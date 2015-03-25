@@ -1,1 +1,0 @@
-# uav-lidar-analytics-course
