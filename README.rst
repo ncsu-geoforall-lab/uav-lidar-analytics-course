@@ -13,6 +13,19 @@ To learn about Git and GitHub, you can use:
 
 http://ncsu-osgeorel.github.io/git-and-github-workshop/
 
+Requirements
+------------
+Pandoc when using rst files.
+
+How to use it
+-------------
+To build the pages, run ``./build.sh``. 
+This will create directory ``build`` on the repository root level.
+To preview the resulting website, open ``build/index.html``.
+
+Before publishing for the first time, run script ``get-gh-pages-branch.sh``.
+
+To publish the changes online, run script ``publish.sh``.
 
 Authors
 -------
