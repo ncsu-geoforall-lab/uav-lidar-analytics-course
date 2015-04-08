@@ -42,7 +42,7 @@ fi
 
 for FILE in `ls *.rst|grep -v foot|grep -v head`
 do
-    build_page_rst $FILE `basename --suffix=.rst $FILE`.html
+    build_page_rst $FILE `basename -s .rst $FILE`.html
 done
 
 for FILE in `ls *.html|grep -v foot|grep -v head`
