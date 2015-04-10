@@ -11,8 +11,8 @@ body {
 /* site top image */
 
 #header-image {
-    height: 150px;
-    background-image: url("img/header.jpg");
+    height: 500px;
+    background-image: url("img/web_pic2.png");
     background-repeat: no-repeat;
 }
 
