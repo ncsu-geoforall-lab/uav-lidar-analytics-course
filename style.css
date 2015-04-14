@@ -11,16 +11,16 @@ body {
 /* site top image */
 
 #header-image {
-    height: 150px;
-    background-image: url("img/header.jpg");
+    height: 550px;
+    background-image: url("img/web_pic6.png");
     background-repeat: no-repeat;
 }
 
 #header-image p {
     margin: 0px;
     padding: 0px;
-    padding-top: 50px;
-    padding-left: 20px;
+    padding-top: 80px;
+    padding-left: 10px;
     font-size: 50px;
     font-weight: bold;
     font-size: 40px;
