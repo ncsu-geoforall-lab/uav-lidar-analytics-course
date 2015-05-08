@@ -50,6 +50,28 @@ do
     build_page $FILE $FILE
 done
 
+for DIR in assignments
+do
+    mkdir -p $OUTDIR/$DIR
+
+    for FILE in `ls $DIR/*.html`
+    do
+        TGT_FILE=$OUTDIR/$DIR/`basename $FILE`
+        ./increase-link-depth.py < $HEAD_FILE > $TGT_FILE
+        echo "<!-- This is a generated file. Do not edit. -->" >> $TGT_FILE
+        ./strip-whitestace.py < $FILE >> $TGT_FILE
+        ./increase-link-depth.py < $FOOT_FILE >> $TGT_FILE
+    done
+
+    for SUBDIR in data img
+    do
+        # copy only if directory exists
+        if [ -d "$DIR/$SUBDIR" ]; then
+            cp -r $DIR/$SUBDIR $OUTDIR/$DIR
+        fi
+    done
+done
+
 for FILE in *.css
 do
     cp $FILE $OUTDIR
