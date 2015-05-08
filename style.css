@@ -293,7 +293,7 @@ iframe {
 
 /* do table using alternate colors of rows */
 .schedule tr:nth-child(even) {
-    background: #DDD;
+    background: #EEE;
 }
 
 .schedule tr:nth-child(odd) {
@@ -302,7 +302,7 @@ iframe {
 
 /* override for header to get different color */
 .schedule > thead > tr:nth-child(1) {
-    background: #DDD;
+    background: #EEE;
 }
 
 /* header needs to bigger a little bit */
