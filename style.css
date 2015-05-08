@@ -11,19 +11,19 @@ body {
 /* site top image */
 
 #header-image {
-    height: 550px;
-    background-image: url("img/web_pic6.png");
+    height: 250;
+    background-image: url("img/web_pic6.jpg");
     background-repeat: no-repeat;
 }
 
 #header-image p {
     margin: 0px;
     padding: 0px;
-    padding-top: 80px;
+    padding-top: 150px;
     padding-left: 10px;
-    font-size: 50px;
+    font-size: 48px;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 38px;
     color: #006600;
     text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
 }
