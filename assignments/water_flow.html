@@ -1,34 +1,49 @@
-<h2>Topic: Geospatial simulations of dynamic processes: water flow</h2>
+<h2>Geospatial simulations of dynamic processes: water flow</h2>
+
+Outline:
 
 <ul>
-<li>perform simulation of surface water flow for selected areas 
-(select Lake Wheeler road area defined by region rural_1m in nc_spm_08 or Centennial Campus)
-<li>optional: assess impact of changes in topography and landuse on water flow pattern and dynamics
+    <li>
+        perform simulation of surface water flow for selected areas
+        (select Lake Wheeler road area defined by region rural_1m in nc_spm_08 or Centennial Campus)
+    </li>
+    <li>optional: assess impact of changes in topography and landuse on water flow pattern and dynamics
 </ul>
 
-Data: note, that the vector format has changed between grass6 and grass7, so the best is to use 
-the grass7 version of nc_spm_08 data set. Data for GRASS6 will still work, you just need to rebuild
-the topology using the v.build command
+Data:
+
 <ul>
-<li>LOCATION <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">nc_spm_08_grass7 from MEA582</a>
-<LI>LOCATION for GRASS6 <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08.zip">nc_spm_08 from MEA582</a>
-<li>MAPSET for GRASS6<a href="../gisdata/cc_south.zip">Centennial Campus South MAPSET </a>
-<!--<li>LOCATION north_carolina_spm used in <a href="a_stc.html">the previous assignment</a>-->
+    <li>
+        Note that the vector format has changed between GRASS GIS version 6 and version 7,
+        so the best is to use the GRASS GIS 7 version of nc_spm_08 data set.
+        Data for GRASS GIS 6 will still work, you just need to rebuild
+        the topology using the v.build command.
+    </li>
+    <li>Location <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">nc_spm_08_grass7 from MEA582</a>
+    <li>Location for GRASS GIS 6 <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08.zip">nc_spm_08 from MEA582</a>
+    <li>Mapset for GRASS GIS 6 <a href="../gisdata/cc_south.zip">Centennial Campus South Mapset</a>
+    <!--<li>LOCATION north_carolina_spm used in <a href="a_stc.html">the previous assignment</a>-->
 </ul>
-<hr>
-start GRASS<br>
+
+Start GRASS - click on GRASS icon or type
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-GIS data directory /local/share/grassdata<br>
-LOCATION select nc_spm_08_grass7<br>
-MAPSET select user1<br>
-Enter GRASS<br>
-GUI opens automatically - you can work in GUI or command line<br>
+Set the following values in the start up window:
+<ul>
+    <li><em>GRASS data directory</em> to, for example /home/john/grassdata<br>
+    <li>for <em>Location</em> select nc_spm_08_grass7<br>
+    <li>for <em>Mapset</em> select user1<br>
+</ul>
 
+Then start GRASS session, GUI opens automatically.
+You can work in GUI, in command console in GUI or the system
+command line (terminal, console) which started with GRASS GIS.
+
+<p>
 compute spatial pattern of overland flow depth and discharge<br>
 compute input raster maps for uniform land cover and uniform rainfall excess<br>
 
@@ -100,6 +115,9 @@ variable Mannings<br>
 
 <pre><code>
 r.recode landcover_1m out=mancover_2m
+</code></pre>
+
+<pre><code>
 1:1:0.9:0.9
 2:2:0.5:0.5
 3:3:0.01:0.01
@@ -118,6 +136,9 @@ variable rainfall excess (rainfall intensity - infitration rate)<br>
 
 <pre><code>
 r.recode landcover_1m out=raincover_2m
+</code></pre>
+
+<pre><code>
 1:1:50:50
 2:2:5:5
 3:3:40:40

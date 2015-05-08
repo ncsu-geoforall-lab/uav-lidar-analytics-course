@@ -1,41 +1,57 @@
-<h2>Topic:  Analyzing and Visualizing surfaces from multiple return lidar data</h2>
+<h2>Analyzing and Visualizing surfaces from multiple return lidar data</h2>
+
+Outline:
 
 <ul>
-<li>analyze and import lidar point cloud for State Farmers Market near NC State Centennial Campus
-<li>compute bare earth and canopy surfaces and derived parameters
-<li>employ visualization techniques to highlight subtle terrain features
-<li>explore voxel model based analysis of multiple return point cloud
+    <li>analyze and import lidar point cloud for State Farmers Market near NC State Centennial Campus
+    <li>compute bare earth and canopy surfaces and derived parameters
+    <li>employ visualization techniques to highlight subtle terrain features
+    <li>explore voxel model based analysis of multiple return point cloud
 </ul>
-Data: 
+
+Data:
+
 <ul>
-<li>GRASS LOCATION <a href="http://courses.ncsu.edu/mea592/common/media/nc_spf_centennial.zip">nc_spf_centennial</a>
-<li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">Classified point cloud tile 16 in las format</a>
-<li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">Point cloud tile in asci xyzirnc format</a>
+    <li>GRASS Location <a href="http://courses.ncsu.edu/mea592/common/media/nc_spf_centennial.zip">nc_spf_centennial</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">Classified point cloud tile 16 in las format</a>
+    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">Point cloud tile in asci xyzirnc format</a>
 </ul>
+
 Tools:
+
 <ul>
-<li>download recent version of <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
-which includes also <a href="http://www.liblas.org/">libLAS</a> library,
-accessible through GRASS modules v.in.lidar/r.in.lidar or using tools lasinfo, las2txt tools </li>
+    <li>
+        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
+        installation should also include <a href="http://www.liblas.org/">libLAS</a> library
+        which is used by GRASS modules v.in.lidar and r.in.lidar
+        (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
+    </li>
+    <li>libLAS installation should include command line tools lasinfo and las2txt.
+    <li>libLAS installation should also include support for LAZ (through LAZzip library).
+    <li>Note that you need libLAS library and tools, not LASlib which is part of LAStools.
+    <li>Web-based <a href="http://plas.io">plas.io</a> (might not work with older browsers, most functionality is available in Chrome)</li>
 </ul>
-<hr>
-Quick data exploration<br>
 
-first view the LAS file in your web browser using <a href="http://plas.io"><b>plas.io</b></a><br>
-(might not work with older browsers, use chrome)<br>
 
-then launch GRASS<br>
-all following commands should be pasted in the GUI command line<br>
+<h3>Quick data exploration</h3>
+
+First view the LAS file in your web browser using <a href="http://plas.io">plas.io</a>.
+
+Then launch GRASS
+(all following commands should be pasted in the GUI command line).
 
 <pre><code>
 grass70
 </code></pre>
 
 <p>
-go to the directory where we downloaded the las file<br>
+Change current working directory to the directory where you downloaded
+the LAS file using <tt>cd</tt> command and path or in case you work
+in command line in GRASS GUI just type <tt>cd</tt> and press enter
+and select directory using a dialog.
 
 <pre><code>
-cd ~/Downloads <font color="#000066"># or just type cd and press enter</font>
+cd ~/Downloads
 </code></pre>
 
 <p>
@@ -46,14 +62,14 @@ we will further work work with the classes 1 and 2<br>
 lasinfo 0793_016.las
 </code></pre>
 
-<p>
-...<br>
-Point Classifications<br>
----------------------------------------------------------<br>
-341246 Unclassified (1)<br>
-560224 Ground (2)<br>
-25 Low Point (noise) (7)<br>
-844382 Reserved for ASPRS Definition (11)<br>
+<pre><code>
+Point Classifications
+---------------------------------------------------------
+341246 Unclassified (1)
+560224 Ground (2)
+25 Low Point (noise) (7)
+844382 Reserved for ASPRS Definition (11)
+</code></pre>
 
 get the geographic extent of the point cloud and then set it<br>
 
@@ -62,9 +78,8 @@ r.in.lidar -sgo input=0793_016.las
 g.region n=734999.990000 s=732500.010000 e=2099999.990000 w=2097500.000000
 </code></pre>
 
-<p>
 
-Density of points<br>
+<h3>Density of points</h3>
 
 first we set the resolution<br>
 
@@ -90,9 +105,8 @@ d.rast tile16_dens_ground
 d.legend -f -s -d rast=tile16_dens_ground at=5,50,7,10
 </code></pre>
 
-<p>
 
-High resolution DEM/DSM<br>
+<h3>High resolution DEM/DSM</h3>
 
 import as points (without attribute table, not necessary to build points)<br>
 
@@ -117,7 +131,7 @@ v.surf.rst input=tile16_surface elevation=tile16_surface_elev slope=tile16_surfa
 visualize DEM and DSM in 3D view, use cross-sections<br>
 
 
-Raster binning and classification<br>
+<h3>Raster binning and classification</h3>
 
 compute different surfaces by binning<br>
 explore what different returns and classes show<br>
@@ -155,10 +169,12 @@ set colors, copy and paste the following color rules into "or enter values direc
 
 <pre><code>
 r.colors map=classes 
+</code></pre>
+
+<pre><code>
 1 220:220:180
 2 0:180:0
 3 150:0:0
-
 </code></pre>
 
 <p>
@@ -166,7 +182,7 @@ leave just raster map 'tile16_surface_elev' in Layer Manager, hide legend<br>
 got to 3D view, set surface resolution 1 and color to map 'classes'<br>
 
 
-Visualize point density in 3D (optional)<br>
+<h3>Visualize point density in 3D (optional)</h3>
 
 convert LAS file into text file with lastools<br>
 
