@@ -11,19 +11,19 @@ body {
 /* site top image */
 
 #header-image {
-    height: 550px;
-    background-image: url("img/web_pic6.png");
+    height: 250;
+    background-image: url("img/web_pic6.jpg");
     background-repeat: no-repeat;
 }
 
 #header-image p {
     margin: 0px;
     padding: 0px;
-    padding-top: 80px;
+    padding-top: 150px;
     padding-left: 10px;
-    font-size: 50px;
+    font-size: 48px;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 38px;
     color: #006600;
     text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
 }
@@ -275,5 +275,53 @@ iframe {
 }
 
 .question {
+    color: #FF5900;
+}
+
+/* default style is too dense */
+.schedule td {
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+/* width of first column */
+.schedule td:first-child {
+    width: 7em;
+}
+
+/* do table using alternate colors of rows */
+.schedule tr:nth-child(even) {
+    background: #DDD;
+}
+
+.schedule tr:nth-child(odd) {
+    background: #FFF;
+}
+
+/* override for header to get different color */
+.schedule > thead > tr:nth-child(1) {
+    background: #DDD;
+}
+
+/* header needs to bigger a little bit */
+.schedule > thead > tr > th {
+    padding-left: 0.5em;
+    padding-right: 0.2em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+}
+
+/* we distinguish lectures from the rest by span with class type */
+.schedule .type::before {
+    content: "[";
+}
+
+.schedule .type::after {
+    content: "]";
+}
+
+.schedule .type {
     color: #FF5900;
 }
