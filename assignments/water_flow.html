@@ -18,9 +18,9 @@ the topology using the v.build command
 <hr>
 start GRASS<br>
 
-<pre>
+<pre><code>
 grass70
-</pre>
+</code></pre>
 
 <p>
 GIS data directory /local/share/grassdata<br>
@@ -32,30 +32,30 @@ GUI opens automatically - you can work in GUI or command line<br>
 compute spatial pattern of overland flow depth and discharge<br>
 compute input raster maps for uniform land cover and uniform rainfall excess<br>
 
-<pre>
+<pre><code>
 g.region rural_1m res=2 -p
 r.mapcalc "man05 = 0.05"
 r.mapcalc "infil0 = 0."
 r.mapcalc "rain50mmhr = 50."
-</pre>
+</code></pre>
 
 <p>
 calculate partial derivatives to define the gradient of elevation surface<br>
 
-<pre>
+<pre><code>
 v.surf.rst -d in=elev_lid792_bepts elev=elev_lid792_2m slop=dx_2m asp=dy_2m ten=15 smooth=1.5 npmin=150
-</pre>
+</code></pre>
 
 <p>
 run the model<br>
 remove backslashes when running from GUI command console<br>
 
-<pre>
+<pre><code>
 r.sim.water -t elev=elev_lid792_2m dx=dx_2m dy=dy_2m rain=rain50mmhr infil=infil0 man=man05 \
           depth=wdp_2m disch=disch_2m nwalk=400000 niter=25 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0
 d.rast wdp_2m.020
 d.rast disch_2m.020
-</pre>
+</code></pre>
 
 <p>
 animate the time series File > Animation tool<br>
@@ -64,41 +64,41 @@ compute peak runoff with predefined flow direction<br>
 along the stream inluding culvert under the road<br>
 compute direction (aspect) of the given streams<br>
 
-<pre>
+<pre><code>
 v.to.rast streams out=streams_dir_2m use=dir
-</pre>
+</code></pre>
 
 <p>
 compute stream dx,dy using direction and slope=2deg<br>
 
-<pre>
+<pre><code>
 r.mapcalc "dxstr_2m = tan(2.)*cos(streams_dir_2m)"
 r.mapcalc "dystr_2m = tan(2.)*sin(streams_dir_2m)"
-</pre>
+</code></pre>
 
 <p>
 compute combined DEM and stream dx,dy<br>
 
-<pre>
+<pre><code>
 r.mapcalc "dxdemstr_2m = if(isnull(dxstr_2m), dx_2m, dxstr_2m)"
 r.mapcalc "dydemstr_2m = if(isnull(dystr_2m), dy_2m, dystr_2m)"
-</pre>
+</code></pre>
 
 <p>
 run the model<br>
 
-<pre>
+<pre><code>
 r.sim.water -t elev=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=rain50mmhr infil=infil0 man=man05 \
       depth=wdpstr_2m disch=dischstr_2m nwalk=400000 niter=25 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0
 d.rast dischstr_2m.020
-</pre>
+</code></pre>
 
 <p>
 compute runoff for <a href="http://courses.ncsu.edu/mea582/common/GIS_anal_grass/lu_labels.txt"><b>spatially variable landcover</b></a><br>
 represented by  spatially variable Mannings and infiltration<br>
 variable Mannings<br>
 
-<pre>
+<pre><code>
 r.recode landcover_1m out=mancover_2m
 1:1:0.9:0.9
 2:2:0.5:0.5
@@ -111,12 +111,12 @@ r.recode landcover_1m out=mancover_2m
 9:9:0.9:0.9
 10:10:0.03:0.03
 11:11:0.5:0.5
-</pre>
+</code></pre>
 
 <p>
 variable rainfall excess (rainfall intensity - infitration rate)<br>
 
-<pre>
+<pre><code>
 r.recode landcover_1m out=raincover_2m
 1:1:50:50
 2:2:5:5
@@ -129,12 +129,12 @@ r.recode landcover_1m out=raincover_2m
 9:9:50.:50.
 10:10:40:40 
 11:11:10:10 
-</pre>
+</code></pre>
 
 <p>
 run the model<br>
 
-<pre>
+<pre><code>
 r.sim.water -t elev=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil=infil0 \
                man=mancover_2m depth=wdpstrcov_2m disch=distrcov_2m nwalk=400000 niter=25 outit=1 \
                hmax=0.2 halpha=8.0 hbeta=1.0
@@ -142,64 +142,64 @@ d.rast wdpstrcov_2m.20
 d.legend wdpstrcov_2m.20
 d.rast distrcov_2m.20
 d.legend distrcov_2m.20 
-</pre>
+</code></pre>
 
 <p>
 run animation<br>
 
-<pre>
-</pre>
+<pre><code>
+</code></pre>
 
 <p>
 compute sediment flow rate and net erosion/deposition using simwe<br>
 set region to the upper part of the watershed<br>
 
-<pre>
+<pre><code>
 g.region s=s+290
-</pre>
+</code></pre>
 
 <p>
 compute input transport capacity and detachment coef. maps<br>
 
-<pre>
+<pre><code>
 r.mapcalc "tranin = 0.001"
 r.mapcalc "detin = 0.001"
-</pre>
+</code></pre>
 
 <p>
 compute input critical shear stress<br>
 
-<pre>
+<pre><code>
 r.mapcalc "tauin = 0.01"
-</pre>
+</code></pre>
 
 <p>
 run the model, use last depth from previous run<br>
 
-<pre>
+<pre><code>
 g.copy rast=wdp_2m.140,wdp_2m
 r.sim.sediment elev=elev_lid792_2m dx=dx_2m dy=dy_2m wdepth=wdp_2m det=detin tran=tranin \
       tau=tauin man=man05 nwalk=600000 niter=600 tc=tcapacity et=erdepmax flux=sedflow erdep=erdepsimwe
-</pre>
+</code></pre>
 
 <p>
 display these results after few seconds:<br>
 
-<pre>
+<pre><code>
 d.rast tcapacity
 d.rast erdepmax
-</pre>
+</code></pre>
 
 <p>
 display the final results<br>
 
-<pre>
+<pre><code>
 d.rast sedflow 
 d.legend sedflow
 d.rast erdepsimwe
 d.legend erdepsimwe
 <P>Simulations for the Centennial Campus
-</pre>
+</code></pre>
 
 <p>
 save the provided cc_south MAPSET in the nc_spm_08_grass7 directory<br>
@@ -207,12 +207,12 @@ Using the 2001, 3m resolution NED LE_ned_3m<br>
 perform watershed analysis (flowaccumulation and watershed boundaries),<br>
 generate countours in a subregion<br>
 
-<pre>
+<pre><code>
 g.region lakeraleigh_3m -p
 r.watershed LR_ned_3m accum=LR_accum basin=LR_basin thre=10000
 g.region lakeraleighzm_3m -p
 r.contour LR_ned_3m out=LR_ned_3m_cont2 step=2
-</pre>
+</code></pre>
 
 <p>
 analyze overland flow for the years 2001<br>
@@ -222,7 +222,7 @@ prepare uniform input and run simwe, show the impact of Mannings on the result<b
 use rain parameter to provide raifall excess (rainfall-infiltration)<br>
 use infil parameter to simulate infiltration of flowing water (flow-infiltration)<br>
 
-<pre>
+<pre><code>
 r.mapcalc "man015 = 0.15"
 r.mapcalc "man005 = 0.05"
 r.mapcalc "infil0 = 0."
@@ -232,7 +232,7 @@ r.sim.water -t elev=LR_ned_3m dx=ned3m_dx dy=ned3m_dy rain=rain25mmhr infil=infi
 depth=nedwdp_3m_n015 disch=nedisch_3m_n015 nwalk=100000 niter=30 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0 --o
 r.sim.water -t elev=LR_ned_3m dx=ned3m_dx dy=ned3m_dy rain=rain25mmhr infil=infil0 man=man005 \
 depth=nedwdp_3m_n005 disch=nedisch_3m_n005 nwalk=100000 niter=30 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0 --o
-</pre>
+</code></pre>
 
 <p>
 if the data set has 2013 DEM perform the same analysis and compare the results<br>

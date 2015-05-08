@@ -27,24 +27,24 @@ first view the LAS file in your web browser using <a href="http://plas.io"><b>pl
 then launch GRASS<br>
 all following commands should be pasted in the GUI command line<br>
 
-<pre>
+<pre><code>
 grass70
-</pre>
+</code></pre>
 
 <p>
 go to the directory where we downloaded the las file<br>
 
-<pre>
+<pre><code>
 cd ~/Downloads <font color="#000066"># or just type cd and press enter</font>
-</pre>
+</code></pre>
 
 <p>
 let's look at the metadata, particularly at the classes,<br>
 we will further work work with the classes 1 and 2<br>
 
-<pre>
+<pre><code>
 lasinfo 0793_016.las
-</pre>
+</code></pre>
 
 <p>
 ...<br>
@@ -57,10 +57,10 @@ Point Classifications<br>
 
 get the geographic extent of the point cloud and then set it<br>
 
-<pre>
+<pre><code>
 r.in.lidar -sgo input=0793_016.las
 g.region n=734999.990000 s=732500.010000 e=2099999.990000 w=2097500.000000
-</pre>
+</code></pre>
 
 <p>
 
@@ -68,27 +68,27 @@ Density of points<br>
 
 first we set the resolution<br>
 
-<pre>
+<pre><code>
 g.region res=3
-</pre>
+</code></pre>
 
 <p>
 compute the density of all points<br>
 
-<pre>
+<pre><code>
 r.in.lidar -o input=0793_016.las output=tile16_dens_all method=n
 d.rast tile16_dens_all
 d.legend -f -s -d rast=tile16_dens_all at=5,50,7,10
-</pre>
+</code></pre>
 
 <p>
 compute the density of ground points<br>
 
-<pre>
+<pre><code>
 r.in.lidar -o input=0793_016.las output=tile16_dens_ground class_filter=2 method=n
 d.rast tile16_dens_ground
 d.legend -f -s -d rast=tile16_dens_ground at=5,50,7,10
-</pre>
+</code></pre>
 
 <p>
 
@@ -96,10 +96,10 @@ High resolution DEM/DSM<br>
 
 import as points (without attribute table, not necessary to build points)<br>
 
-<pre>
+<pre><code>
 v.in.lidar -t -o input=0793_016.las output=tile16_ground class_filter=2
 v.in.lidar -t -o input=0793_016.las output=tile16_surface class_filter=1,2 return_filter=first
-</pre>
+</code></pre>
 
 <p>
 remove the vector layers from your Layer Manager if they were added<br>
@@ -108,10 +108,10 @@ interpolate with resolution 3 feet<br>
 also create slope and profile curvature map<br>
 set higher npmin to reduce artifacts from segmentation visible on slope and curvature maps (will be much slower!)<br>
 
-<pre>
+<pre><code>
 v.surf.rst input=tile16_ground elevation=tile16_ground_elev slope=tile16_ground_slope pcurv=tile16_ground_profcurv dmin=1 npmin=80 tension=10 smooth=10
 v.surf.rst input=tile16_surface elevation=tile16_surface_elev slope=tile16_surface_slope pcurv=tile16_surface_profcurv dmin=1 npmin=80 tension=20 smooth=1
-</pre>
+</code></pre>
 
 <p>
 visualize DEM and DSM in 3D view, use cross-sections<br>
@@ -125,41 +125,41 @@ create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings<br>
 
 create DSM<br>
 
-<pre>
+<pre><code>
 r.in.lidar -o input=0793_016.las output=tile16_all_max method=max resolution=10 class_filter=1,2
-</pre>
+</code></pre>
 
 <p>
 create surface based on last return (represents canopy)<br>
 
-<pre>
+<pre><code>
 r.in.lidar -o input=0793_016.las output=tile16_last_mean resolution=10 method=mean return_filter=last class_filter=1,2
-</pre>
+</code></pre>
 
 <p>
 create surface representing ground based on already classified points<br>
 
-<pre>
+<pre><code>
 r.in.lidar -o input=0793_016.las output=tile16_ground_mean resolution=10 class_filter=2
-</pre>
+</code></pre>
 
 <p>
 combine surfaces and create classes: 1 - ground, 2 - vegetation, 3 - buildings<br>
 
-<pre>
+<pre><code>
 r.mapcalc "classes = if( ! isnull(tile16_last_mean), 2, if( !isnull( tile16_ground_mean), 1, if( !isnull(tile16_all_max),3, null())))"
-</pre>
+</code></pre>
 
 <p>
 set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules)<br>
 
-<pre>
+<pre><code>
 r.colors map=classes 
 1 220:220:180
 2 0:180:0
 3 150:0:0
 
-</pre>
+</code></pre>
 
 <p>
 leave just raster map 'tile16_surface_elev' in Layer Manager, hide legend<br>
@@ -170,23 +170,23 @@ Visualize point density in 3D (optional)<br>
 
 convert LAS file into text file with lastools<br>
 
-<pre>
+<pre><code>
 las2txt -i 0793_016.las --parse xyzc -o tile16.txt
-</pre>
+</code></pre>
 
 <p>
 set region for creating the 3D raster<br>
 
-<pre>
+<pre><code>
 g.region n=734617 s=733919 w=2098538 e=2099470 b=300 t=450 res=10 res3=10 tbres=25 -p3
-</pre>
+</code></pre>
 
 <p>
 use binning to create point density 3D raster<br>
 
-<pre>
+<pre><code>
 r3.in.xyz input=tile16.txt output=tile16_dens method=n separator=comma
-</pre>
+</code></pre>
 
 <p>
 visualize in 3D view using slices and isosurfaces
