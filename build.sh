@@ -2,13 +2,20 @@
 
 # builds pages from source
 
-function build_page {
+function build_page_general {
     FILE_SOURCE=$1
     FILE_TARGET=$2
+    HEAD_FILE=$3
+    FOOT_FILE=$4
+    OUTDIR=$5
     cat $HEAD_FILE > $OUTDIR/$FILE_TARGET
     echo "<!-- This is a generated file. Do not edit. -->" >> $OUTDIR/$FILE_TARGET
     cat $FILE_SOURCE >> $OUTDIR/$FILE_TARGET
     cat $FOOT_FILE >> $OUTDIR/$FILE_TARGET
+}
+
+function build_page {
+    build_page_general $1 $2 $HEAD_FILE $FOOT_FILE $OUTDIR
 }
 
 function build_page_rst {
@@ -70,6 +77,22 @@ do
             cp -r $DIR/$SUBDIR $OUTDIR/$DIR
         fi
     done
+done
+
+if [ ! -d "$OUTDIR/lectures" ]; then
+    mkdir $OUTDIR/lectures
+fi
+
+for FILE in lectures/*
+do
+    if [ ${FILE: -5} == ".html" ]; then
+        if [ ${FILE: -9} == "head.html" ] || [ ${FILE: -9} == "foot.html" ]; then
+            continue
+        fi
+        build_page_general $FILE $FILE lectures/head.html lectures/foot.html $OUTDIR
+    else
+        cp -r $FILE $OUTDIR/lectures
+    fi
 done
 
 for FILE in *.css
