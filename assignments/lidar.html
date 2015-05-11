@@ -39,7 +39,7 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h2>Analyzing and Visualizing surfaces from multiple return lidar data</h2>
+<h1>Analyzing and Visualizing surfaces from multiple return lidar data</h1>
 
 Outline:
 
@@ -74,7 +74,7 @@ Tools:
 </ul>
 
 
-<h3>Quick data exploration</h3>
+<h2>Quick data exploration</h2>
 
 First view the LAS file in your web browser using <a href="http://plas.io">plas.io</a>.
 
@@ -115,7 +115,7 @@ g.region n=734999.990000 s=732500.010000 e=2099999.990000 w=2097500.000000
 </code></pre>
 
 
-<h3>Density of points</h3>
+<h2>Density of points</h2>
 
 first we set the resolution<br>
 
@@ -139,7 +139,7 @@ d.legend -f -s -d rast=tile16_dens_ground at=5,50,7,10
 </code></pre>
 
 
-<h3>High resolution DEM/DSM</h3>
+<h2>High resolution DEM/DSM</h2>
 
 import as points (without attribute table, not necessary to build points)<br>
 
@@ -162,7 +162,7 @@ v.surf.rst input=tile16_surface elevation=tile16_surface_elev slope=tile16_surfa
 visualize DEM and DSM in 3D view, use cross-sections<br>
 
 
-<h3>Raster binning and classification</h3>
+<h2>Raster binning and classification</h2>
 
 compute different surfaces by binning<br>
 explore what different returns and classes show<br>
@@ -207,7 +207,7 @@ leave just raster map 'tile16_surface_elev' in Layer Manager, hide legend<br>
 got to 3D view, set surface resolution 1 and color to map 'classes'<br>
 
 
-<h3>Visualize point density in 3D (optional)</h3>
+<h2>Visualize point density in 3D (optional)</h2>
 
 convert LAS file into text file with lastools<br>
 
