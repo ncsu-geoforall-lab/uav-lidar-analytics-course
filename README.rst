@@ -55,3 +55,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 For the website style see:
 
 https://github.com/ncsu-osgeorel/course-website-template
+
+For information on lecture slides (presentations) see:
+
+https://github.com/ncsu-osgeorel/lecture-slides-template
