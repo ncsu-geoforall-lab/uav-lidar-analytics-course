@@ -11,19 +11,21 @@ body {
 /* site top image */
 
 #header-image {
-    height: 250;
-    background-image: url("img/header.jpg");
+    height: 150px;
+    background-image: url("img/header.png");
     background-repeat: no-repeat;
 }
 
-#header-image p {
+/* main heading / title */
+
+h1 {
     margin: 0px;
     padding: 0px;
-    padding-top: 150px;
-    padding-left: 10px;
-    font-size: 48px;
+    padding-top: 50px;
+    padding-left: 30px;
+    font-size: 50px;
     font-weight: bold;
-    font-size: 38px;
+    font-size: 40px;
     color: #006600;
     text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
 }
@@ -39,9 +41,9 @@ a:hover {
     text-decoration: underline;
 }
 
-/* headings */
+/* normal headings */
 
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
     font-weight: bold;
     color: #444;
     clear: both;
@@ -100,15 +102,16 @@ nav li {
     float: left;
     border-right: 2px solid #F3F3F3;
     /*border-left: 1px solid #DDDDDD;*/
+}
+
+.nav a {
+    text-decoration: none;
+    color: #F3F3F3;
+    display: inline-block;
     padding-left: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-right: 15px;
-}
-
-.nav a {
-text-decoration:none;
-color: #F3F3F3;
 }
 
 nav li:hover {
