@@ -14,6 +14,17 @@ orientation data.</p>
 you are unable to execute the whole step the intermediate results are
 provided in the separate project files here (add link)</p>
 
+<p>
+General workflow (with GCPs):
+
+<ul>
+    <li>Preparation
+    <li>Stage 1: Building simple geometry (in order to place GCPs)
+    <li>Stage 2: Placing GCPs
+    <li>Stage 3: Building complex geometry
+    <li>Stage 4: Exporting results
+</ul>
+
 
 <h3>Preparation</h3>
 
@@ -30,16 +41,6 @@ provided in the separate project files here (add link)</p>
 <ul>
     <li>Agisoft PhotoScan Professional (link to the installation file)
 </ul>
-
-<h4>General workflow (with GCPs)</h4>
-
-<ul>
-    <li>Stage 1: Building simple geometry (in order to place GCPs)
-    <li>Stage 2: Placing GCPs
-    <li>Stage 3: Building complex geometry
-    <li>Stage 4: Exporting results
-</ul>
-
 
 <h4>Preferences</h4>
 
@@ -92,7 +93,7 @@ subsequent sessions.</p>
 <p>Menu &gt;  Workflow &gt; Add Photos</p>
 
 <p>Indicate the path to the folder (downloaded data) containing photos
-and select them all.</p> <p>In the REFERENCE panel, you can see that
+and select them all.</p> <p>In the Reference panel, you can see that
 the photos has been loaded, but the coordinate system indicates local
 coordinates. It can be changed in the Settings.</p> <p>Click the
 settings icon <img src="img/geoprocessing/settings_icon.png" class="icon">
@@ -172,7 +173,7 @@ placement by indicating column number (top right of dialog box). Notice
 that the file contains Easting and Northing values, which are NOT
 latitude and longitude</p>
 
-<p>This time you disable the LOAD ORIENTATION option since GCPs are
+<p>This time you disable the <em>Load orientation</em> option since GCPs are
 stationary and do not need determining yaw pitch and roll angles.</p>
 
 <p>The window with the message: <em>Can’t find match for ‘UAV 1’ entry.
@@ -425,7 +426,7 @@ above.</p>
 
 <h3>Stage 4: Exporting results</h3>
 
-<p>This option will be disabled if you are working in the DEMO version
+<p>This option will be disabled if you are working in the demo version
 of Agisoft. You can switch to full function mode with
 <a href="http://www.agisoft.com/downloads/request-trial/">30-day trial license</a>
 for free. (click link and request a trial code via email)</p>
