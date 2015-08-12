@@ -1,0 +1,518 @@
+<h2>Geoprocessing of the UAS data</h2>
+
+<p>Completing this assignment you will generate orthomosaic and Digital
+Surface Model using pictures taken from the UAS Trimble UX5 Rover
+(Flight mission executed on June 20<sup>th</sup> 2015). The Study area
+is located at
+<a href="https://www.google.com/maps/d/edit?mid=zi8EsFDQAyqo.kr7lL7Germeo">Lake Wheeler COA</a>. Additionally you will be able to see the processing
+results in the generated report and optionally you will be able to
+export also 3D model and Point cloud as well as Camera calibration and
+orientation data.</p>
+
+<p>The process can be very time consuming
+(depending on computational power of your and desired quality) so if
+you are unable to execute the whole step the intermediate results are
+provided in the separate project files here (add link)</p>
+
+<p>
+General workflow (with GCPs):
+
+<ul>
+    <li>Preparation
+    <li>Stage 1: Building simple geometry (in order to place GCPs)
+    <li>Stage 2: Placing GCPs
+    <li>Stage 3: Building complex geometry
+    <li>Stage 4: Exporting results
+</ul>
+
+
+<h3>Preparation</h3>
+
+<h4>Data</h4>
+
+<ul>
+    <li>Photos (link to data)
+    <li>Log (link to data)
+    <li>GCP coordinates (link to data)
+</ul>
+
+<h4>Software</h4>
+
+<ul>
+    <li>Agisoft PhotoScan Professional (link to the installation file)
+</ul>
+
+<h4>Preferences</h4>
+
+<p>When launching PhotoScan for the first time, some settings need to
+be adjusted to optimize performance. These settings need to be done
+only once, at the first use of PhotoScan, and are loaded by default in
+subsequent sessions.</p>
+
+<p>Menu &gt; Tools  &gt;  Preferences</p>
+
+<p>General tab:</p>
+
+<ul>
+    <li>Leave default
+        (optional – white log to file: enabled, if you want to save the txt log file)
+</ul>
+
+<p>OpenCL TAB:</p>
+
+<ul>
+    <li>Check on any OpenCL devices detected by PhotoScan in the dialog
+        and reduce the number of active CPU cores by one for each OpenCL
+        device enabled.
+</ul>
+
+<p>Advanced tab:</p>
+
+<ul>
+    <li>Project compression level: 6
+    <li>Keep depth maps: enabled
+    <li>Store absolute image paths: disabled
+    <li>Check for updates on program startup: disabled
+    <li>Enable VBO support: enabled if you have an OpenCL-enabled GPU from NVIDIA,
+    <li>Disabled: GPU from another mark (this applies to any Mac)
+    <li>Strip camera extensions during model export: enabled
+</ul>
+
+<figure>
+<img src="img/geoprocessing/preferences.png">
+</figure>
+
+
+<h3>Stage 1: Building simple geometry (in order to place GCPs)</h3>
+
+<p>In order to localize the GCPs first a preliminary simple model needs to be build.</p>
+
+
+<h4>Adding photos</h4>
+
+<p>Menu &gt;  Workflow &gt; Add Photos</p>
+
+<p>Indicate the path to the folder (downloaded data) containing photos
+and select them all.</p> <p>In the Reference panel, you can see that
+the photos has been loaded, but the coordinate system indicates local
+coordinates. It can be changed in the Settings.</p> <p>Click the
+settings icon <img src="img/geoprocessing/settings_icon.png" class="icon">
+&gt;  change coordinate system to WGS
+84</p>
+
+<figure>
+<img src="img/geoprocessing/settings_in_toolbar.png">
+</figure>
+<figure>
+<img src="img/geoprocessing/settings_wgs84.png">
+</figure>
+
+
+<h4>Loading camera positions</h4>
+
+<p>Click Import button <img src="img/geoprocessing/import_icon.png" class="icon">
+on the Reference pane toolbar &gt; select file
+containing camera positions information (log file*) in the Open
+dialog.</p>
+
+<figure>
+<img src="img/geoprocessing/import_csv.png">
+</figure>
+
+<p>*Agisoft support the camera orientation files in 3 formats: .csv,
+.txt, .tel, .xml and and .log. In order to convert the Trimble .jxl log
+file please use <a href="https://github.com/wenzeslaus/jxl2csv">script
+by Vaclav Petras</a></p>
+
+<p>Make sure that the columns are named properly – you can adjust their
+placement by indicating column number (top right of dialog box)</p>
+
+
+<h4>Aligning photos</h4>
+
+<ul>
+    <li>Accuracy: High
+    <li>Pair preselection: Reference
+    <li>Key point limit: 40000
+    <li>Tie point limit: 1000
+</ul>
+
+<p>Menu &gt; Workflow &gt; Align Photos</p>
+
+<figure>
+<img src="img/geoprocessing/align_photos.png">
+</figure>
+<p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
+
+
+<h3>Building dense point cloud (for rapid processing)</h3>
+
+<p>Menu &gt; Workflow &gt; Build Dense Point Cloud</p>
+
+<ul>
+    <li>Quality: Lowest
+    <li>Depth filtering: Aggressive
+</ul>
+
+<figure>
+<img src="img/geoprocessing/build_dense_cloud.png">
+</figure>
+<p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
+
+
+<h3>Stage 2: Placing GCPs</h3>
+
+
+<h4>Loading the gcps coordinates</h4>
+
+<p>In the Reference pane choose Import icon and indicate the
+localization of the file with Ground Control Points positions</p>
+
+<p>Make sure that the columns are named properly – you can adjust their
+placement by indicating column number (top right of dialog box). Notice
+that the file contains Easting and Northing values, which are NOT
+latitude and longitude</p>
+
+<p>This time you disable the <em>Load orientation</em> option since GCPs are
+stationary and do not need determining yaw pitch and roll angles.</p>
+
+<p>The window with the message: <em>Can’t find match for ‘UAV 1’ entry.
+Create new marker?</em> will pop up.</p>
+
+<figure>
+<img src="img/geoprocessing/no_match_new_marker.png">
+</figure>
+
+<p>Choose ‘Yes to All’ – it will create new marker for each of the
+named GCPs from the file. They will be listed in Reference pane under
+the list of photos.</p>
+
+
+<h4>Indicating GCPs on the pictures</h4>
+
+<p>Now you need to find each of the GCPs and indicate its localization
+on all photos depicting it.</p>
+
+<p>It is possible that the flight area do not cover all the GCPs. The
+Mode pane shows approximate positions of GCPs, it is better visible if
+the ‘Show cameras’ option is disabled (Menu &gt; View &gt; Show/Hide
+Items &gt; Show cameras)</p>
+
+<p>
+<figure>
+<img src="img/geoprocessing/gcps_cameras.png">
+<img src="img/geoprocessing/gcps_photo.png"></p>
+</figure>
+
+<p>Choose in the context menu of the selected point on the list (right
+click)  &gt;  Filter Photos by Marker</p>
+
+<figure>
+<img src="img/geoprocessing/filter_photos_by_marker.png">
+</figure>
+
+<p>In the Photos pane
+appear only the images in which the currently selected GCP is probably
+visible.</p>
+
+<p>Open an image by double clicking the thumbnail. It will open in a
+tab next to the Model pane.</p>
+
+<p>The GCP will appear as a grey icon
+<img src="img/geoprocessing/gcp_gray.png" class="icon">.
+This icon needs to be moved to the middle of GCP visible on the photo</p>
+
+<figure class="large">
+<img src="img/geoprocessing/gcp_reposition.png">
+</figure>
+
+<p>Drag the marker to the correct measurement position. At that point,
+the marker will appear as a green flag, meaning it is enabled and will
+be used for further processing.</p>
+
+<p>Double click on the next photo and repeat the steps. As soon as the
+GCP marker position has already been indicated on at two images, the
+proposed position will almost exactly match the point of measurement.
+You can now slightly drag the marker to enable it (turning it into a
+green flag) or leave it unchanged (gray marker icon) to exclude it from
+processing.</p>
+
+<p>Mathematically, you need to indicate marker positions for at least 3
+GCPs. Accurate error estimates can be calculated with at least 4 GCPs,
+while often at least 5 are needed to cover the center of the project as
+well, which reduces the chance of error propagation and resulting
+terrain distortions especially on flat or undulating terrain types.</p>
+
+<p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
+
+
+<h4>Optimizing alignment</h4>
+
+<p>Best results are obtained when the alignment is first optimized based on the camera coordinates only, and a second time based on the GCP only.</p>
+
+
+<h4>Optimizing based on the camera coordinates</h4>
+
+<p>In the Ground Control pane:</p>
+
+<ul>
+    <li>disable all the GCP Marker coordinates
+        (select one &gt; press Ctrl+A &gt; right-click &gt; choose Uncheck).
+    <li>enable all the camera coordinates
+        (select one &gt; press Ctrl+A &gt; right-click &gt; choose Check).
+</ul>
+
+<p>Click Settings icon <img src="img/geoprocessing/settings_icon.png" class="icon"> in the Ground Control toolbar:</p>
+
+<ul>
+    <li>set Camera accuracy (m) = 1,
+    <li>leave the rest at default values,
+</ul>
+
+<p>Click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (leave all options at the default)</p>
+
+
+<h4>Optimizing based on the GCP Markers</h4>
+
+<p>In the Ground Control pane:</p>
+
+<ul>
+    <li>disable all the camera coordinates
+        (select one &gt; press Ctrl+A &gt; right-click &gt; choose Uncheck).
+    <li>enable all the GCP Marker coordinates
+        (select one &gt; press Ctrl+A &gt; right-click &gt; choose Check).
+</ul>
+
+<p>Click Settings icon <img src="img/geoprocessing/settings_icon.png" class="icon"> in the Ground Control toolbar:</p>
+
+<ul>
+    <li>set Marker accuracy (m) = 0.001m
+    <li>leave the rest at default values,
+</ul>
+
+<p>click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (leave all options at the default)</p>
+<p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
+<p>You can now see the errors by clicking on the View Errors icon
+<img src="img/geoprocessing/view_errors_icon.png" class="icon"></p>
+
+
+<h3>Stage 3: Building complex geometry (for quality processing)</h3>
+
+
+<p>Before starting the Build Geometry step it is recommended to check
+the bounding box of the reconstruction (to make sure that it includes
+the whole region of interest, in all dimensions). The bounding box
+should also not be too large (increased processing time and memory
+requirements).</p>
+
+<p>The bounding box can be adjusted using the Resize Region
+<img src="img/geoprocessing/resize_region.png" class="icon"> and the Rotate Region
+<img src="img/geoprocessing/rotate_region.png" class="icon"> tool from the
+toolbar. Make sure that the base (red plane) is at the bottom.</p>
+
+<figure>
+<img src="img/geoprocessing/rotated_view.png">
+</figure>
+
+<p>The next steps will be time consuming (depending on the desired
+quality and number of pictures).You can execute them one step at the
+time, what would be explained below. You can also set a batch
+processing that does not require user interaction until the end of
+geoprocessing (especially useful in case of Ultra High quality that
+requires even several says of processing). The batch processing will be
+explained at the end of this section.</p>
+
+<p>Menu &gt; Workflow &gt;  Build Dense Cloud</p>
+<ul>
+    <li>Quality* =
+        <ul>
+            <li>Medium (will downsample the images to get a 3D coordinate every 4
+            <li>High (will downsample the images to get a 3D coordinate every 2 pixels;
+                pixels; typically takesseveral hours but will give acceptable results for
+                most cases),
+                typically takes >10-20 hours) or
+            <li>Ultra high (will calculate a 3D coordinate for every pixel in original
+                imagery; may take more than a day or several days)
+        </ul>
+    <li>Depth filtering = Aggressive
+</ul>
+
+<p>*Take into consideration the RAM size requirements for the different
+target qualities with respect to the number of images (in appendix or
+in lecture slides).</p>
+
+<figure>
+<img src="img/geoprocessing/build_dense_cloud_medium_aggressive.png">
+</figure>
+
+<p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
+
+<p>Menu &gt; Workflow &gt;  Build Mesh</p>
+
+<ul>
+    <li>Surface type: Height field
+    <li>Source data: Dense cloud
+    <li>Face count*: Custom: 50 000 000
+    <li>Advanced options: leave default
+</ul>
+
+<p>*Face count set at “0” means that PhotoScan will determine an
+optimum number of faces (but this may not be enough to describe all the
+features on terrain)</p>
+
+<figure>
+<img src="img/geoprocessing/build_mesh.png">
+</figure>
+
+<p>Menu &gt; Workflow &gt;  Build Texture</p>
+
+<ul>
+    <li>Mapping mode: Orthophoto
+    <li>Blending mode: Mosaic (default)
+    <li>Texture size/count: 4096
+    <li>Enable color correction: disabled (unchecked)
+</ul>
+
+<p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
+
+<figure>
+<img src="img/geoprocessing/build_texture.png">
+</figure>
+
+<h4>Editing geometry</h4>
+
+<p>Sometimes it is necessary to edit geometry before building texture
+atlas and exporting the model.</p>
+
+<p>If the overlap of the original images was not sufficient, the model
+can contain holes. In this case to obtain holeless model use Close
+Holes command</p>
+
+<p>Menu &gt;  Tools  &gt;  Mesh  &gt;  Close Holes</p>
+
+<p>In Close Holes dialog select the size of the largest hole to be
+closed (in percentage of the total model size).</p>
+
+<figure>
+<img src="img/geoprocessing/close_holes.png">
+</figure>
+
+<p>This does not apply to our data, since we have sufficient image
+overlap. But due to strong dependency on weather conditions, the holes
+in data are common with UAS.</p>
+
+<h4>Batch processing</h4>
+
+<p>Menu &gt;  Workflow &gt;  Batch process  &gt; Add</p>
+
+<p>
+Batch processing allows to set multiple process
+in the preset order and execute it one after another without user
+intervention. All the parameters should be set the same as explained
+above.</p>
+
+<ol>
+    <li>Build dense point cloud
+    <li>Build Mesh
+    <li>Decimate Mesh
+    <li>Build Texture
+</ol>
+
+<figure>
+<img src="img/geoprocessing/batch_process.png">
+<img src="img/geoprocessing/edit_job.png">
+</figure>
+
+
+<h3>Stage 4: Exporting results</h3>
+
+<p>This option will be disabled if you are working in the demo version
+of Agisoft. You can switch to full function mode with
+<a href="http://www.agisoft.com/downloads/request-trial/">30-day trial license</a>
+for free. (click link and request a trial code via email)</p>
+
+
+<h4>Orthomosaic</h4>
+
+<p>File &gt;  Export Orthophoto &gt;  Export JPEG/TIFF/PNG…</p>
+
+<ul>
+    <li>Projection Type = geographic (default);
+    <li>Datum = WGS 1984,
+    <li>Write KML file (footprint) and World file (.tfw) = check if desired (if left unchecked,
+        georeferencing information will still be contained in the GeoTIFF .tif file);
+    <li>Blending mode =Mosaic (default)
+    <li>Pixel size: leave default
+</ul>
+
+<figure>
+<img src="img/geoprocessing/export_orthophoto.png">
+</figure>
+
+<p>Fill out the desired name and save as type TIFF/GeoTIFF (*.tif)</p>
+
+
+<h4>Digital surface model</h4>
+
+<p>Menu &gt;  File  &gt;  Export DEM…</p>
+
+<ul>
+    <li>Projection Type = Geographic (default);
+    <li>Datum = WGS 1984
+    <li>Write KML file (footprint) and World file (.tfw) = check if desired (if left unchecked,
+        georeferencing information will still be contained in the GeoTIFF .tif file);
+    <li>Crop invalid DEM =checked;
+    <li>Pixel size: leave default
+</ul>
+
+<figure>
+<img src="img/geoprocessing/export_dem.png">
+</figure>
+<p>Fill out the desired name) and save as type TIFF/GeoTIFF (*.tif)</p>
+
+
+<h4>Generating report</h4>
+
+<p>Menu &gt;  File &gt;  Generate report</p>
+<p>Indicate the name and path for the PDF file</p>
+
+<hr>
+The following export steps are optional.
+
+<h4>Model</h4>
+
+<p>Menu &gt;  File &gt;  Export model  &gt;  OBJ/FBX/KMZ…</p>
+
+<p>Indicate the name, path and format of the output model</p>
+
+<p>PhotoScan supports model export in the following formats: Wavefront
+OBJ, 3DS file format, VRML, COLLADA, Stanford PLY, STL models, Autodesk
+FBX, Autodesk DXF, Google Earth KMZ, U3D, Adobe PDF. Some file formats
+(OBJ, 3DS, VRML, COLLADA, PLY, FBX) save texture image in a separate
+file. The texture file should be kept in the same directory as the main
+file describing the geometry.</p>
+
+
+<h4>Point cloud</h4>
+
+<p>Menu &gt;  File &gt;  Export points…</p>
+
+<p>Indicate the name, path and format of the output file</p>
+
+<p>PhotoScan supports point cloud export in the following formats:
+Wavefront OBJ, Stanford PLY, XYZ text file format, ASPRS LAS, ASTM E57,
+U3D,Potree,PhotoScan OC3, PDF,</p>
+
+
+<h4>Camera calibration and orientation data</h4>
+
+<p>Menu &gt; Tools &gt; Export &gt; Export Cameras</p>
+
+<p>Indicate the name, path and format of the output file</p>
+
+<p>PhotoScan supports camera data export in the following formats:
+PhotoScan structure file format (XML based), Bundler OUT file format,
+CHAN file format, Boujou TXT file format, Omega phi Kappa text file
+format, PATB Exterior orientation, BINGO Exterior orientation, AeroSys
+Exterior orientation, Inpho project file.</p>
+
