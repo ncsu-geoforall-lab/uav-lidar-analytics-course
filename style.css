@@ -258,21 +258,25 @@ dt {
     float: left;
 }
 
+figure {
+    text-align: center;
+    display: table;
+    max-width: 50%;
+    margin: 10px auto; /* for centered */
+}
+
 figure .video {
     width: 100%;
     height: 345px;
     background-color: #ffffff;
 }
 
-figure .image {
+figure img, figure .image {
     width: 100%;
 }
 
-figure {
-    text-align: center;
-    display: table;
-    max-width: 50%;
-    margin: 10px auto; /* for centered */
+figure.large {
+    max-width: 100%;
 }
 
 iframe {
@@ -341,4 +345,9 @@ hr {
 
 .schedule .type {
     color: #FF5900;
+}
+
+.icon {
+    height: 1.4em;
+    vertical-align: -0.2em;
 }
