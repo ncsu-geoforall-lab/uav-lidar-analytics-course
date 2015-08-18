@@ -266,6 +266,165 @@
             <img class="fragment" src="img/TBC_export.png">
     </div>
 </section>
+<section>
+    <h2>Preprocessing</h2>
+        <ul>
+        <li class="fragment">Loading photos,</li>
+        <li class="fragment">Loading camera positions (flight log)</li>
+        </ul>
+        <img class="fragment" src="img/agisoft_preprocessing.png">
+</section>
+<section>
+    <h2>1. Aligning photos</h2>
+            <p class="fragment">At this stage Agisoft PhotoScan: implements SfM algorithms to monitor the movement of features through sequence of multiple images</p>
+    <div class="left">  
+    <ul>
+        <li class="fragment">obtains the relative location of the acquisition positions,</li>
+        <li class="fragment">refines camera calibration parameters, </li>
+        <li class="fragment"><strong>sparse point cloud</strong> and a set of <strong>camera positions</strong> are formed.</li>
+        </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/aligning_photos_funny.png">
+    </div>
+</section>
+<section>
+    <h2>Bundle Block Adjustment</h2>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Non-linear method for refining structure and motion</li>
+        <li class="fragment">Minimizing reprojection error</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/Bundle_Block_Adjustment.png">
+    </div>
+</section>
+<section>
+    <h2>Bundle Block Adjustment</h2>
+    <ul>
+        <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
+        <li class="fragment">Subsequently monitoring the movement of those points throughout the sequence of multiple images; </li>
+    </ul>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Using this information as input, the locations of those feature points can be estimated and rendered as a sparse 3D point cloud    </div>
+    <div class="right">
+            <img class="fragment" src="img/Bundle_Block_Adjustment2.png">
+    </div>
+</section>
+<section>
+    <h2>Aligning cameras in PhotoScan</h2>
+    <div class="left">     
+        <p class="fragment"><strong>Accuracy</strong></p>
+            <ul>
+                <li class="fragment"><strong>High</strong>accuracy setting > more accurate camera position estimates. (time consuming)</li>
+                <li class="fragment"><strong>Low</strong>accuracy setting > rough camera positions</li>
+            </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/Agisoft_aligning.png">
+    </div>
+</section>
+<section>
+    <h2>2. Building dense point cloud</h2>
+    <div class="left">     
+        <p class="fragment">At the stage of dense point cloud generation reconstruction PhotoScan calculates depth maps for every image</p>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/Agisoft_point_cloud.png">
+    </div>
+    <p class="fragment"><strong>Quality</strong></p>
+       <ul>
+                <li class="fragment"><strong>Higher quality </strong>> more accurate camera position estimates. (time consuming)</li>
+       </ul>   
+</section>
+<section>
+    <h2>2. Building dense point cloud</h2>
+    <div class="left">     
+        <p class="fragment"><strong>Depth Filtering modes</strong><br> Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images) </p>
+    </div>
+    <div class="right">
+            <img src="img/Agisoft_point_cloud.png">
+    </div>
+       <ul>
+                <li class="fragment"><strong>Mild </strong>depth filtering mode > for <strong>complex geometry </strong>(numerous small details on the foreground), for important features not to be sorted out;</li>
+                <li class="fragment"><strong>Aggressive </strong>depth filtering mode > sorting out most of the outliers;/li>
+                <li class="fragment"><strong>Moderate </strong>depth filtering mode > results in between the Mild and Aggressive</li>
+      </ul>   
+</section>
+<section>
+    <h2>Optional: editing dense point cloud</h2>
+    <ul>
+        <li class="fragment">Automatic filtering based on specified criterion (sparse cloud only):</li>
+            <ul>
+                <li class="small fragment">Reprojection error;</li>
+                <li class="small fragment">Reconstruction uncertainty;</li>
+                <li class="small fragment">Image count.</li>
+            </ul>
+        <li class="fragment">Automatic filtering based on applied masks (dense cloud only);</li>
+        <li class="fragment">Reducing number of points in cloud by setting tie point per photo limit (sparse cloud only);</li>
+        <li class="fragment">Manual points removal</li>
+    </ul>
+</section>
+<section>
+    <h2>3. Building mesh</h2>
+    <div class="right">
+            <img class="fragment" src="img/Agisoft_point_cloud.png">
+    </div>
+    <div class="left">     
+    <ul>
+        <li class="fragment"><strong>Arbitraty</strong> > for modeling of any kind of object</li>
+            <ul>
+                <li class="small fragment">should be selected for closed objects (statues, buildings, etc.);</li>
+                <li class="small fragment">high memory consumption.</li>
+            </ul>
+        <li class="fragment"><strong>High field</strong> > for modeling of planar surfaces</li>
+        <ul>
+                <li class="small fragment">should be selected for aerial photography;</li>
+                <li class="small fragment">requires lower amount of memory;</li>
+                <li class="small fragment">allows for larger data sets processing.</li>
+        </ul>
+    </ul>
+    </div>
+
+</section>
+<section>
+    <h2>3. Building mesh</h2>
+    <div class="left">     
+    <ul>
+        <li class="fragment"><strong>Source data</strong> > the source for the mesh generation</li>
+            <ul>
+                <li class="fragment"><strong>Sparse cloud</strong> > fast 3D model generation (low quailty)</li>
+                <li class="fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
+            </ul>
+    </ul>
+    </div>
+    <div class="right">
+            <img src="img/Agisoft_point_cloud.png">
+    </div>
+            <ul>
+                <li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh. Face count set at “0” means that PhotoScan will determine an optimum number of faces</li>
+                <li class="fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
+            </ul>    
+</section>
+<section>
+    <h2>Optional: editing mesh</h2>
+    <div class="left">     
+    <ul>
+        <li class="fragment"><strong>Decimation tool</strong> > decreases the geometric resolution of the model by replacing high resolution mesh with a lower resolution one;</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/Agisoft_point_cloud.png">
+    </div>
+            <ul>
+                <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong></li>
+            </ul>    
+</section>
+
+
+
 
 
 <section>
