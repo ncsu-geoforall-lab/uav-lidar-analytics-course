@@ -416,12 +416,136 @@
     </ul>
     </div>
     <div class="right">
-            <img class="fragment" src="img/Agisoft_point_cloud.png">
+            <img class="fragment" src="img/Agisoft_editing_mesh.png">
     </div>
             <ul>
                 <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong></li>
             </ul>    
 </section>
+<section>
+    <h2>Optional: editing mesh</h2>
+    <ul>
+        <li class="fragment"><strong>Automatic filtering</strong> based on specified criterion:</li>
+            <ul>
+                <li class="fragment">Connected component size,</li>
+                <li class="fragment">Polygon size.</li>
+            </ul>
+    </ul> 
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_editing_mesh2.png">
+ </div>
+ <div class="left">     
+    <ul>
+        <li class="fragment">Manual polygon removal,</li>
+        <li class="fragment">Fixing mesh topology,</li>
+        <li class="fragment"><strong>Editing mesh in the external program</strong> <br> export mesh for editing in the external program > import edited mesh</li>
+    
+    </ul>
+    </div>   
+</section>
+<section>
+    <h2>4. Generating texture</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_texture.png">
+ </div>
+ <div class="left">     
+    <ul>
+    <li class="fragment">Determines how the object texture will be packed in the texture atlas;</li>
+    <li class="fragment">Effects the quality of the final model;</li>
+
+    <li class="fragment"><strong>Texture mapping modes:</strong></li>
+            <ul>
+                <li class="fragment">Generic,</li>
+                <li class="fragment">Adaptive orthophoto,</li>
+                <li class="fragment">Orthophoto,</li>
+                <li class="fragment">Spherical,</li>
+                <li class="fragment">Single photo,</li>
+                <li class="fragment">Keep uv.</li>
+            </ul>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Texture mapping modes</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_texture_modes.png">
+ </div>
+ <div class="left">   
+    <p class="fragment"><strong>Generic</strong></p> 
+        <ul>
+        <li class="fragment">creates as uniform texture as possible.</li>
+        </ul> 
+ </div>   
+     <p class="fragment"><strong>Adaptive orthophoto</strong></p> 
+        <ul>
+        <li class="fragment">The object surface split into the flat part and vertical regions;</li>
+        <li class="fragment">The flat part of the surface textured using the orthographic projection, while vertical regions textured separately to maintain accurate texture representation in such regions;</li>
+        <li class="fragment">More compact texture representation for nearly planar scenes + good texture quality for vertical surfaces.</li>
+        </ul> 
+</section>
+<section>
+    <h2>Texture mapping modes</h2>
+     <p class="fragment"><strong>Orthophoto</strong></p> 
+        <ul>
+        <li class="fragment">The whole object surface textured in the orthographic projection;</li>
+        <li class="fragment">Even more compact texture representation than the Adaptive orthophoto at the expense of texture quality in vertical regions.</li>
+        </ul> 
+     <p class="fragment"><strong>Spherical</strong></p> 
+        <ul>
+        <li class="fragment">Only for objects that have a ball-like form.</li>
+        </ul> 
+     <p class="fragment"><strong>Single photo</strong></p> 
+        <ul>
+        <li class="fragment">Texture from a single photo (photo can be selected from 'Texture from' list.</li>
+        </ul> 
+     <p class="fragment"><strong>Keep uv</strong></p> 
+        <ul>
+        <li class="fragment">Generates texture atlas using current texture parametrization;</li>
+        <li class="fragment">Rebuilding current texture with different resolution or generating the atlas parametrized in the external software.</li>
+        </ul> 
+</section>
+<section>
+    <h2>Texture generation parameters</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_texture_parameters.png">
+ </div>
+ <div class="left">     
+     <p class="fragment"><strong>Texture from (Single photo mapping mode only)</strong></p> 
+        <ul>
+        <li class="fragment">Specifies the photo to be used for texturing.</li>
+        </ul>
+ </div>   
+     <p class="fragment"><strong>Blending mode (not used in Single photo mode)</strong></p> 
+        <ul>
+            <li class="fragment"><strong>Selects the way how pixel values from different photos will be combined in the final texture.</strong></li>
+                <ul>
+                <li class="fragment"><strong>Mosaic</strong> - gives more quality for orthophoto and texture atlas than Average mode, since it <strong>does not mix image details of overlapping photos but uses most appropriate</strong></li>
+                <li class="fragment"><strong>Average</strong> - uses the average value of all pixels from individual photos</li>
+                <li class="fragment"><strong>Max Intensity</strong> - the photo which has maximum intensity of the corresponding pixel is selected</li>
+                <li class="fragment"><strong>Min Intensity </strong> - the photo which has minimum intensity of the corresponding pixel is selected</li>
+                </ul>
+        </ul> 
+</section>
+<section>
+    <h2>Texture generation parameters</h2>
+     <p class="fragment"><strong>Texture size / count</strong></p> 
+        <ul>
+            <li class="fragment">Specifies the size (width & hight) of the texture atlas in pixels;</li>
+            <li class="fragment">Determines the number of files for texture to be exported to:</li>
+            <ul>
+                <li class="fragment">several files > archive greater resolution,</li>
+                <li class="fragment">single file can fail due to RAM limitations. </li>
+              </ul>
+        </ul> 
+       <p class="fragment"><strong>Enable color correction</strong></p> 
+        <ul>
+            <li class="fragment">for processing of data sets with extreme brightness variation,</li>
+            <li class="fragment">takes up a long time.</li>
+        </ul>
+</section>
+
+
+
 
 
 
