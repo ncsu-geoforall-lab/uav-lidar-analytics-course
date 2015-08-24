@@ -318,8 +318,8 @@
     <div class="left">     
         <p class="fragment"><strong>Accuracy</strong></p>
             <ul>
-                <li class="fragment"><strong>High</strong>accuracy setting > more accurate camera position estimates. (time consuming)</li>
-                <li class="fragment"><strong>Low</strong>accuracy setting > rough camera positions</li>
+                <li class="fragment"><strong>High</strong> accuracy setting > more accurate camera position estimates (time consuming);</li>
+                <li class="fragment"><strong>Low</strong> accuracy setting > rough camera positions.</li>
             </ul>
     </div>
     <div class="right">
@@ -349,7 +349,7 @@
     </div>
        <ul>
                 <li class="fragment"><strong>Mild </strong>depth filtering mode > for <strong>complex geometry </strong>(numerous small details on the foreground), for important features not to be sorted out;</li>
-                <li class="fragment"><strong>Aggressive </strong>depth filtering mode > sorting out most of the outliers;/li>
+                <li class="fragment"><strong>Aggressive </strong>depth filtering mode > sorting out most of the outliers;</li>
                 <li class="fragment"><strong>Moderate </strong>depth filtering mode > results in between the Mild and Aggressive</li>
       </ul>   
 </section>
@@ -543,15 +543,117 @@
             <li class="fragment">takes up a long time.</li>
         </ul>
 </section>
-
-
-
-
-
-
-
-
 <section>
-<p class="small">This is the first part of the lecture the whole is in the .ppt format on<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXRjlnR2tWWFlJWk0"> googledrive</a></p>
+    <h2>Memory requirements</h2>
+    
+        <p class="fragment"><strong>Aligning Photos</strong></p>
+        <img class="fragment" src="img/memory1.png">
+        <p class="fragment"><strong>Building Model (Height-field mode)</strong></p>
+        <img class="fragment" src="img/memory2.png"> 
 </section>
+<section>
+    <h2>Memory requirements</h2>
+    
+        <p class="fragment"><strong>Building Model (Arbitrary mode)</strong></p>
+        <img class="fragment" src="img/memory3.png">
+        <p class="fragment"><strong>Decimating Model</strong></p>
+        <img class="fragment" src="img/memory4.png"> 
+</section>
+<section>
+    <h2>Exporting results</h2>
+    <h2 class="small"> and saving intermediate results</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_export_intermediate.png">
+ </div>
+ <div class="left">     
+    <ul>
+    <li class="fragment">Point cloud export</li>
+    <li class="fragment">Camera calibration and orientation data export</li>
+    <li class="fragment">Tie points data export (matching points and panoramas) </li>
+    <li class="fragment">3D model export</li>
+    <li class="fragment"><strong>Orthophoto export</strong></li>
+    <li class="fragment"><strong>DEM export</strong></li>
+    <li class="fragment"><strong>Processing report generation</strong></li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Processing report</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_report.png">
+ </div>
+ <div class="left">   
+<p> Includes: </p> 
+    <ul>
+    <li class="fragment">Orthophoto and digital elevation model sketch;</li>
+    <li class="fragment">Camera parameters and survey scheme</li>
+    <li class="fragment">Tie points data export (matching points and panoramas) </li>
+    <li class="fragment">Image overlap statistics</li>
+    <li class="fragment">Camera positioning error estimates</li>
+    <li class="fragment">Ground control point error estimates</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Batch processing</h2>
+             <img class="fragment" src="img/batch_process.png">
+ </section>
+<section>
+    <h2>Ground Control Points</h2>
+        <ul>
+            <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
+            <li class="fragment">used for:</li>
+
+            <ul>
+                <li class="fragment">setting up a coordinate system,</li>
+                <li class="fragment">photo alignment optimization,</li>
+                <li class="fragment">measuring distances and volumes,</li>
+                <li class="fragment">marker based chunk alignment.</li>
+
+                </ul>
+            <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
+        </ul> 
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+             <img class="fragment" src="img/Agisoft_placing_markers.png">
+</section>
+<section>
+    <h2>Placing markers</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_placing_markers2.png">
+ </div>
+ <div class="left">   
+<p> <a href="https://www.youtube.com/watch?v=-fYOB8VPDnk">video tutorial</a></p> 
+    <ul>
+    <li class="fragment">Click 'Filter Photos by Markers';</li>
+    <li class="fragment">Open an image by double clicking the thumbnail - the GCP will appear as a grey icon;</li>
+    <li class="fragment">Drag the marker to the correct measurement position;</li>
+    <li class="fragment">the marker will appear as a green flag, meaning it is enabled and will be used for further processing.</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Optimize Camera Alignment</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_optimizing.png">
+ </div>
+ <div class="left">   
+    <ul>
+    <li class="fragment">Set the marker coordinates for optimization (check markers /uncheck cameras);</li>
+    <li class="fragment">Click Settings toolbar button on the Reference pane and set the coordinate system;</li>
+    <li class="fragment">Specify the assumed accuracy of GCP measurements and marker projections on the source photos</li>
+    <li class="fragment">click 'Optimize Camera Alignment'.</li>
+    </ul> 
+ </div>   
+</section>
+ <section>
+    <h2>Ground Control Points</h2>
+        <ul>
+            <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
+            <li class="fragment">used for:</li>
+            <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
+        </ul> 
+</section>
+
 
