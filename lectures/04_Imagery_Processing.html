@@ -145,7 +145,7 @@
         }
         .small {
             font-size: smaller !important;
-            color: gray;
+            color: black;
             margin: 0.1em !important;
         }
         .credit {
@@ -163,11 +163,11 @@
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
 <!-- This is a generated file. Do not edit. -->
+<section> 
 <section>
-    <h2>Imagery processing</h2>
-    <h3>GIS595/MEA792: UAV/lidar Data Analytics</h3>
-    <h3 style="margin-top: 0.5em">
-        Author</h3>
+    <h2>Introduction to UAS</h2>
+    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
+<!--    <h3 style="margin-top: 0.5em"> Author</h3>-->
     <p class="title-foot">
         <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
         <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU OSGeo Research and Education Laboratory">OSGeoREL</a>
@@ -175,551 +175,471 @@
         <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
         <br>
     </p>
-    <p>Fall, 2015</p>
+    <p>Fall 2015</p>
 </section>
 <section>
-    <h2>Objectives (1)</h2>
+    <h2>Objectives</h2>
     <ul>
-        <li class="fragment"><strong>Understand</strong> the photogrammetric data processing as a multistep process;</li>
-        <li class="fragment"><strong>Indicate</strong> the sources of imagery disortion and the need of orthorectification of photos;</li>
-        <li class="fragment"><strong>Describe</strong> the concept of orthorectification;</li>
-        <li class="fragment"><strong>Indicate</strong> data needed for orthophoto/DTM generation from aerial imagery;</li>
-        <li class="fragment"><strong>Understand</strong> the difference between interior and exterior orientation of the photo;</li>
+        <li class="fragment"><strong>Use</strong> the proper terminology and <strong>understand</strong> its meaning</li>
+        <li class="fragment"><strong>Describe</strong> the historical evolution of the UAS</li>
+        <li class="fragment"><strong>Describe</strong> the elements of UAS</li>
+        <li class="fragment"><strong>Classify</strong> different UAS according to their make and characteristics</li>
+        <li class="fragment"><strong>Describe</strong> the different classes of the UAS</li>
+        <li class="fragment"><strong>Recognize</strong> the military and civilian contribution to the UAS development</li>
+        <li class="fragment"><strong>Understand</strong> the current state of the UAS development</li>
+        <li class="fragment"><strong>Describe</strong> the objectives beyond the use of the UAS</li>
     </ul>
 </section>
 <section>
-    <h2>Objectives (2)</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> the terms: Bundle Block Adjustment, Ground Control Points, flight log;</li>
-        <li class="fragment"><strong>Describe</strong> the workflow of geoprocessing of aerial imagery in designated software (Agisoft Photoscan);</li>
-        <li class="fragment"><strong>Practice</strong> the process of georectification with and without GCPs;</li>
-        <li class="fragment"><strong>Explain</strong> the impact of GCP in the processing for the quality of final results.</li>
-    </ul>
-</section>
-<section>
-    <h2>Photogrammetric process</h2>
-     <img class="fragment" src="img/photogrammetric_proces.png">
-</section>
-<section>
-    <h2>Why do we need to process the data?</h2>
-    <div class="left">  
-            <img class="fragment" src="img/scale.png">
-            <img class="fragment" src="img/orthophoto_why.png">
-    </div>
-    <div class="right fragment">
-        <img src="img/disortion.png">
-    </div>
-</section>
-<section>
-    <h2>Why do we need to process the data?</h2>
-    <div class="left fragment">  
-            <img src="img/pespective_vs_orthographic.png">
-    </div>
-    <div class="right fragment">
-        <img src="img/pespective_vs_orthographic_image_plane.png">
-    </div>
-</section>
-<section>
-    <h2>Orthorectification</h2>
-    <p class="fragment">Process that removes:</p>
-    <ul>
-        <li class="fragment">effects of relief displacement,</li>
-        <li class="fragment">optical distortions from the sensor,</li>
-        <li class="fragment">geometric perspective</li>
-    </ul>
-        <p class="fragment">from a photograph or digital image</p>
-    <div class="left fragment">  
-            <img src="img/DSM_ortho.png">
-    </div>
-    <div class="right fragment">
-        <img src="img/ortho_example.png">
-    </div>
-     <p class="fragment">The resulting image - an <strong>orthophoto</strong> or <strong>orthoimage.</strong></p>
-</section>
-<section>
-    <h2>Orthophoto</h2>
-      <ul>
-        <li class="fragment">Photo that has the same lack of distortion as a map (geometrically corrected, uniform scale);</li>
-        <li class="fragment">Can be used to measure true distances</li>
-        <img class="fragment" src="img/ortho_example.png">
-</section> 
-<section>
-    <h2>How do we get there?</h2>
-    <p class="fragment">Process that removes:</p>
-    <ul>
-        <li class="fragment">effects of relief displacement,</li>
-        <li class="fragment">optical distortions from the sensor,</li>
-        <li class="fragment">geometric perspective</li>
-    </ul>
-        <p class="fragment">from a photograph or digital image</p>
-    <div class="left">  
-            <p class="fragment">Old way: analogue</p>
-                <img class="fragment" src="img/analogue.png">
-            <p class="fragment">Now: digital</p>
-                <img class="fragment" src="img/digital.png">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/orthophoto_how.png">
-    </div>
-</section>
-<section>
-    <h2>Multiple-view geometry questions</h2>
-    <ul>
-        <li class="fragment"><strong>Scene geometry (structure):</strong> <br>Given 2D point matches in two or more images, where are the corresponding points in 3D?</li>
-        <li class="fragment"><strong>Correspondence (stereo matching):</strong> Given a point in just one image, how does it constrain the position of the corresponding point in another image? </li>
-        <li class="fragment"><strong>Camera geometry (motion):</strong> Given a set of corresponding points in two or more images, what are the camera matrices for these views?</li>
-    </ul>
-</section>
-<section>
-    <h2>What do we need?</h2>
-    <ol>
-        <li class="fragment">Digital<strong>imagery</strong>;</li>
-        <li class="fragment">(Digital elevation model or topographic dataset)</li>
-        <li class="fragment">Exterior<strong>orientation parameters</strong>from aerial triangulation or IMU;</li>
-        <li class="fragment">(<strong>Camera calibration</strong> report);</li>
-        <li class="fragment">(Ground Control Points parameters);</li>
-        <li class="fragment">Photogrammetric<strong>processing software</strong> that utilizes collinearity equations.</li>
-    </ol>
-</section>
-<section>
-    <h2>1. Digital imagery</h2>
-            <img class="fragment" src="img/digital_imagery.png">
-    <div class="left">  
-            <img class="fragment" src="img/multiview.png">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/camera_sensor.png">
-    </div>
-</section>
-<section>
-    <h2>2. Digital elevation model</h2>
-     <div class="left">  
-            <p class="fragment"> <strong>Before:</strong> Shape of the ground surface must be known in order to remove the effects of relief displacement<p>
-    </div>
-    <div class="right">
-             <p class="fragment"> <strong>Now:</strong> computed automatically by Structure from Motion <p>
-    </div>
-    <img class="fragment" src="img/disortion.png">
+    <h2>What is an UAV?</h2>
+    For the brief summary read the <a href="http://www.insidegnss.com/auto/janfeb08-wp.pdf">overview article</a>
 </section>
 
 <section>
-    <h2>Structure from Motion (SfM)</h2>
+    <h2>UAS or UAV? Or maybe a drone?</h2>
+    <p class="fragment">
+            <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle 
+	</p>
+    <p class="fragment">
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>S</strong>ystems
+		</p>
+    <p class="fragment">
+            <strong>Drone</strong> = <strong>D</strong>ynamic <strong>R</strong>emotely <strong>O</strong>perated <strong>N</strong>avigation <strong>E</strong>quipment
+	</p>
+    <p class="fragment">
+            <strong>RPA</strong> = <strong>R</strong>emotely <strong>P</strong>iloted <strong>A</strong>ircraft
+	</p>
+</section>
+<section>
+    <h2>UAS</h2>
+     <p >
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>ircraft <strong>S</strong>ystems
+	</p>
     <div class="left">  
-        <ul>
-        <li class="fragment">range imaging technique,</li>
-        <li class="fragment">process of estimating 3D structures from 2D image sequences,</li>
-        <li class="fragment">may be coupled with local motion signals</li>
-        </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/SfM.png">
-    </div>
-</section>
-<section>
-    <h2>3. Exterior orientation (EO) </h2>
-            <p class="fragment">EO= <strong>position</strong> and <strong>orientation</strong> in the object space</p>
-            <p class="fragment">6 elements <strong>necessary</strong> for any photogrammetric processing:</p>
-    <div class="left">  
-    <ul>
-        <li class="fragment">X, Y, and Z of the exposure station position (latitude, longnitude and altitude of the camera),</li>
-        <li class="fragment">angular orientation: ω, φ, and κ (yaw, pich and roll)</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/orientation.png">
-    </div>
-</section>
-<section>
-    <h2>Flight log</h2>
-        <ul>
-        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
-        <li class="fragment">Information is logged into a text file (flight log),</li>
-        <li class="fragment">Contains elements of exterior orientation</li>
-        </ul>
-        <img class="fragment" src="img/log.png">
-</section>
-<section>
-    <h2>4. Interior orientation </h2>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Before: camera calibration report,</li>
-        <li class="fragment">Now: Self-calibration (auto-calibration) is the process of determining intrinsic camera parameters directly from uncalibrated images</li>
-        <li class="fragment">Can be automatically derived using Structure from Motion (SfM) methods</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/interior_orientation.png">
-    </div>
-</section>
-<section>
-    <h2>5. Ground Control Points</h2>
-            <p class="fragment">GCP - target in the project area with known coordinates (X,Y,Z). Accurate, well placed and marked GCPs are essential elements for aerial triangulation</p>
-    <div class="left">  
-        <p class="fragment"><strong>Photo Identifiable (Photo ID):</strong></p>
-    <ul>
-        <li class="fragment">any feature on the ground,</li>
-            <ul>
-                <li class="fragment">specific (e.g. corners)</li>
-                <li class="fragment">unmovable,</li>
-                <li class="fragment">not covered by vegetation</li>
-            </ul>
-        <li class="fragment">it can be surveyed later on.</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/GCPs.png">
-    </div>
-</section>
-<section>
-    <h2>Ground Control Points </h2>
-    <div class="left">  
-        <p class="fragment">Pre-marked (Panels): marking or painting figures or symbols on the ground before the UAS flies</p>
-         <img class="fragment" src="img/GCP_sketch.png">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/GCP_photo.png">
-    </div>
-<section>
-    <h2>Processing software</h2>
-     <img class="fragment" src="img/agisoft.png">
-</section>
-<section>
-    <h2>Agisoft PhotoScan Professional</h2>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Image-based solution aimed at creating 3D content from still images;</li>
-        <li class="fragment">Operates with arbitrary images and is efficient in both controlled and uncontrolled conditions;</li>
-        <li class="fragment">Both image alignment and 3D model reconstruction are fully automated.</li>
-    </ul>
-    </div>
-    <div class="right fragment">
-        <p class="small"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
-        <p class="small"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_1_en.pdf"> Manual</a></p>
-        <p class="small">also</p>
-        <p class="small"><a href="http://www.agisoft.com/support/tutorials/beginner-level/"> Tutorials</a></p>
-        <p class="small"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
-        <img class="fragment" src="img/agisoft_demo.png">
-    </div>
-</section>
-<section>
-    <h2>Processing workflow</h2>
-     <p class="fragment">Processing of images with PhotoScan includes the following main steps:</p>
-     <p class="fragment">Preprocessing stage:</p>
-            <ul>
-                <li class="fragment">loading photos into PhotoScan;</li>
-                <li class="fragment">inspecting loaded images, removing unnecessary images.</li>
-            </ul>
-        <p class="fragment">Processing:</p>
-            <ol>
-                <li class="fragment">Aligning photos;</li>
-                <li class="fragment">Building dense point cloud;<br>optional: editing dense point cloud;</li>
-                <li class="fragment">Building mesh (3D polygonal model);<br>optional: editing mesh;</li>
-                <li class="fragment">Generating texture;</li>
-            </ol>
-        <p class="fragment">Exporting results</p>     
-</section>
-<section>
-    <h2>Possible issues: </h2>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Agisoft Photoscan works with raw text files. Trimble uses its own file formats that need to be converted to</li>
-        <li class="fragment">if only .jxl is available use <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> </li>
-        <li class="fragment">If a project file (.gwt extension) is available, the text file can be exported from Trimble Access Aerial Imaging software</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/TBC_export.png">
-    </div>
-</section>
-<section>
-    <h2>Preprocessing</h2>
-        <ul>
-        <li class="fragment">Loading photos,</li>
-        <li class="fragment">Loading camera positions (flight log)</li>
-        </ul>
-        <img class="fragment" src="img/agisoft_preprocessing.png">
-</section>
-<section>
-    <h2>1. Aligning photos</h2>
-            <p class="fragment">At this stage Agisoft PhotoScan: implements SfM algorithms to monitor the movement of features through sequence of multiple images</p>
-    <div class="left">  
-    <ul>
-        <li class="fragment">obtains the relative location of the acquisition positions,</li>
-        <li class="fragment">refines camera calibration parameters, </li>
-        <li class="fragment"><strong>sparse point cloud</strong> and a set of <strong>camera positions</strong> are formed.</li>
-        </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/aligning_photos_funny.png">
-    </div>
-</section>
-<section>
-    <h2>Bundle Block Adjustment</h2>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Non-linear method for refining structure and motion</li>
-        <li class="fragment">Minimizing reprojection error</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/Bundle_Block_Adjustment.png">
-    </div>
-</section>
-<section>
-    <h2>Bundle Block Adjustment</h2>
-    <ul>
-        <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
-        <li class="fragment">Subsequently monitoring the movement of those points throughout the sequence of multiple images; </li>
-    </ul>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Using this information as input, the locations of those feature points can be estimated and rendered as a sparse 3D point cloud    </div>
-    <div class="right">
-            <img class="fragment" src="img/Bundle_Block_Adjustment2.png">
-    </div>
-</section>
-<section>
-    <h2>Aligning cameras in PhotoScan</h2>
-    <div class="left">     
-        <p class="fragment"><strong>Accuracy</strong></p>
-            <ul>
-                <li class="fragment"><strong>High</strong>accuracy setting > more accurate camera position estimates. (time consuming)</li>
-                <li class="fragment"><strong>Low</strong>accuracy setting > rough camera positions</li>
-            </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/Agisoft_aligning.png">
-    </div>
-</section>
-<section>
-    <h2>2. Building dense point cloud</h2>
-    <div class="left">     
-        <p class="fragment">At the stage of dense point cloud generation reconstruction PhotoScan calculates depth maps for every image</p>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/Agisoft_point_cloud.png">
-    </div>
-    <p class="fragment"><strong>Quality</strong></p>
-       <ul>
-                <li class="fragment"><strong>Higher quality </strong>> more accurate camera position estimates. (time consuming)</li>
-       </ul>   
-</section>
-<section>
-    <h2>2. Building dense point cloud</h2>
-    <div class="left">     
-        <p class="fragment"><strong>Depth Filtering modes</strong><br> Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images) </p>
-    </div>
-    <div class="right">
-            <img src="img/Agisoft_point_cloud.png">
-    </div>
-       <ul>
-                <li class="fragment"><strong>Mild </strong>depth filtering mode > for <strong>complex geometry </strong>(numerous small details on the foreground), for important features not to be sorted out;</li>
-                <li class="fragment"><strong>Aggressive </strong>depth filtering mode > sorting out most of the outliers;/li>
-                <li class="fragment"><strong>Moderate </strong>depth filtering mode > results in between the Mild and Aggressive</li>
-      </ul>   
-</section>
-<section>
-    <h2>Optional: editing dense point cloud</h2>
-    <ul>
-        <li class="fragment">Automatic filtering based on specified criterion (sparse cloud only):</li>
-            <ul>
-                <li class="small fragment">Reprojection error;</li>
-                <li class="small fragment">Reconstruction uncertainty;</li>
-                <li class="small fragment">Image count.</li>
-            </ul>
-        <li class="fragment">Automatic filtering based on applied masks (dense cloud only);</li>
-        <li class="fragment">Reducing number of points in cloud by setting tie point per photo limit (sparse cloud only);</li>
-        <li class="fragment">Manual points removal</li>
-    </ul>
-</section>
-<section>
-    <h2>3. Building mesh</h2>
-    <div class="right">
-            <img class="fragment" src="img/Agisoft_point_cloud.png">
-    </div>
-    <div class="left">     
-    <ul>
-        <li class="fragment"><strong>Arbitraty</strong> > for modeling of any kind of object</li>
-            <ul>
-                <li class="small fragment">should be selected for closed objects (statues, buildings, etc.);</li>
-                <li class="small fragment">high memory consumption.</li>
-            </ul>
-        <li class="fragment"><strong>High field</strong> > for modeling of planar surfaces</li>
-        <ul>
-                <li class="small fragment">should be selected for aerial photography;</li>
-                <li class="small fragment">requires lower amount of memory;</li>
-                <li class="small fragment">allows for larger data sets processing.</li>
-        </ul>
-    </ul>
-    </div>
-
-</section>
-<section>
-    <h2>3. Building mesh</h2>
-    <div class="left">     
-    <ul>
-        <li class="fragment"><strong>Source data</strong> > the source for the mesh generation</li>
-            <ul>
-                <li class="fragment"><strong>Sparse cloud</strong> > fast 3D model generation (low quailty)</li>
-                <li class="fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
-            </ul>
-    </ul>
-    </div>
-    <div class="right">
-            <img src="img/Agisoft_point_cloud.png">
-    </div>
-            <ul>
-                <li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh. Face count set at “0” means that PhotoScan will determine an optimum number of faces</li>
-                <li class="fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
-            </ul>    
-</section>
-<section>
-    <h2>Optional: editing mesh</h2>
-    <div class="left">     
-    <ul>
-        <li class="fragment"><strong>Decimation tool</strong> > decreases the geometric resolution of the model by replacing high resolution mesh with a lower resolution one;</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/Agisoft_editing_mesh.png">
-    </div>
-            <ul>
-                <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong></li>
-            </ul>    
-</section>
-<section>
-    <h2>Optional: editing mesh</h2>
-    <ul>
-        <li class="fragment"><strong>Automatic filtering</strong> based on specified criterion:</li>
-            <ul>
-                <li class="fragment">Connected component size,</li>
-                <li class="fragment">Polygon size.</li>
-            </ul>
-    </ul> 
- <div class="right">
-            <img class="fragment" src="img/Agisoft_editing_mesh2.png">
- </div>
- <div class="left">     
-    <ul>
-        <li class="fragment">Manual polygon removal,</li>
-        <li class="fragment">Fixing mesh topology,</li>
-        <li class="fragment"><strong>Editing mesh in the external program</strong> <br> export mesh for editing in the external program > import edited mesh</li>
     
-    </ul>
-    </div>   
-</section>
-<section>
-    <h2>4. Generating texture</h2>
- <div class="right">
-            <img class="fragment" src="img/Agisoft_texture.png">
- </div>
- <div class="left">     
+            <ul>
+                <li class="fragment">Unmanned = <p class="small">without a person onboard (operated by automatic or remote control)</p></li>
+                <li class="fragment">Aircraft = <p class="small">able to fly</></li>
+            </ul>  
+    </div>
+
+    <div class="right fragment">
+        <img src="img/Pilot_data_UAV.png" width="65%">
+    </div>
     <ul>
-    <li class="fragment">Determines how the object texture will be packed in the texture atlas;</li>
-    <li class="fragment">Effects the quality of the final model;</li>
+        <li class="fragment">System =  associated elements related to safe operations  <p class="small">(may include control stations,control links, support equipment, payloads, flight termination systems, and launch recovery equipment)</p> consists of three elements:</li>
+                    <ul>
+                    <li class="small fragment">Unmanned Aircraft;</li>
+                    <li class="small fragment">Control Station;</li>
+                    <li class="small fragment">Data Link.</li>                    
+                    </ul>
 
-    <li class="fragment"><strong>Texture mapping modes:</strong></li>
-            <ul>
-                <li class="fragment">Generic,</li>
-                <li class="fragment">Adaptive orthophoto,</li>
-                <li class="fragment">Orthophoto,</li>
-                <li class="fragment">Spherical,</li>
-                <li class="fragment">Single photo,</li>
-                <li class="fragment">Keep uv.</li>
+    </ul>      
+    
+</section>
+<section>
+    <h2>UAS or UAV? Or maybe a drone?</h2>
+    <div class="left fragment">
+        <p >
+            <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle (?)
+		</p>
+        <ul>
+            <li class="small fragment">Excludes: missiles, weapons, or exploding warheads,</li>
+            <li class="small fragment">Includes: all classes of airplanes, helicopters, airships, and powered-lift aircraft,</li>
+            <li class="small fragment">Doesn’t  include: traditional balloons, rockets, tethered aircraft and un-powered gliders.</li>
+        </ul>
+
+    </div>
+    <div class="right fragment">
+        <img src="img/uav_acronym.png">
+        <p class="small">
+            More about terminology in the article:
+            <a href="http://dissenter.firedoglake.com/2013/10/11/dont-use-the-word-drones-theyre-uavs/">Don’t Use the ‘D’ Word: They’re ‘UAVs’ or ‘RPAs’ But Definitely Not ‘Drones’</a>
+        </p>
+    </div>
+</section>
+
+<section>
+    <h2>How does an UAS look like?</h2>
+    <p class="small">Types and classification of UAS</p>
+</section>
+<section>
+    <h2>Different shapes and sizes…</h2>
+    <img class="small fragment"  src="img/uav_shapes_sizes.png">
+</section>
+<section>
+    <h2>… different designs…</h2>
+    <img class="small fragment" src="img/uas_designs.png">
+</section>
+<section>
+    <h2>… and different classifications</h2>
+    <div class="left">
+          <ul class="small">
+            <li class="fragment">By physical size</li>
+            <li class="fragment">By weight</li>
+            <li class="fragment">By endurance</li>
+			<li class="fragment">By altitude</li>
+			<li class="fragment">By wing loading</li>
+			<li class="fragment">By engine type</li>
+			<li class="fragment">By range</li>
+			<li class="fragment">By performance</li>
+			<li class="fragment">By capabilities</li>
+			<li class="fragment">By type...</li>
+        </ul>
+    </div>
+    <div class="right fragment">
+        <img src="img/uav_classification_bases.png">
+        <p class="small">
+           <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf"> more about classifications in this article (source for the table)</a>
+        </p>
+    </div>
+</section>
+<section>
+    <h2>US classifications</h2>
+    <img src="img/uav_classification_examples.png"  width="70%" >
+	 <p class="small">
+           <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf"> more about classifications in this article (source for the table)</a>
+     </p>
+</section>
+<section>
+    <h2>International classifications</h2>
+    <div class="left fragment">
+        <img src="img/uav_nomenclature_scheme.png">
+    </div>
+    <div class="right fragment">
+        <img src="img/uav_classification_NATO.png">
+    </div>
+</section>
+<section>
+    <h2>Simplified classifications</h2>
+    <div class="left fragment">
+        <img src="img/uav_classification_simple.png">
+        <ul>
+            <li class="small fragment">More (much much more) about classifications in the <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf">article</a></li>
+            <li class="small fragment">Condensed basics including classification can be found in  <a href="http://www.bigs-potsdam.org/images/Policy%20Paper/PolicyPaper-No.1_Civil-Use-of-UAS_Bildschirmversion%20interaktiv.pdf">Unmanned Aircraft Systems for Civilian Missions</a></li>
+        </ul>
+    </div>
+    <div class="right fragment">
+        <img src="img/uav_classification_simple_scheme.png">
+    </div>
+</section>
+<section>
+    <h2>How does UAS work?</h2>
+    <p class="small">System elements</p>
+</section>
+<section>
+    <h2>Generic Unmanned Aircraft System</h2>
+    <div class="right fragment">
+        <img src="img/UAS_general_scheme.png">
+    </div>
+    <div class="left">
+		<ul>
+		<li class="fragment">Air vehicle</li>
+		<li class="fragment">Mission planning element</li>
+		<li class="fragment">Command and control element</li>
+		<li class="fragment">Communication link</li>
+		<li class="fragment">Launch and recovery element (for some of them)</li>
+		<li class="fragment">Payload</li>
+		</ul> 
+    </div>
+</section>
+<section>
+    <h2>Sensors</h2>
+    <img src="img/uav_sensors.png" style="width:60%">
+</section>
+
+<section>
+    <h2>Sensors (2)</h2>
+    <img src="img/uav_sensors2.png" width="60%">
+</section>
+<section>
+    <h2>Who invented a first UAS?</h2>
+    <p class="small">Brief history</p>
+</section>
+<section>
+    <h2>History – early beginnings</h2>
+    <ul>
+        <li class="fragment">1782 Montgolfier baloon</li>
+        <li class="fragment">1843 and 1848 Aerial steam carriage (small distances within the hangar)</li>
+    </ul>
+    <div class="left">
+        <img class="fragment" src="img/aerial_steam_carrage.png" style="width: 80%">
+    </div>
+    <div class="right fragment">
+        <img src="img/aerial_baloon.png">
+    </div>
+</section>
+<section>
+    <h2>History – pioneers</h2>
+    <div class="left">
+        <p class="fragment">1918 Kettering Bug</p>
+        <ul>
+            <li class="fragment">never used in combat,</li>
+            <li class="fragment">Max flying distance: 75 mi</li>
+        </ul> 
+     </div>
+     <div class="right">
+            <p class="fragment">1944 Germany: V-1 flying bomb (Buzz Bug), </p>
+            <p class="fragment">USA: Interstate BQ-4/TDR(TDN).</p>
+    </div>
+	<img class="fragment" src="img/history_uav.png" width="80%">
+	</section>
+<section>
+    <h2>History – modern era</h2>
+    <div class="left">
+        <ul>
+            <li class="fragment">Vietnam War: UAVs used extensively in combat, but only for reconnaissance</li>
+            <li class="fragment">2002 first rotary wing UAV Northrop Grumman MQ-8 Fire Scout
+            <img class="fragment" src="img/modern_uav.png" width="70%">
+            <li class="fragment"><a href="https://www.youtube.com/watch?v=WzguorulGB4&amp;feature=youtu.be"> last four decades (movie)</a></li>
+        </ul>
+    </div>
+    <div class="right fragment">
+        <img src="img/modern_uav_chart.png">
+		<p class="small fragment"><a href="http://www.army-technology.com/features/featureuav-evolution-natural-selection-drone-revolution"> More about history of UAVs and drones</a></p>
+            </div>
+</section>
+<section>
+    <h2>Who uses UAS?</h2>
+    <p class="small">Types of UAV operations</p>
+</section>
+<section>
+    <h2>Types of UAS Operations</h2>
+    <ul>
+            <li class="fragment"><a href="https://www.faa.gov/uas/public_operations/"> Public Operations </a><br>
+			Governmental, limited by federal statue to certain government operations within U.S. Airspace;</li>
+            <li class="fragment"><a href="https://www.faa.gov/uas/civil_operations/"> Civil Operations </a><br>
+			Non-Governmental, must be conducted in accordance with all Federal Aviation Administration (FAA) regulations;</li>
+			<li class="fragment"><a href="https://www.faa.gov/uas/model_aircraft/"> Model Aircraft </a><br>
+			Hobby or Recreation <strong>only.</strong></li>
+    </ul>
+</section>
+<section>
+ <h2>FAA – Federal Aviation Administation</h2>
+    <div class="left">
+        <ul>
+            <li class="fragment">NAS – National Airspace System</li>
+        </ul>
+		<p class="small fragment"> The common network of U.S. airspace — air navigation facilities, equipment, and services; airports or landing areas; aeronautical charts, information and services; rules, regulations, and procedures; technical information; and manpower and material. </p>
+    </div>
+    <div class="right fragment">
+        <img src="img/NAS.png">
+    </div>
+</section>
+<section>
+    <h2>Integration of UAS into the NAS</h2>
+    <ul>
+        <li class="fragment">review of current policies, regulations, environmental impact, privacy considerations, standards, and procedures;</li>
+        <li class="fragment">identification of <strong>gaps in current UAS</strong> technologies and <strong>regulations,</strong> standards, policies, or procedures;</li>
+		<li class="fragment">development of new technologies and <strong>new or revised regulations, standards, policies, and procedures;</strong></li>
+		<li class="fragment">and the associated development of guidance material, <strong>training, and certification</strong> of aircraft systems, propulsion systems, and airmen.</li>
+    </ul>
+	<p class="fragment">For more info: <a href="http://www.faa.gov/uas/media/uas_roadmap_2013.pdf">Integration of UAS in the NAS Roadmap</a></p>
+</section>
+<section>
+    <h2>Can I use it?</h2>
+    <p class="small">regulations, standards, policies, and procedures</p>
+</section>
+<section>
+    <img src="img/know_before_you_fly.png">
+</section>
+<section>
+    <h2>What are UAS used for?</h2>
+</section>
+<section>
+    <h2>Army and government</h2>
+    <div class="left">  
+    	<p class="fragment"> <strong>Public Use Aircraft</strong> </p>
+            <ul class="small">
+                <li class="fragment">Department of Agriculture</li>
+                <li class="fragment">Department of Commerce</li>
+                <li class="fragment">Department of Defence</li>
+                <li class="fragment">Department of Energy</li>
+                <li class="fragment">Department of Homeland Security</li>
+                <li class="fragment">Department of Interior</li>
+                <li class="fragment">Department of Justice</li>
+                <li class="fragment">NASA</li>
+                <li class="fragment">NOAA</li>
+                <li class="fragment">State Universities</li>
+                <li class="fragment">State Law Enforcement</li>
             </ul>
-    </ul> 
- </div>   
+    </div>
+    <div class="right fragment">
+		<p class="fragment"><a href="https://www.youtube.com/watch?v=MkqlwKnvdQo"> Military (movie)</a></p>
+        <img class="fragment" src="img/uas_military.png">
+    </div>
 </section>
 <section>
-    <h2>Texture mapping modes</h2>
- <div class="right">
-            <img class="fragment" src="img/Agisoft_texture_modes.png">
- </div>
- <div class="left">   
-    <p class="fragment"><strong>Generic</strong></p> 
-        <ul>
-        <li class="fragment">creates as uniform texture as possible.</li>
-        </ul> 
- </div>   
-     <p class="fragment"><strong>Adaptive orthophoto</strong></p> 
-        <ul>
-        <li class="fragment">The object surface split into the flat part and vertical regions;</li>
-        <li class="fragment">The flat part of the surface textured using the orthographic projection, while vertical regions textured separately to maintain accurate texture representation in such regions;</li>
-        <li class="fragment">More compact texture representation for nearly planar scenes + good texture quality for vertical surfaces.</li>
-        </ul> 
-</section>
-<section>
-    <h2>Texture mapping modes</h2>
-     <p class="fragment"><strong>Orthophoto</strong></p> 
-        <ul>
-        <li class="fragment">The whole object surface textured in the orthographic projection;</li>
-        <li class="fragment">Even more compact texture representation than the Adaptive orthophoto at the expense of texture quality in vertical regions.</li>
-        </ul> 
-     <p class="fragment"><strong>Spherical</strong></p> 
-        <ul>
-        <li class="fragment">Only for objects that have a ball-like form.</li>
-        </ul> 
-     <p class="fragment"><strong>Single photo</strong></p> 
-        <ul>
-        <li class="fragment">Texture from a single photo (photo can be selected from 'Texture from' list.</li>
-        </ul> 
-     <p class="fragment"><strong>Keep uv</strong></p> 
-        <ul>
-        <li class="fragment">Generates texture atlas using current texture parametrization;</li>
-        <li class="fragment">Rebuilding current texture with different resolution or generating the atlas parametrized in the external software.</li>
-        </ul> 
-</section>
-<section>
-    <h2>Texture generation parameters</h2>
- <div class="right">
-            <img class="fragment" src="img/Agisoft_texture_parameters.png">
- </div>
- <div class="left">     
-     <p class="fragment"><strong>Texture from (Single photo mapping mode only)</strong></p> 
-        <ul>
-        <li class="fragment">Specifies the photo to be used for texturing.</li>
-        </ul>
- </div>   
-     <p class="fragment"><strong>Blending mode (not used in Single photo mode)</strong></p> 
-        <ul>
-            <li class="fragment"><strong>Selects the way how pixel values from different photos will be combined in the final texture.</strong></li>
-                <ul>
-                <li class="fragment"><strong>Mosaic</strong> - gives more quality for orthophoto and texture atlas than Average mode, since it <strong>does not mix image details of overlapping photos but uses most appropriate</strong></li>
-                <li class="fragment"><strong>Average</strong> - uses the average value of all pixels from individual photos</li>
-                <li class="fragment"><strong>Max Intensity</strong> - the photo which has maximum intensity of the corresponding pixel is selected</li>
-                <li class="fragment"><strong>Min Intensity </strong> - the photo which has minimum intensity of the corresponding pixel is selected</li>
-                </ul>
-        </ul> 
-</section>
-<section>
-    <h2>Texture generation parameters</h2>
-     <p class="fragment"><strong>Texture size / count</strong></p> 
-        <ul>
-            <li class="fragment">Specifies the size (width & hight) of the texture atlas in pixels;</li>
-            <li class="fragment">Determines the number of files for texture to be exported to:</li>
+    <h2>Civilian Application Fields for UAS</h2>
+    <div class="right">
+        <img class="fragment" src="img/civil_use_diagram.png">
+    </div>
+    <div class="left">  
+    	<p class="fragment"> <strong>Commercial markets:</strong> </p>
             <ul>
-                <li class="fragment">several files > archive greater resolution,</li>
-                <li class="fragment">single file can fail due to RAM limitations. </li>
-              </ul>
-        </ul> 
-       <p class="fragment"><strong>Enable color correction</strong></p> 
-        <ul>
-            <li class="fragment">for processing of data sets with extreme brightness variation,</li>
-            <li class="fragment">takes up a long time.</li>
-        </ul>
+                <li class="fragment">Engineering & Surveying</li>
+                <li class="fragment">Mining</li>
+                <li class="fragment">Civil & Heavy Earthworks </li>
+                <li class="fragment">Oil & Gas</li>
+                <li class="fragment">Environmental & Landfill</li>
+                <li class="fragment">Public Agencies</li>
+                <li class="fragment">Agriculture & Forestry</li>
+             </ul>
+    </div>
+
 </section>
-
-
-
-
-
-
-
-
 <section>
-<p class="small">This is the first part of the lecture the whole is in the .ppt format on<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXRjlnR2tWWFlJWk0"> googledrive</a></p>
-</section>
+    <h2>Application examples (1)</h2>
 
+    <div class="right fragment">
+        <img src="img/use_examples_1.png">
+    </div>    <div class="left">  
+            <ul>
+                <li class="fragment">Agricultural industry:
+                    <ul><li class="fragment">UAS equipped with fertilizer and pesticide dispersing equipment can be used to spray over large fields;</li></ul>
+                <li class="fragment">Telecommunications:
+                    <ul><li class="fragment">As mobile relay platforms as well as in disaster zones for emergency telecommunications;</li></ul>
+            </ul>  
+    </div>
+</section>
+<section>
+    <h2>Application examples (2)</h2>
+    <div class="right fragment">
+        <img src="img/use_examples_2a.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">News broadcasting:
+                    <ul><li class="fragment">In providing aerial video feeds for news events where reporters cannot get into time;</li></ul>
+                <li class="fragment">Air traffic Control and ground traffic control:
+                    <ul><li class="fragment">To monitor traffic and accidents over highways and road in big and densely populated cities, violation of traffic rules;</li></ul>
+               </ul>  
+    </div>
+</section>
+<section>
+    <h2>Application examples (3)</h2>
+    <div class="right fragment">
+        <img src="img/use_examples_2.png">
+    </div>
+    <div class="left ">  
+            <ul>
+                
+                <li class="fragment">Mineral exploration:</li>
+                    <ul><li class="fragment">In aerial survey, to find minerals in desolate and hard-to-reach regions;</li></ul>
+                <li class="fragment">Coastal surveillance:</li>
+                    <ul><li class="fragment">By the coast guard for monitoring coastlines;</li></ul>
+            </ul>  
+    </div>
+    
+</section>
+<section>
+    <h2>UAS for Remote Sensing (1)</h2>
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas1.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">Agricultural and environmental application:</li>
+                    <ul><li class="small fragment">Vegetation and/or biodiversity control, forest fire monitoring, tree classification, monitor stream temperatures, animals detection, bird counts;</li></ul>
+                <li class="fragment">Intelligence, surveillance, and reconnaissance:</li>
+                    <ul><li class="small fragment">Detection of lost persons in difficult-to-access situations, support fire brigades in real-time crisis management, rapid disaster management;</li></ul>
+                            </ul>  
+    </div>
+</section>
+<section>
+    <h2>UAS for Remote Sensing (2)</h2>
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas2.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">Aerial monitoring in engineering:</li>
+                    <ul>
+                    <li class="fragment">Infrastructure inspections and crop monitoring, distributed wind measurement, landslide monitoring;</li>
+                    </ul>
+                <li class="fragment">Cultural heritage:</li>
+                    <ul>
+                    <li class="fragment">Orthophotos of archaeological sites, 3D models of man-made structures;</li>
+                    </ul>
+
+            </ul>  
+          
+    </div>
+
+</section>
+<section>
+    <h2>UAS for Remote Sensing (3)</h2>
+    <div class="right fragment">
+        <img src="img/flight_track.png">
+    </div>
+    <div class="left">  
+            <ul>
+            <li class="fragment">Traditional surveying, conventional mapping and photogrammetry, and cadastral applications:</li>
+                    <ul>
+                    <li class="fragment">cadastral surveying, advantageous alternative to traditional surveying, high-precision parcel boundary determination;</li>
+                    </ul>
+            </ul> 
+    </div>            
+   <div class="right fragment">
+        <p class="fragment">Extended review on UAS in remote sensing in the<a href="http://ac.els-cdn.com/S0924271614000501/1-s2.0-S0924271614000501-main.pdf?_tid=61c0aabe-f9ad-11e4-8a75-00000aacb360&amp;acdnat=1431548559_cae211036258226462ab73873e8d0fb3"> article</a></p>
+    </div>          
+</section>
+<section>
+    <h2>Use your imagination!</h2>
+            <div class="right fragment">
+            <img src="img/cool_uses_for_drones.png">
+            </div>   
+            <div class="left">
+            <ul>
+                <li class="fragment"><a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Pizza delivery</a> - <a href="http://rt.com/news/167936-russia-drones-pizza-delivery/">Russian example</a>, <a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Domino’s DomiCopter</a></li>
+                <li class="fragment"><a href="http://news.sky.com/story/1101379/take-off-for-sushi-restaurants-flying-tray">Sushi delivery</a></li>
+                <li class="fragment"><a href="https://www.youtube.com/watch?v=hhOHpr2l5PE">Beer copter</a></li>
+             </ul> 
+             </div>
+                     
+    <p class="fragment">More at: <a href="https://www.youtube.com/watch?v=3zE6BaFDkP4">Power of Drones - Totally Cool Uses for Drones</a></p>
+</section>
+<section>
+    <h2>Why shoud you know how to use UAV?</h2>
+    <embed src="video/UAV.mp4" autostart=true>
+</section>
+<section>
+<a href="https://www.youtube.com/watch?v=LFb7hvWOR0Q&feature=youtu.be"><img src="img/movie_screenshot.png"></a>
+</section>
+<section>
+    <h2>Barriers</h2>
+    <ul>
+            <li class="fragment">the absence of legislation and regulation,</li>
+            <li class="fragment">political and societal acceptance,</li>
+            <li class="fragment">high development and procurement.</li>
+
+    </ul>
+</section>
+<!--
+<section>
+    <h2>Lists</h2>
+    <ul>
+        <li>bullet (unordered) list are done by <code>ul</code></li>
+        <li>numbered (ordered) list are done by <code>ol</code></li>
+        <li>nested lists
+            <ol>
+                <li>nested list font size is smaller</li>
+                <li>works the same for bullet and numbered lists</li>
+                <li>you should pay attention to nesting elements
+                    <ul>
+                        <li>nested list must be inside <code>li</code> element</li>
+                        <li>if the HTML is not valid the styles will not work</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>
+            description lists and their elements (<code>dl</code>, <code>dt</code>, <code>dd</code>)
+            do not have any special handing
+        </li>
+    </ul>
+</section>
+-->
         </div>  <!-- slides -->
 
     </div>  <!-- reveal -->
