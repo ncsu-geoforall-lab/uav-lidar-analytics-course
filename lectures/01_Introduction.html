@@ -163,6 +163,8 @@
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
 <!-- This is a generated file. Do not edit. -->
+
+<section> 
 <section>
     <h2>Introduction to UAS</h2>
     <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
@@ -193,23 +195,61 @@
     <h2>What is an UAV?</h2>
     For the brief summary read the <a href="http://www.insidegnss.com/auto/janfeb08-wp.pdf">overview article</a>
 </section>
+
+<section>
+    <h2>UAS or UAV? Or maybe a drone?</h2>
+    <p class="fragment">
+            <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle 
+	</p>
+    <p class="fragment">
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>S</strong>ystems
+		</p>
+    <p class="fragment">
+            <strong>Drone</strong> = <strong>D</strong>ynamic <strong>R</strong>emotely <strong>O</strong>perated <strong>N</strong>avigation <strong>E</strong>quipment
+	</p>
+    <p class="fragment">
+            <strong>RPA</strong> = <strong>R</strong>emotely <strong>P</strong>iloted <strong>A</strong>ircraft
+	</p>
+</section>
+<section>
+    <h2>UAS</h2>
+     <p >
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>ircraft <strong>S</strong>ystems
+	</p>
+    <div class="left">  
+    
+            <ul>
+                <li class="fragment">Unmanned = <p class="small">without a person onboard (operated by automatic or remote control)</p></li>
+                <li class="fragment">Aircraft = <p class="small">able to fly</></li>
+            </ul>  
+    </div>
+
+    <div class="right fragment">
+        <img src="img/Pilot_data_UAV.png" width="65%">
+    </div>
+    <ul>
+        <li class="fragment">System =  associated elements related to safe operations  <p class="small">(may include control stations,control links, support equipment, payloads, flight termination systems, and launch recovery equipment)</p> consists of three elements:</li>
+                    <ul>
+                    <li class="small fragment">Unmanned Aircraft;</li>
+                    <li class="small fragment">Control Station;</li>
+                    <li class="small fragment">Data Link.</li>                    
+                    </ul>
+
+    </ul>      
+    
+</section>
 <section>
     <h2>UAS or UAV? Or maybe a drone?</h2>
     <div class="left fragment">
-        <p>
+        <p >
             <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle (?)
 		</p>
         <ul>
-            <li class="fragment" class="small">Excludes: missiles, weapons, or exploding warheads,</li>
-            <li class="fragment" class="small">Includes: all classes of airplanes, helicopters, airships, and powered-lift aircraft,</li>
-            <li class="fragment" class="small">Doesn’t  include: traditional balloons, rockets, tethered aircraft and un-powered gliders.</li>
+            <li class="small fragment">Excludes: missiles, weapons, or exploding warheads,</li>
+            <li class="small fragment">Includes: all classes of airplanes, helicopters, airships, and powered-lift aircraft,</li>
+            <li class="small fragment">Doesn’t  include: traditional balloons, rockets, tethered aircraft and un-powered gliders.</li>
         </ul>
-		<p>
-            <strong>Drone</strong> = <strong>D</strong>ynamic <strong>R</strong>emotely <strong>O</strong>perated <strong>N</strong>avigation <strong>E</strong>quipment
-		</p>
-		<p>
-            <strong>RPA</strong> = <strong>R</strong>emotely <strong>P</strong>iloted <strong>A</strong>ircraft
-		</p>
+
     </div>
     <div class="right fragment">
         <img src="img/uav_acronym.png">
@@ -219,31 +259,29 @@
         </p>
     </div>
 </section>
+
 <section>
     <h2>How does an UAS look like?</h2>
     <p class="small">Types and classification of UAS</p>
 </section>
 <section>
-    <h2>… different designs…</h2>
-    <img src="img/uas_designs.png">
+    <h2>Different shapes and sizes…</h2>
+    <img class="small fragment"  src="img/uav_shapes_sizes.png">
 </section>
 <section>
-    <h2>Different shapes and sizes…</h2>
-    <img src="img/uav_shapes_sizes.png">
+    <h2>… different designs…</h2>
+    <img class="small fragment" src="img/uas_designs.png">
 </section>
 <section>
     <h2>… and different classifications</h2>
-    <div class="left fragment">
-        <p>
-            <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle (?)
-		</p>
-        <ul>
+    <div class="left">
+          <ul class="small">
             <li class="fragment">By physical size</li>
             <li class="fragment">By weight</li>
             <li class="fragment">By endurance</li>
 			<li class="fragment">By altitude</li>
 			<li class="fragment">By wing loading</li>
-			<li class="fragment">By eengine type</li>
+			<li class="fragment">By engine type</li>
 			<li class="fragment">By range</li>
 			<li class="fragment">By performance</li>
 			<li class="fragment">By capabilities</li>
@@ -259,7 +297,7 @@
 </section>
 <section>
     <h2>US classifications</h2>
-    <img src="img/uav_classification_examples.png">
+    <img src="img/uav_classification_examples.png"  width="70%" >
 	 <p class="small">
            <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf"> more about classifications in this article (source for the table)</a>
      </p>
@@ -278,8 +316,8 @@
     <div class="left fragment">
         <img src="img/uav_classification_simple.png">
         <ul>
-            <li class="fragment">More (much much more) about classifications in the <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf">article</a></li>
-            <li class="fragment">Condensed basics including classification can be found in  <a href="http://www.bigs-potsdam.org/images/Policy%20Paper/PolicyPaper-No.1_Civil-Use-of-UAS_Bildschirmversion%20interaktiv.pdf">Unmanned Aircraft Systems for Civilian Missions</a></li>
+            <li class="small fragment">More (much much more) about classifications in the <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf">article</a></li>
+            <li class="small fragment">Condensed basics including classification can be found in  <a href="http://www.bigs-potsdam.org/images/Policy%20Paper/PolicyPaper-No.1_Civil-Use-of-UAS_Bildschirmversion%20interaktiv.pdf">Unmanned Aircraft Systems for Civilian Missions</a></li>
         </ul>
     </div>
     <div class="right fragment">
@@ -292,7 +330,10 @@
 </section>
 <section>
     <h2>Generic Unmanned Aircraft System</h2>
-    <div class="left fragment">
+    <div class="right fragment">
+        <img src="img/UAS_general_scheme.png">
+    </div>
+    <div class="left">
 		<ul>
 		<li class="fragment">Air vehicle</li>
 		<li class="fragment">Mission planning element</li>
@@ -300,25 +341,17 @@
 		<li class="fragment">Communication link</li>
 		<li class="fragment">Launch and recovery element (for some of them)</li>
 		<li class="fragment">Payload</li>
-		</ul>
+		</ul> 
     </div>
-    <div class="right">
-        <img src="img/UAS_general_scheme.png">
-    </div>
-</section>
-
-<section>
-    <h2>here suppose to be a slide that have so many animations</h2>
-    <p class="small">I'm still working on convertinbg it to the movie but it is minor issue, it can be even skipped</p>
 </section>
 <section>
     <h2>Sensors</h2>
-    <img src="img/uav_sensors.png" style="width:70%">
+    <img src="img/uav_sensors.png" style="width:60%">
 </section>
 
 <section>
     <h2>Sensors (2)</h2>
-    <img src="img/uav_sensors2.png">
+    <img src="img/uav_sensors2.png" width="60%">
 </section>
 <section>
     <h2>Who invented a first UAS?</h2>
@@ -339,30 +372,32 @@
 </section>
 <section>
     <h2>History – pioneers</h2>
-    <p class="fragment">1918 Kettering Bug</p>
+    <div class="left">
+        <p class="fragment">1918 Kettering Bug</p>
         <ul>
             <li class="fragment">never used in combat,</li>
             <li class="fragment">Max flying distance: 75 mi</li>
         </ul> 
-	<p class="fragment">1944 Germany: V-1 flying bomb (Buzz Bug), </p>
-	<p class="fragment">USA: Interstate BQ-4/TDR(TDN).</p>
-	<img src="img/history_uav.png">
-	
+     </div>
+     <div class="right">
+            <p class="fragment">1944 Germany: V-1 flying bomb (Buzz Bug), </p>
+            <p class="fragment">USA: Interstate BQ-4/TDR(TDN).</p>
+    </div>
+	<img class="fragment" src="img/history_uav.png" width="80%">
 	</section>
 <section>
     <h2>History – modern era</h2>
-    <div class="left fragment">
-        
+    <div class="left">
         <ul>
             <li class="fragment">Vietnam War: UAVs used extensively in combat, but only for reconnaissance</li>
             <li class="fragment">2002 first rotary wing UAV Northrop Grumman MQ-8 Fire Scout
-          <img class="fragment" src="img/modern_uav.png">
-		  <li class="fragment"><a href="https://www.youtube.com/watch?v=WzguorulGB4&amp;feature=youtu.be"> last four decades (movie)</a></li>
+            <img class="fragment" src="img/modern_uav.png" width="70%">
+            <li class="fragment"><a href="https://www.youtube.com/watch?v=WzguorulGB4&amp;feature=youtu.be"> last four decades (movie)</a></li>
         </ul>
     </div>
     <div class="right fragment">
         <img src="img/modern_uav_chart.png">
-		<p class="fragment"><a href="http://www.army-technology.com/features/featureuav-evolution-natural-selection-drone-revolution"> More about history of UAVs and drones</a></p>
+		<p class="small fragment"><a href="http://www.army-technology.com/features/featureuav-evolution-natural-selection-drone-revolution"> More about history of UAVs and drones</a></p>
             </div>
 </section>
 <section>
@@ -382,12 +417,11 @@
 </section>
 <section>
  <h2>FAA – Federal Aviation Administation</h2>
-    <div class="left fragment">
-        
+    <div class="left">
         <ul>
             <li class="fragment">NAS – National Airspace System</li>
         </ul>
-		<p class="fragment"> The common network of U.S. airspace — air navigation facilities, equipment, and services; airports or landing areas; aeronautical charts, information and services; rules, regulations, and procedures; technical information; and manpower and material. </p>
+		<p class="small fragment"> The common network of U.S. airspace — air navigation facilities, equipment, and services; airports or landing areas; aeronautical charts, information and services; rules, regulations, and procedures; technical information; and manpower and material. </p>
     </div>
     <div class="right fragment">
         <img src="img/NAS.png">
@@ -415,9 +449,9 @@
 </section>
 <section>
     <h2>Army and government</h2>
-    <div class="left fragment">  
+    <div class="left">  
     	<p class="fragment"> <strong>Public Use Aircraft</strong> </p>
-            <ul>
+            <ul class="small">
                 <li class="fragment">Department of Agriculture</li>
                 <li class="fragment">Department of Commerce</li>
                 <li class="fragment">Department of Defence</li>
@@ -438,7 +472,10 @@
 </section>
 <section>
     <h2>Civilian Application Fields for UAS</h2>
-    <div class="left fragment">  
+    <div class="right">
+        <img class="fragment" src="img/civil_use_diagram.png">
+    </div>
+    <div class="left">  
     	<p class="fragment"> <strong>Commercial markets:</strong> </p>
             <ul>
                 <li class="fragment">Engineering & Surveying</li>
@@ -450,41 +487,42 @@
                 <li class="fragment">Agriculture & Forestry</li>
              </ul>
     </div>
-    <div class="right fragment">
-        <img class="fragment" src="img/civil_use_diagram.png">
-    </div>
+
 </section>
 <section>
     <h2>Application examples (1)</h2>
-    <div class="left fragment">  
+
+    <div class="right fragment">
+        <img src="img/use_examples_1.png">
+    </div>    <div class="left">  
             <ul>
                 <li class="fragment">Agricultural industry:
                     <ul><li class="fragment">UAS equipped with fertilizer and pesticide dispersing equipment can be used to spray over large fields;</li></ul>
                 <li class="fragment">Telecommunications:
                     <ul><li class="fragment">As mobile relay platforms as well as in disaster zones for emergency telecommunications;</li></ul>
-                            </ul>  
-    </div>
-    <div class="right">
-        <img src="img/use_examples_1.png">
+            </ul>  
     </div>
 </section>
 <section>
     <h2>Application examples (2)</h2>
-    <div class="left fragment">  
+    <div class="right fragment">
+        <img src="img/use_examples_2a.png">
+    </div>
+    <div class="left">  
             <ul>
                 <li class="fragment">News broadcasting:
                     <ul><li class="fragment">In providing aerial video feeds for news events where reporters cannot get into time;</li></ul>
-                <li class="fragment">Agricultural industry:
-                    <ul><li class="fragment">UAS equipped with fertilizer and pesticide dispersing equipment can be used to spray over large fields;</li></ul>
+                <li class="fragment">Air traffic Control and ground traffic control:
+                    <ul><li class="fragment">To monitor traffic and accidents over highways and road in big and densely populated cities, violation of traffic rules;</li></ul>
                </ul>  
-    </div>
-    <div class="right">
-        <img src="img/use_examples_2a.png">
     </div>
 </section>
 <section>
     <h2>Application examples (3)</h2>
-    <div class="left fragment">  
+    <div class="right fragment">
+        <img src="img/use_examples_2.png">
+    </div>
+    <div class="left ">  
             <ul>
                 
                 <li class="fragment">Mineral exploration:</li>
@@ -493,27 +531,28 @@
                     <ul><li class="fragment">By the coast guard for monitoring coastlines;</li></ul>
             </ul>  
     </div>
-    <div class="right">
-        <img src="img/use_examples_2.png">
-    </div>
+    
 </section>
 <section>
     <h2>UAS for Remote Sensing (1)</h2>
-    <div class="left fragment">  
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas1.png">
+    </div>
+    <div class="left">  
             <ul>
                 <li class="fragment">Agricultural and environmental application:</li>
-                    <ul><li class="fragment">Vegetation and/or biodiversity control, forest fire monitoring, tree classification, monitor stream temperatures, animals detection, bird counts;</li></ul>
+                    <ul><li class="small fragment">Vegetation and/or biodiversity control, forest fire monitoring, tree classification, monitor stream temperatures, animals detection, bird counts;</li></ul>
                 <li class="fragment">Intelligence, surveillance, and reconnaissance:</li>
-                    <ul><li class="fragment">Detection of lost persons in difficult-to-access situations, support fire brigades in real-time crisis management, rapid disaster management;</li></ul>
+                    <ul><li class="small fragment">Detection of lost persons in difficult-to-access situations, support fire brigades in real-time crisis management, rapid disaster management;</li></ul>
                             </ul>  
-    </div>
-    <div class="right">
-        <img src="img/remote_sensing_uas1.png">
     </div>
 </section>
 <section>
     <h2>UAS for Remote Sensing (2)</h2>
-    <div class="left fragment">  
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas2.png">
+    </div>
+    <div class="left">  
             <ul>
                 <li class="fragment">Aerial monitoring in engineering:</li>
                     <ul>
@@ -523,51 +562,50 @@
                     <ul>
                     <li class="fragment">Orthophotos of archaeological sites, 3D models of man-made structures;</li>
                     </ul>
-                <li class="fragment">Traditional surveying, conventional mapping and photogrammetry, and cadastral applications:</li>
-                    <ul>
-                    <li class="fragment">cadastral surveying, advantageous alternative to traditional surveying, high-precision parcel boundary determination;</li>
-                    </ul>
+
             </ul>  
           
     </div>
-    <div class="right">
-        <img src="img/remote_sensing_uas2.png">
-    </div>
+
 </section>
 <section>
     <h2>UAS for Remote Sensing (3)</h2>
-    <div class="left fragment">  
+    <div class="right fragment">
+        <img src="img/flight_track.png">
+    </div>
+    <div class="left">  
             <ul>
             <li class="fragment">Traditional surveying, conventional mapping and photogrammetry, and cadastral applications:</li>
                     <ul>
                     <li class="fragment">cadastral surveying, advantageous alternative to traditional surveying, high-precision parcel boundary determination;</li>
                     </ul>
-            </ul>  
-            <p class="fragment">Extended review on UAS in remote sensing <a href="http://ac.els-cdn.com/S0924271614000501/1-s2.0-S0924271614000501-main.pdf?_tid=61c0aabe-f9ad-11e4-8a75-00000aacb360&amp;acdnat=1431548559_cae211036258226462ab73873e8d0fb3"> article</a></p>
-    </div>
-    <div class="right">
-        <img src="img/flight_track.png">
-    </div>
+            </ul> 
+    </div>            
+   <div class="right fragment">
+        <p class="fragment">Extended review on UAS in remote sensing in the<a href="http://ac.els-cdn.com/S0924271614000501/1-s2.0-S0924271614000501-main.pdf?_tid=61c0aabe-f9ad-11e4-8a75-00000aacb360&amp;acdnat=1431548559_cae211036258226462ab73873e8d0fb3"> article</a></p>
+    </div>          
 </section>
 <section>
     <h2>Use your imagination!</h2>
+            <div class="right fragment">
+            <img src="img/cool_uses_for_drones.png">
+            </div>   
+            <div class="left">
             <ul>
                 <li class="fragment"><a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Pizza delivery</a> - <a href="http://rt.com/news/167936-russia-drones-pizza-delivery/">Russian example</a>, <a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Domino’s DomiCopter</a></li>
                 <li class="fragment"><a href="http://news.sky.com/story/1101379/take-off-for-sushi-restaurants-flying-tray">Sushi delivery</a></li>
                 <li class="fragment"><a href="https://www.youtube.com/watch?v=hhOHpr2l5PE">Beer copter</a></li>
-             </ul>  
-            <p class="fragment">More at: <a href="https://www.youtube.com/watch?v=3zE6BaFDkP4">Power of Drones - Totally Cool Uses for Drones</a></p>
+             </ul> 
+             </div>
+                     
+    <p class="fragment">More at: <a href="https://www.youtube.com/watch?v=3zE6BaFDkP4">Power of Drones - Totally Cool Uses for Drones</a></p>
 </section>
 <section>
     <h2>Why shoud you know how to use UAV?</h2>
-    <p class="small">Advantages and disadvantages, challenges and perspectives</p>
+    <embed src="video/UAV.mp4" autostart=true>
 </section>
 <section>
-<img src="img/remote_sensing_uas1.png"> <a href="https://www.youtube.com/watch?v=LFb7hvWOR0Q&amp;feature=youtu.be">movie</a>
-</section>
-<section>
-    <h2>here suppose to be a slide that have so many animations</h2>
-    <p class="small">I'm still working on convertinbg it to the movie but it is minor issue, it can be even skipped</p>
+<a href="https://www.youtube.com/watch?v=LFb7hvWOR0Q&feature=youtu.be"><img src="img/movie_screenshot.png"></a>
 </section>
 <section>
     <h2>Barriers</h2>
@@ -577,36 +615,7 @@
             <li class="fragment">high development and procurement.</li>
 
     </ul>
-</section>
-<!--
-<section>
-    <h2>Lists</h2>
-    <ul>
-        <li>bullet (unordered) list are done by <code>ul</code></li>
-        <li>numbered (ordered) list are done by <code>ol</code></li>
-        <li>nested lists
-            <ol>
-                <li>nested list font size is smaller</li>
-                <li>works the same for bullet and numbered lists</li>
-                <li>you should pay attention to nesting elements
-                    <ul>
-                        <li>nested list must be inside <code>li</code> element</li>
-                        <li>if the HTML is not valid the styles will not work</li>
-                    </ul>
-                </li>
-            </ol>
-        </li>
-        <li>
-            description lists and their elements (<code>dl</code>, <code>dt</code>, <code>dd</code>)
-            do not have any special handing
-        </li>
-    </ul>
-</section>
--->
-
-
-
-        </div>  <!-- slides -->
+</section>        </div>  <!-- slides -->
 
     </div>  <!-- reveal -->
 
