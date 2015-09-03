@@ -658,7 +658,7 @@
     <h2>Ground Control Points</h2>
         <ul>
             <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
-            <li class="fragment">used for:</li>
+            <p class="fragment">used for:</p>
             <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
         </ul> 
 </section>
