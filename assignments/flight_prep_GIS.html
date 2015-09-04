@@ -35,7 +35,7 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h1>Terrain Anaysis of the flight site using GIS</h1>
+<h1>Terrain Analysis of the flight site using GIS tools</h1>
 
 <p>In order to execute a safe flight, you need to make sure that the flight path will not cross any
 obstacles. Also remember that the ground altitude is measured in the take off localization and
@@ -58,13 +58,13 @@ General workflow (with GCPs):</h4>
 <h4>Data</h4>
 
 <ul>
-    <li>2013 lidar data <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las" Mid Pines </a>
-
+    <li>2013 lidar data <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a>
+</ul>
 <h4>Software</h4>
 
 <ul>
     <li><a href="http://grass.osgeo.org/">GRASS GIS 7.0.1</a>
-    <li>Trimble Aerial Imaging<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXRWo0TGl1a3ZVMDQ">installation file (Windows)</a>
+    <li>Trimble Aerial Imaging <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXRWo0TGl1a3ZVMDQ">installation file (Windows)</a>
 </ul>
 
 <h3>Compute a raster for elevation of the flight path</h3>
@@ -126,6 +126,10 @@ r.unpack -o input=...your_location...\mid_pines_lidar2013_dsm.pack
 r.mapcalc expression=elev_diff = flight_path_wide - secref_lidar2013_dsm
 </code></pre>
 </ul>
+<p>Use the aquired diffrence map to evaluate your flight plan, pay close attention to the obstacle free zones</p>
+<p>Visualize results</p>
+<p>Explain your choice of tje flight area, parameters and takeoff and landing locations based on the performed analysis</p>
+
 
 
 
