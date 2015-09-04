@@ -73,7 +73,6 @@ v.in.lidar -o input=mid_pines_spm_2013.las class_filter=1,2 out=mid_pines_lidar2
 <pre><code>
 g.region vector=mid_pines_lidar2013_dsm res=0.3 –ap
 v.surf.rst input=mid_pines_lidar2013_dsm elevation=mid_pines_lidar2013_dsm tension=20 smooth=2 npmin=200 dmin=0.3
-<br>
 g.region vector=secref_lidar2013_dsm res=0.3 –ap
 v.surf.rst input=secref_lidar2013_dsm elevation=secref_lidar2013_dsm tension=20 smooth=2 npmin=200 dmin=0.3
 </code></pre>
