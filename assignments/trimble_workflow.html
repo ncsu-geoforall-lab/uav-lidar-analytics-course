@@ -1,8 +1,8 @@
 <h1>Flight planning in Trimble Aerial Imaging software</h1>
 
 <p>You have already seen the UAV we will fly - UX5 Aerial Imaging Rover (if you don't remember the details - check <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmJobHdELTJfQkR3RWJIV2hOVUR2RW1VRmk4MnJERlhrTmZKSFZVWlBMM0U">the lecture slides</a> or <a href="https://vimeo.com/68480689"> movie</a>). It is produced by <a href="http://www.trimble.com/">Trimble</a> and comes with dedicated flight planning software - Trimble Aerial Imaging. It is also possible to process the data using <a href="http://www.trimble.com/">Trimble</a> software (<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXQmZyWm1hRjFOQlE">Trimble Business Center</a>) but we will use their solution just for the flight planning phase
- Trimble Aerial Imaging can be launched on the tablet that serves as a Ground Control Station, but it is also available for any PC (installation file here). The project files with flight plans can be transfered to the Ground Control Station later.
-Trimble offers a lot of materials regarding the UX5 solution (see <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmpBcVJqamdrcFV5bTU4QnhaSVlUdzU0VGNnR05qVF9nelI4MVdJMzJ4cEk">the litereture</a>), the most useful for the flight planning is the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXTTN6OVlSMkxOM0E">User Guide</a> (section about the software starts at page 16).
+ Trimble Aerial Imaging can be launched on the tablet that serves as a Ground Control Station, but it is also available for any PC (installation file <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmlBcmRweDkwLTJ2TjRoc2hOdjhYcXNjUXp0SlN2RGxrdmFsZ005Qk5pNHc">here</a>). The project files with flight plans can be transfered to the Ground Control Station later.
+Trimble offers a lot of materials regarding the UX5 solution (see <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmpBcVJqamdrcFV5bTU4QnhaSVlUdzU0VGNnR05qVF9nelI4MVdJMzJ4cEk">the literature</a>), the most useful for the flight planning is the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXTTN6OVlSMkxOM0E">User Guide</a> (section about the software starts at page 16).
 
 <h3>Terms used</h3>
 	<ul>
@@ -129,18 +129,22 @@ overlap.</p>
 	<li>From 50 m to 280 m: obstacles must not appear above the safety line determined by a 15° safety angle and within 25 m (82 ft) to the left and right of the launch direction (see picture below)
 	</ul>
 <img src="img/planning/obstacles_take_off.png" width="60%">
-
+<br>
 <li>Obstacle clearances for <strong>cruise flight</strong>
 	<ul>
 	<li>During cruise flight, no obstacles must appear between the cruise flight height and 25 m (82 ft) below it
 	</ul>
 <img src="img/planning/obstacles_cruise.png" width="60%">
+<br>
 <li>Obstacle clearances for descent
+<br>
 	<ul>
 	<li>When entering the landing orbit, no obstacles must appear with a 300 m (984 ft) radius of the center of the orbit.
 	<li>Once the UX5 has descended 25 m from the cruise flight height, the required obstacle-free area has a radius of 150 m (462 ft)
 	</ul>
+<br>
 <li>Obstacle clearances for <strong>landing</strong>
+<br>
 	<ul>
 	<li>Along the final leg of the landing, there must be a clear area free of obstacles within 15 m to the left and right of the landing direction</li>
 <img src="img/planning/obstacles_landing.png" width="30%">
