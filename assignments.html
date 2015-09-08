@@ -49,10 +49,12 @@ Data
     <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">boundaries of COA in NC obtained by NGAT</a>
     <li>sUAS surveys of LW area: <br><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">images, log file</a> from the flight 06/20/2015,   DSMs
     <li>raw text format of <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXN2FHTzlicWRENUU">GCP locations</a>
-    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k"> GRASS location</a> containing timeseries of DSMs computed from example flights, includes GCPs and COA layers
+    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfkJJeDBZY0Z0QnZtUDNvTjFJLUo2UE9sdXZBRXV1LW4zNXdweTFVNFFiV3M"> GRASS location</a> containing timeseries of DSMs computed from example flights, includes GCPs and COA layers
     <li>2013 lidar data (Wake county survey):
     <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">secref_spm_2013.las</a> and
-    <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/lake_wheeler_spm_2013.las">lake_wheeler_spm_2013.las</a>
+    <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">mid_pines_spm_2013.las</a>,
+    and already <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">interpolated DEM/DSM</a>
+    (use <a href="https://grass.osgeo.org/grass70/manuals/r.unpack.html">r.unpack</a>)
     <li>2001 lidar data (NC Floodplain mapping - for SECREF it is in the MEA582 data set)
     <li>data not provided elsewhere are available through
         <a href="https://drive.google.com/a/ncsu.edu/folderview?id=0B1AfQGDB8tPXflZPQ3FpV3kyZ1JlanpWSXczT1A4QnZEZmFGeEJVRnhQZGdDUHlGZnN2RzQ&usp=sharing">Google Drive</a>
@@ -80,21 +82,24 @@ Assignments
 <ol>
     <li><a href="assignments/uas_types.html">Explore different types of UAS</a></li>
     <li><a href="assignments/flight_plan.html">Flight plan preparation</a>
-        (use Tribmle Aerial Imaging and GIS)
+        - use Trimble Aerial Imaging(<a href="assignments/trimble_workflow.html">Assignment 2a</a>) and GIS (<a href="assignments/flight_prep_GIS.html">Assignment 2b</a>)
     <li><a href="assignments/geoprocessing.html">Processing the data to create orthophoto and DSM</a></li>
-    <li><a href="assignments/analytics1.html">Comparing DSMs processed using different workflows </a>
+    <li><!--<a href="assignments/analytics1.html"></a>-->
+        Comparing DSMs processed using different workflows
         (assess the importance of GCPs, GPS and IMS accuracy, SfM only)
+    <li><a href="assignments/lidar.html">Multiple return lidar data analysis and visualization</a></li>
+    <li><!--<a href="assignments/lidar_uavfusion.html"></a>-->
+     Fusion of lidar and UAV data</li>
     <li><a href="http://ncsu-osgeorel.github.io/grass-temporal-workshop/">
     Management and visualization of multitemporal data in GRASS GIS 7</a></li>
     <li>
-        Geospatial simulations of dynamic processes
+        Geospatial simulations of dynamic processes at ultra high resolution: impact of terrain change
         <ul>
             <li><a href="assignments/water_flow.html">Water flow</a></li>
             <li><a href="http://fatra.cnr.ncsu.edu/temporal-grass-workshop/#visualization-of-solar-radiation">Solar radiation</a></li>
         </ul>
     </li>
-    <li><a href="assignments/lidar.html">Multiple return lidar data analysis and visualization</a></li>
-    <li>Processing a lot of data with GRASS GIS and Python
+    <li>Processing and analysis of elevation series with GRASS GIS and Python
         <ul>
             <li>Introduction to Python
                 (additional resource:
