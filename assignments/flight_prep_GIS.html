@@ -97,14 +97,8 @@ General workflow (with GCPs):</h4>
     <li>Download lidar data for m<a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a> to your computer</li>
     
     <li>Import lidar data to grass
-<pre><code>v.in.lidar -o input=secref_spm_2013.las class_filter=1,2 out=secref_lidar2013_dsm return_filter=first
-v.in.lidar -o input=mid_pines_spm_2013.las class_filter=1,2 out=mid_pines_lidar2013_dsm return_filter=first
-</code></pre>
-    <li>Interpolate DSM
-<pre><code>g.region vector=mid_pines_lidar2013_dsm res=0.3 –ap
-v.surf.rst input=mid_pines_lidar2013_dsm elevation=mid_pines_lidar2013_dsm tension=20 smooth=2 npmin=200 dmin=0.3
-g.region vector=secref_lidar2013_dsm res=0.3 –ap
-v.surf.rst input=secref_lidar2013_dsm elevation=secref_lidar2013_dsm tension=20 smooth=2 npmin=200 dmin=0.3
+<pre><code>r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
+r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter=1,2 return=first res=3 zrange=0,300 -oe
 </code></pre>
  </ul>
 
