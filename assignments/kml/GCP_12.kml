@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+  <Document>
+    <ScreenOverlay>
+      <name>Trimble Business Center</name>
+      <Icon>
+        <href>C:\Program Files\Trimble\Trimble Business Center\Support\iv\TrimbleLogoWhite.jpg</href>
+      </Icon>
+      <overlayXY x="0" y="1" xunits="fraction" yunits="fraction" />
+      <screenXY x="0.01" y="0.99" xunits="fraction" yunits="fraction" />
+      <size x="0.15" y="0" xunits="fraction" yunits="fraction" />
+    </ScreenOverlay>
+    <Style id="pointStylePhoto">
+      <IconStyle>
+        <color>ffffffff</color>
+        <Icon>
+          <href>C:\Program Files\Trimble\Trimble Business Center\Support\iv\camera.png</href>
+          <x>0</x>
+          <y>0</y>
+        </Icon>
+        <hotSpot x="0.5" y="0.5" xunits="fraction" yunits="fraction" />
+        <scale>0.6</scale>
+      </IconStyle>
+      <LabelStyle>
+        <color>ffffffff</color>
+        <scale>0.6</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<b>$[name]</b><br/>$[description]]]></text>
+      </BalloonStyle>
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>1</width>
+      </LineStyle>
+    </Style>
+    <Style id="featureStyle-Color [A=255, R=255, G=255, B=255]">
+      <IconStyle>
+        <color>ffffffff</color>
+        <Icon>
+          <href>root://icons/palette-4.png</href>
+          <x>32</x>
+          <y>0</y>
+        </Icon>
+        <scale>0.5</scale>
+      </IconStyle>
+      <LabelStyle>
+        <color>ffffffff</color>
+        <scale>0.6</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<b>$[name]</b><br/>$[description]]]></text>
+      </BalloonStyle>
+      <LineStyle>
+        <color>ffffffff</color>
+        <width>1</width>
+      </LineStyle>
+    </Style>
+    <Folder>
+      <name>Point</name>
+      <Placemark>
+        <name>UAV 1</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>636795.964 m</td></tr><tr><td>Northing</td><td>219156.170 m</td></tr><tr><td>Elevation</td><td>105.060 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6993954383404,35.7252269454735,72.2789766816422</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 2</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>637175.634 m</td></tr><tr><td>Northing</td><td>219154.897 m</td></tr><tr><td>Elevation</td><td>104.533 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6951987295252,35.7252050366265,71.7342724734917</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 3</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>637194.845 m</td></tr><tr><td>Northing</td><td>219378.379 m</td></tr><tr><td>Elevation</td><td>111.888 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.694978779254,35.727218870451,79.0935843810439</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 4</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>637136.808 m</td></tr><tr><td>Northing</td><td>219595.016 m</td></tr><tr><td>Elevation</td><td>115.335 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6956129807434,35.7291731410024,82.5472110277042</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 5</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>636744.062 m</td></tr><tr><td>Northing</td><td>219555.849 m</td></tr><tr><td>Elevation</td><td>111.315 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6999557952741,35.7288308860023,78.5445125447586</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 6</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>637096.603 m</td></tr><tr><td>Northing</td><td>219361.049 m</td></tr><tr><td>Elevation</td><td>112.526 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6960653375712,35.7270653775259,79.7351520787925</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 7</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>636979.787 m</td></tr><tr><td>Northing</td><td>219264.669 m</td></tr><tr><td>Elevation</td><td>106.947 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6973598554961,35.7261998735337,74.1594870155677</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 8</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>636960.473 m</td></tr><tr><td>Northing</td><td>219401.592 m</td></tr><tr><td>Elevation</td><td>111.069 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6975687477936,35.7274345697123,78.2852249396965</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 9</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>636744.300 m</td></tr><tr><td>Northing</td><td>219381.308 m</td></tr><tr><td>Elevation</td><td>109.971 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6999589941884,35.7272576491697,77.1967615084723</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 10</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>636624.697 m</td></tr><tr><td>Northing</td><td>219323.746 m</td></tr><tr><td>Elevation</td><td>107.193 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.7012830020822,35.7267420612688,74.4228771394119</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 11</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>636748.871 m</td></tr><tr><td>Northing</td><td>219728.967 m</td></tr><tr><td>Elevation</td><td>109.034 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.69989685815,35.7303911625243,76.2661768710241</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UAV 12</name>
+        <description><![CDATA[<table><tr><th colspan="2">Coordinates</th></tr><tr><td>Easting</td><td>637057.310 m</td></tr><tr><td>Northing</td><td>219733.909 m</td></tr><tr><td>Elevation</td><td>116.120 m</td></tr></table>]]></description>
+        <snippet maxLines="0" />
+        <styleUrl>#featureStyle-Color [A=255, R=255, G=255, B=255]</styleUrl>
+        <Point>
+          <coordinates>-78.6964870790007,35.7304272513753,83.3388162683696</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

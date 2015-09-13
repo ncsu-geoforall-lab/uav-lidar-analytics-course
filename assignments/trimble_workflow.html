@@ -1,7 +1,7 @@
 <h1>Flight planning in Trimble Aerial Imaging software</h1>
 
 <p>You have already seen the UAV we will fly - UX5 Aerial Imaging Rover (if you don't remember the details - check <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmJobHdELTJfQkR3RWJIV2hOVUR2RW1VRmk4MnJERlhrTmZKSFZVWlBMM0U">the lecture slides</a> or <a href="https://vimeo.com/68480689"> movie</a>). It is produced by <a href="http://www.trimble.com/">Trimble</a> and comes with dedicated flight planning software - Trimble Aerial Imaging. It is also possible to process the data using <a href="http://www.trimble.com/">Trimble</a> software (<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXQmZyWm1hRjFOQlE">Trimble Business Center</a>) but we will use their solution just for the flight planning phase
- Trimble Aerial Imaging can be launched on the tablet that serves as a Ground Control Station, but it is also available for any PC (installation file <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmlBcmRweDkwLTJ2TjRoc2hOdjhYcXNjUXp0SlN2RGxrdmFsZ005Qk5pNHc">here</a>). The project files with flight plans can be transfered to the Ground Control Station later.
+ Trimble Aerial Imaging can be launched on the tablet that serves as a Ground Control Station, but it is also available for any PC (installation file <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmlBcmRweDkwLTJ2TjRoc2hOdjhYcXNjUXp0SlN2RGxrdmFsZ005Qk5pNHc">here</a>, installation instructions <a href="instructions_trimble.html">here</a>). The project files with flight plans can be transfered to the Ground Control Station later.
 Trimble offers a lot of materials regarding the UX5 solution (see <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmpBcVJqamdrcFV5bTU4QnhaSVlUdzU0VGNnR05qVF9nelI4MVdJMzJ4cEk">the literature</a>), the most useful for the flight planning is the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXTTN6OVlSMkxOM0E">User Guide</a> (section about the software starts at page 16).
 
 <h3>Terms used</h3>
@@ -48,7 +48,7 @@ suggest the takeoff and landing locations. In the field you must validate the fl
 <ul>
 <li>  Click <img src="img/planning/new_project.png" class="icon"> and enter the name of the new project in the pop-up field. The Map layers screen for the new project appears</li>
 </ul>
-<iframe src="https://player.vimeo.com/video/120041272" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120041272"> <strong>instruction  movie</strong></a>
 
 <h3>Preparing the project map</h3>
 <p>To prepare the project map, select the <strong>Map layers tab</strong><img src="img/ico/tabs_layers.png" class="icon">.</p>
@@ -58,18 +58,20 @@ suggest the takeoff and landing locations. In the field you must validate the fl
 
 <ul>
 <li>Click <img src="img/ico/bar_look.png" class="icon"> on the map and then enter the location of interest and zoom in or out, or pan until you view the preferred map area</li>
-<iframe src="https://player.vimeo.com/video/120041275" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120041275"> <strong>instruction  movie</strong></a>
 
 <li>Click <img src="img/ico/tab_add_layer.png" class="icon"> and then click <img src="img/ico/tab_offline.png" class="icon"> to save the offline map - the current view of the online map, including two extra zoom levels, is downloaded (The largest area you can download has zoom level 10)
+<br> <a href="https://player.vimeo.com/video/120041276"> <strong>instruction  movie</strong></a>
+<li>Import<img src="img/ico/tabs_import.png" class="icon"> all additional layers that can be useful while planning the flight - <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXa3lLYmg5VU9FdEU">COA boundaries</a> and <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXa3lLYmg5VU9FdEU">GCPs</a> 
 </li>
 </ul>
 
-<iframe src="https://player.vimeo.com/video/120041276" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
 
 <h4>Managing map layers</h4>
 <p>The "Online map" is the map's default layer. The online map is always the bottom layer and cannot
 be moved up.</p>
-<p>On the left side of the window there are multiple buttons that control the bahavior of a display. You can:
+<p>On the left side of the window there are multiple buttons that control the behavior of a display. You can:
 	<ul>
 	<li>toggle between the map view and the satellite view of the online map,
 	<li>display the map grid lines,
@@ -82,18 +84,18 @@ be moved up.</p>
 	</ul>
 <p> you can also block and hide each layer and rename it and  move it up and down in the layers stack.</p>
 </ul>
-<iframe src="https://player.vimeo.com/video/120042947" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042947"> <strong>instruction  movie</strong></a>
 <h3>Creating the mission</h3>
 <p>A mission is the area to be flown over at a specified ground sample distance (GSD) and image
 overlap.</p>
-<iframe src="https://player.vimeo.com/video/120041277" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120041277"> <strong>instruction  movie</strong></a>
 <ul>
 <li>To create the <strong>mission area</strong> click <img src="img/ico/tab_add_layer.png" class="icon"> and then click <img src="img/ico/tab_draw.png" class="icon"> to draw a polygonal or rectangular area</li>
 <br>
 <li>To edit the <strong>mission properties</strong>, click <img src="img/ico/play2.png" class="icon"> next to the mission name in the map layers list and 
 	<ul>
 	<li>select the <strong>type of sensor</strong> that you will use to map the mission: Sony NEX-5
-	<li>Set the <strong>ground sample distance (GSD)</strong> The smaller the value in the GSD field, the more detailed the images. <br><i>The GSD field and the height <img src="img/ico/tab_altitude.png" class="icon"> at which the UX5 aerial imaging rover flies are linked -the higher the unmanned 		aircraft flies, the larger the distance on the ground represented by each pixel in the images acquired during the flight.</i>
+	<li>Set the <strong>ground sample distance (GSD)</strong> The smaller the value in the GSD field, the more detailed the images. Take into account that this is desired resolution for orthophoto, generated DSM will be about 4 times lower resolution <br><i>The GSD field and the height <img src="img/ico/tab_altitude.png" class="icon"> at which the UX5 aerial imaging rover flies are linked -the higher the unmanned 		aircraft flies, the larger the distance on the ground represented by each pixel in the images acquired during the flight.</i>
 	<li>Enter the image <strong>forward<img src="img/ico/tab_overlap_f.png" class="icon"> and side<img src="img/ico/tab_overlap_s.png" class="icon"> overlap</strong>. The default value is 80%. Image overlap can range from 60% to 90%. A higher overlap results in: better accuracy, a higher density of flight lines on the area, a higher number of 		images to process, longer processing times for images, longer flight duration for the same area</li>
 	</ul>
 <br>
@@ -102,7 +104,7 @@ overlap.</p>
 	<li>create <strong>avoidance zones</strong> <img src="img/ico/tab_add_layer.png" class="icon"> and <img src="img/ico/tab_avoidance.png" class="icon"> </li> 
 	<li>import <img src="img/ico/tabs_import.png" class="icon"> a <strong>kml or csv* file</strong>
 	     	<ul><li><i>*The format for the Ground Control Points .csv file is: Identifier, Latitude, Longitude, Altitude. The coordinates must be in the WGS84 coordinate system and the altitude in meters. There should be no header.</i></ul>
-<iframe src="https://player.vimeo.com/video/120042946" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042946"> <strong>instruction  movie</strong></a>
 </ul>
 <h4>Defining the blocks</h4>
 <p>To define blocks, select the <strong>Blocks tab</strong>.<img src="img/ico/tab_blocks.png" class="icon"></p>
@@ -114,9 +116,9 @@ overlap.</p>
 		<li>cover different parts of the mission at different heights to deal with differences in terrain.
 		</ul>
 	<li>To view the <strong>properties</strong> of a block, click <img src="img/ico/play2.png" class="icon">  next to the block name. By default the block inherits the properties of the mission. If required, edit the height (or GSD) and image overlap values for the block, taking into account specific obstacles in the block.
-<iframe src="https://player.vimeo.com/video/120041278" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120041278"> <strong>instruction  movie</strong></a>
 	<li>If the estimated flight duration exceeds 50 minutes, a <strong>warning</strong> indication appears next tothe block name in the list. If the warning appears then you must <strong>split the block</strong> - the <img src="img/ico/tab_split.png" class="icon"> button in th editing mode will divide the block through the center, perpendicular to the wind direction, but you can change its position by manipulating the boudary points
-<iframe src="https://player.vimeo.com/video/120042124" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042124"> <strong>instruction  movie</strong></a>
 	<li>To use a left turn or a right turn to enter the block during flight, click <img src="img/ico/tab_right.png" class="icon">  or <img src="img/ico/tab_left.png" class="icon">  This setting also defines the first waypoint that the UX5 will fly to.
 	<li>You can also hide the block, copy or rename it.
  </ul>
@@ -160,14 +162,14 @@ overlap.</p>
 <p>To define flights, select the <strong>Flights tab</strong>.<img src="img/ico/tab_flight.png" class="icon"></p>
 <p>If the auto-generate flight setting is enabled in the Settings screen, the software automatically generates a flight including block 1 (the top-most block). A flight can cover more than one block, and blocks can be linked to more than one flight.
 <p>To add a flight, click <img src="img/ico/tab_add.png" class="icon">
-<iframe src="https://player.vimeo.com/video/120042116" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042116"> <strong>instruction  movie</strong></a>
 <ul>
 <li>Setting the <strong>takeoff parameters</strong> (in the Flight tab click <img src="img/ico/play2.png" class="icon"> beside the flight and then click <img src="img/ico/play2.png" class="icon"> beside Takeoff)
 	<ul>
 	<li>To add a new location click <img src="img/ico/tab_plus.png" class="icon"> and then click on the map to set the location
 	<li>To set the <strong>takeoff heading</strong>, click the arrow next to the takeoff pin and rotate to change the takeoff direction and avoid any obstacles. You can also  enter the heading for the selected pin in the <img src="img/ico/play2.png" class="icon"> beside the flight and then click <img src="img/ico/tab_takeoff.png" class="icon"> field.
 	</ul>
-<iframe src="https://player.vimeo.com/video/120042117" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042117"> <strong>instruction  movie</strong></a>
 <li>Setting the <strong>landing properties</strong>
 	<ul>
 	<li>To add a new location click <img src="img/ico/tab_plus.png" class="icon"> and then click on the map to set the location.
@@ -182,16 +184,16 @@ overlap.</p>
 	<li>To set <strong>alternative* landing</strong> parameters, repeat the steps above.<br>
 	*<i>For additional safety, the Aerial Imaging software enables you to set alternative landing parameters. These alternative 		landing locations are useful if: the preferred landing location is suddenly unavailable due to a sudden obstacle in the 	landing clearance zone or if the wind direction changes during the flight and the alternative landing location is better 		suitedto the new conditions.</i>
 	<ul>
-<iframe src="https://player.vimeo.com/video/120042948" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042948"> <strong>instruction  movie</strong></a>
 </ul>
 </ul>
 <li><strong>Managing blocks</strong>
 	<ul>
 	<li>To add blocks, in the Flight tab click <img src="img/ico/play2.png" class="icon"> beside the flight and then click <img src="img/ico/play2.png" class="icon"> beside Select blocks.
 	<li>From the map or the list, select one or more blocks to link to the flight.
-<iframe src="https://player.vimeo.com/video/120042118" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042118"> <strong>instruction  movie</strong></a>
 	<li>If sequential blocks do not have the same height, the software gives the possibility ofchaniging te type of connection. For more details see User Guide p. 41. or watch the video below
-<iframe src="https://player.vimeo.com/video/120042119" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042119"> <strong>instruction  movie</strong></a>
 </ul>
 <li><strong>Simulating the flight</strong>
 	<ul>
@@ -204,7 +206,7 @@ overlap.</p>
 		</ul>
 	<li>You can go back and correct any of the previous steps and simulate the flight again
 	</ul>
-<iframe src="https://player.vimeo.com/video/120043257" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120043257"> <strong>instruction  movie</strong></a>
 </ul>
 </ul>
 </ul>
@@ -213,10 +215,13 @@ overlap.</p>
 
 <h4>Exporting the simulation kml file</h4>
 <p> In the Flights screen, select the flight for which you want to export the simulation, click <img src="img/ico/tab_export.png" class="icon"> export button and save the file. You will need it in the <a href="/flight_premPGIS.html"> Assignment 2b></p></a>
-<iframe src="https://player.vimeo.com/video/120042951" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<a href="https://player.vimeo.com/video/120042951"> <strong>instruction  movie</strong></a>
 <h4>Exporting the project file</h4>
-<p> In the Projects screen, select the project to export and click <img src="img/ico/tab_export.png" class="icon">  export button. Saving the file select the GWT output format</p>
-<iframe src="https://player.vimeo.com/video/120042950" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<p> In the Projects screen, select the project to export and click <img src="img/ico/tab_export.png" class="icon">  export button. Saving the file select the GWT output format</p> <a href="https://player.vimeo.com/video/120042950"> <strong>instruction  movie</strong></a>
+<ul>
+<li> This project file will be shared with NGAT who executes the flight. For sharing, remove the offline map layer and save it under lastname_firstname.gwt</li>
+<li>Put the lastname_firstname.gwt file on your google site</li>
+
 <br><br><br><br><br>
 <h2> </h2>
 <p><i> The instructions were prepared based on the TRIMBLE UX5 AERIAL IMAGING SOLUTION User Guide, Version 2.0, 2015. It is also the source of the figures used.</i></p>
