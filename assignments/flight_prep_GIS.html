@@ -78,16 +78,16 @@ r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter
     <li>Download <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip"> zip files</a> and unpack them.
     <li>Import data to GRASS
 <pre><code>
-r.unpack -o input=...your_location...\secref_lidar2013_dsm.pack
-r.unpack -o input=...your_location...\mid_pines_lidar2013_dsm.pack
+r.unpack -o input=...your_path.../secref_lidar2013_dsm.pack
+r.unpack -o input=...your_path.../mid_pines_lidar2013_dsm.pack
 </code></pre>
 </ul>
 <h3>Calculate the elevation difference between the flight path and surface</h3>
 <ul>
     <li>Use map algebra to compute difference between two rasters - elevation of your flight path and Surface of the terrain
 <pre><code>
-r.mapcalc expression=elev_diff = flight_path_wide - mid_pines_lidar2013_dsm
-r.mapcalc expression=elev_diff = flight_path_wide - secref_lidar2013_dsm
+r.mapcalc expression="elev_diff = flight_path_wide - mid_pines_lidar2013_dsm"
+r.mapcalc expression="elev_diff = flight_path_wide - secref_lidar2013_dsm"
 </code></pre>
 </ul>
 <p>Use the acquired diffrence map to evaluate your flight plan, pay close attention to the obstacle free zones</p>
