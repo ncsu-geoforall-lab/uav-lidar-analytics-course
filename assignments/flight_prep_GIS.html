@@ -21,6 +21,7 @@ General workflow (with GCPs):</h4>
 <h4>Data</h4>
 
 <ul>
+    <li>GRASS Location, see the links for data at the <a href="../assignments.html">Assignments</a> webpage
     <li>2013 lidar data <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a>
 </ul>
 <h4>Software</h4>
@@ -32,6 +33,9 @@ General workflow (with GCPs):</h4>
 
 <h3>Compute a raster for elevation of the flight path</h3>
 
+For this analysis you can run GRASS GIS with the Lake_Wheeler_NCspm location 
+or nc_spm_08 from MEA582 can be used as well. Create a new mapset to manage your flight analysis. 
+
 <ul>
     <li>Export a flight plan path that you created to the kml file from Trimble Aerial Imaging .gwt project</li>
     <li>Launch GRASS</li>
@@ -39,16 +43,17 @@ General workflow (with GCPs):</h4>
 <pre><code>
 g.extension extension=v.import svnurl=http://svn.osgeo.org/grass/grass-addons/grass7
 </code></pre>
-    <li>Import generatred kml into GRASS
+    <li>Import generated kml into GRASS
 <pre><code>
-v.import input=exported_kml_file.kml output=flight_path
+v.import input=exported_kml_file.kml output=flight_track_kml
 </code></pre>
-    <li>Convert vector line to elevation points. Set the maximum distance between the point as 0.3 m
+    <li>Convert vector line to elevation points. Set the maximum distance between the points as 0.3 m
 <pre><code>
 v.to.points -i input=flight_track_kml output=flight_track_points dmax=0.3
 </code></pre>
-     <li>Convert vector to raster
+     <li>Convert vector to raster after setting the region to study area and 1m resolution
 <pre><code>
+g.region vect=flight_track_kml res=1
 v.to.rast input=flight_track_points output=flight_path_altitude_rast use=z
 </code></pre>
      <li>Make the flight path line thick (wide) enough taking to account the wingspan of the UAV and weather impacts on the flight trajectory. Desired width of the path = 5m (radius 2.5m)
@@ -62,16 +67,14 @@ r.grow -m input=flight_path_altitude_rast output=flight_path_wide radius=2.5
 <h4>A. Using lidar data</h4>
 
 <ul>
-    <li>Download lidar data for m<a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a> to your computer</li>
-    
+    <li>Download lidar data for <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a> to your computer</li>
+   <li> set region to your study area using g.region or using the zoom function for setting the region 
     <li>Import lidar data to grass
 <pre><code>
 r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
 r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter=1,2 return=first res=3 zrange=0,300 -oe
 </code></pre>
  </ul>
-
-
 
 <h4>B. Import existing DSM into GRASS</h4>
 <ul>
@@ -92,31 +95,6 @@ r.mapcalc expression="elev_diff = flight_path_wide - secref_lidar2013_dsm"
 </ul>
 <p>Use the acquired diffrence map to evaluate your flight plan, pay close attention to the obstacle free zones</p>
 <h4>Visualize results</h4>
-<h4>Explain your choice of tje flight area, parameters and takeoff and landing locations based on the performed analysis</h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<h4>Explain your choice of the flight area, parameters and takeoff and landing locations based on the performed analysis</h4>
 
 
