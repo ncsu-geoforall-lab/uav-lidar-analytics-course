@@ -35,13 +35,38 @@ vagrant ssh
 </code></pre>
 You have now installed, launched and logged in to an Ubuntu GNU/Linux OS.
 </li>
-<li>Download git:
+<li>Install git and download ODM repository:
 <pre><code>
 sudo apt-get -y install git
+sudo mkdir /odm_app
+sudo chown vagrant:vagrant /odm_app/
+cd /odm_app/
+git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </code></pre>
-
 </li>
+<li>Install ODM. We will switch first to a branch with the latest development.
+<pre><code>
+git checkout python-port
+./install.sh
+</code></pre>
+During installation all dependecies are automatically downloaded and compiled. This will take approximately 1 hour. If successfull, you will see "script finished" in the end.
+Now you are ready to start the computation.
+</li>
+<li>You can shutdown the virtual machine when you don't use it:
+<pre><code>
+sudo shutdown now
+</code></pre>
+You can start it anytime by <code>cd</code> to your <code>'odm/vagrant'</code> and typing:
+<pre><code>vagrant ssh</code></pre>
+</li>
+
+
 </ol>
+
+<h3>Preprocesing of images</h3>
+
+<h3>Running OpenDroneMap</h3>
+
 
 
 
