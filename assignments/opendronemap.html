@@ -35,12 +35,71 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h2>Processing of UAS imagery in opendrone map</h2>
+<h2>Processing of UAS imagery in OpenDroneMap</h2>
+We will reconstruct DSM and create orthophoto in <a href="http://opendronemap.github.io/odm/">
+OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
 
-assignment on the geoprocessing in opendronemap: orthophoto, DSM
+<h3>Setting up OpenDroneMap in virtual machine</h3>
+We will run OpenDroneMap in virtual machine to simplify setup on different platforms (the guest machine is Ubuntu).
+OpenDroneMap doesn't have GUI, we will run it in command line, which is quite simple.
 
-<p>
-Details will be posted soon
+<ol>
+<li>Download and install <a href=" http://virtualbox.org">VirtualBox</a> for your platform if you don't have it already.</li>
+<li>We need bash command line. If you are using Windows, download <a href="http://git-scm.com/download/win">Git for Windows</a> unless you already have some shell.</li>
+<li>Install <a href="https://www.vagrantup.com/downloads.html">Vagrant</a>.</li>
+<li>Either in file manager or in command line create a directory somewhere called <code>'odm'</code>.
+Inside <code>'odm'</code> create directory <code>'vagrant'</code> and <code>'data'</code>
+(directory <code>'data'</code> will be our shared folder):
+<pre><code>mkdir odm
+cd odm
+mkdir vagrant
+mkdir data
+</code></pre>
+
+</li>
+<li>Download <a href="./resources/Vagrantfile">this Vagrantfile</a> (based on ODM Vagrantfile) to the newly created folder <code>'odm/vagrant'</code>.
+This files describes settings of the virtual machine we are about to create.
+I suggest to change the number of CPUs and available memory based on your computer.
+Change the values in <code>vb.cpus</code> and <code>vb.customize ["modifyvm", :id, "--memory", "4096"]</code>
+(change the number to 1024, 2048, 4096, 8192), depending how much you want to use your coomputer for other things during the computation.
+</li>
+<li>Copy your images into directory <code>'odm/data'</code>.</li>
+<li>Open your command line and <code>cd</code> to your <code>'odm/vagrant'</code> directory:
+<pre><code>vagrant up
+vagrant ssh
+</code></pre>
+You have now installed, launched and logged in to an Ubuntu GNU/Linux OS.
+</li>
+<li>Install git and download ODM repository:
+<pre><code>sudo apt-get -y install git
+sudo mkdir /odm_app
+sudo chown vagrant:vagrant /odm_app/
+cd /odm_app/
+git clone https://github.com/OpenDroneMap/OpenDroneMap.git
+</code></pre>
+</li>
+<li>Install ODM. We will switch first to a branch with the latest development.
+<pre><code>git checkout python-port
+./install.sh
+</code></pre>
+During installation all dependecies are automatically downloaded and compiled. This will take approximately 1 hour. If successfull, you will see "script finished" in the end.
+Now you are ready to start the computation.
+</li>
+<li>You can shutdown the virtual machine when you don't use it:
+<pre><code>sudo shutdown now
+</code></pre>
+You can start it anytime by <code>cd</code> to your <code>'odm/vagrant'</code> and typing:
+<pre><code>vagrant ssh</code></pre>
+</li>
+
+
+</ol>
+
+<h3>Preprocesing of images</h3>
+
+<h3>Running OpenDroneMap</h3>
+
+
 
 
 
