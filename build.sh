@@ -70,7 +70,7 @@ do
         ./increase-link-depth.py < $FOOT_FILE >> $TGT_FILE
     done
 
-    for SUBDIR in data img
+    for SUBDIR in data img resources
     do
         # copy only if directory exists
         if [ -d "$DIR/$SUBDIR" ]; then
