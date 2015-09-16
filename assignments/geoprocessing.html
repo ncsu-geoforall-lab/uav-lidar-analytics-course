@@ -72,7 +72,7 @@ General workflow (with GCPs):
 <ul>
     <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos</a> (downsampled to accelerate processing)
     <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXeVhJTTZ4SXM5Sm8">flight log</a> (log with _sample contains only photos used in this processing, but full log is also available)
-    <li><a href="https://drive.google.com/file/d/0B1AfQGDB8tPXN2FHTzlicWRENUU/view">GCP coordinates </a> of all 12 GCP measured for Mid Pines area. In this sample processing we will use 4 of them)\
+    <li><a href="https://drive.google.com/file/d/0B1AfQGDB8tPXN2FHTzlicWRENUU/view">GCP coordinates </a> of all 12 GCPs measured for Mid Pines area. (In this sample processing we will use 4 of them)
 </ul>
 
 <h4>Software</h4>
@@ -132,12 +132,11 @@ subsequent sessions.</p>
 <p>Menu &gt;  Workflow &gt; Add Photos</p>
 
 <p>Indicate the path to the folder (downloaded data) containing photos
-and select them all.</p> <p>In the Reference panel, you can see that
+and select them all.</p> <p>In the Reference pane, you can see that
 the photos has been loaded, but the coordinate system indicates local
 coordinates. It can be changed in the Settings.</p> <p>Click the
 settings icon <img src="img/geoprocessing/settings_icon.png" class="icon">
-&gt;  change coordinate system to WGS
-84</p>
+&gt;  change coordinate system to WGS 84</p>
 
 <figure>
 <img src="img/geoprocessing/settings_in_toolbar.png">
@@ -158,9 +157,8 @@ dialog.</p>
 <img src="img/geoprocessing/import_csv.png">
 </figure>
 
-<p>*Agisoft support the camera orientation files in 5 formats: .csv,
-.txt, .tel, .xml and and .log. The default format of the Trimble Aerial Imaging log is .jxl. In order to convert the Trimble .jxl log
-file please use <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> or use provided already converted log in .txt format</p>
+<p>*Agisoft support the camera orientation files in 5 formats: .csv, .txt, .tel, .xml and and .log. The default format of the Trimble Aerial Imaging log is .jxl. In order to convert the Trimble .jxl log
+file please run <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> or use provided already converted log in .txt format</p>
 
 <p>Make sure that the columns are named properly – you can adjust their
 placement by indicating column number (top right of dialog box)</p>
@@ -233,7 +231,7 @@ the list of photos.</p>
 on all photos depicting it.</p>
 
 <p>The sample used for this processing do not cover all the GCPs. The
-Mode pane shows approximate positions of GCPs, it is better visible if
+Model pane shows approximate positions of GCPs, it is better visible if
 the ‘Show cameras’ option is disabled (Menu &gt; View &gt; Show/Hide
 Items &gt; Show cameras)</p>
 
@@ -244,7 +242,7 @@ Items &gt; Show cameras)</p>
 </figure>
 
 <p>Choose in the context menu of the selected point on the list (right
-click)  &gt;  Filter Photos by Marker. If the marker does not appear on any photo (the list of thumbnail is empty) it means that it is located outside of our sample area and you can remove this Marker (right click &gt; Remove Marker). You should end up with 4 markers</p>
+click)  &gt;  Filter Photos by Marker. If the marker does not appear on any photo (the list of thumbnail is empty) it means that this marker is located outside of our sample area and you can remove it (right click &gt; Remove Marker). You should end up with 4 markers</p>
 
 <figure>
 <img src="img/geoprocessing/filter_photos_by_marker.png">
@@ -276,7 +274,7 @@ You can now slightly drag the marker to enable it (turning it into a
 green flag) or leave it unchanged (gray marker icon) to exclude it from
 processing.</p>
 
-<p>Filter photos my each marker again. Agisoft adjusts the GCP posisions on the run, so you can locate the GCP on additional images that will appear in the Photos pane.</p>
+<p>Filter photos my each marker again. Agisoft adjusts the GCPs posisions on the run, so you can locate the GCP on additional images that will appear in the Photos pane.</p>
 
 <p>In this sample processing we will include 4 GCPs. Mathematically, you need to indicate marker positions for at least 3
 GCPs. Accurate error estimates can be calculated with at least 4 GCPs,
@@ -380,9 +378,9 @@ explained at the end of this section.</p>
     <li>Depth filtering = Aggressive
 </ul>
 
-<p>*Take into consideration the RAM size requirements for the different
-target qualities with respect to the number of images (in appendix or
-in lecture slides).</p>
+<p>*When working with large datasets take into consideration the RAM size requirements for the different
+target qualities with respect to the number of images (in appendix in the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdlAzTk95VjQtZkU"> manual </a>or
+in <a href="http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/lectures/04_Imagery_Processing.html#/40"> lecture slides</a>).</p>
 
 <figure>
 <img src="img/geoprocessing/build_dense_cloud_medium_aggressive.png">

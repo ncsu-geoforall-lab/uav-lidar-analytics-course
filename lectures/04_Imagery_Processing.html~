@@ -339,7 +339,8 @@
 <section>
     <h2>2. Building dense point cloud</h2>
     <div class="left">     
-        <p class="fragment"><strong>Depth Filtering modes</strong><br> <p class="small fragment">Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images)</p> </p>
+        <p class="fragment"><strong>Depth Filtering modes</strong></p>
+ 	<p class="small fragment">Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images)</p> 
     </div>
     <div class="right">
             <img src="img/Agisoft_point_cloud.png">
@@ -655,11 +656,16 @@
  </div>   
 </section>
  <section>
-    <h2>Ground Control Points</h2>
+    <h2>Quality processing with GCPs</h2>
         <ul>
             <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
+<<<<<<< HEAD
+            <li class="fragment">Point cloud the texture and mesh is generated again.</li>
+            <li class="fragment">In practice: start geoprocessing over, begining from point 2. Build the dense point.</li>
+=======
             <p class="fragment">used for:</p>
             <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
+>>>>>>> 7c841e370c617e29dfe37986639eb942c754ca3b
         </ul> 
 </section>
 
