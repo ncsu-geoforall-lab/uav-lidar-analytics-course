@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build from.
   config.vm.box = "ubuntu/trusty64"
 
-  config.vm.synced_folder "../odm_data", "/data"
+  config.vm.synced_folder "../data", "/odm_data"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

@@ -27,7 +27,8 @@ I suggest to change the number of CPUs and available memory based on your comput
 Change the values in <code>vb.cpus</code> and <code>vb.customize ["modifyvm", :id, "--memory", "4096"]</code>
 (change the number to 1024, 2048, 4096, 8192), depending how much you want to use your coomputer for other things during the computation.
 </li>
-<li>Copy your images into directory <code>'odm/data'</code>.</li>
+<li>Copy your <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
+into directory <code>'odm/data'</code>. Unzip it directly into this directory (no subdirectory).</li>
 <li>Open your command line and <code>cd</code> to your <code>'odm/vagrant'</code> directory:
 <pre><code>
 vagrant up
@@ -35,7 +36,7 @@ vagrant ssh
 </code></pre>
 You have now installed, launched and logged in to an Ubuntu GNU/Linux OS.
 </li>
-<li>Install git and download ODM repository:
+<li>On the guest machine install git and download ODM repository:
 <pre><code>
 sudo apt-get -y install git
 sudo mkdir /odm_app
@@ -46,10 +47,13 @@ git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </li>
 <li>Install ODM. We will switch first to a branch with the latest development.
 <pre><code>
+cd OpenDroneMap
 git checkout python-port
 ./install.sh
 </code></pre>
-During installation all dependecies are automatically downloaded and compiled. This will take approximately 1 hour. If successfull, you will see "script finished" in the end.
+During installation all dependecies are automatically downloaded and compiled.
+This will take approximately half an hour.
+If successfull, you will see "script finished" in the end.
 Now you are ready to start the computation.
 </li>
 <li>You can shutdown the virtual machine when you don't use it:
@@ -59,14 +63,30 @@ sudo shutdown now
 You can start it anytime by <code>cd</code> to your <code>'odm/vagrant'</code> and typing:
 <pre><code>vagrant ssh</code></pre>
 </li>
-
-
 </ol>
 
 <h3>Preprocesing of images</h3>
+OpenDroneMap takes GPS position and focal length from images, not from the log.
+Since the images don't have this information in their EXIF data, we will have
+to add them there. We will need to convert the .jxl log file into a csv file
+using Vasek's <a href="https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py">script</a>.
+Then we need to upload the focal length and GPS into the photos' EXIF data.
+All these commands are executed on the host machine:
+
+<p>
+Convert to CSV:
+<pre><code>
+cd /odm_data
+wget https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py
+python jxl2csv.py full.jxl full.csv
+</code></pre>
+
+Update EXIF. There will be some warnings, ignore them.
+<pre><code>
+wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
+python write_exif_GPS.py full.csv
+</code></pre>
+
+Now we are ready to run OpenDroneMap!
 
 <h3>Running OpenDroneMap</h3>
-
-
-
-
