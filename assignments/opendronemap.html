@@ -112,10 +112,10 @@ To review parameters run:
 /odm_app/OpenDroneMap/run.py --h
 </code></pre>
 
-Now we launch the computation.
+Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>
 cd /odm_data
-/odm_app/OpenDroneMap/run.py
+/odm_app/OpenDroneMap/run.py --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
 </code></pre>
 
 <h3>Importing results</h3>
