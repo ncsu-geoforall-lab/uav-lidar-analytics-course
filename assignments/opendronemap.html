@@ -139,18 +139,18 @@ To review parameters run:
 <pre><code>/odm_app/OpenDroneMap/run.py --h
 </code></pre>
 
-Now we launch the computation.
+Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>cd /odm_data
-/odm_app/OpenDroneMap/run.py
+/odm_app/OpenDroneMap/run.py --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
 </code></pre>
 
 <h3>Importing results</h3>
 All results are stored in <code>/odm_data/reconstruction-with-image-size-2400-results/</code>.
 We are interested in the point cloud <code>pointcloud_georef.laz</code>.
-To import it to GRASS GIS, we first have to convert it to .las file.
+To import it to GRASS GIS, we will first convert it to .las file using LAStools installed already during ODM installation.
 Still on the host machine run:
 <pre><code>cd /odm_data/reconstruction-with-image-size-2400-results/
-las2las -i pointcloud_georef.laz -o pointcloud_georef.las
+/odm_app/OpenDroneMap/src/lastools/bin/las2las -i pointcloud_georef.laz -o pointcloud_georef.las
 </code></pre>
 
 and then we use <a href="https://grass.osgeo.org/grass70/manuals/r.in.lidar.html">r.in.lidar</a>
