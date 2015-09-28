@@ -27,7 +27,9 @@ mkdir data
 This files describes settings of the virtual machine we are about to create.
 I suggest to change the number of CPUs and available memory based on your computer.
 Change the values in <code>vb.cpus</code> and <code>vb.customize ["modifyvm", :id, "--memory", "4096"]</code>
-(change the number to 1024, 2048, 4096, 8192), depending how much you want to use your coomputer for other things during the computation.
+depending how much you want to use your coomputer for other things during the computation.
+I recommend however to give it as much memory a you can. If it doesn't have enough memory,
+it will finish with an error.
 </li>
 <li>Copy your <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
 into directory <code>'odm/data'</code>. Unzip it directly into this directory (no subdirectory).</li>
@@ -64,6 +66,15 @@ sudo shutdown now
 </code></pre>
 You can start it anytime by <code>cd</code> to your <code>'odm/vagrant'</code> and typing:
 <pre><code>vagrant ssh</code></pre>
+If you need to make any changes to the virtual machine specification, for example number of CPUs or memory,
+shutdown the machine from host:
+<pre><code>
+vagrant halt
+</code></pre>
+change the Vagrant file and re-initialize the machine:
+<pre><code>
+vagrant up
+</code></pre>
 </li>
 </ol>
 
@@ -72,7 +83,8 @@ OpenDroneMap takes GPS position and focal length from images, not from the log.
 Since the images don't have this information in their EXIF data, we will have
 to add them there. We will need to convert the .jxl log file into a csv file
 using Vasek's <a href="https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py">script</a>.
-Then we need to upload the focal length and GPS into the photos' EXIF data.
+Then we need to upload the focal length and GPS into the photos' EXIF data,
+because our photos don't have this information in EXIF.
 All these commands are executed on the host machine:
 
 <p>
@@ -83,12 +95,14 @@ wget https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py
 python jxl2csv.py full.jxl full.csv
 </code></pre>
 
-Update EXIF. There will be some warnings, ignore them.
+Update EXIF with GPS coordinates, focal length, camera model. There will be some warnings, ignore them.
 <pre><code>
 wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
 python write_exif_GPS.py full.csv
 </code></pre>
-
+Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
+and must be changed for different cameras.
+<p>
 To georeference the DSM, we need to prepare a text file with each GCP on one line,
 where the numbers represent GCP X, GCP Y, GCP altitude, image row, image column, image name.
 For example:
@@ -115,8 +129,10 @@ To review parameters run:
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>
 cd /odm_data
-/odm_app/OpenDroneMap/run.py --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
+/odm_app/OpenDroneMap/run.py --with-opensfm --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
 </code></pre>
+By using he option <code>--with-opensfm</code> we select project <a href="https://github.com/mapillary/OpenSfM">OpenSfM</a> as backend,
+which seems to be faster and producing better results.
 
 <h3>Importing results</h3>
 All results are stored in <code>/odm_data/reconstruction-with-image-size-2400-results/</code>.
