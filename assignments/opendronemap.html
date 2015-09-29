@@ -38,6 +38,8 @@
 <h2>Processing of UAS imagery in OpenDroneMap</h2>
 We will reconstruct DSM and create orthophoto in <a href="http://opendronemap.github.io/odm/">
 OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
+<p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0UctfoeNB_Y" frameborder="0" allowfullscreen></iframe>
 
 <h3>Setting up OpenDroneMap in virtual machine</h3>
 We will run OpenDroneMap in virtual machine to simplify setup on different platforms (the guest machine is Ubuntu).
@@ -61,16 +63,19 @@ mkdir data
 This files describes settings of the virtual machine we are about to create.
 I suggest to change the number of CPUs and available memory based on your computer.
 Change the values in <code>vb.cpus</code> and <code>vb.customize ["modifyvm", :id, "--memory", "4096"]</code>
-(change the number to 1024, 2048, 4096, 8192), depending how much you want to use your coomputer for other things during the computation.
+depending how much you want to use your coomputer for other things during the computation.
+I recommend however to give it as much memory a you can. If it doesn't have enough memory,
+it will finish with an error.
 </li>
-<li>Copy your images into directory <code>'odm/data'</code>.</li>
+<li>Copy your <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
+into directory <code>'odm/data'</code>. Unzip it directly into this directory (no subdirectory).</li>
 <li>Open your command line and <code>cd</code> to your <code>'odm/vagrant'</code> directory:
 <pre><code>vagrant up
 vagrant ssh
 </code></pre>
 You have now installed, launched and logged in to an Ubuntu GNU/Linux OS.
 </li>
-<li>Install git and download ODM repository:
+<li>On the guest machine install git and download ODM repository:
 <pre><code>sudo apt-get -y install git
 sudo mkdir /odm_app
 sudo chown vagrant:vagrant /odm_app/
@@ -79,10 +84,13 @@ git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </code></pre>
 </li>
 <li>Install ODM. We will switch first to a branch with the latest development.
-<pre><code>git checkout python-port
+<pre><code>cd OpenDroneMap
+git checkout python-port
 ./install.sh
 </code></pre>
-During installation all dependecies are automatically downloaded and compiled. This will take approximately 1 hour. If successfull, you will see "script finished" in the end.
+During installation all dependecies are automatically downloaded and compiled.
+This will take approximately half an hour.
+If successfull, you will see "script finished" in the end.
 Now you are ready to start the computation.
 </li>
 <li>You can shutdown the virtual machine when you don't use it:
@@ -90,18 +98,82 @@ Now you are ready to start the computation.
 </code></pre>
 You can start it anytime by <code>cd</code> to your <code>'odm/vagrant'</code> and typing:
 <pre><code>vagrant ssh</code></pre>
+If you need to make any changes to the virtual machine specification, for example number of CPUs or memory,
+shutdown the machine from host:
+<pre><code>vagrant halt
+</code></pre>
+change the Vagrant file and re-initialize the machine:
+<pre><code>vagrant up
+</code></pre>
 </li>
-
-
 </ol>
 
 <h3>Preprocesing of images</h3>
+OpenDroneMap takes GPS position and focal length from images, not from the log.
+Since the images don't have this information in their EXIF data, we will have
+to add them there. We will need to convert the .jxl log file into a csv file
+using Vasek's <a href="https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py">script</a>.
+Then we need to upload the focal length and GPS into the photos' EXIF data,
+because our photos don't have this information in EXIF.
+All these commands are executed on the host machine:
+
+<p>
+Convert to CSV:
+<pre><code>cd /odm_data
+wget https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py
+python jxl2csv.py full.jxl full.csv
+</code></pre>
+
+Update EXIF with GPS coordinates, focal length, camera model. There will be some warnings, ignore them.
+<pre><code>wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
+python write_exif_GPS.py full.csv
+</code></pre>
+Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
+and must be changed for different cameras.
+<p>
+To georeference the DSM, we need to prepare a text file with each GCP on one line,
+where the numbers represent GCP X, GCP Y, GCP altitude, image row, image column, image name.
+For example:
+<pre><code>636795.964 219156.17 105.06 1588 2066 DSC01861.jpg
+</code></pre>
+Download the <a href="./resources/gcp_odm.txt">prepared GCP file here</a>.
+<pre><code>wget http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/assignments/resources/gcp_odm.txt
+</code></pre>
+
+
+
+Now we are ready to run OpenDroneMap!
 
 <h3>Running OpenDroneMap</h3>
+Run ODM on your host machine. We will use default parameters.
+To review parameters run:
 
+<pre><code>/odm_app/OpenDroneMap/run.py --h
+</code></pre>
 
+Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
+<pre><code>cd /odm_data
+/odm_app/OpenDroneMap/run.py --with-opensfm --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
+</code></pre>
+By using he option <code>--with-opensfm</code> we select project <a href="https://github.com/mapillary/OpenSfM">OpenSfM</a> as backend,
+which seems to be faster and producing better results.
 
+<h3>Importing results</h3>
+All results are stored in <code>/odm_data/reconstruction-with-image-size-2400-results/</code>.
+We are interested in the point cloud <code>pointcloud_georef.laz</code>.
+To import it to GRASS GIS, we will first convert it to .las file using LAStools installed already during ODM installation.
+Still on the host machine run:
+<pre><code>cd /odm_data/reconstruction-with-image-size-2400-results/
+/odm_app/OpenDroneMap/src/lastools/bin/las2las -i pointcloud_georef.laz -o pointcloud_georef.las
+</code></pre>
 
+and then we use <a href="https://grass.osgeo.org/grass70/manuals/r.in.lidar.html">r.in.lidar</a>
+to create a DSM by binning as we did in the previous assignment
+or <a href="https://grass.osgeo.org/grass70/manuals/v.surf.rst.html">v.surf.rst</a>
+to interpolate a DSM. Use <code>-o</code> flag when importing into GRASS GIS ncspm location - 
+the las file metadata show UTM, but the GCPs coordinates were in ncspm.
+
+We can also quickly view our results in <a href="http://plas.io/">plas.io</a> (needs browser with WebGL support).
 
 </main>
 
