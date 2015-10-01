@@ -129,7 +129,7 @@ To review parameters run:
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>
 cd /odm_data
-/odm_app/OpenDroneMap/run.py --with-opensfm --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
+/odm_app/OpenDroneMap/run.py --with-opensfm=True --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
 </code></pre>
 By using he option <code>--with-opensfm</code> we select project <a href="https://github.com/mapillary/OpenSfM">OpenSfM</a> as backend,
 which seems to be faster and producing better results.
