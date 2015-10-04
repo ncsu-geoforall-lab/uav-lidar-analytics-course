@@ -88,17 +88,18 @@ because our photos don't have this information in EXIF.
 All these commands are executed on the host machine:
 
 <p>
-Convert to CSV:
+Convert to CSV and lowercase all image names in the CSV file to match the photos' names which are lowercase:
 <pre><code>
 cd /odm_data
 wget https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py
 python jxl2csv.py full.jxl full.csv
+tr A-Z a-z < full.csv > full_lowercase.csv
 </code></pre>
 
 Update EXIF with GPS coordinates, focal length, camera model. There will be some warnings, ignore them.
 <pre><code>
 wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
-python write_exif_GPS.py full.csv
+python write_exif_GPS.py full_lowercase.csv
 </code></pre>
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
