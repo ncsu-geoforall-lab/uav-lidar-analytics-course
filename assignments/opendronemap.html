@@ -104,6 +104,14 @@ python write_exif_GPS.py full_lowercase.csv
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
 <p>
+Our camera model is not in OpenSfM database yet, so you have to download the updated
+camera database file:
+<pre><code>
+cd /odm_app/OpenDroneMap/src/OpenSfM/opensfm/data/
+wget http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/assignments/resources/sensor_data.json -O sensor_data.json
+cd /odm_data
+</code></pre>
+<p>
 To georeference the DSM, we need to prepare a text file with each GCP on one line,
 where the numbers represent GCP X, GCP Y, GCP altitude, image row, image column, image name.
 For example:
