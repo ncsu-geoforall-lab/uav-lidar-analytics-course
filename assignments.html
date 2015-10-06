@@ -51,10 +51,15 @@ Data
     <li>raw text format of <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXN2FHTzlicWRENUU">GCP locations</a>
     <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k"> GRASS location</a> containing timeseries of DSMs computed from example flights, includes GCPs and COA layers
     <li>2013 lidar data (Wake county survey):
+        <ul><li>
     <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">secref_spm_2013.las</a> and
     <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">mid_pines_spm_2013.las</a>,
     and already <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">interpolated DEM/DSM</a>
-    (use <a href="https://grass.osgeo.org/grass70/manuals/r.unpack.html">r.unpack</a>)
+    (use <a href="https://grass.osgeo.org/grass70/manuals/r.unpack.html">r.unpack</a>)</li>
+    <li>LAS 2013 tiles overview is available as GRASS vector file
+        <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">LAS_overview_2013.pack</a> for nc_spm.</li>
+    <li>Additional 2013 LAS files will be posted <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>.<br> Use <code>las2las --a_srs=EPSG:2264 --t_srs=EPSG:32119 -i input_spf.las -o output_spm.las</code> to reproject it.</li>
+    </ul>
     <li>2001 lidar data (NC Floodplain mapping - for SECREF it is in the MEA582 data set)
     <li>data not provided elsewhere are available through
         <a href="https://drive.google.com/a/ncsu.edu/folderview?id=0B1AfQGDB8tPXflZPQ3FpV3kyZ1JlanpWSXczT1A4QnZEZmFGeEJVRnhQZGdDUHlGZnN2RzQ&usp=sharing">Google Drive</a>
@@ -82,11 +87,10 @@ Assignments
 <ol>
     <li><a href="assignments/uas_types.html">Explore different types of UAS</a></li>
     <li><a href="assignments/flight_plan.html">Flight plan preparation</a>
-        - use Trimble Aerial Imaging (<a href="assignments/trimble_workflow.html">Assignment 2a</a>) and GIS (<a href="assignments/flight_prep_GIS.html">Assignment 2b</a>)
-    <li><a href="assignments/geoprocessing.html">Processing the data to create orthophoto and DSM</a></li>
-    <li><!--<a href="assignments/analytics1.html"></a>-->
-        Comparing DSMs processed using different workflows
-        (assess the importance of GCPs, GPS and IMS accuracy, SfM only)
+        - use Trimble Aerial Imaging (<a href="assignments/trimble_workflow.html">Assignment 2A</a>) and GRASS GIS (<a href="assignments/flight_prep_GIS.html">Assignment 2B</a>)
+    <li>Processing the data to create orthophoto and DSM using <a href="assignments/geoprocessing.html">Agisoft Photoscan</a>
+        and <a href="assignments/opendronemap.html">OpenDroneMap</a></li>
+    <li><a href="assignments/analysis.html"> Critical and analytical approach to the geoprocessing outputs</a>
     <li><a href="assignments/lidar.html">Multiple return lidar data analysis and visualization</a></li>
     <li><!--<a href="assignments/lidar_uavfusion.html"></a>-->
      Fusion of lidar and UAV data</li>
