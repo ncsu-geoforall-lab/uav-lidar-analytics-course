@@ -333,7 +333,7 @@ terrain distortions especially on flat or undulating terrain types.</p>
 
 <p>click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (leave all options at the default)</p>
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
-<p>You can now seehow much the errors were reduced through optimization by clicking on the View Errors icon
+<p>You can now see how much the errors were reduced through optimization by clicking on the View Errors icon
 <img src="img/geoprocessing/view_errors_icon.png" class="icon"></p>
 
 
@@ -356,7 +356,7 @@ toolbar. Make sure that the base (red plane) is at the bottom.</p>
 </figure>
 
 <p>The next steps will be time consuming (depending on the desired
-quality and number of pictures).You can execute them one step at the
+quality and number of pictures). You can execute them one step at the
 time, what would be explained below. You can also set a batch
 processing that does not require user interaction until the end of
 geoprocessing (especially useful in case of Ultra High quality that
@@ -367,9 +367,9 @@ explained at the end of this section.</p>
 <ul>
     <li>Quality* =
         <ul>
-            <li>Medium (will downsample the images to get a 3D coordinate every 4
+            <li>Medium (will downsample the images to get a 3D coordinate every 4 pixels
             <li>High (will downsample the images to get a 3D coordinate every 2 pixels;
-                pixels; typically takesseveral hours but will give acceptable results for
+                typically takes several hours but will give acceptable results for
                 most cases),
                 typically takes >10-20 hours) or
             <li>Ultra high (will calculate a 3D coordinate for every pixel in original
@@ -393,7 +393,7 @@ in <a href="http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/lectures/0
 <ul>
     <li>Surface type: Height field
     <li>Source data: Dense cloud
-    <li>Face count*: Custom: 50 000 000
+    <li>Face count*: Custom: 50000000 (50,000,000)
     <li>Advanced options: leave default
 </ul>
 
@@ -465,7 +465,15 @@ above.</p>
 </figure>
 
 <p>
-If the process takes really long time on your device, you can cancel the processing and work with the project files saved on the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfm9DOEZpYWwyZTFJX040em90NFZMQ3o5amdUSmtZdGRMeFp1VXNzakpOTVk"> google drive</a> (after each time consuming step, the project file was saved and you can work starting from this step). The only adjustment you need to make is to change the path of the pictures to the localization of downloaded images on your computer.<br>In order to do that right clik on any of the pictures in the Pictures pane and choose <em>Change Path...</em> and in the dialog window mark the <em>All cameras</em> option. This will automatically apply the updated location to all the pictures in the project.</p>
+If the process takes really long time on your device,
+you can cancel the processing and work with the project files saved on the
+<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfm9DOEZpYWwyZTFJX040em90NFZMQ3o5amdUSmtZdGRMeFp1VXNzakpOTVk">google drive</a>
+(after each time consuming step, the project file was saved and you can work starting from this step).
+The only adjustment you need to make is to change the path of the pictures
+to the localization of downloaded images on your computer.
+
+<p>
+In order to do that right clik on any of the pictures in the Pictures pane and choose <em>Change Path...</em> and in the dialog window mark the <em>All cameras</em> option. This will automatically apply the updated location to all the pictures in the project.</p>
 <figure><img src="img/geoprocessing/agisoft_changepath.png"> </figure>
 <h3>Stage 4: Exporting results</h3>
 
