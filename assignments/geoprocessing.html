@@ -47,9 +47,11 @@ export also 3D model and Point cloud as well as Camera calibration and
 orientation data.</p>
 
 <p>The process can be very time consuming
-(depending on computational power of your and desired quality) so if
+(depending on computational power of your device and desired quality) so if
 you are unable to execute the whole step the intermediate results are
-provided in the separate project files here (add link)</p>
+provided in the separate project files<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfm9DOEZpYWwyZTFJX040em90NFZMQ3o5amdUSmtZdGRMeFp1VXNzakpOTVk"> here</a></p>
+
+<p>In order to minimize the processing time, we will process only fraction of the data collected and we will use imagery downsampled by 50%. It will allow us to generate outputs in the classroom. The resolution of ortophoto and DSM will be lower,  but the high quality and full extent files are provided in the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k"> GRASS location</a></p>
 
 <p>
 General workflow (with GCPs):
@@ -68,9 +70,9 @@ General workflow (with GCPs):
 <h4>Data</h4>
 <p> Flight over Mid Pines Area on June 20th 2015, conducted by NGAT with UX5 Aerial Imaging Rover
 <ul>
-    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos</a>
-    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXeVhJTTZ4SXM5Sm8">flight log</a>
-    <li><a href="https://drive.google.com/file/d/0B1AfQGDB8tPXN2FHTzlicWRENUU/view">GCP coordinates </a>
+    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos</a> (downsampled to accelerate processing)
+    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXeVhJTTZ4SXM5Sm8">flight log</a> (log with _sample contains only photos used in this processing, but full log is also available)
+    <li><a href="https://drive.google.com/file/d/0B1AfQGDB8tPXN2FHTzlicWRENUU/view">GCP coordinates </a> of all 12 GCPs measured for Mid Pines area. (In this sample processing we will use 4 of them)
 </ul>
 
 <h4>Software</h4>
@@ -130,12 +132,11 @@ subsequent sessions.</p>
 <p>Menu &gt;  Workflow &gt; Add Photos</p>
 
 <p>Indicate the path to the folder (downloaded data) containing photos
-and select them all.</p> <p>In the Reference panel, you can see that
+and select them all.</p> <p>In the Reference pane, you can see that
 the photos has been loaded, but the coordinate system indicates local
 coordinates. It can be changed in the Settings.</p> <p>Click the
 settings icon <img src="img/geoprocessing/settings_icon.png" class="icon">
-&gt;  change coordinate system to WGS
-84</p>
+&gt;  change coordinate system to WGS 84</p>
 
 <figure>
 <img src="img/geoprocessing/settings_in_toolbar.png">
@@ -156,10 +157,8 @@ dialog.</p>
 <img src="img/geoprocessing/import_csv.png">
 </figure>
 
-<p>*Agisoft support the camera orientation files in 3 formats: .csv,
-.txt, .tel, .xml and and .log. In order to convert the Trimble .jxl log
-file please use <a href="https://github.com/wenzeslaus/jxl2csv">script
-by Vaclav Petras</a></p>
+<p>*Agisoft support the camera orientation files in 5 formats: .csv, .txt, .tel, .xml and and .log. The default format of the Trimble Aerial Imaging log is .jxl. In order to convert the Trimble .jxl log
+file please run <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> or use provided already converted log in .txt format</p>
 
 <p>Make sure that the columns are named properly – you can adjust their
 placement by indicating column number (top right of dialog box)</p>
@@ -200,10 +199,11 @@ placement by indicating column number (top right of dialog box)</p>
 <h3>Stage 2: Placing GCPs</h3>
 
 
-<h4>Loading the gcps coordinates</h4>
+<h4>Loading the GCPs coordinates</h4>
 
-<p>In the Reference pane choose Import icon and indicate the
-localization of the file with Ground Control Points positions</p>
+<p>Click Import button <img src="img/geoprocessing/import_icon.png" class="icon">
+on the Reference pane toolbar &gt; select file
+containing Ground Control Points coordinates in the Open dialog</p>
 
 <p>Make sure that the columns are named properly – you can adjust their
 placement by indicating column number (top right of dialog box). Notice
@@ -214,7 +214,7 @@ latitude and longitude</p>
 stationary and do not need determining yaw pitch and roll angles.</p>
 
 <p>The window with the message: <em>Can’t find match for ‘UAV 1’ entry.
-Create new marker?</em> will pop up.</p>
+Create new marker?</em>  will pop up.</p>
 
 <figure>
 <img src="img/geoprocessing/no_match_new_marker.png">
@@ -230,8 +230,8 @@ the list of photos.</p>
 <p>Now you need to find each of the GCPs and indicate its localization
 on all photos depicting it.</p>
 
-<p>It is possible that the flight area do not cover all the GCPs. The
-Mode pane shows approximate positions of GCPs, it is better visible if
+<p>The sample used for this processing do not cover all the GCPs. The
+Model pane shows approximate positions of GCPs, it is better visible if
 the ‘Show cameras’ option is disabled (Menu &gt; View &gt; Show/Hide
 Items &gt; Show cameras)</p>
 
@@ -242,7 +242,7 @@ Items &gt; Show cameras)</p>
 </figure>
 
 <p>Choose in the context menu of the selected point on the list (right
-click)  &gt;  Filter Photos by Marker</p>
+click)  &gt;  Filter Photos by Marker. If the marker does not appear on any photo (the list of thumbnail is empty) it means that this marker is located outside of our sample area and you can remove it (right click &gt; Remove Marker). You should end up with 4 markers</p>
 
 <figure>
 <img src="img/geoprocessing/filter_photos_by_marker.png">
@@ -274,7 +274,9 @@ You can now slightly drag the marker to enable it (turning it into a
 green flag) or leave it unchanged (gray marker icon) to exclude it from
 processing.</p>
 
-<p>Mathematically, you need to indicate marker positions for at least 3
+<p>Filter photos my each marker again. Agisoft adjusts the GCPs posisions on the run, so you can locate the GCP on additional images that will appear in the Photos pane.</p>
+
+<p>In this sample processing we will include 4 GCPs. Mathematically, you need to indicate marker positions for at least 3
 GCPs. Accurate error estimates can be calculated with at least 4 GCPs,
 while often at least 5 are needed to cover the center of the project as
 well, which reduces the chance of error propagation and resulting
@@ -285,6 +287,8 @@ terrain distortions especially on flat or undulating terrain types.</p>
 
 <h4>Optimizing alignment</h4>
 
+<p>You can see the errors by clicking on the View Errors icon
+<img src="img/geoprocessing/view_errors_icon.png" class="icon"></p>
 <p>Best results are obtained when the alignment is first optimized based on the camera coordinates only, and a second time based on the GCP only.</p>
 
 
@@ -329,7 +333,7 @@ terrain distortions especially on flat or undulating terrain types.</p>
 
 <p>click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (leave all options at the default)</p>
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
-<p>You can now see the errors by clicking on the View Errors icon
+<p>You can now see how much the errors were reduced through optimization by clicking on the View Errors icon
 <img src="img/geoprocessing/view_errors_icon.png" class="icon"></p>
 
 
@@ -352,20 +356,20 @@ toolbar. Make sure that the base (red plane) is at the bottom.</p>
 </figure>
 
 <p>The next steps will be time consuming (depending on the desired
-quality and number of pictures).You can execute them one step at the
+quality and number of pictures). You can execute them one step at the
 time, what would be explained below. You can also set a batch
 processing that does not require user interaction until the end of
 geoprocessing (especially useful in case of Ultra High quality that
-requires even several says of processing). The batch processing will be
+requires even several days of processing). The batch processing will be
 explained at the end of this section.</p>
 
 <p>Menu &gt; Workflow &gt;  Build Dense Cloud</p>
 <ul>
     <li>Quality* =
         <ul>
-            <li>Medium (will downsample the images to get a 3D coordinate every 4
+            <li>Medium (will downsample the images to get a 3D coordinate every 4 pixels
             <li>High (will downsample the images to get a 3D coordinate every 2 pixels;
-                pixels; typically takesseveral hours but will give acceptable results for
+                typically takes several hours but will give acceptable results for
                 most cases),
                 typically takes >10-20 hours) or
             <li>Ultra high (will calculate a 3D coordinate for every pixel in original
@@ -374,9 +378,9 @@ explained at the end of this section.</p>
     <li>Depth filtering = Aggressive
 </ul>
 
-<p>*Take into consideration the RAM size requirements for the different
-target qualities with respect to the number of images (in appendix or
-in lecture slides).</p>
+<p>*When working with large datasets take into consideration the RAM size requirements for the different
+target qualities with respect to the number of images (in appendix in the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdlAzTk95VjQtZkU"> manual </a>or
+in <a href="http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/lectures/04_Imagery_Processing.html#/40"> lecture slides</a>).</p>
 
 <figure>
 <img src="img/geoprocessing/build_dense_cloud_medium_aggressive.png">
@@ -389,7 +393,7 @@ in lecture slides).</p>
 <ul>
     <li>Surface type: Height field
     <li>Source data: Dense cloud
-    <li>Face count*: Custom: 50 000 000
+    <li>Face count*: Custom: 50000000 (50,000,000)
     <li>Advanced options: leave default
 </ul>
 
@@ -460,7 +464,17 @@ above.</p>
 <img src="img/geoprocessing/edit_job.png">
 </figure>
 
+<p>
+If the process takes really long time on your device,
+you can cancel the processing and work with the project files saved on the
+<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfm9DOEZpYWwyZTFJX040em90NFZMQ3o5amdUSmtZdGRMeFp1VXNzakpOTVk">google drive</a>
+(after each time consuming step, the project file was saved and you can work starting from this step).
+The only adjustment you need to make is to change the path of the pictures
+to the localization of downloaded images on your computer.
 
+<p>
+In order to do that right clik on any of the pictures in the Pictures pane and choose <em>Change Path...</em> and in the dialog window mark the <em>All cameras</em> option. This will automatically apply the updated location to all the pictures in the project.</p>
+<figure><img src="img/geoprocessing/agisoft_changepath.png"> </figure>
 <h3>Stage 4: Exporting results</h3>
 
 <p>This option will be disabled if you are working in the demo version
@@ -478,7 +492,7 @@ for free. (click link and request a trial code via email)</p>
     <li>Datum = WGS 1984,
     <li>Write KML file (footprint) and World file (.tfw) = check if desired (if left unchecked,
         georeferencing information will still be contained in the GeoTIFF .tif file);
-    <li>Blending mode =Mosaic (default)
+    <li>Blending mode = Mosaic (default)
     <li>Pixel size: leave default
 </ul>
 
