@@ -3,18 +3,16 @@
 Outline:
 
 <ul>
-    <li>analyze and import lidar point cloud for State Farmers Market near NC State Centennial Campus
+    <li>analyze and import lidar point cloud for Mid Pines area
     <li>compute bare earth and canopy surfaces and derived parameters
     <li>employ visualization techniques to highlight subtle terrain features
-    <li>explore voxel model based analysis of multiple return point cloud
+    <!-- <li>explore voxel model based analysis of multiple return point cloud -->
 </ul>
 
 Data:
 
 <ul>
-    <li>GRASS Location <a href="http://courses.ncsu.edu/mea592/common/media/nc_spf_centennial.zip">nc_spf_centennial</a>
-    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016.las.zip">Classified point cloud tile 16 in las format</a>
-    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/0793_016_xyzirnc_ncspf.zip">Point cloud tile in asci xyzirnc format</a>
+    <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud (merged from 4 tiles) in las format</a>
 </ul>
 
 Tools:
@@ -27,8 +25,8 @@ Tools:
         (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
     </li>
     <li>libLAS installation should include command line tools lasinfo and las2txt.
-    <li>libLAS installation should also include support for LAZ (through LAZzip library).
-    <li>Note that you need libLAS library and tools, not LASlib which is part of LAStools.
+    <!-- <li>libLAS installation should also include support for LAZ (through LAZzip library). -->
+    <li>Note that for merging las tiles (not necessary for this assignment) you need LASlib's lasmerge tool (part of LAStools).
     <li>Web-based <a href="http://plas.io">plas.io</a> (might not work with older browsers, most functionality is available in Chrome)</li>
 </ul>
 
@@ -55,117 +53,118 @@ cd ~/Downloads
 </code></pre>
 
 <p>
-let's look at the metadata, particularly at the classes,<br>
-we will further work work with the classes 1 and 2<br>
+Let's look at the metadata, particularly at the classes,<br>
+we will further work work with the classes 1 and 2.<br>
 
 <pre><code>
-lasinfo 0793_016.las
+lasinfo mid_pines_spm_2013.las
 </code></pre>
 
 <pre><code>
-Point Classifications
+  Point Classifications
 ---------------------------------------------------------
-341246 Unclassified (1)
-560224 Ground (2)
-25 Low Point (noise) (7)
-844382 Reserved for ASPRS Definition (11)
+	1340658 Unclassified (1) 
+	2580704 Ground (2) 
+	66 Low Point (noise) (7) 
+	1960603 Reserved for ASPRS Definition (11) 
 </code></pre>
 
-get the geographic extent of the point cloud and then set it<br>
+Get the geographic extent of the point cloud and then set it:
 
 <pre><code>
-r.in.lidar -sgo input=0793_016.las
-g.region n=734999.990000 s=732500.010000 e=2099999.990000 w=2097500.000000
+r.in.lidar -sgo input=mid_pines_spm_2013.las
+g.region n=220218 s=218694 e=637795 w=636271 -p
 </code></pre>
 
 
 <h2>Density of points</h2>
 
-first we set the resolution<br>
+First we set the resolution:
 
 <pre><code>
-g.region res=3
+g.region res=1 -pa
 </code></pre>
 
 <p>
-compute the density of all points<br>
+Compute the density of all points:
 
 <pre><code>
-r.in.lidar -o input=0793_016.las output=tile16_dens_all method=n
-d.rast tile16_dens_all
-d.legend -f -s -d rast=tile16_dens_all at=5,50,7,10
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_dens_all method=n
+d.rast mid_pines_dens_all
+d.legend -f -s -d rast=mid_pines_dens_all at=5,50,7,10
 </code></pre>
 
 <p>
-compute the density of ground points<br>
+Compute the density of ground points:
 
 <pre><code>
-r.in.lidar -o input=0793_016.las output=tile16_dens_ground class_filter=2 method=n
-d.rast tile16_dens_ground
-d.legend -f -s -d rast=tile16_dens_ground at=5,50,7,10
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_dens_ground class_filter=2 method=n
+d.rast mid_pines_dens_ground
+d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
 
 
 <h2>High resolution DEM/DSM</h2>
 
-import as points (without attribute table, not necessary to build points)<br>
+Import as points (without attribute table, not necessary to build points):
 
 <pre><code>
-v.in.lidar -t -o input=0793_016.las output=tile16_ground class_filter=2
-v.in.lidar -t -o input=0793_016.las output=tile16_surface class_filter=1,2 return_filter=first
+v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
+v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
 </code></pre>
 
 <p>
-remove the vector layers from your Layer Manager if they were added<br>
+Remove the vector layers from your Layer Manager if they were added.
+<p>
+Interpolate with resolution 1 meter,
+also create slope and profile curvature map.<br>
 
-interpolate with resolution 3 feet<br>
-also create slope and profile curvature map<br>
-set higher npmin to reduce artifacts from segmentation visible on slope and curvature maps (will be much slower!)<br>
+Set higher npmin to reduce artifacts from segmentation
+visible on slope and curvature maps (will be much slower!):
 
 <pre><code>
-v.surf.rst input=tile16_ground elevation=tile16_ground_elev slope=tile16_ground_slope pcurv=tile16_ground_profcurv dmin=1 npmin=80 tension=10 smooth=10
-v.surf.rst input=tile16_surface elevation=tile16_surface_elev slope=tile16_surface_slope pcurv=tile16_surface_profcurv dmin=1 npmin=80 tension=20 smooth=1
+v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv dmin=1 npmin=80 tension=10 smooth=10
+v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv dmin=1 npmin=80 tension=20 smooth=1
 </code></pre>
 
 <p>
-visualize DEM and DSM in 3D view, use cross-sections<br>
+Visualize DEM and DSM in 3D view, use cross-sections.
 
 
 <h2>Raster binning and classification</h2>
 
-compute different surfaces by binning<br>
-explore what different returns and classes show<br>
-create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings<br>
-
-create DSM<br>
-
+Compute different surfaces by binning.
+Explore what different returns and classes show.<br>
+Create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings.
+<p>
+Create DSM:
 <pre><code>
-r.in.lidar -o input=0793_016.las output=tile16_all_max method=max resolution=10 class_filter=1,2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_all_max method=max resolution=3 class_filter=1,2
 </code></pre>
 
 <p>
-create surface based on last return (represents canopy)<br>
+Create surface based on last return (represents canopy):
 
 <pre><code>
-r.in.lidar -o input=0793_016.las output=tile16_last_mean resolution=10 method=mean return_filter=last class_filter=1,2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_last_mean resolution=3 method=mean return_filter=last class_filter=1,2
 </code></pre>
 
 <p>
-create surface representing ground based on already classified points<br>
+Create surface representing ground based on already classified points:
 
 <pre><code>
-r.in.lidar -o input=0793_016.las output=tile16_ground_mean resolution=10 class_filter=2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_ground_mean resolution=3 class_filter=2
 </code></pre>
 
 <p>
-combine surfaces and create classes: 1 - ground, 2 - vegetation, 3 - buildings<br>
+Combine surfaces and create classes: 1 - ground, 2 - vegetation, 3 - buildings:
 
 <pre><code>
-r.mapcalc "classes = if( ! isnull(tile16_last_mean), 2, if( !isnull( tile16_ground_mean), 1, if( !isnull(tile16_all_max),3, null())))"
+r.mapcalc "classes = if( ! isnull(mid_pines_last_mean), 2, if( !isnull(mid_pines_ground_mean), 1, if( !isnull(mid_pines_all_max),3, null())))"
 </code></pre>
 
 <p>
-set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules)<br>
+Set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules):
 
 <pre><code>
 r.colors map=classes 
@@ -178,31 +177,31 @@ r.colors map=classes
 </code></pre>
 
 <p>
-leave just raster map 'tile16_surface_elev' in Layer Manager, hide legend<br>
-got to 3D view, set surface resolution 1 and color to map 'classes'<br>
+Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
+Go to 3D view, set surface resolution 1 and color to map 'classes'.
 
 
 <h2>Visualize point density in 3D (optional)</h2>
 
-convert LAS file into text file with lastools<br>
+Convert LAS file into text file:
 
 <pre><code>
-las2txt -i 0793_016.las --parse xyzc -o tile16.txt
+las2txt -i mid_pines_spm_2013.las --parse xyzc -o mid_pines.txt
 </code></pre>
 
 <p>
-set region for creating the 3D raster<br>
+Set smaller region for creating the 3D raster (TBD):
 
 <pre><code>
-g.region n=734617 s=733919 w=2098538 e=2099470 b=300 t=450 res=10 res3=10 tbres=25 -p3
+g.region n= s= w= e= b= t= res=10 res3=3 tbres=8 -p3
 </code></pre>
 
 <p>
-use binning to create point density 3D raster<br>
+Use binning to create point density 3D raster:
 
 <pre><code>
-r3.in.xyz input=tile16.txt output=tile16_dens method=n separator=comma
+r3.in.xyz input=mid_pines.txt output=mid_pines_dens method=n separator=comma
 </code></pre>
 
 <p>
-visualize in 3D view using slices and isosurfaces
+Visualize in 3D view using slices and isosurfaces.
