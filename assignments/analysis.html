@@ -37,119 +37,143 @@
 <!-- This is a generated file. Do not edit. -->
 <h2>GIS based analysis of UAS derived data processing outputs</h2>
 
-<p>This assignment requires critical thinking about the processing outputs. <br>In the scope of your project (previously stated research problem) run the necessary analysis in GIS software. 
+<p>This assignment requires critical thinking about the processing outputs.
+In the scope of your project (previously stated research problem) run
+the necessary analysis in GIS software.
 <ul>
-<li>You can use the timeseries of data from the GRASS location if your project includes changes in terrain in time. 
+<li>You can use the timeseries of data from the GRASS location if your project includes changes in terrain in time.
 <li>There are also orthophotomaps and point clouds available from all the flights (dates in DSM file names). If you need any of them – please request the specific file and format. Note that especially orthophotos are quite large files – up to couple GB.
 </ul>
-<br>
+
+<p>
 If you want to use data from your research – I strongly encourage you to do so and share the results with others!
-<br>
-<br>
-<strong> In the report include:</strong> 
+
+<p>
+
+<strong> In the report include:</strong>
 <ul>
-	<li>Your research problem/research question
-	<li>Steps and procedures the you've performed in order to answer this question
-	<li>Obstacles and problems you’ve encountered
+    <li>Your research problem/research question
+    <li>Steps and procedures the you've performed in order to answer this question
+    <li>Obstacles and problems you’ve encountered
 </ul>
-Asses the relevance of UAV derived data and processing outputs for solving your research problem. <br><br>
-<strong>You will present your results in front of the class. </strong> <br></p> 
-<h2>Some additional issues worth investigating:</h2>
+
+Asses the relevance of UAV derived data and processing outputs for
+solving your research problem.
+<strong>You will present your results in front of the class.</strong>
+
+<p>
+Some additional issues worth investigating:
+
 <ul>
-	<li>Including GCPs in geoprocessing improves the results. Does it have an effect on phenomenon that you are investigating?
-	<li>Agisoft is only one of the software solutions available for the UAV data processing. In the GRASS location there are available DSM generated in different environments: opendronemap, Pix4D and Trimble Business Center (just for one example flight). If it is relevant to your research scope, you can include comparison of this results.
-	<li>In <a href="http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/assignments/geoprocessing.html">Assignment 3</a> you’ve used arbitrary given parameter values in each processing step. You can change various modes, quality, values and options and investigate if it does improve the results for investigation of your chosen phenomenon. You can find descriptions of the options for each processing step on <a href="http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/lectures/04_Imagery_Processing.html#/">lecture slides </a> and in the <a href="http://www.agisoft.com/pdf/photoscan-pro_1_1_en.pdf"> Agisoft Manual</a>
+    <li>Including GCPs in geoprocessing improves the results.
+        Does it have an effect on phenomenon that you are investigating?
+    <li>Agisoft is only one example of the software solutions available for the UAV data processing.
+        In the GRASS location there are available DSM generated in different environments:
+        OpenDroneMap, Pix4D and Trimble Business Center (just for one example flight).
+        If it is relevant to your research scope, you can include comparison of this results.
+    <li>In <a href="http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/assignments/geoprocessing.html">Assignment 3</a>
+    you’ve used arbitrary given parameter values in each processing step.
+    You can change various modes, quality, values and options and investigate
+    if it does improve the results for investigation of your chosen phenomenon.
+    You can find descriptions of the options for each processing step on <a href="http://ncsu-osgeorel.github.io/uav-lidar-analytics-course/lectures/04_Imagery_Processing.html#/">lecture slides</a>
+    and in the <a href="http://www.agisoft.com/pdf/photoscan-pro_1_1_en.pdf">Agisoft Manual</a>.
 </ul>
-<h4>DSMs comparison - influence of GCPs</h4>
-<p>In order to detect the bowl effect, additional DSM needs to be computed. This time GCPs shuld not be used in the processing. You can repeat all the steps from Assgment 3 - part for quality processing. Batch processing commands should be in this order:
+
+
+<h3>DSMs comparison - influence of GCPs</h3>
+
+<p>
+In order to detect the bowl effect, additional DSM needs to be computed.
+This time GCPs shuld not be used in the processing.
+You can repeat all the steps in Agisoft from Assgment 3 - part for quality processing.
+Batch processing commands should be in this order:
 <ol>
-	<li>Align Photos</li>
-	<li>Optimize Alignment (this is only based on camera coordinates)</li>
-	<li>Build Dense Point cloud (quality:medium)</li>
-	<li>Build Mesh (face count 50 000 000)</li>
-	<li>Decimate Mesh (face count: 1 000 000)</li>
-	<li>Build Texture</li>
-	<li>Export DEM</li>
+    <li>Align Photos</li>
+    <li>Optimize Alignment (this is only based on camera coordinates)</li>
+    <li>Build Dense Point cloud (quality:medium)</li>
+    <li>Build Mesh (face count 50 000 000)</li>
+    <li>Decimate Mesh (face count: 1 000 000)</li>
+    <li>Build Texture</li>
+    <li>Export DEM</li>
 </ol>
-Then calculate the differences in elevation in the DSM generated with GCPs and the new one without GCPs
+Then calculate the differences in elevation in the DSM generated with GCPs and the new one without GCPs in GRASS GIS using raster map algebra:
 <pre><code>r.mapcalc expression="GCP_noGCP = sample_DSM - sample_DSM_noGCPs"
 </code></pre>
-Change the color map to better see the differences (for me it worked the best entering the values directly: 
+Change the color map to better see the differences
+(entering the values directly in the dialog <em>r.colors</em> dialog will
+probably work the best):
 <pre><code>35 blue
 36 white
 37 red
 </code></pre>
-</p>
+
+
+<h3>Compare DSMs generated in different software</h3>
+
+For the flight from 2015-06-20 there are DSM with GCPs generated in 3 different software environments (Trimble Business Center, Agisoft Photoscan and Pix4D). Additionally there are DSMs generated without GCPs in Agisoft Photoscan and Pix4D.
+
 <p>
-<h4>Compare DSMs generated in different software</h4>
-For the flight from 2015-06-20 there are DSM with GCPs generated in 3 different software environments (Trimble Business Center, Agisoft Photoscan and Pix4D). Additionally there are DSMs generated without GCPs in Agisoft Photoscan and Pix4D.<br>
-Check the bowl effect for the Agisoft generated products
+Check the bowl effect for the Agisoft generated products:
 <pre><code>r.mapcalc expression="agi_GCP_agi_noGCP = 2015_06_20_DSM_agi_11GCP - 2015_06_20_DSM_agi_noGCP"
 </code></pre>
-change the color table to better see the differences<br>
-Check the bowl effect for the Pix4D generated products
+Change the color table to better see the differences.
+
+<p>
+Check the bowl effect for the Pix4D generated products:
 <pre><code>r.mapcalc expression="p4d_GCP_p4d_noGCP = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_pix4d_NoGCP"
 </code></pre>
-Which software does generate larger bowl effect?<br>
+Which software does generate larger bowl effect?
 
 <pre><code>r.mapcalc expression="agi_trimble = 2015_06_20_DSM_agi_11GCP - 2015_06_20_DSM_Trimble_11GCP"
 r.mapcalc expression="p4d_agi = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_agi_11GCP"
 r.mapcalc expression="p4d_trimble" = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_Trimble_11GCP"
 </code></pre>
-apply the color table that varies from -1m to 1m to visualize results of the comparison
-<pre><code>r.colors  
-</code></pre>
-In the <i>Define</i> tab, type the rules in the <i>enter values directly</i> option
+Apply the color table that varies from -1m to 1m to visualize results of the comparison
+using <em>r.colors</em> module.
+In the <em>Define</em> tab, type the following rules in the <em>enter values directly</em> option.
 <pre><code>-1 blue
 0 white
-1 red  
+1 red
 </code></pre>
 
 Compare the maps. How do they relate to each other? What patterns (artifacts) can you recognize?
-</p>
-<h4>Terrain analysis</h4>
-<p>It is also useful to a perform terrain analysis using GIS tools to see the differences even more clearly.<br>
-Run the <i>r.slope.aspect</i> and <i>r.relief</i> command for chosen DSMs.<br>
-example:
+
+
+<h3>Terrain analysis</h3>
+
+<p>
+It is also useful to a perform terrain analysis using GIS tools
+to see the differences even more clearly.
+
+<p>
+Run the <em>r.slope.aspect</em> and <em>r.relief</em> command for chosen DSMs,
+for example:
 <pre><code>r.slope.aspect elevation=sample_DSM slope=sample_DSM_slope aspect=sample_DSM_aspect pcurvature=sample_DSM_curv
 r.relief input=sample_DSM output=sample_DSM_relief
 r.slope.aspect elevation=sample_DSM_noGCP slope=sample_DSM_noGCP_slope aspect=sample_DSM_noGCP_aspect pcurvature=sample_DSM_noGCP_curv
 r.relief input=sample_DSM output=sample_DSM_noGCP_relief
 </code></pre>
-<p> You can also install GRASS Add-ons (via g.extension):
+
+<p>
+You can also install GRASS GIS Addons (via g.extension):
 <ul>
-	<li><a herf="https://grass.osgeo.org/grass70/manuals/addons/r.local.relief.html">r.local.relief</a></li>
-	<li><a herf="https://grass.osgeo.org/grass70/manuals/addons/r.shaded.pca.html">r.shaded.pca</a></li>
-	<li><a herf="https://grass.osgeo.org/grass70/manuals/addons/r.skyview.html">r.skyview</a></li>
+    <li><a href="https://grass.osgeo.org/grass70/manuals/addons/r.local.relief.html">r.local.relief</a></li>
+    <li><a href="https://grass.osgeo.org/grass70/manuals/addons/r.shaded.pca.html">r.shaded.pca</a></li>
+    <li><a href="https://grass.osgeo.org/grass70/manuals/addons/r.skyview.html">r.skyview</a></li>
 </ul>
-and apply this modules to sample data or your data
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+and apply this modules to sample data or your data.
+<pre><code>g.extension extension=r.local.relief operation=add 
+r.local.relief input=sample_DSM output=local_relief_sample_DSM
+r.local.relief input=sample_DSM_noGCPs output=local_relief_sample_DSM_noGCPs
+</code></pre>
+<pre><code>g.extension extension=r.shaded.pca operation=add 
+r.shaded.pca input=sample_DSM output=shaded_pca_sample_DSM
+r.shaded.pca input=sample_DSM_noGCPs output=shaded_pca_sample_DSM_noGCPs
+</code></pre>
+<pre><code>g.extension extension=r.skyview operation=add
+r.skyview input=sample_DSM output=skyview_sample_DSM
+r.skyview input=sample_DSM_noGCPs output=skyview_sample_DSM_noGCPs
+</code></pre>
 
 </main>
 
