@@ -140,7 +140,7 @@ r.local.relief input=sample_DSM_noGCPs output=local_relief_sample_DSM_noGCPs
 <pre><code>
 g.extension extension=r.shaded.pca operation=add 
 r.shaded.pca input=sample_DSM output=shaded_pca_sample_DSM
-  input=sample_DSM_noGCPs output=shaded_pca_sample_DSM_noGCPs
+r.shaded.pca input=sample_DSM_noGCPs output=shaded_pca_sample_DSM_noGCPs
 </code></pre>
 <pre><code>
 g.extension extension=r.skyview operation=add
