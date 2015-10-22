@@ -125,9 +125,11 @@ d.legend -f -s -d rast=mid_pines_dens_all at=5,50,7,10
 </code></pre>
 
 <p>
-Compute the density of ground points:
+Compute the density of ground points
+and set histogram equalized color table for both densities so that we can compare them:
 
 <pre><code>r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_dens_ground class_filter=2 method=n
+r.colors -e map=mid_pines_dens_all,mid_pines_dens_ground color=bcyr
 d.rast mid_pines_dens_ground
 d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
@@ -200,6 +202,16 @@ Set colors, copy and paste the following color rules into "or enter values direc
 <p>
 Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
 Go to 3D view, set surface resolution 1 and color to map 'classes'.
+
+
+<h2>Compute the difference of lidar DEM and GSP heights</h2>
+
+<pre><code>v.db.addcolumn map=GCP_12_degrees columns="dem_height DOUBLE"
+v.db.addcolumn map=GCP_12_degrees columns="height_difference DOUBLE"
+v.what.rast -i map=GCP_12_degrees raster=2015_01_29_DSM_agi_noGCP column=dem_height
+v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
+v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
+</code></pre>
 
 
 <h2>Visualize point density in 3D (optional)</h2>
