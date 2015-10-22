@@ -182,6 +182,17 @@ leave just raster map 'tile16_surface_elev' in Layer Manager, hide legend<br>
 got to 3D view, set surface resolution 1 and color to map 'classes'<br>
 
 
+<h2>Compute the difference of lidar DEM and GSP heights</h2>
+
+<pre><code>
+v.db.addcolumn map=GCP_12_degrees columns="dem_height DOUBLE"
+v.db.addcolumn map=GCP_12_degrees columns="height_difference DOUBLE"
+v.what.rast -i map=GCP_12_degrees raster=2015_01_29_DSM_agi_noGCP column=dem_height
+v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
+v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
+</code></pre>
+
+
 <h2>Visualize point density in 3D (optional)</h2>
 
 convert LAS file into text file with lastools<br>
