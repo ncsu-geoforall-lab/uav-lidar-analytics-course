@@ -95,10 +95,12 @@ d.legend -f -s -d rast=mid_pines_dens_all at=5,50,7,10
 </code></pre>
 
 <p>
-Compute the density of ground points:
+Compute the density of ground points
+and set histogram equalized color table for both densities so that we can compare them:
 
 <pre><code>
 r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_dens_ground class_filter=2 method=n
+r.colors -e map=mid_pines_dens_all,mid_pines_dens_ground color=bcyr
 d.rast mid_pines_dens_ground
 d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
