@@ -1,4 +1,4 @@
-<h1>Analyzing and Visualizing surfaces from multiple return lidar data</h1>
+<h2>Analyzing and Visualizing surfaces from multiple return lidar data</h2>
 
 Outline:
 
@@ -31,7 +31,7 @@ Tools:
 </ul>
 
 
-<h2>Quick data exploration</h2>
+<h3>Quick data exploration</h3>
 
 First view the LAS file in your web browser using <a href="http://plas.io">plas.io</a>.
 
@@ -77,7 +77,7 @@ g.region n=220218 s=218694 e=637795 w=636271 -p
 </code></pre>
 
 
-<h2>Density of points</h2>
+<h3>Density of points</h3>
 
 First we set the resolution:
 
@@ -114,7 +114,7 @@ Estimated point density: 1.111
 Estimated mean distance between points: 0.9487
 </pre>
 
-<h2>High resolution DEM/DSM</h2>
+<h3>High resolution DEM/DSM</h3>
 
 Import as points (without attribute table, not necessary to build points):
 
@@ -142,7 +142,7 @@ v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pi
 Visualize DEM and DSM in 3D view, use cross-sections.
 
 
-<h2>Raster binning and classification</h2>
+<h3>Raster binning and classification</h3>
 
 Compute different surfaces by binning.
 Explore what different returns and classes show.<br>
@@ -192,18 +192,37 @@ Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
 Go to 3D view, set surface resolution 1 and color to map 'classes'.
 
 
-<h2>Compute the difference of lidar DEM and GSP heights</h2>
+<h3>Compute the difference of lidar DEM and GCP heights</h3>
+
+First, add the columns:
 
 <pre><code>
-v.db.addcolumn map=GCP_12_degrees columns="dem_height DOUBLE"
-v.db.addcolumn map=GCP_12_degrees columns="height_difference DOUBLE"
-v.what.rast -i map=GCP_12_degrees raster=2015_01_29_DSM_agi_noGCP column=dem_height
+v.db.addcolumn map=GCP_12_degrees columns="dem_height DOUBLE, height_difference DOUBLE"
+</code></pre>
+
+Query (sample) the raster elevation at the locations of GCPs:
+
+<pre><code>
+v.what.rast -i map=GCP_12_degrees raster=mid_pines_ground_elev column=dem_height
+</code></pre>
+
+Compute the difference and save it in the attribute column:
+
+<pre><code>
 v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
+</code></pre>
+
+View at the results:
+
+<pre><code>
 v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
 </code></pre>
 
+Alternatively use <em>Attribute Table Manager</em> to view the results.
 
-<h2>Visualize point density in 3D (optional)</h2>
+
+
+<h3>Visualize point density in 3D (optional)</h3>
 
 Convert LAS file into text file:
 
