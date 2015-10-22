@@ -132,3 +132,18 @@ You can also install GRASS GIS Addons (via g.extension):
     <li><a href="https://grass.osgeo.org/grass70/manuals/addons/r.skyview.html">r.skyview</a></li>
 </ul>
 and apply this modules to sample data or your data.
+<pre><code>
+g.extension extension=r.local.relief operation=add 
+r.local.relief input=sample_DSM output=local_relief_sample_DSM
+r.local.relief input=sample_DSM_noGCPs output=local_relief_sample_DSM_noGCPs
+</code></pre>
+<pre><code>
+g.extension extension=r.shaded.pca operation=add 
+r.shaded.pca input=sample_DSM output=shaded_pca_sample_DSM
+r.shaded.pca input=sample_DSM_noGCPs output=shaded_pca_sample_DSM_noGCPs
+</code></pre>
+<pre><code>
+g.extension extension=r.skyview operation=add
+r.skyview input=sample_DSM output=skyview_sample_DSM
+r.skyview input=sample_DSM_noGCPs output=skyview_sample_DSM_noGCPs
+</code></pre>
