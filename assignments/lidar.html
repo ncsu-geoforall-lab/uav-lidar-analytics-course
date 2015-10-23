@@ -132,21 +132,21 @@ Create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings.
 <p>
 Create DSM:
 <pre><code>
-r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_all_max method=max resolution=2 class_filter=1,2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_all_max method=max resolution=3 class_filter=1,2
 </code></pre>
 
 <p>
 Create surface based on last return (represents canopy):
 
 <pre><code>
-r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_last_mean resolution=2 method=mean return_filter=last class_filter=1,2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_last_mean resolution=3 method=mean return_filter=last class_filter=1,2
 </code></pre>
 
 <p>
 Create surface representing ground based on already classified points:
 
 <pre><code>
-r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_ground_mean resolution=2 class_filter=2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_ground_mean resolution=3 class_filter=2
 </code></pre>
 
 <p>
@@ -180,7 +180,7 @@ v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_fil
 <p>
 Remove the vector layers from your Layer Manager if they were added.
 <p>
-Interpolate with resolution 0.5 meter,
+Interpolate with resolution 0.3 meter,
 also create slope and profile curvature map.<br>
 
 Set higher npmin to reduce artifacts from segmentation
@@ -188,8 +188,8 @@ visible on slope and curvature maps (will be much slower!):
 
 <pre><code>
 g.region res=0.3
-v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv npmin=200 tension=20 smooth=2
-v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv npmin=200 tension=20 smooth=2
+v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv npmin=80 tension=20 smooth=1
+v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv npmin=80 tension=20 smooth=1
 </code></pre>
 
 Visualize DEM and DSM in 3D view, use cross-sections.
@@ -240,10 +240,10 @@ las2txt -i mid_pines_spm_2013.las --parse xyzc -o mid_pines.txt
 </code></pre>
 
 <p>
-Set smaller region for creating the 3D raster (you can select different area):
+Set smaller region for creating the 3D raster (TBD):
 
 <pre><code>
-g.region n=219502 s=219348 w=637070 e=637276 b=110 t=135 res=10 res3=3 res=3 tbres=1 -p3
+g.region n= s= w= e= b= t= res=10 res3=3 tbres=8 -p3
 </code></pre>
 
 <p>
