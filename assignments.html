@@ -8,26 +8,36 @@ UAS mapping will be done at the Lake Wheeler COA:
 <p>
 Data
 <ul>
-    <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">North Carolina data set used in MEA582</a>
-    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXa3lLYmg5VU9FdEU">boundaries of COA in NC obtained by NGAT</a>
-    <li>sUAS surveys of LW area: <br><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">images, log file</a> from the flight 06/20/2015,   DSMs
-    <li>point clouds for the gully area, <a href="https://drive.google.com/a/ncsu.edu/folderview?id=0B1AfQGDB8tPXVmJrZUFsX09hTjQ&usp=sharing">timeseries</a>
-    <li>raw text format of <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXN2FHTzlicWRENUU">GCP locations</a>
-    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k"> GRASS location</a> containing timeseries of DSMs computed from example flights, includes GCPs and COA layers
-    <li>2013 lidar data (Wake county survey):
-        <ul><li>
-    <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">secref_spm_2013.las</a> and
-    <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">mid_pines_spm_2013.las</a>,
-    and already <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">interpolated DEM/DSM</a>
-    (use <a href="https://grass.osgeo.org/grass70/manuals/r.unpack.html">r.unpack</a>)</li>
-    <li>LAS 2013 tiles overview is available as GRASS vector file
-        <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">LAS_overview_2013.pack</a> for nc_spm.</li>
-    <li>Additional 2013 LAS files will be posted <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>.<br> Use <code>las2las --a_srs=EPSG:2264 --t_srs=EPSG:32119 -i input_spf.las -o output_spm.las</code> to reproject it.</li>
+<li><strong>GENERAL RESOURCES</strong>
+    <ul>
+        <li><a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">
+	North Carolina dataset (GRASS location)</a>
+    	<li>Goggle drive <a href="https://drive.google.com/a/ncsu.edu/folderview?id=0B1AfQGDB8tPXflZPQ3FpV3kyZ1JlanpWSXczT1A4QnZEZmFGeEJVRnhQZGdDUHlGZnN2RzQ&usp=sharing">student's resources folder</a>
     </ul>
-    <li>2001 lidar data (NC Floodplain mapping - for SECREF it is in the MEA582 data set)
-    <li>data not provided elsewhere are available through
-        <a href="https://drive.google.com/a/ncsu.edu/folderview?id=0B1AfQGDB8tPXflZPQ3FpV3kyZ1JlanpWSXczT1A4QnZEZmFGeEJVRnhQZGdDUHlGZnN2RzQ&usp=sharing">Google Drive</a>
-        (accessible with NCSU account)
+<li><strong>UAV DATA:</strong></li>
+    <ul>
+    	<li>boundaries of all COAs obtained by NGAT in North Carolina (<a href="https://www.google.com/maps/d/edit?mid=zi8EsFDQAyqo.kr7lL7Germeo">google maps</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXa3lLYmg5VU9FdEU">shp</a>)</li>
+    	<li>Study site (Lake Wheeler): COA boundaries (<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXa3lLYmg5VU9FdEU">shp</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXOFdwR3VoTUloX0k">kml</a>), GCP coordinates (<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXN2FHTzlicWRENUU">txt</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXb2c1bTF4QXhfT1k">kml</a>), also included in the GRASS location (see processed data)</li>
+    	<li>Survey data: <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">down-sampled pictures</a> and <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXTWdfdGJWZ0pkOWc">log</a> from the flight 06/20/2015</li>
+    	<li>Processed data:</li>
+		<ul>
+		    <li>LakeWheeler_NCspm <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k">GRASS location</a> with timeseries of DSMs from 2015 flights
+		    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfk1IZlhLZ2FhNksyQ1VfX1o3YVFpZ19MOVRTWE9PNnpySXNtRTdJN2pFNlU">point clouds from 2015 flights</a>  </li>
+		    <li><a href="">point clouds for the gully area </a> (high density, from 2015 flights) </li>
+		</ul>
+   </ul>
+<li><strong>LIDAR DATA:</strong></li>
+    <ul>
+    	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
+    	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">Secref and Mid Pines</a> interpolated DEM/DSM (use r.unpack)</li>
+    	<li>for additional point cloud tiles:</li>
+		<ul>
+		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
+		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
+		    <li>follow the <a href="instructions_lidar_uplad.html">instructions</a> for importing lidar data to GRASS GIS.
+		</ul>
+	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
+    </ul>    	
 </ul>
 <p>
 Software
@@ -41,6 +51,7 @@ Software
         (installation will be discussed in class)
     <li>open source software <a href="http://logiciels.ign.fr/?-Micmac,3-">MicMac</a>
         (documentation can be found <a href="http://logiciels.ign.fr/IMG/pdf/docmicmac.pdf">here</a>)
+    <li><a href="http://www.cs.unc.edu/~isenburg/lastools/download/LASlib.zip">LASlib</a> and <a href="http://http://www.cs.unc.edu/~isenburg/lastools/download/LAStools.zip">LAStools</a> for managing the .las files in GRASS
     <li>software provided at NCSU is available through
         <a href="https://drive.google.com/a/ncsu.edu/folderview?id=0B1AfQGDB8tPXflZPQ3FpV3kyZ1JlanpWSXczT1A4QnZEZmFGeEJVRnhQZGdDUHlGZnN2RzQ&usp=sharing">Google Drive</a>
         (accessible with NCSU account)
