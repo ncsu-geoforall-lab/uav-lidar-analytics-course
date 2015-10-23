@@ -50,6 +50,15 @@ Data:
 
 <ul>
     <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud (merged from 4 tiles) in las format</a>
+ 	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
+        	<li>for additional point cloud tiles:</li>
+		<ul>
+		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
+		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
+		    <li>follow the <a href="instructions_lidar_uplad.html">instructions</a> for importing lidar data to GRASS GIS.
+		</ul>
+	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
+  	
 </ul>
 
 Tools:
@@ -101,7 +110,8 @@ we will further work work with the classes 1 and 2.<br>
 	66 Low Point (noise) (7) 
 	1960603 Reserved for ASPRS Definition (11) 
 </code></pre>
-
+Class 11 - for the explanation of Categories in this class refer to p. 10 in ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> </p>
+<p>
 Get the geographic extent of the point cloud and then set it:
 
 <pre><code>r.in.lidar -sgo input=mid_pines_spm_2013.las
@@ -142,32 +152,6 @@ Estimated point density: 1.111
 Estimated mean distance between points: 0.9487
 </pre>
 
-<h3>High resolution DEM/DSM</h3>
-
-Import as points (without attribute table, not necessary to build points):
-
-<pre><code>v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
-v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
-</code></pre>
-
-<p>
-Remove the vector layers from your Layer Manager if they were added.
-<p>
-Interpolate with resolution 0.3 meter,
-also create slope and profile curvature map.<br>
-
-Set higher npmin to reduce artifacts from segmentation
-visible on slope and curvature maps (will be much slower!):
-
-<pre><code>g.region res=0.3
-v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv npmin=80 tension=20 smooth=1
-v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv npmin=80 tension=20 smooth=1
-</code></pre>
-
-<p>
-Visualize DEM and DSM in 3D view, use cross-sections.
-
-
 <h3>Raster binning and classification</h3>
 
 Compute different surfaces by binning.
@@ -175,19 +159,19 @@ Explore what different returns and classes show.<br>
 Create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings.
 <p>
 Create DSM:
-<pre><code>r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_all_max method=max resolution=3 class_filter=1,2
+<pre><code>r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_all_max method=max resolution=2 class_filter=1,2
 </code></pre>
 
 <p>
 Create surface based on last return (represents canopy):
 
-<pre><code>r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_last_mean resolution=3 method=mean return_filter=last class_filter=1,2
+<pre><code>r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_last_mean resolution=2 method=mean return_filter=last class_filter=1,2
 </code></pre>
 
 <p>
 Create surface representing ground based on already classified points:
 
-<pre><code>r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_ground_mean resolution=3 class_filter=2
+<pre><code>r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_ground_mean resolution=2 class_filter=2
 </code></pre>
 
 <p>
@@ -206,6 +190,41 @@ Set colors, copy and paste the following color rules into "or enter values direc
 2 0:180:0
 3 150:0:0
 </code></pre>
+<h3>High resolution DEM/DSM</h3>
+
+Import as points (without attribute table, not necessary to build points):
+
+<pre><code>v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
+v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
+</code></pre>
+
+<p>
+Remove the vector layers from your Layer Manager if they were added.
+<p>
+Interpolate with resolution 0.5 meter,
+also create slope and profile curvature map.<br>
+
+Set higher npmin to reduce artifacts from segmentation
+visible on slope and curvature maps (will be much slower!):
+
+<pre><code>g.region res=0.3
+v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv npmin=200 tension=20 smooth=2
+v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv npmin=200 tension=20 smooth=2
+</code></pre>
+<p>
+Set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules):
+
+<pre><code>r.colors map=classes 
+</code></pre>
+
+<pre><code>1 
+2 
+3 
+</code></pre>
+<p>
+Visualize DEM and DSM in 3D view, use cross-sections.
+
+
 
 <p>
 Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
@@ -246,9 +265,9 @@ Convert LAS file into text file:
 </code></pre>
 
 <p>
-Set smaller region for creating the 3D raster (TBD):
+Set smaller region for creating the 3D raster (you can select different area):
 
-<pre><code>g.region n= s= w= e= b= t= res=10 res3=3 tbres=8 -p3
+<pre><code>g.region n=219502 s=219348 w=637070 e=637276 b=110 t=135 res=10 res3=3 res=3 tbres=1 -p3
 </code></pre>
 
 <p>
