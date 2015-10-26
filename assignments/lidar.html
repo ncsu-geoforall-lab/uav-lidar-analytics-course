@@ -221,11 +221,18 @@ Compute the difference and save it in the attribute column:
 v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
 </code></pre>
 
-View at the results:
+View the results:
 
 <pre><code>
 v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
 </code></pre>
+
+Compute extended univariate statistics
+
+<pre><code>
+v.univar -e GCP_12 column=height_difference
+</code></pre>
+
 
 Alternatively use <em>Attribute Table Manager</em> to view the results.
 
