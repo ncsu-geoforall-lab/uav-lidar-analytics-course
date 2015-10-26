@@ -10,24 +10,7 @@ Outline:
 
 Data: you should already have both the lidar and uas DSMs and points clouds.
 
-<!--
 <p>
-lidar data
-<ul>
-    <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud (merged from 4 tiles) in las format</a>
- 	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
-        	<li>for additional point cloud tiles:</li>
-		<ul>
-		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
-		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
-		    <li>follow the <a href="instructions_lidar_upload.html">instructions</a> for importing lidar data to GRASS GIS.
-		</ul>
-	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
-</ul>
-<p>
-uas data: see the google drive
--->
-
 Tools:
 
 <ul>
@@ -59,7 +42,59 @@ to verify the correction) use Mitasova et al. 2009 for reference
       create a new DSM for the entire area using at least two approaches
       and compare how the two approaches work for for viewshed mapping
 </ul>
+
+Suggested color table for differences, used in the workflow as dif_lidar_uav.txt
+
+<pre><code>
+ -40 red
+ -1 orange
+ -0.5 yellow
+ -0.1 grey
+ 0 white
+ 0.1 grey
+ 0.5 cyan
+ 1 aqua
+ 35 blue
+</code></pre>
+
+Compute the differences between the lidar and uav DSMs
+
+<pre><code>
+g.region rast=mid_pines_lidar2013_dsm -p
+r.mapcalc "dif_midlidsm_uavjune = mid_pines_lidar2013_dsm-uas_june_agi11gcp_03m"
+r.colors dif_midlidsm_uavjune rules=dif_lidar_uav.txt
+r.mapcalc "dif_midlidsm_pix4djune = mid_pines_lidar2013_dsm-2015_06_20_pix4d_11GCP_dsm"
+r.colors dif_midlidsm_pix4djune rules=dif_lidar_uav.txt
+</code></pre>
+
+Evaluate possible systematic shift along stable features using the profile tool or the following commands
+
+<pre><code>
+r.profile dif_lidsurf_uavjune out=dif_lidsurf_uavjune_road file=road.txt
+v.in.ascii
+v.univar
+</code></pre>
+
+Select the region with minimal distortion in the UAS DSM and compute clipped DSM
+
+<pre><code> 
+g.region n=219735 s=219355 e=637000 w=636675
+r.mapcalc  "uas_june_agi11gcp_03m_cl = uas_june_agi11gcp_03m * 1."
+</code></pre>
+
+Compute patched and fused DSM.
+Compare viewshed from lidar only, uas only, fused.
+Compare flow in a similar way.
+
 <!--
+<pre><code> </code></pre>
+<pre><code> </code></pre>
+<pre><code> </code></pre>
+<pre><code> </code></pre>
+<pre><code> </code></pre>
+<pre><code> </code></pre>
+
+
 First, add the columns:
 
 <pre><code>
