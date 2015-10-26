@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+<link rel="shortcut icon" href="./img/favicon.ico" />
+
+<link href="layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>GIS595/MEA792:<br>UAV/lidar Data Analytics</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="index.html">Syllabus</a></li>
+<li><a href="schedule.html">Schedule</a></li>
+<li><a href="lectures.html">Lectures</a></li>
+<li><a href="assignments.html">Assignments</a></li>
+<li><a href="projects.html">Projects</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Basic workflows for importing lidar data to GRASS GIS</h2>
+<p>If you want to obtain a DEM/DSM in GRASS from .las point cloud use one of the following options
+   <ol>
+	<li>Binning
+		<ul>
+		<li>Use r.in.lidar to create raster map using binning. Crude but fast. 
+		<li>Multiple tiles can be merged by r.patch after r.in.lidar (since they are raster maps)</li>
+		</ul>
+	<li>Interpolating
+		<ul>
+		<li>Use v.in.lidar to create vector map with points 
+		(you can use -t and -b to not build topology and attribute table and speed up the process)
+		<li> Multiple tiles can be merged by v.patch (since they are vector maps). 
+		<li>This you can interpolate using v.surf.rst. </li>
+		</ul>
+   </ol>
+</p>
+<p>If the projection of the .las file does not match your GRASS location use one of the following options:
+<ol>
+	<li>Use las2las before using r.in.lidar or v.in.lidar 
+	<br> exapmle command for reprojecting tiles in NAD83/North Carolina in feet (EPSG:2264) 
+	into NAD83/North Carolina in meters (EPSG:32119)
+	<pre><code>las2las --a_srs=EPSG:2264 --t_srs=EPSG:32119 -i input_spf.las -o output_spm.las</pre></code>
+
+	<li>You can create a Location which matches the resolution of the las file and then v.in.lidar to import the points there and finally, go to the desired Location and use v.proj to re-project the data from the other Location
+   </ol>
+
+
+    
+    
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li>
+    <a href="https://github.com/ncsu-osgeorel/uav-lidar-analytics-course" title="Fork on GitHub">
+        <img src="img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license">
+    &copy; 2015
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU OSGeoREL</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
