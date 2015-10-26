@@ -1,0 +1,115 @@
+<h2>Fusion of uas and lidar data</h2>
+
+Outline:
+
+<ul>
+    <li>analyze the differences between the lidar and uas DEM/DSM
+    <li>fuse lidar and uas DSM for viewshed analysis: compare simple patching with map algebra 
+        with reinterpolation from maximum elevation points
+</ul>
+
+Data: you should already have both the lidar and uas DSMs and points clouds.
+
+<!--
+<p>
+lidar data
+<ul>
+    <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud (merged from 4 tiles) in las format</a>
+ 	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
+        	<li>for additional point cloud tiles:</li>
+		<ul>
+		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
+		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
+		    <li>follow the <a href="instructions_lidar_upload.html">instructions</a> for importing lidar data to GRASS GIS.
+		</ul>
+	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
+</ul>
+<p>
+uas data: see the google drive
+-->
+
+Tools:
+
+<ul>
+    <li>
+        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
+        installation should also include <a href="http://www.liblas.org/">libLAS</a> library
+        which is used by GRASS modules v.in.lidar and r.in.lidar
+        (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
+    </li>
+    <li>libLAS installation should include command line tools lasinfo and las2txt.
+</ul>
+
+<h3>Analyze the difference between the lidar and UAS DSM </h3>
+
+First we need to evaluate the DSMs to find out which are suitable for fusion
+<ul>
+ <li> compare errors at GCPs (lidar, agisoft,trimble or pix4d in june)
+ <li> compute the difference between lidar DSM and selected uas: raster, profile/difference along a road and roof
+ <li> use above to identify potential systematic error (you will see approx constant shift in profiles
+and most difs have the same sign, use mean or median as syst. error estimate, re-do the profile
+to verify the correction) use Mitasova et al. 2009 for reference
+ <li> identify distortions - use corrected dsm and lid-uav diff, 
+ look for unexpected pattern, verify with profile.
+ put into report and exclude distorted areas from study area.
+ Why are the distortions / errors low along the road but high in the fields?
+ What would you have to do if you needed to correct the distorted area
+(add gcps using stable features in lidar and reprocess)
+ <li> now you have two DSMs: corrected lidar DSM and (corrected) low-distortion subset of UAS DSM:
+      create a new DSM for the entire area using at least two approaches
+      and compare how the two approaches work for for viewshed mapping
+</ul>
+<!--
+First, add the columns:
+
+<pre><code>
+v.db.addcolumn map=GCP_12_degrees columns="dem_height DOUBLE, height_difference DOUBLE"
+</code></pre>
+
+Query (sample) the raster elevation at the locations of GCPs:
+
+<pre><code>
+v.what.rast -i map=GCP_12_degrees raster=mid_pines_ground_elev column=dem_height
+</code></pre>
+
+Compute the difference and save it in the attribute column:
+
+<pre><code>
+v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
+</code></pre>
+
+View at the results:
+
+<pre><code>
+v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
+</code></pre>
+
+Alternatively use <em>Attribute Table Manager</em> to view the results.
+
+
+
+<h3>Visualize point density in 3D (optional)</h3>
+
+Convert LAS file into text file:
+
+<pre><code>
+las2txt -i mid_pines_spm_2013.las --parse xyzc -o mid_pines.txt
+</code></pre>
+
+<p>
+Set smaller region for creating the 3D raster (TBD):
+
+<pre><code>
+g.region n= s= w= e= b= t= res=10 res3=3 tbres=8 -p3
+</code></pre>
+
+<p>
+Use binning to create point density 3D raster:
+
+<pre><code>
+r3.in.xyz input=mid_pines.txt output=mid_pines_dens method=n separator=comma
+</code></pre>
+
+<p>
+Visualize in 3D view using slices and isosurfaces.
+-->
