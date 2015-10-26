@@ -35,7 +35,7 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h1>Analyzing and Visualizing surfaces from multiple return lidar data</h1>
+<h2>Analyzing and Visualizing surfaces from multiple return lidar data</h2>
 
 Outline:
 
@@ -50,6 +50,15 @@ Data:
 
 <ul>
     <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud (merged from 4 tiles) in las format</a>
+ 	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
+        	<li>for additional point cloud tiles:</li>
+		<ul>
+		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
+		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
+		    <li>follow the <a href="instructions_lidar_upload.html">instructions</a> for importing lidar data to GRASS GIS.
+		</ul>
+	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
+  	
 </ul>
 
 Tools:
@@ -68,7 +77,7 @@ Tools:
 </ul>
 
 
-<h2>Quick data exploration</h2>
+<h3>Quick data exploration</h3>
 
 First view the LAS file in your web browser using <a href="http://plas.io">plas.io</a>.
 
@@ -101,7 +110,8 @@ we will further work work with the classes 1 and 2.<br>
 	66 Low Point (noise) (7) 
 	1960603 Reserved for ASPRS Definition (11) 
 </code></pre>
-
+Class 11 - for the explanation of Categories in this class refer to p. 10 in ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> </p>
+<p>
 Get the geographic extent of the point cloud and then set it:
 
 <pre><code>r.in.lidar -sgo input=mid_pines_spm_2013.las
@@ -109,7 +119,7 @@ g.region n=220218 s=218694 e=637795 w=636271 -p
 </code></pre>
 
 
-<h2>Density of points</h2>
+<h3>Density of points</h3>
 
 First we set the resolution:
 
@@ -134,33 +144,15 @@ d.rast mid_pines_dens_ground
 d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
 
-
-<h2>High resolution DEM/DSM</h2>
-
-Import as points (without attribute table, not necessary to build points):
-
-<pre><code>v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
-v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
+We can examine the density also using v.outlier:
+<pre><code>v.outlier -e input=mid_pines_ground output=dummy outlier=dummy
 </code></pre>
+<pre>
+Estimated point density: 1.111
+Estimated mean distance between points: 0.9487
+</pre>
 
-<p>
-Remove the vector layers from your Layer Manager if they were added.
-<p>
-Interpolate with resolution 1 meter,
-also create slope and profile curvature map.<br>
-
-Set higher npmin to reduce artifacts from segmentation
-visible on slope and curvature maps (will be much slower!):
-
-<pre><code>v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv dmin=1 npmin=80 tension=20 smooth=1
-v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv dmin=1 npmin=80 tension=20 smooth=1
-</code></pre>
-
-<p>
-Visualize DEM and DSM in 3D view, use cross-sections.
-
-
-<h2>Raster binning and classification</h2>
+<h3>Raster binning and classification</h3>
 
 Compute different surfaces by binning.
 Explore what different returns and classes show.<br>
@@ -198,13 +190,38 @@ Set colors, copy and paste the following color rules into "or enter values direc
 2 0:180:0
 3 150:0:0
 </code></pre>
+<h3>High resolution DEM/DSM</h3>
+
+Import as points (without attribute table, not necessary to build points):
+
+<pre><code>v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
+v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
+</code></pre>
+
+<p>
+Remove the vector layers from your Layer Manager if they were added.
+<p>
+Interpolate with resolution 0.3 meter,
+also create slope and profile curvature map.<br>
+
+Set higher npmin to reduce artifacts from segmentation
+visible on slope and curvature maps (will be much slower!):
+
+<pre><code>g.region res=0.3
+v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv npmin=80 tension=20 smooth=1
+v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv npmin=80 tension=20 smooth=1
+</code></pre>
+
+Visualize DEM and DSM in 3D view, use cross-sections.
+
+
 
 <p>
 Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
 Go to 3D view, set surface resolution 1 and color to map 'classes'.
 
 
-<h2>Compute the difference of lidar DEM and GCP heights</h2>
+<h3>Compute the difference of lidar DEM and GCP heights</h3>
 
 First, add the columns:
 
@@ -221,16 +238,22 @@ Compute the difference and save it in the attribute column:
 <pre><code>v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
 </code></pre>
 
-View at the results:
+View the results:
 
 <pre><code>v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
 </code></pre>
+
+Compute extended univariate statistics
+
+<pre><code>v.univar -e GCP_12 column=height_difference
+</code></pre>
+
 
 Alternatively use <em>Attribute Table Manager</em> to view the results.
 
 
 
-<h2>Visualize point density in 3D (optional)</h2>
+<h3>Visualize point density in 3D (optional)</h3>
 
 Convert LAS file into text file:
 
