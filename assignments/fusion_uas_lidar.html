@@ -27,23 +27,23 @@ Tools:
 
 First we need to evaluate the DSMs to find out which are suitable for fusion
 <ul>
- <li> compare errors at GCPs (lidar, agisoft,trimble or pix4d in june)
+ <li> compare errors at GCPs (lidar, agisoft, trimble or pix4d in june)
  <li> compute the difference between lidar DSM and selected uas: raster, profile/difference along a road and roof
  <li> use above to identify potential systematic error (you will see approx constant shift in profiles
 and most difs have the same sign, use mean or median as syst. error estimate, re-do the profile
-to verify the correction) use Mitasova et al. 2009 for reference
+to verify the correction), use Mitasova et al. 2009 for reference
  <li> identify distortions - use corrected dsm and lid-uav diff, 
  look for unexpected pattern, verify with profile.
- put into report and exclude distorted areas from study area.
+ Put into report and exclude distorted areas from study area.
  Why are the distortions / errors low along the road but high in the fields?
  What would you have to do if you needed to correct the distorted area
 (add gcps using stable features in lidar and reprocess)
  <li> now you have two DSMs: corrected lidar DSM and (corrected) low-distortion subset of UAS DSM:
       create a new DSM for the entire area using at least two approaches
-      and compare how the two approaches work for for viewshed mapping
+      and compare how the two approaches work for viewshed mapping
 </ul>
 
-Suggested color table for differences, used in the workflow as dif_lidar_uav.txt
+Suggested color table for differences, used in the workflow as dif_lidar_uav.txt:
 
 <pre><code>
  -40 red
@@ -61,18 +61,18 @@ Compute the differences between the lidar and uav DSMs
 
 <pre><code>
 g.region rast=mid_pines_lidar2013_dsm -p
-r.mapcalc "dif_midlidsm_uavjune = mid_pines_lidar2013_dsm-uas_june_agi11gcp_03m"
-r.colors dif_midlidsm_uavjune rules=dif_lidar_uav.txt
-r.mapcalc "dif_midlidsm_pix4djune = mid_pines_lidar2013_dsm-2015_06_20_pix4d_11GCP_dsm"
-r.colors dif_midlidsm_pix4djune rules=dif_lidar_uav.txt
+r.mapcalc "diff_lidardsm_agi_june = mid_pines_lidar2013_dsm - 2015_06_20_DSM_agi_11GCP"
+r.colors diff_lidardsm_agi_june rules=dif_lidar_uav.txt
+r.mapcalc "diff_lidardsm_pix4d_june = mid_pines_lidar2013_dsm - 2015_06_20_pix4d_11GCP_dsm"
+r.colors diff_lidardsm_pix4d_june rules=dif_lidar_uav.txt
 </code></pre>
 
 Evaluate possible systematic shift along stable features using the profile tool or the following commands
 
 <pre><code>
-r.profile dif_lidsurf_uavjune out=dif_lidsurf_uavjune_road file=road.txt
-v.in.ascii
-v.univar
+r.profile -g input=diff_lidardsm_agi_june output=road.txt coordinates=637208,219491,637059,219734
+v.in.ascii input=road.txt output=profile_road separator=space columns="x double,y double,profile double,diff double"
+v.univar map=profile_road column=diff
 </code></pre>
 
 Select the region with minimal distortion in the UAS DSM and compute clipped DSM
