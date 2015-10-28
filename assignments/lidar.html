@@ -238,10 +238,16 @@ Compute the difference and save it in the attribute column:
 <pre><code>v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
 </code></pre>
 
-View at the results:
+View the results:
 
 <pre><code>v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
 </code></pre>
+
+Compute extended univariate statistics
+
+<pre><code>v.univar -e GCP_12 column=height_difference
+</code></pre>
+
 
 Alternatively use <em>Attribute Table Manager</em> to view the results.
 
@@ -257,7 +263,7 @@ Convert LAS file into text file:
 <p>
 Set smaller region for creating the 3D raster (TBD):
 
-<pre><code>g.region n= s= w= e= b= t= res=10 res3=3 tbres=8 -p3
+<pre><code>g.region n=219502 s=219348 w=637070 e=637276 b=110 t=135 res=2 res3=2 tbres=0.5 -p3
 </code></pre>
 
 <p>
