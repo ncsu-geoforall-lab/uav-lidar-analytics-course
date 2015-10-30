@@ -55,7 +55,7 @@ Data:
 		<ul>
 		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
 		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
-		    <li>follow the <a href="instructions_lidar_upload.html">instructions</a> for importing lidar data to GRASS GIS.
+		    <li>follow the <a href="../instructions_lidar_upload.html">instructions</a> for importing lidar data to GRASS GIS.
 		</ul>
 	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
   	
@@ -144,13 +144,9 @@ d.rast mid_pines_dens_ground
 d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
 
-We can examine the density also using v.outlier:
-<pre><code>v.outlier -e input=mid_pines_ground output=dummy outlier=dummy
-</code></pre>
-<pre>
-Estimated point density: 1.111
-Estimated mean distance between points: 0.9487
-</pre>
+Later, we can will examine the density also using v.outlier
+and imported vector points.
+
 
 <h3>Raster binning and classification</h3>
 
@@ -199,7 +195,17 @@ v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_fil
 </code></pre>
 
 <p>
-Remove the vector layers from your Layer Manager if they were added.
+Remove the vector layers from your Layer Manager if they were added
+(you can disable automatic adding of layers in the dialog for the module).
+
+Check the point overall point density using v.outlier:
+<pre><code>v.outlier -e input=mid_pines_ground output=dummy outlier=dummy
+</code></pre>
+<pre>
+Estimated point density: 1.111
+Estimated mean distance between points: 0.9487
+</pre>
+
 <p>
 Interpolate with resolution 0.3 meter,
 also create slope and profile curvature map.<br>
@@ -263,7 +269,7 @@ Convert LAS file into text file:
 <p>
 Set smaller region for creating the 3D raster (TBD):
 
-<pre><code>g.region n= s= w= e= b= t= res=10 res3=3 tbres=8 -p3
+<pre><code>g.region n=219502 s=219348 w=637070 e=637276 b=110 t=135 res=2 res3=2 tbres=0.5 -p3
 </code></pre>
 
 <p>
