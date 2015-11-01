@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>GIS595/MEA792:<br>UAV/lidar Data Analytics</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<li><a href="../lectures.html">Lectures</a></li>
+<li><a href="../assignments.html">Assignments</a></li>
+<li><a href="../projects.html">Projects</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Using Python and GRASS GIS</h2>
+
+Outline:
+
+<ul>
+    <li>
+</ul>
+
+Data:
+
+<ul>
+    <li>
+</ul>
+
+Tools:
+
+<ul>
+    <li>
+        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
+        installation should also include <a href="http://www.liblas.org/">libLAS</a> library
+        which is used by GRASS modules v.in.lidar and r.in.lidar
+        (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
+    </li>
+    <li>libLAS installation should include command line tools lasinfo and las2txt.
+    <!-- <li>libLAS installation should also include support for LAZ (through LAZzip library). -->
+    <li>Note that for merging las tiles (not necessary for this assignment) you need LASlib's lasmerge tool (part of LAStools).
+</ul>
+
+
+<h3>Working with command line tools</h3>
+
+Change coordinate system of multiple LAS files
+Would also work for conversion of LAS to LAS
+
+
+<h3>Import multiple files to GRASS GIS</h3>
+
+Import LAS to GRASS GIS
+
+
+<h3>Aggregating multiple maps into one</h3>
+
+Get list names of all imported maps (available from last step as well)
+
+Patch the maps together using v.patch
+
+Same way we would use, e.g. r.series
+
+
+<h3>Parallelization of computation on one map</h3>
+
+Interpolate using GridModule
+
+
+<h3>Working with large amount of maps</h3>
+
+Compute difference each map with each map
+
+
+<h3>Report</h3>
+
+Compute univariate statistics for each map
+Compute shaded relief for each raster map
+Render each map using d.* modules
+Create an HTML report from the data above
+
+
+<h3>Profile</h3>
+
+Convert vector to points for r.profile
+Compute a profile for a given set of points
+Draw the profile using matplotlib
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li>
+    <a href="https://github.com/ncsu-osgeorel/uav-lidar-analytics-course" title="Fork on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license">
+    &copy; 2015
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU OSGeoREL</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
