@@ -65,8 +65,56 @@ Render each map using d.* modules
 Create an HTML report from the data above
 
 
-<h3>Profile</h3>
+<h3>Terrain profiles</h3>
+Compute a profile for multiple rasters and plot them in <a href="http://matplotlib.org/">matplotlib</a>:
+<pre><code>
+import grass.script as gscript
+import matplotlib.pyplot as plt
 
-Convert vector to points for r.profile
-Compute a profile for a given set of points
-Draw the profile using matplotlib
+rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
+coordinates = [637132,219609,637059,219744]
+profiles = {}
+distance = []
+for raster in rasters:
+    profile = gscript.read_command('r.profile', input=raster, coordinates=coordinates, quiet=True).strip()
+    # parse output
+    if not distance:
+        for line in profile.splitlines():
+            distance.append(float(line.split()[0]))
+    profile_elev = []
+    for line in profile.splitlines():
+        profile_elev.append(float(line.split()[-1]))
+    profiles[raster] = profile_elev
+
+for raster in profiles:
+    plt.plot(distance, profiles[raster], label=raster)
+    plt.legend(loc=0)
+plt.show()
+</code></pre>
+
+Compute profile statistics using NumPy:
+<pre><code>
+import numpy as np
+
+stats = {}
+for raster in profiles:
+    profile = np.array(profiles[raster])
+    maxim = np.max(profile)
+    minim = np.min(profile)
+    mean = np.mean(profile)
+    stddev = np.std(profile)
+    median = np.median(profile)
+    roughness = np.std(np.diff(profile))
+    stats[raster] = (minim, maxim, mean, stddev, median, roughness)
+</code></pre>
+And write them into a CSV file:
+<pre><code>
+with open('profile_stats.csv', 'w') as f:
+    f.write(','.join(['name', 'minim', 'maxim', 'mean', 'stddev', 'median', 'roughness']))
+    f.write('\n')
+    for raster in profiles:
+        f.write(raster + ',')
+        f.write(','.join([str(i) for i in stats[raster]]))
+        f.write('\n')
+</code></pre>
+
