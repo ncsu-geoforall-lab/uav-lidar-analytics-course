@@ -29,8 +29,21 @@ Tools:
 
 <h3>Working with command line tools</h3>
 
-Change coordinate system of multiple LAS files
-Would also work for conversion of LAS to LAS
+Change coordinate system of multiple LAS files:
+<pre><code>
+import os
+from subprocess import call
+
+# first check where are we
+print os.getcwd()
+# change directory to where your files are
+# on Windows use 'D:\\path\\to\\files'
+os.chdir('/path/to/las/files')
+for f in os.listdir('.'):
+    if f.endswith('.las'):
+        name, ext = os.path.splitext(f)
+        call(['las2las', '--a_srs=EPSG:2264', '--t_srs=EPSG:3358', '-i', f, '-o', name + '_spm' + ext])
+</code></pre>
 
 
 <h3>Import multiple files to GRASS GIS</h3>
