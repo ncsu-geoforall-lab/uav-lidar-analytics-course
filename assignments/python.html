@@ -137,7 +137,11 @@ First try to run it in not parallel mode (debug=True) to see if it is working.
 <pre><code>grd = GridModule('v.surf.rst', debug=True, width=width, height=height, overlap=10, processes=4, input='merged_points', elevation='mid_pines_small_dem_1m', tension=30, smooth=1, overwrite=True)
 grd.run()
 </code></pre>
+Note: if you are getting error 'AttributeError: 'VisibleMapset' object has no attribute 'write'',
+you have to first set the SEARCH_PATH by going to Settings -> GRASS working environment -> Mapset access
+and check anything.
 
+<p>
 Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
 <pre><code>grd = GridModule('v.surf.rst', debug=False, width=width, height=height, overlap=10, processes=4, input='merged_points', elevation='mid_pines_small_dem_1m', tension=30, smooth=1, overwrite=True)
 grd.run()
