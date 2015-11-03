@@ -48,8 +48,33 @@ for f in os.listdir('.'):
 
 <h3>Import multiple files to GRASS GIS</h3>
 
-Import LAS to GRASS GIS
+We are looping through the <a href="http://fatra.cnr.ncsu.edu/lidar/">lidar files</a>
+and importing points only in our region of ineterest. Fisrt set the region in command line:
+<pre style="background-color:#FFFFFF"><code>
+g.region n=219637 s=219254 w=636730 s=219254 -p
+</code></pre>
+Now run this script (assuming you are in the directory with the las files):
 
+<pre><code>
+import os
+import grass.script as gscript
+
+region = gscript.region()
+
+vectors = []
+for lidar_file in os.listdir('.'):
+    if lidar_file.endswith('_spm.las'):
+        bbox = gscript.read_command('r.in.lidar', input=lidar_file, output='foo', flags='g').strip()
+        bbox = gscript.parse_key_val(bbox, vsep=' ', val_type=float)
+        if bbox['n'] < region['s'] or bbox['s'] > region['n'] or bbox['e'] < region['w'] or bbox['w'] > region['e']:
+            gscript.info('Skipping tile %s' % lidar_file)
+            continue
+        name = 'tile_' + lidar_file.rsplit('.', 1)[0]
+        vectors.append(name)
+        gscript.run_command('v.in.lidar', input=lidar_file, output=name, flags='rt', class_filter=2)
+gscript.run_command('v.patch', input=vectors, output='merged_points', flags='b', overwrite=True)
+gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
+</code></pre>
 
 <h3>Aggregating multiple maps into one</h3>
 
