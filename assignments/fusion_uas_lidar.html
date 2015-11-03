@@ -8,8 +8,12 @@ Outline:
         with reinterpolation from maximum elevation points
 </ul>
 
-Data: you should already have both the lidar and uas DSMs and points clouds.
+Data: 
 
+<ul>
+    <li>you should already have both the lidar and uas DSMs and points clouds.
+    <li><a href="./resources/fields.pack">Fields polygon as packed raster</a> use r.unpack in your mapset to import it
+</ul>
 <p>
 Tools:
 
@@ -111,25 +115,54 @@ g.region rast=mid_pines_lidar2013_dsm
 r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
 r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
 </code></pre>
+We now have smoother transition from UAS to lidar, but you can still identify the edge when viewing the patched DSM
+in 3D view (nviz). We will create a smooth transition when modeling the flow, in this assignment
+we will explore the viewshed analysis.
 
-We now have smooth transition from UAS to lidar but we are missing parts of the grown corn fields in the lidar.
-TODO 
-We will use raster digitizer to define the patch shape which captures the grown corn in our entire area.
 <p>
-We would like to set up a webcam to monitor this area for erosion 
-during the growing season so we need to analyze the viewshed while 
-taking into account the corn growing in the field.
+We would like to set up a webcam to monitor this area 
+during the growing season so we need to update the lidar-based DSM with the  UAS data and
+analyze the viewshed while taking into account the corn growing in the field.
+First we need to make sure that we take into account entire field
+to create a lidar-based DSM updated in the fields using UAS data.
+You can use digitizer to create a polygon or 
+get the packed raster representation of fields from the link above.
+
+<pre><code> 
+r.unpack fields.pack out=fields use=val
+r.mapcalc "uas_june_clpol = uas_june_agi11gcp_03m * fields" 
+r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
+r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
+</code></pre>
+
 We compute viewshed from the point 637100,219360 using
-lidar only, uas only, patched lidar+uas, smooth merge of lidar+uas
+lidar only, uas only, patched lidar+uas, 
 <pre><code> 
 r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar coordinates=637100,219360
 r.viewshed input=uas_june_agi11gcp_03m output=viewshed_uas coordinates=637100,219360
+r.viewshed input=lid_uas_patch_polygon output=viewshed_liduaspatchpoly coordinates=637100,219360 --o
+r.colors viewshed_lidar co=reds
+r.colors viewshed_uas co=greens
+r.colors viewshed_liduaspatchpoly co=blues
+</code></pre>
+To compare the viewsheds display the resulting maps with transparency.
+
+<!--
 r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
 r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
-</code></pre>
+-->
 
 Discuss the result.
 
+To address the missing parts of the grown corn fields in the lidar we will use raster digitizer to define the patch shape which captures the grown corn in our entire area.
+
+<p>
+Further reading
+<p>
+Fusion of multi-scale DEMs using a regularized super-resolution method
+Linwei Yue , Huanfeng Shen , Qiangqiang Yuan , Liangpei Zhang
+International Journal of Geographical Information Science
+Vol. 29, Iss. 12, 2015
 <!--
 <pre><code> </code></pre>
 <pre><code> </code></pre>
