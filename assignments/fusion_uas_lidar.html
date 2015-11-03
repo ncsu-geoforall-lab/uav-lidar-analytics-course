@@ -45,8 +45,12 @@ Outline:
         with reinterpolation from maximum elevation points
 </ul>
 
-Data: you should already have both the lidar and uas DSMs and points clouds.
+Data: 
 
+<ul>
+    <li>you should already have both the lidar and uas DSMs and points clouds.
+    <li><a href="./resources/fields.pack">Fields polygon as packed raster</a> use r.unpack in your mapset to import it
+</ul>
 <p>
 Tools:
 
@@ -109,16 +113,83 @@ v.in.ascii input=road.txt output=profile_road separator=space columns="x double,
 v.univar map=profile_road column=diff
 </code></pre>
 
-Select the region with minimal distortion in the UAS DSM and compute clipped DSM
+Because the shift in lidar is small we will ignore it in our first set of fusion examples, but we will
+use the analysis above top select the region with minimal distortion in the UAS DSM and compute clipped DSM
 
-<pre><code>g.region n=219735 s=219355 e=637000 w=636675
+<pre><code>g.region n=219720.9 s=219257.1 w=636762.9 e=637190.4 res=0.3 -p
 r.mapcalc  "uas_june_agi11gcp_03m_cl = uas_june_agi11gcp_03m * 1."
 </code></pre>
 
-Compute patched and fused DSM.
-Compare viewshed from lidar only, uas only, fused.
-Compare flow in a similar way.
+Patch UAS DSM with lidar DSM to cover the entire Mid Pines study area and use shaded relief 
+to check for patch edges
 
+<pre><code>g.region rast=mid_pines_lidar2013_dsm -p
+r.patch uas_june_agi11gcp_03m_cl,mid_pines_lidar2013_dsm out=lid_uas_patch
+r.relief lid_uas_patch out=lid_uas_patchsh
+</code></pre>
+
+We have visible discontinuity along the patch edges so we will use map algebra to do
+the patching with averaged overlap.
+First we define a region for 6m (20 cell) overlap (you can do this also interactively using mouse)
+<pre><code>g.region rast=uas_june_agi11gcp_03m_cl -p
+g.region s=s-6 n=n+6 e=e+6 w=w-6 -p 
+</code></pre>
+
+Then, within this region, we compute a raster with lidar+uas DSM average in the overlap and UAS elsehwere
+<pre><code>r.mapcalc "lid_uas_overlap_avg = if(isnull(uas_june_agi11gcp_03m_cl),(uas_june_agi11gcp_03m+mid_pines_lidar2013_dsm)/2.,uas_june_agi11gcp_03m_cl)"
+</code></pre>
+
+We can now merge it with lidar for entire study area and check the patch edges using shaded relief
+<pre><code>g.region rast=mid_pines_lidar2013_dsm
+r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
+r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
+</code></pre>
+We now have smoother transition from UAS to lidar, but you can still identify the edge when viewing the patched DSM
+in 3D view (nviz). We will create a smooth transition when modeling the flow, in this assignment
+we will explore the viewshed analysis.
+
+<p>
+We would like to set up a webcam to monitor this area 
+during the growing season so we need to update the lidar-based DSM with the  UAS data and
+analyze the viewshed while taking into account the corn growing in the field.
+First we need to make sure that we take into account entire field
+to create a lidar-based DSM updated in the fields using UAS data.
+You can use digitizer to create a polygon or 
+get the packed raster representation of fields from the link above.
+
+<pre><code>r.unpack fields.pack out=fields use=val
+r.mapcalc "uas_june_clpol = uas_june_agi11gcp_03m * fields" 
+r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
+r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
+</code></pre>
+
+We compute viewshed from the point 637100,219360 using
+lidar only, uas only, patched lidar+uas, 
+<pre><code>r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar coordinates=637100,219360
+r.viewshed input=uas_june_agi11gcp_03m output=viewshed_uas coordinates=637100,219360
+r.viewshed input=lid_uas_patch_polygon output=viewshed_liduaspatchpoly coordinates=637100,219360 --o
+r.colors viewshed_lidar co=reds
+r.colors viewshed_uas co=greens
+r.colors viewshed_liduaspatchpoly co=blues
+</code></pre>
+To compare the viewsheds display the resulting maps with transparency.
+
+<!--
+r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
+r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
+-->
+
+Discuss the result.
+
+To address the missing parts of the grown corn fields in the lidar we will use raster digitizer to define the patch shape which captures the grown corn in our entire area.
+
+<p>
+Further reading
+<p>
+Fusion of multi-scale DEMs using a regularized super-resolution method
+Linwei Yue , Huanfeng Shen , Qiangqiang Yuan , Liangpei Zhang
+International Journal of Geographical Information Science
+Vol. 29, Iss. 12, 2015
 <!--
 <pre><code> </code></pre>
 <pre><code> </code></pre>
