@@ -119,6 +119,33 @@ Compute difference each map with each map
 
 <h3>Report</h3>
 
+<pre><code>
+rasters = ['2015_03_18_DSM_agi_6GCP', '2015_03_18_DSM_agi_noGCP', '2015_06_20_DSM_Trimble_11GCP']
+stats = {}
+for raster in rasters:
+    stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
+    gscript.run_command('d.mon', start='cairo', output=raster + '.png', width=400, height=400, overwrite=True)
+    gscript.run_command('d.rast', map=rasters[0])
+    gscript.run_command('d.mon', stop='cairo')
+
+template = """&lt;h2&gt;Raster map {name}&lt;/h2&gt;
+&lt;h3&gt;Statistics&lt;/h3&gt;
+&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;Mean&lt;/td&gt;&lt;td&gt;{mean}&lt;/td&gt;
+&lt;tr&gt;&lt;td&gt;Variance&lt;/td&gt;&lt;td&gt;{var}&lt;/td&gt;
+&lt;/table&gt;
+&lt;h3&gt;Image&lt;/h3&gt;
+&lt;img src="{name}.png"&gt;
+"""
+
+with open('file.html', 'w') as output:
+        for raster in sorted(rasters):
+            stat = stats[raster]
+            output.write(template.format(
+                name=raster, mean=stat['mean'], var=stat['variance']))
+</code></pre>
+
+
 Compute univariate statistics for each map
 Compute shaded relief for each raster map
 Render each map using d.* modules

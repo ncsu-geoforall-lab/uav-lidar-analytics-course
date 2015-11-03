@@ -1,15 +1,37 @@
 <h2>Introduction to Python scripting in GRASS GIS 7</h2>
-The following content is derived from 
-workshop <em>How to write a Python GRASS GIS 7 addon</em> presented at FOSS4G-Europe 2015.
-The relevant parts are:
-<ul>
-<li><a href="https://github.com/wenzeslaus/python-grass-addon/blob/master/01_scripting_library.ipynb">Python scripting in GRASS GIS</a>
-<li><a href="https://github.com/wenzeslaus/python-grass-addon/blob/master/02_pygrass_library.ipynb">Working with individual points</a>
-<li><a href="https://github.com/wenzeslaus/python-grass-addon/blob/master/03_create_script.ipynb">Creating a script</a>
-</ul>
+
+Python code can be executed in GRASS GIS GUI in the <em>Python shell</em>
+tab in the <em>Layer Manager</em>. You can enter any Python code, we can
+for example, do a simple calculation:
+<pre><code>
+import math
+5 * math.sin(math.pi/2)
+</code></pre>
+This is an quick way to run small code snippets and
+test Python code you are currently working on.
+
+<p>
+For this class, we will use more advanced method called IPython Notebook
+which gives us ability to write code, run code and also write nicely
+formated additional explanatory text and create a report or notes in this way.
+
+<p>
+To avoid installing IPython Notebook on all machines, we will use
+OSGeo Live machine from NCSU VLC in the class. Go to
+<a href="https://vcl.ncsu.edu/scheduling">VLC reservation page</a>
+and reserve machine called <em>OSGeo Live</em>. Wait for it to boot
+and you will get instructions how to connect to it using remote
+desktop method.
+
+<p>
+Once you are in OSGeo Live, start GRASS GIS from the menu at the bottom
+left, submenu Geospatial, Desktop GIS. In GRASS GIS, go to the system
+command line (not the one in GUI) and start <code>ipython notebook</code>
+(note the space).
+
 
 <h3>Python Scripting Library</h3>
-The <a href="http://grass.osgeo.org/grass7/">GRASS GIS 7 Python Scripting Library</a>
+The <a href="https://grass.osgeo.org/grass70/manuals/libpython/">GRASS GIS 7 Python Scripting Library</a>
 provides functions to call GRASS modules within scripts as subprocesses.
 The most often used functions include:
 
@@ -164,3 +186,14 @@ with VectorTopo('view_points', mode='r') as points:
     for point in points:
         print(point, point.attrs['name'])
 </code></pre>
+
+<hr>
+
+The above content is derived from
+workshop <em>How to write a Python GRASS GIS 7 addon</em> presented at FOSS4G Europe 2015.
+The relevant parts are:
+<ul>
+<li><a href="https://github.com/wenzeslaus/python-grass-addon/blob/master/01_scripting_library.ipynb">Python scripting in GRASS GIS</a>
+<li><a href="https://github.com/wenzeslaus/python-grass-addon/blob/master/02_pygrass_library.ipynb">Working with individual points</a>
+<li><a href="https://github.com/wenzeslaus/python-grass-addon/blob/master/03_create_script.ipynb">Creating a script</a>
+</ul>
