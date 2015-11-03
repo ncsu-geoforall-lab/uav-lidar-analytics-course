@@ -52,7 +52,7 @@ We are looping through the <a href="http://fatra.cnr.ncsu.edu/lidar/">lidar file
 and importing points only in our region of interest. First set the region in command line:
 
 <pre style="background-color:#FFFFFF"><code>
-g.region n=219637 s=219254 w=636730 s=219254 -p
+g.region n=219637 s=219254 w=636730 e=637193 -p
 </code></pre>
 Now run this script (assuming you are in the directory with the las files):
 
@@ -79,7 +79,37 @@ gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
 
 <h3>DSM interpolation with parallelization</h3>
 
-Interpolate using GridModule
+We will interpolate DEM using <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">
+GridModule</a> which allows to run v.surf.rst
+in parallel by splitting the region into tiles and interpolating each part
+and then patching them back.
+First we set the region of our area:
+<pre style="background-color:#FFFFFF"><code>
+g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
+</code></pre>
+
+We import GridModule and compute the size of the tiles
+if we want to run it on 4 cores at once:
+<pre><code>
+import grass.script as gscript
+from grass.pygrass.modules.grid import GridModule
+
+region = gscript.region()
+width = region['cols'] / 2 + 1
+height = region['rows'] / 2 + 1
+</code></pre>
+
+First try to run it in not parallel mode (debug=True) to see if it is working.
+<pre><code>
+grd = GridModule('v.surf.rst', debug=True, width=width, height=height, overlap=10, processes=4, input='merged_points', elevation='mid_pines_small_dem_1m', tension=30, smooth=1, overwrite=True)
+grd.run()
+</code></pre>
+
+Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
+<pre><code>
+grd = GridModule('v.surf.rst', debug=False, width=width, height=height, overlap=10, processes=4, input='merged_points', elevation='mid_pines_small_dem_1m', tension=30, smooth=1, overwrite=True)
+grd.run()
+</code></pre>
 
 
 <h3>Working with large amount of maps</h3>
