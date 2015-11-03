@@ -82,10 +82,11 @@ for f in os.listdir('.'):
 </code></pre>
 
 
-<h3>Import multiple files to GRASS GIS</h3>
+<h3>Import multiple LAS files to GRASS GIS and merging them</h3>
 
 We are looping through the <a href="http://fatra.cnr.ncsu.edu/lidar/">lidar files</a>
-and importing points only in our region of ineterest. Fisrt set the region in command line:
+and importing points only in our region of interest. First set the region in command line:
+
 <pre style="background-color:#FFFFFF"><code>
 g.region n=219637 s=219254 w=636730 s=219254 -p
 </code></pre>
@@ -111,16 +112,7 @@ gscript.run_command('v.patch', input=vectors, output='merged_points', flags='b',
 gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
 </code></pre>
 
-<h3>Aggregating multiple maps into one</h3>
-
-Get list names of all imported maps (available from last step as well)
-
-Patch the maps together using v.patch
-
-Same way we would use, e.g. r.series
-
-
-<h3>Parallelization of computation on one map</h3>
+<h3>DSM interpolation with parallelization</h3>
 
 Interpolate using GridModule
 
