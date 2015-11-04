@@ -73,6 +73,11 @@ code {
     font-size: 120%;
 }
 
+.comment {
+    color: gray;
+    font-style: italic;
+}
+
 /* main menu navigation */
 
 nav {
