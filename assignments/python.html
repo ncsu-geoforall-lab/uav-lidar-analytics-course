@@ -52,7 +52,7 @@ for f in os.listdir('.'):
 We are looping through the <a href="http://fatra.cnr.ncsu.edu/lidar/">lidar files</a>
 and importing points only in our region of interest. First set the region in command line:
 
-<pre style="background-color:#FFFFFF"><code>
+<pre style="background-color: #FFFFFF"><code>
 g.region n=219637 s=219254 w=636730 e=637193 -p
 </code></pre>
 Now run this script (assuming you are in the directory with the las files):
@@ -90,7 +90,7 @@ GridModule</a> which allows to run v.surf.rst
 in parallel by splitting the region into tiles and interpolating each part
 and then patching them back.
 First we set the region of our area:
-<pre style="background-color:#FFFFFF"><code>
+<pre style="background-color: #FFFFFF"><code>
 g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
 </code></pre>
 
@@ -153,7 +153,7 @@ for raster_a in rasters:
 Before running the code again, we need to remove the created raster maps
 (in the command line):
 
-<pre style="background-color:#FFFFFF"><code>
+<pre style="background-color: #FFFFFF"><code>
 g.remove type=raster pattern="diff_*" -f
 </code></pre>
 
