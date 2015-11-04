@@ -3,42 +3,92 @@
 Outline:
 
 <ul>
-    <li>
+    <li>Import lidar points.
+    <li>Interpolate with parallelization.
+    <li>Process multiple maps at once and generate an HTML report.
+    <li>Use matplotlib to show terrain profiles.
 </ul>
 
 Data:
 
 <ul>
-    <li>
+    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k">Lake Wheeler GRASS Location</a>;
+        be sure to use separate Mapset for this assignment
+    <li>selected LAS tiles from
+        <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>
+        (see below for the tiles we will need; you can use the provided
+        Python code to download them)
 </ul>
 
 Tools:
 
 <ul>
     <li>
-        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
+        Your <a href="http://grass.osgeo.org">GRASS GIS 7</a>
         installation should also include <a href="http://www.liblas.org/">libLAS</a> library
         which is used by GRASS modules v.in.lidar and r.in.lidar
         (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
     </li>
-    <li>libLAS installation should include command line tools lasinfo and las2txt.
-    <!-- <li>libLAS installation should also include support for LAZ (through LAZzip library). -->
-    <li>Note that for merging las tiles (not necessary for this assignment) you need LASlib's lasmerge tool (part of LAStools).
+    <li>libLAS installation should include command line tool las2las.
 </ul>
+
+
+<h3>Downloading the data</h3>
+
+In case you don't have the lidar tiles, download them using Python,
+otherwise skip this step.
+
+First, create a directory where you want to have the files. Then
+set it as current directory in Python:
+
+<pre><code>
+# use path which applies to you
+# on Windows use something like 'D:\\path\\to\\files'
+os.chdir('/path/to/las/files')
+</code></pre>
+
+Then, download the files using:
+
+<pre><code>
+import urllib
+
+base_url = 'http://fatra.cnr.ncsu.edu/lidar/'
+
+urllib.urlretrieve(base_url + '0791_005.las', '0791_005.las')
+urllib.urlretrieve(base_url + '0791_011.las', '0791_011.las')
+urllib.urlretrieve(base_url + '0792_017.las', '0792_017.las')
+urllib.urlretrieve(base_url + '0782_020.las', '0782_020.las')
+urllib.urlretrieve(base_url + '0781_008.las', '0781_008.las')
+</code></pre>
+
+The same could be done in much smarter way using a for loop
+and a list of files to download, so you can try that as well.
 
 
 <h3>Working with command line tools</h3>
 
-Change coordinate system of multiple LAS files:
+The LAS files are in different coordinate system, so we need to change it.
+
+<p>
+First, we check if we are in the directory with the files:
+
+<pre><code>
+print os.getcwd()
+</code></pre>
+
+If not, we change directory to where the files are:
+
+<pre><code>
+# on Windows use 'D:\\path\\to\\files'
+os.chdir('/path/to/las/files')
+</code></pre>
+
+Now change to coordinate system for all files in the current directory:
+
 <pre><code>
 import os
 from subprocess import call
 
-# first check where are we
-print os.getcwd()
-# change directory to where your files are
-# on Windows use 'D:\\path\\to\\files'
-os.chdir('/path/to/las/files')
 for f in os.listdir('.'):
     if f.endswith('.las'):
         name, ext = os.path.splitext(f)
@@ -46,15 +96,20 @@ for f in os.listdir('.'):
               f, '-o', name + '_spm' + ext])
 </code></pre>
 
+In the same step, we could do also some other conversions which are
+supported by las2las, for example format conversion.
+
 
 <h3>Import multiple LAS files to GRASS GIS and merging them</h3>
 
-We are looping through the <a href="http://fatra.cnr.ncsu.edu/lidar/">lidar files</a>
-and importing points only in our region of interest. First set the region in command line:
+We are looping through the lidar files
+and importing points only in our region of interest.
+First set the region in command line:
 
 <pre class="other-code"><code>
 g.region n=219637 s=219254 w=636730 e=637193 -p
 </code></pre>
+
 Now run this script (assuming you are in the directory with the las files):
 
 <pre><code>
@@ -70,7 +125,7 @@ for lidar_file in os.listdir('.'):
                                     output='foo', flags='g').strip()
         bbox = gscript.parse_key_val(bbox, vsep=' ', val_type=float)
         if (bbox['n'] &lt; region['s'] or bbox['s'] &gt; region['n']
-          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']:
+          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']):
             gscript.info('Skipping tile %s' % lidar_file)
             continue
         name = 'tile_' + lidar_file.rsplit('.', 1)[0]
@@ -81,6 +136,10 @@ gscript.run_command('v.patch', input=vectors, output='merged_points',
                     flags='b', overwrite=True)
 gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
 </code></pre>
+
+In case you are having problems with projections but you know that the
+projections in fact match, add <code>o</code> flag to <em>r.in.lidar</em>
+and <em>v.in.lidar</em> calls.
 
 
 <h3>DSM interpolation with parallelization</h3>
@@ -160,6 +219,10 @@ g.remove type=raster pattern="diff_*" -f
 
 <h3>Report</h3>
 
+Using HTML and generated images, we can create a report using Python
+for the analysis we have made.
+
+<p>
 First, we get a list of raster maps we are interested in. We
 use <em>g.list</em> wrapper with <code>pattern</code>
 option. Then we compute univariate statistics
@@ -206,7 +269,7 @@ template = """&lt;h2&gt;Raster map {name}&lt;/h2&gt;
 """
 
 # write to a file using a template
-with open('file.html', 'w') as output:
+with open('report.html', 'w') as output:
         for raster in sorted(rasters):
             stat = stats[raster]
             output.write(template.format(
@@ -223,6 +286,7 @@ g.remove type=raster pattern="*_shade" -f
 <h3>Terrain profiles</h3>
 
 Compute a profile for multiple rasters and plot them in <a href="http://matplotlib.org/">matplotlib</a>:
+
 <pre><code>
 import grass.script as gscript
 import matplotlib.pyplot as plt
@@ -250,6 +314,7 @@ plt.show()
 </code></pre>
 
 Compute profile statistics using NumPy:
+
 <pre><code>
 import numpy as np
 
@@ -264,7 +329,9 @@ for raster in profiles:
     roughness = np.std(np.diff(profile))
     stats[raster] = (minim, maxim, mean, stddev, median, roughness)
 </code></pre>
+
 And write them into a CSV file:
+
 <pre><code>
 with open('profile_stats.csv', 'w') as f:
     f.write(','.join(['name', 'minim', 'maxim', 'mean',
@@ -296,3 +363,39 @@ with open('profile_stats.csv', 'w') as f:
     <li>Deliver a short version of a normal report with your notes,
         observations, selected figures or screenshots.
 </ul>
+
+<hr>
+
+The following parts are optional.
+
+
+<h3>Downloading all files linked on a website</h3>
+
+<pre><code>
+import urllib
+import re
+
+# note the slash at the end
+base_url = 'http://fatra.cnr.ncsu.edu/lidar/'
+
+tile_file = 'tile_list.html'
+# download the file (in one step)
+urllib.urlretrieve(base_url, filename=tile_file)
+
+# open the file and read it line by line
+# we expect to get HTML with a list of filenames in the given directory
+with open(tile_file) as html:
+    for line in html:
+        # search for the links (a tags with href attribute)
+        # we expect one link per line in the HTML source code
+        match = re.search(r'&lt;a href="(.*?)"&gt;', line)
+        if not match:
+            continue
+        # get the content of the href attribute captured before
+        filename = match.group(1)
+        # download only files we are interested in
+        if not filename.endswith('.las'):
+            continue
+        # we expect the link to be relative to our base URL
+        urllib.urlretrieve(base_url + filename, filename=filename)
+</code></pre>
