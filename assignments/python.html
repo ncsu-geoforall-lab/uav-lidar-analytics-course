@@ -144,15 +144,28 @@ and <em>v.in.lidar</em> calls.
 
 <h3>DSM interpolation with parallelization</h3>
 
-We will interpolate DEM using <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">
-GridModule</a> which allows to run v.surf.rst
+We will interpolate DEM using
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">GridModule</a>
+which allows to run <em>v.surf.rst</em>
 in parallel by splitting the region into tiles and interpolating each part
 and then patching them back.
-First we set the region of our area:
+First we set the region of our area
+(in this example, we use very low resolution to make the computation fast):
+
 <pre class="other-code"><code>
 g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
 </code></pre>
 
+Note: You need to change the visible Mapsets to something else than
+the default (current Mapset and PERMANENT Mapset).
+Set the visible Mapsets (SEARCH_PATH) by going to
+<em>Settings -> GRASS working environment -> Mapset access</em>
+and check one of the unchecked Mapsets.
+Otherwise, you will get an error "AttributeError: 'VisibleMapset' object
+has no attribute 'write'",
+see ticket <a href="http://trac.osgeo.org/grass/ticket/2791">#2791</a>.
+
+<p>
 We import GridModule and compute the size of the tiles
 if we want to run it on 4 cores at once:
 <pre><code>
@@ -167,20 +180,17 @@ height = region['rows'] / 2 + 1
 First try to run it in not parallel mode (debug=True) to see if it is working.
 <pre><code>
 grd = GridModule('v.surf.rst', debug=True, width=width, height=height,
-                 overlap=10, processes=4,
+                 overlap=10, processes=4, npmin=100,
                  input='merged_points', elevation='mid_pines_small_dem_1m',
                  tension=30, smooth=1, overwrite=True)
 grd.run()
 </code></pre>
-Note: if you are getting error 'AttributeError: 'VisibleMapset' object has no attribute 'write'',
-you have to first set the SEARCH_PATH by going to Settings -> GRASS working environment -> Mapset access
-and check anything.
 
 <p>
 Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
 <pre><code>
 grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
-                 overlap=10, processes=4,
+                 overlap=10, processes=4, npmin=100,
                  input='merged_points', elevation='mid_pines_small_dem_1m',
                  tension=30, smooth=1, overwrite=True)
 grd.run()
@@ -188,6 +198,12 @@ grd.run()
 
 
 <h3>Working with large amount of maps</h3>
+
+Set the region to fit one of the raster maps:
+
+<pre class="other-code"><code>
+g.region raster=2015_06_20_pix4d_11GCP_dsm
+</code></pre>
 
 Now we will compute difference between raster maps in a list
 using nested for loops.
@@ -399,3 +415,32 @@ with open(tile_file) as html:
         # we expect the link to be relative to our base URL
         urllib.urlretrieve(base_url + filename, filename=filename)
 </code></pre>
+
+
+<h3>Script with parameters</h3>
+
+Putting filenames, paths, map names etc. to a script might see as an
+easy option at the beginning, however later this gets hard to manage
+as one needs to search for them and change them for different data
+especially when one script is used with different data at the same time.
+
+Here, we create a script which adds two numbers and prints the whole
+expression including the result. It should be easy to imagine that
+the parameters would be raster names and the expression would be
+<em>r.mapcalc</em> expression which we could execute.
+
+<pre><code>
+import sys
+
+if len(sys.argv) != 3:
+    sys.exit("Please, provide two parameters")
+a = float(sys.argv[1])
+b = float(sys.argv[2])
+c = a + b
+print "{a} + {b} = {c}".format(a=a, b=b, c=c)
+</code></pre>
+
+When checking the number of parameters and getting the individual parameters
+remember that the first (zeroth) parameter is the name of the script
+and the first parameter provided in the command line is at the position 1
+in the list.
