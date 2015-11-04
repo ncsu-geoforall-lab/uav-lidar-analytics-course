@@ -129,14 +129,14 @@ You can use digitizer to create a polygon or
 get the packed raster representation of fields from the link above.
 
 <pre><code> 
-r.unpack fields.pack out=fields use=val
+r.unpack -o fields.pack out=fields use=val
 r.mapcalc "uas_june_clpol = 2015_06_20_DSM_agi_11GCP * fields" 
 r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
 r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
 </code></pre>
 
 We compute viewshed from the point 637100,219360 using
-lidar only, uas only, patched lidar+uas, 
+lidar only, uas only, and patched lidar+uas, 
 <pre><code> 
 r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar coordinates=637100,219360
 r.viewshed input=2015_06_20_DSM_agi_11GCP output=viewshed_uas coordinates=637100,219360
@@ -146,15 +146,18 @@ r.colors viewshed_uas co=greens
 r.colors viewshed_liduaspatchpoly co=blues
 </code></pre>
 To compare the viewsheds display the resulting maps with transparency.
+Discuss the result.
+<p>
+Note: To find the location and height of the webcam that will capture the entire field during entire
+year we can run r.series on the time series of UAS DSMs to derive the DSM envelope surface
+and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
+the following year.
 
 <!--
 r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
 r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
 -->
 
-Discuss the result.
-
-To address the missing parts of the grown corn fields in the lidar we will use raster digitizer to define the patch shape which captures the grown corn in our entire area.
 
 <p>
 Further reading:
