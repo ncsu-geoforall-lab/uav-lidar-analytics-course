@@ -136,8 +136,8 @@ The g.region wrapper is a convenient way to retrieve the current region settings
 converted to appropriate types (floats and ints).
 <pre><code>region = gscript.region()
 print region
-# cell area in map units (in projected Locations)
-region['nsres'] * region['ewres']
+<span class="comment"># cell area in map units (in projected Locations)
+</span>region['nsres'] * region['ewres']
 </code></pre>
 We can list data stored in a GRASS GIS location with g.list wrappers.
 With this function, the map layers are grouped by mapsets (in this example, raster layers):
@@ -182,16 +182,16 @@ Finally close the vector map:
 </code></pre>
 Now do the same thing using the context manager syntax provided by with,
 and creating and setting also the attribute table:
-<pre><code># Define the columns of the new vector map
-cols = [(u'cat',       'INTEGER PRIMARY KEY'),
+<pre><code><span class="comment"># Define the columns of the new vector map
+</span>cols = [(u'cat',       'INTEGER PRIMARY KEY'),
         (u'name',      'TEXT')]
 
 with VectorTopo('view_points', mode='w', tab_cols=cols, overwrite=True) as view_points:
-    # save the point and the attribute
-    view_points.write(point1, ('pub', ))
+<span class="comment">    # save the point and the attribute
+</span>    view_points.write(point1, ('pub', ))
     view_points.write(point2, ('restaurant', ))
-    # save the changes to the database
-    view_points.table.conn.commit()
+<span class="comment">    # save the changes to the database
+</span>    view_points.table.conn.commit()
 </code></pre>
 Note: we don't need to close the vector map because it is already closed by the context manager.
 <p>
