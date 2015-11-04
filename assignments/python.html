@@ -155,14 +155,38 @@ Compute difference each map with each map
 
 <h3>Report</h3>
 
-<pre><code>rasters = ['2015_03_18_DSM_agi_6GCP', '2015_03_18_DSM_agi_noGCP', '2015_06_20_DSM_Trimble_11GCP']
-stats = {}
-for raster in rasters:
-    stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
-    gscript.run_command('d.mon', start='cairo', output=raster + '.png', width=400, height=400, overwrite=True)
-    gscript.run_command('d.rast', map=rasters[0])
-    gscript.run_command('d.mon', stop='cairo')
+First, we get a list of raster maps we are interested in. We
+use <em>g.list</em> wrapper with <code>pattern</code>
+option. Then we compute univariate statistics
+and we also compute shaded relief for each raster map.
+Finally, we render the raster map together with shaded relief using
+<em>d.*</em> modules to a PNG file.
+Note that we are using <em>d.shade</em> to avoid creating another
+raster which would combine the original raster and its shaded relief.
 
+<pre><code># get list of rasters we are interested in using a search pattern
+rasters = gscript.list_strings('raster', pattern='2015_06_*')
+# initialize a dictionary to hold statistics for each raster
+stats = {}
+# iterate through the list of rasters
+for raster in rasters:
+    # save univariate statistics for raster to dictionary
+    stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
+    # compute shaded relief, use name of the original raster including mapset
+    shaded_relief = raster.replace('@', '_') + '_shade'
+    gscript.run_command('r.relief', input=raster, output=shaded_relief)
+    gscript.run_command('r.colors', map=raster, color='elevation')
+    # render the raster (geographical extent follows current region)
+    gscript.run_command('d.mon', start='cairo', output=raster + '.png',
+                        width=400, height=400, overwrite=True)
+    gscript.run_command('d.shade', shade=shaded_relief, color=raster)
+    gscript.run_command('d.mon', stop='cairo')
+</code></pre>
+
+Now, we create an HTML report from the data collected above.
+We also link images created above to the HTML.
+
+<pre><code># a template for an HTML report for one raster
 template = """&lt;h2&gt;Raster map {name}&lt;/h2&gt;
 &lt;h3&gt;Statistics&lt;/h3&gt;
 &lt;table&gt;
@@ -173,18 +197,13 @@ template = """&lt;h2&gt;Raster map {name}&lt;/h2&gt;
 &lt;img src="{name}.png"&gt;
 """
 
+# write to a file using a template
 with open('file.html', 'w') as output:
         for raster in sorted(rasters):
             stat = stats[raster]
             output.write(template.format(
                 name=raster, mean=stat['mean'], var=stat['variance']))
 </code></pre>
-
-
-Compute univariate statistics for each map
-Compute shaded relief for each raster map
-Render each map using d.* modules
-Create an HTML report from the data above
 
 
 <h3>Terrain profiles</h3>
