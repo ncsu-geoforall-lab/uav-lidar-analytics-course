@@ -130,7 +130,32 @@ grd.run()
 
 <h3>Working with large amount of maps</h3>
 
-Compute difference each map with each map
+Now we will compute difference between raster maps in a list
+using nested for loops.
+
+<pre><code>
+rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
+           '2015_06_20_DSM_agi_11GCP']
+for raster_a in rasters:
+    for raster_b in rasters:
+        if raster_a == raster_b:
+            continue
+        # create the name for the difference raster
+        difference = "diff_{a}_{b}".format(a=raster_a.replace('@', '_'),
+                                           b=raster_b.replace('@', '_'))
+        # compute difference between the rasters using r.mapcalc
+        gscript.mapcalc('{diff} = {a} - {b}'.format(
+            a=raster_a, b=raster_b, diff=difference))
+        # set color table to the resulting map
+        gscript.run_command('r.colors', map=difference, color='differences')
+</code></pre>
+
+Before running the code again, we need to remove the created raster maps
+(in the command line):
+
+<pre style="background-color:#FFFFFF"><code>
+g.remove type=raster pattern="diff_*" -f
+</code></pre>
 
 
 <h3>Report</h3>
@@ -155,7 +180,8 @@ for raster in rasters:
     stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
     # compute shaded relief, use name of the original raster including mapset
     shaded_relief = raster.replace('@', '_') + '_shade'
-    gscript.run_command('r.relief', input=raster, output=shaded_relief)
+    gscript.run_command('r.relief', input=raster, output=shaded_relief,
+                        overwrite=True)
     gscript.run_command('r.colors', map=raster, color='elevation')
     # render the raster (geographical extent follows current region)
     gscript.run_command('d.mon', start='cairo', output=raster + '.png',
@@ -185,6 +211,12 @@ with open('file.html', 'w') as output:
             stat = stats[raster]
             output.write(template.format(
                 name=raster, mean=stat['mean'], var=stat['variance']))
+</code></pre>
+
+To remove the created raster maps, we can use (in the command line):
+
+<pre style="background-color:#FFFFFF"><code>
+g.remove type=raster pattern="*_shade" -f
 </code></pre>
 
 
