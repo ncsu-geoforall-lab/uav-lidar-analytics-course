@@ -42,7 +42,8 @@ os.chdir('/path/to/las/files')
 for f in os.listdir('.'):
     if f.endswith('.las'):
         name, ext = os.path.splitext(f)
-        call(['las2las', '--a_srs=EPSG:2264', '--t_srs=EPSG:3358', '-i', f, '-o', name + '_spm' + ext])
+        call(['las2las', '--a_srs=EPSG:2264', '--t_srs=EPSG:3358', '-i',
+              f, '-o', name + '_spm' + ext])
 </code></pre>
 
 
@@ -65,17 +66,22 @@ region = gscript.region()
 vectors = []
 for lidar_file in os.listdir('.'):
     if lidar_file.endswith('_spm.las'):
-        bbox = gscript.read_command('r.in.lidar', input=lidar_file, output='foo', flags='g').strip()
+        bbox = gscript.read_command('r.in.lidar', input=lidar_file,
+                                    output='foo', flags='g').strip()
         bbox = gscript.parse_key_val(bbox, vsep=' ', val_type=float)
-        if bbox['n'] < region['s'] or bbox['s'] > region['n'] or bbox['e'] < region['w'] or bbox['w'] > region['e']:
+        if (bbox['n'] &lt; region['s'] or bbox['s'] &gt; region['n']
+          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']:
             gscript.info('Skipping tile %s' % lidar_file)
             continue
         name = 'tile_' + lidar_file.rsplit('.', 1)[0]
         vectors.append(name)
-        gscript.run_command('v.in.lidar', input=lidar_file, output=name, flags='rt', class_filter=2)
-gscript.run_command('v.patch', input=vectors, output='merged_points', flags='b', overwrite=True)
+        gscript.run_command('v.in.lidar', input=lidar_file, output=name,
+                            flags='rt', class_filter=2)
+gscript.run_command('v.patch', input=vectors, output='merged_points',
+                    flags='b', overwrite=True)
 gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
 </code></pre>
+
 
 <h3>DSM interpolation with parallelization</h3>
 
@@ -101,7 +107,10 @@ height = region['rows'] / 2 + 1
 
 First try to run it in not parallel mode (debug=True) to see if it is working.
 <pre><code>
-grd = GridModule('v.surf.rst', debug=True, width=width, height=height, overlap=10, processes=4, input='merged_points', elevation='mid_pines_small_dem_1m', tension=30, smooth=1, overwrite=True)
+grd = GridModule('v.surf.rst', debug=True, width=width, height=height,
+                 overlap=10, processes=4,
+                 input='merged_points', elevation='mid_pines_small_dem_1m',
+                 tension=30, smooth=1, overwrite=True)
 grd.run()
 </code></pre>
 Note: if you are getting error 'AttributeError: 'VisibleMapset' object has no attribute 'write'',
@@ -111,7 +120,10 @@ and check anything.
 <p>
 Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
 <pre><code>
-grd = GridModule('v.surf.rst', debug=False, width=width, height=height, overlap=10, processes=4, input='merged_points', elevation='mid_pines_small_dem_1m', tension=30, smooth=1, overwrite=True)
+grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
+                 overlap=10, processes=4,
+                 input='merged_points', elevation='mid_pines_small_dem_1m',
+                 tension=30, smooth=1, overwrite=True)
 grd.run()
 </code></pre>
 
@@ -177,6 +189,7 @@ with open('file.html', 'w') as output:
 
 
 <h3>Terrain profiles</h3>
+
 Compute a profile for multiple rasters and plot them in <a href="http://matplotlib.org/">matplotlib</a>:
 <pre><code>
 import grass.script as gscript
@@ -187,7 +200,8 @@ coordinates = [637132,219609,637059,219744]
 profiles = {}
 distance = []
 for raster in rasters:
-    profile = gscript.read_command('r.profile', input=raster, coordinates=coordinates, quiet=True).strip()
+    profile = gscript.read_command('r.profile', input=raster,
+                                   coordinates=coordinates, quiet=True).strip()
     # parse output
     if not distance:
         for line in profile.splitlines():
@@ -221,7 +235,8 @@ for raster in profiles:
 And write them into a CSV file:
 <pre><code>
 with open('profile_stats.csv', 'w') as f:
-    f.write(','.join(['name', 'minim', 'maxim', 'mean', 'stddev', 'median', 'roughness']))
+    f.write(','.join(['name', 'minim', 'maxim', 'mean',
+                      'stddev', 'median', 'roughness']))
     f.write('\n')
     for raster in profiles:
         f.write(raster + ',')
