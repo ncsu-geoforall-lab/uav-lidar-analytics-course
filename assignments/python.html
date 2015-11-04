@@ -70,35 +70,94 @@ Change coordinate system of multiple LAS files:
 <pre><code>import os
 from subprocess import call
 
-# first check where are we
-print os.getcwd()
-# change directory to where your files are
-# on Windows use 'D:\\path\\to\\files'
-os.chdir('/path/to/las/files')
+<span class="comment"># first check where are we
+</span>print os.getcwd()
+<span class="comment"># change directory to where your files are
+</span><span class="comment"># on Windows use 'D:\\path\\to\\files'
+</span>os.chdir('/path/to/las/files')
 for f in os.listdir('.'):
     if f.endswith('.las'):
         name, ext = os.path.splitext(f)
-        call(['las2las', '--a_srs=EPSG:2264', '--t_srs=EPSG:3358', '-i', f, '-o', name + '_spm' + ext])
+        call(['las2las', '--a_srs=EPSG:2264', '--t_srs=EPSG:3358', '-i',
+              f, '-o', name + '_spm' + ext])
 </code></pre>
 
 
-<h3>Import multiple files to GRASS GIS</h3>
+<h3>Import multiple LAS files to GRASS GIS and merging them</h3>
 
-Import LAS to GRASS GIS
+We are looping through the <a href="http://fatra.cnr.ncsu.edu/lidar/">lidar files</a>
+and importing points only in our region of interest. First set the region in command line:
+
+<pre style="background-color:#FFFFFF"><code>
+g.region n=219637 s=219254 w=636730 e=637193 -p
+</code></pre>
+Now run this script (assuming you are in the directory with the las files):
+
+<pre><code>import os
+import grass.script as gscript
+
+region = gscript.region()
+
+vectors = []
+for lidar_file in os.listdir('.'):
+    if lidar_file.endswith('_spm.las'):
+        bbox = gscript.read_command('r.in.lidar', input=lidar_file,
+                                    output='foo', flags='g').strip()
+        bbox = gscript.parse_key_val(bbox, vsep=' ', val_type=float)
+        if (bbox['n'] &lt; region['s'] or bbox['s'] &gt; region['n']
+          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']:
+            gscript.info('Skipping tile %s' % lidar_file)
+            continue
+        name = 'tile_' + lidar_file.rsplit('.', 1)[0]
+        vectors.append(name)
+        gscript.run_command('v.in.lidar', input=lidar_file, output=name,
+                            flags='rt', class_filter=2)
+gscript.run_command('v.patch', input=vectors, output='merged_points',
+                    flags='b', overwrite=True)
+gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
+</code></pre>
 
 
-<h3>Aggregating multiple maps into one</h3>
+<h3>DSM interpolation with parallelization</h3>
 
-Get list names of all imported maps (available from last step as well)
+We will interpolate DEM using <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">
+GridModule</a> which allows to run v.surf.rst
+in parallel by splitting the region into tiles and interpolating each part
+and then patching them back.
+First we set the region of our area:
+<pre style="background-color:#FFFFFF"><code>
+g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
+</code></pre>
 
-Patch the maps together using v.patch
+We import GridModule and compute the size of the tiles
+if we want to run it on 4 cores at once:
+<pre><code>import grass.script as gscript
+from grass.pygrass.modules.grid import GridModule
 
-Same way we would use, e.g. r.series
+region = gscript.region()
+width = region['cols'] / 2 + 1
+height = region['rows'] / 2 + 1
+</code></pre>
 
+First try to run it in not parallel mode (debug=True) to see if it is working.
+<pre><code>grd = GridModule('v.surf.rst', debug=True, width=width, height=height,
+                 overlap=10, processes=4,
+                 input='merged_points', elevation='mid_pines_small_dem_1m',
+                 tension=30, smooth=1, overwrite=True)
+grd.run()
+</code></pre>
+Note: if you are getting error 'AttributeError: 'VisibleMapset' object has no attribute 'write'',
+you have to first set the SEARCH_PATH by going to Settings -> GRASS working environment -> Mapset access
+and check anything.
 
-<h3>Parallelization of computation on one map</h3>
-
-Interpolate using GridModule
+<p>
+Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
+<pre><code>grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
+                 overlap=10, processes=4,
+                 input='merged_points', elevation='mid_pines_small_dem_1m',
+                 tension=30, smooth=1, overwrite=True)
+grd.run()
+</code></pre>
 
 
 <h3>Working with large amount of maps</h3>
@@ -108,13 +167,59 @@ Compute difference each map with each map
 
 <h3>Report</h3>
 
-Compute univariate statistics for each map
-Compute shaded relief for each raster map
-Render each map using d.* modules
-Create an HTML report from the data above
+First, we get a list of raster maps we are interested in. We
+use <em>g.list</em> wrapper with <code>pattern</code>
+option. Then we compute univariate statistics
+and we also compute shaded relief for each raster map.
+Finally, we render the raster map together with shaded relief using
+<em>d.*</em> modules to a PNG file.
+Note that we are using <em>d.shade</em> to avoid creating another
+raster which would combine the original raster and its shaded relief.
+
+<pre><code><span class="comment"># get list of rasters we are interested in using a search pattern
+</span>rasters = gscript.list_strings('raster', pattern='2015_06_*')
+<span class="comment"># initialize a dictionary to hold statistics for each raster
+</span>stats = {}
+<span class="comment"># iterate through the list of rasters
+</span>for raster in rasters:
+<span class="comment">    # save univariate statistics for raster to dictionary
+</span>    stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
+<span class="comment">    # compute shaded relief, use name of the original raster including mapset
+</span>    shaded_relief = raster.replace('@', '_') + '_shade'
+    gscript.run_command('r.relief', input=raster, output=shaded_relief)
+    gscript.run_command('r.colors', map=raster, color='elevation')
+<span class="comment">    # render the raster (geographical extent follows current region)
+</span>    gscript.run_command('d.mon', start='cairo', output=raster + '.png',
+                        width=400, height=400, overwrite=True)
+    gscript.run_command('d.shade', shade=shaded_relief, color=raster)
+    gscript.run_command('d.mon', stop='cairo')
+</code></pre>
+
+Now, we create an HTML report from the data collected above.
+We also link images created above to the HTML.
+
+<pre><code><span class="comment"># a template for an HTML report for one raster
+</span>template = """&lt;h2&gt;Raster map {name}&lt;/h2&gt;
+&lt;h3&gt;Statistics&lt;/h3&gt;
+&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;Mean&lt;/td&gt;&lt;td&gt;{mean}&lt;/td&gt;
+&lt;tr&gt;&lt;td&gt;Variance&lt;/td&gt;&lt;td&gt;{var}&lt;/td&gt;
+&lt;/table&gt;
+&lt;h3&gt;Image&lt;/h3&gt;
+&lt;img src="{name}.png"&gt;
+"""
+
+<span class="comment"># write to a file using a template
+</span>with open('file.html', 'w') as output:
+        for raster in sorted(rasters):
+            stat = stats[raster]
+            output.write(template.format(
+                name=raster, mean=stat['mean'], var=stat['variance']))
+</code></pre>
 
 
 <h3>Terrain profiles</h3>
+
 Compute a profile for multiple rasters and plot them in <a href="http://matplotlib.org/">matplotlib</a>:
 <pre><code>import grass.script as gscript
 import matplotlib.pyplot as plt
@@ -124,9 +229,10 @@ coordinates = [637132,219609,637059,219744]
 profiles = {}
 distance = []
 for raster in rasters:
-    profile = gscript.read_command('r.profile', input=raster, coordinates=coordinates, quiet=True).strip()
-    # parse output
-    if not distance:
+    profile = gscript.read_command('r.profile', input=raster,
+                                   coordinates=coordinates, quiet=True).strip()
+<span class="comment">    # parse output
+</span>    if not distance:
         for line in profile.splitlines():
             distance.append(float(line.split()[0]))
     profile_elev = []
@@ -156,7 +262,8 @@ for raster in profiles:
 </code></pre>
 And write them into a CSV file:
 <pre><code>with open('profile_stats.csv', 'w') as f:
-    f.write(','.join(['name', 'minim', 'maxim', 'mean', 'stddev', 'median', 'roughness']))
+    f.write(','.join(['name', 'minim', 'maxim', 'mean',
+                      'stddev', 'median', 'roughness']))
     f.write('\n')
     for raster in profiles:
         f.write(raster + ',')
@@ -164,6 +271,26 @@ And write them into a CSV file:
         f.write('\n')
 </code></pre>
 
+
+<h3>Tasks and deliverables</h3>
+
+<ul>
+    <li>Try the provided code snippets. Modify them as you wish.
+    <li>Extent the generated report by computing viewshed from a selected point.
+    <li>Deliver the generated report as PDF.
+        <ul>
+            <li>To get the PDF, print the web page as PDF in a web browser
+                (it should be also possible to copy the HTML through
+                the clipboard to a word processor like LibreOffice Writer).
+            <li>Alternatively, generate report in LaTeX, or another markup,
+                and deliver generated PDF.
+            <li>In any case, include also the source text file
+                (but you don't have to include the individual images).
+        </ul>
+    <li>Run the script for creating profiles several times with different coordinates.
+    <li>Deliver a short version of a normal report with your notes,
+        observations, selected figures or screenshots.
+</ul>
 
 </main>
 

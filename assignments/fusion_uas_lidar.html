@@ -117,26 +117,26 @@ Because the shift in lidar is small we will ignore it in our first set of fusion
 use the analysis above top select the region with minimal distortion in the UAS DSM and compute clipped DSM
 
 <pre><code>g.region n=219720.9 s=219257.1 w=636762.9 e=637190.4 res=0.3 -p
-r.mapcalc  "uas_june_agi11gcp_03m_cl = uas_june_agi11gcp_03m * 1."
+r.mapcalc "2015_06_20_DSM_agi_11GCP_cl = 2015_06_20_DSM_agi_11GCP"
 </code></pre>
 
 Patch UAS DSM with lidar DSM to cover the entire Mid Pines study area and use shaded relief 
 to check for patch edges
 
 <pre><code>g.region rast=mid_pines_lidar2013_dsm -p
-r.patch uas_june_agi11gcp_03m_cl,mid_pines_lidar2013_dsm out=lid_uas_patch
+r.patch 2015_06_20_DSM_agi_11GCP_cl,mid_pines_lidar2013_dsm out=lid_uas_patch
 r.relief lid_uas_patch out=lid_uas_patchsh
 </code></pre>
 
 We have visible discontinuity along the patch edges so we will use map algebra to do
 the patching with averaged overlap.
 First we define a region for 6m (20 cell) overlap (you can do this also interactively using mouse)
-<pre><code>g.region rast=uas_june_agi11gcp_03m_cl -p
+<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
 g.region s=s-6 n=n+6 e=e+6 w=w-6 -p 
 </code></pre>
 
 Then, within this region, we compute a raster with lidar+uas DSM average in the overlap and UAS elsehwere
-<pre><code>r.mapcalc "lid_uas_overlap_avg = if(isnull(uas_june_agi11gcp_03m_cl),(uas_june_agi11gcp_03m+mid_pines_lidar2013_dsm)/2.,uas_june_agi11gcp_03m_cl)"
+<pre><code>r.mapcalc "lid_uas_overlap_avg = if(isnull(2015_06_20_DSM_agi_11GCP_cl),(2015_06_20_DSM_agi_11GCP+mid_pines_lidar2013_dsm)/2.,2015_06_20_DSM_agi_11GCP_cl)"
 </code></pre>
 
 We can now merge it with lidar for entire study area and check the patch edges using shaded relief
@@ -157,94 +157,42 @@ to create a lidar-based DSM updated in the fields using UAS data.
 You can use digitizer to create a polygon or 
 get the packed raster representation of fields from the link above.
 
-<pre><code>r.unpack fields.pack out=fields use=val
-r.mapcalc "uas_june_clpol = uas_june_agi11gcp_03m * fields" 
+<pre><code>r.unpack -o fields.pack out=fields use=val
+r.mapcalc "uas_june_clpol = 2015_06_20_DSM_agi_11GCP * fields" 
 r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
 r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
 </code></pre>
 
 We compute viewshed from the point 637100,219360 using
-lidar only, uas only, patched lidar+uas, 
+lidar only, uas only, and patched lidar+uas, 
 <pre><code>r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar coordinates=637100,219360
-r.viewshed input=uas_june_agi11gcp_03m output=viewshed_uas coordinates=637100,219360
+r.viewshed input=2015_06_20_DSM_agi_11GCP output=viewshed_uas coordinates=637100,219360
 r.viewshed input=lid_uas_patch_polygon output=viewshed_liduaspatchpoly coordinates=637100,219360 --o
 r.colors viewshed_lidar co=reds
 r.colors viewshed_uas co=greens
 r.colors viewshed_liduaspatchpoly co=blues
 </code></pre>
 To compare the viewsheds display the resulting maps with transparency.
+Discuss the result.
+<p>
+Note: To find the location and height of the webcam that will capture the entire field during entire
+year we can run r.series on the time series of UAS DSMs to derive the DSM envelope surface
+and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
+the following year.
 
 <!--
 r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
 r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
 -->
 
-Discuss the result.
-
-To address the missing parts of the grown corn fields in the lidar we will use raster digitizer to define the patch shape which captures the grown corn in our entire area.
 
 <p>
-Further reading
+Further reading:
 <p>
-Fusion of multi-scale DEMs using a regularized super-resolution method
-Linwei Yue , Huanfeng Shen , Qiangqiang Yuan , Liangpei Zhang
-International Journal of Geographical Information Science
+Fusion of multi-scale DEMs using a regularized super-resolution method.<br>
+Linwei Yue , Huanfeng Shen , Qiangqiang Yuan , Liangpei Zhang.<br>
+International Journal of Geographical Information Science.
 Vol. 29, Iss. 12, 2015
-<!--
-<pre><code> </code></pre>
-<pre><code> </code></pre>
-<pre><code> </code></pre>
-<pre><code> </code></pre>
-<pre><code> </code></pre>
-<pre><code> </code></pre>
-
-
-First, add the columns:
-
-<pre><code>v.db.addcolumn map=GCP_12_degrees columns="dem_height DOUBLE, height_difference DOUBLE"
-</code></pre>
-
-Query (sample) the raster elevation at the locations of GCPs:
-
-<pre><code>v.what.rast -i map=GCP_12_degrees raster=mid_pines_ground_elev column=dem_height
-</code></pre>
-
-Compute the difference and save it in the attribute column:
-
-<pre><code>v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
-</code></pre>
-
-View at the results:
-
-<pre><code>v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
-</code></pre>
-
-Alternatively use <em>Attribute Table Manager</em> to view the results.
-
-
-
-<h3>Visualize point density in 3D (optional)</h3>
-
-Convert LAS file into text file:
-
-<pre><code>las2txt -i mid_pines_spm_2013.las --parse xyzc -o mid_pines.txt
-</code></pre>
-
-<p>
-Set smaller region for creating the 3D raster (TBD):
-
-<pre><code>g.region n= s= w= e= b= t= res=10 res3=3 tbres=8 -p3
-</code></pre>
-
-<p>
-Use binning to create point density 3D raster:
-
-<pre><code>r3.in.xyz input=mid_pines.txt output=mid_pines_dens method=n separator=comma
-</code></pre>
-
-<p>
-Visualize in 3D view using slices and isosurfaces.
--->
 
 </main>
 
