@@ -63,7 +63,7 @@ Tools:
     <li>
         Your <a href="http://grass.osgeo.org">GRASS GIS 7</a>
         installation should also include <a href="http://www.liblas.org/">libLAS</a> library
-        which is used by GRASS modules v.in.lidar and r.in.lidar
+        which is used by GRASS modules <em></em>v.in.lidar</em> and <em>r.in.lidar</em>
         (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
     </li>
     <li>libLAS installation should include command line tool las2las.
@@ -174,14 +174,27 @@ and <em>v.in.lidar</em> calls.
 
 <h3>DSM interpolation with parallelization</h3>
 
-We will interpolate DEM using <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">
-GridModule</a> which allows to run v.surf.rst
+We will interpolate DEM using
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">GridModule</a>
+which allows to run <em>v.surf.rst</em>
 in parallel by splitting the region into tiles and interpolating each part
 and then patching them back.
-First we set the region of our area:
+First we set the region of our area
+(in this example, we use very low resolution to make the computation fast):
+
 <pre class="other-code"><code>g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
 </code></pre>
 
+Note: You need to change the visible Mapsets to something else than
+the default (current Mapset and PERMANENT Mapset).
+Set the visible Mapsets (SEARCH_PATH) by going to
+<em>Settings -> GRASS working environment -> Mapset access</em>
+and check one of the unchecked Mapsets.
+Otherwise, you will get an error "AttributeError: 'VisibleMapset' object
+has no attribute 'write'",
+see ticket <a href="http://trac.osgeo.org/grass/ticket/2791">#2791</a>.
+
+<p>
 We import GridModule and compute the size of the tiles
 if we want to run it on 4 cores at once:
 <pre><code>import grass.script as gscript
@@ -194,19 +207,16 @@ height = region['rows'] / 2 + 1
 
 First try to run it in not parallel mode (debug=True) to see if it is working.
 <pre><code>grd = GridModule('v.surf.rst', debug=True, width=width, height=height,
-                 overlap=10, processes=4,
+                 overlap=10, processes=4, npmin=100,
                  input='merged_points', elevation='mid_pines_small_dem_1m',
                  tension=30, smooth=1, overwrite=True)
 grd.run()
 </code></pre>
-Note: if you are getting error 'AttributeError: 'VisibleMapset' object has no attribute 'write'',
-you have to first set the SEARCH_PATH by going to Settings -> GRASS working environment -> Mapset access
-and check anything.
 
 <p>
 Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
 <pre><code>grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
-                 overlap=10, processes=4,
+                 overlap=10, processes=4, npmin=100,
                  input='merged_points', elevation='mid_pines_small_dem_1m',
                  tension=30, smooth=1, overwrite=True)
 grd.run()
@@ -214,6 +224,11 @@ grd.run()
 
 
 <h3>Working with large amount of maps</h3>
+
+Set the region to fit one of the raster maps:
+
+<pre class="other-code"><code>g.region raster=2015_06_20_pix4d_11GCP_dsm
+</code></pre>
 
 Now we will compute difference between raster maps in a list
 using nested for loops.
@@ -241,7 +256,7 @@ Before running the code again, we need to remove the created raster maps
 </code></pre>
 
 
-<h3>Report</h3>
+<h3 id="report">Generating a report</h3>
 
 Using HTML and generated images, we can create a report using Python
 for the analysis we have made.
@@ -306,13 +321,28 @@ To remove the created raster maps, we can use (in the command line):
 
 <h3>Terrain profiles</h3>
 
-Compute a profile for multiple rasters and plot them in <a href="http://matplotlib.org/">matplotlib</a>:
+In this example, we will compare profiles from two raster maps,
+2015_10_06_DSM_agi_8GCPs which is in PERMANENT Mapset and
+mid_pines_lidar2013_dem which in DEM created from Mid Pines lidar tile.
+You should have this raster map in some of the Mapsets you used before.
+You need to make map from this Mapset accessible by adding it to
+search path (SEARCH_PATH). This is done in GUI by going to
+<em>Settings -> GRASS working environment -> Mapset access</em>
+and by checking the Mapset there. In command line, use
+<em>g.mapsets</em>. Alternatively, add at-sign and Mapset name
+to the name of the map (<code>mapname@mapsetname</code>).
+
+<p>
+Compute a profile for multiple rasters and plot them in
+<a href="http://matplotlib.org/">matplotlib</a>:
 
 <pre><code>import grass.script as gscript
 import matplotlib.pyplot as plt
 
 rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
-coordinates = [637132,219609,637059,219744]
+coordinates = [637160.446919, 219373.236976,
+               637105.693795, 219392.416036,
+               637072.439779, 219400.613538]
 profiles = {}
 distance = []
 for raster in rasters:
@@ -416,6 +446,34 @@ tile_file = 'tile_list.html'
 <span class="comment">        # we expect the link to be relative to our base URL
 </span>        urllib.urlretrieve(base_url + filename, filename=filename)
 </code></pre>
+
+
+<h3>Script with parameters</h3>
+
+Putting filenames, paths, map names etc. to a script might see as an
+easy option at the beginning, however later this gets hard to manage
+as one needs to search for them and change them for different data
+especially when one script is used with different data at the same time.
+
+Here, we create a script which adds two numbers and prints the whole
+expression including the result. It should be easy to imagine that
+the parameters would be raster names and the expression would be
+<em>r.mapcalc</em> expression which we could execute.
+
+<pre><code>import sys
+
+if len(sys.argv) != 3:
+    sys.exit("Please, provide two parameters")
+a = float(sys.argv[1])
+b = float(sys.argv[2])
+c = a + b
+print "{a} + {b} = {c}".format(a=a, b=b, c=c)
+</code></pre>
+
+When checking the number of parameters and getting the individual parameters,
+remember that the first (zeroth) parameter is the name of the script
+and the first parameter provided in the command line is at the position 1
+in the list.
 
 </main>
 
