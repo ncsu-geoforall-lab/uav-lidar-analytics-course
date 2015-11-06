@@ -240,6 +240,8 @@ Now we will compute difference between raster maps in a list
 using nested for loops.
 
 <pre><code>
+import grass.script as gscript
+
 rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
            '2015_06_20_DSM_agi_11GCP']
 for raster_a in rasters:
@@ -280,6 +282,8 @@ Note that we are using <em>d.shade</em> to avoid creating another
 raster which would combine the original raster and its shaded relief.
 
 <pre><code>
+import grass.script as gscript
+
 # get list of rasters we are interested in using a search pattern
 rasters = gscript.list_strings('raster', pattern='2015_06_*')
 # initialize a dictionary to hold statistics for each raster
