@@ -40,6 +40,8 @@ Tools:
 First, start GRASS GIS in the Mapset you will be using for the assignment.
 To run the code, put relevant code snippets from each section into a file
 (a script) using your text editor and save it with <code>.py</code> extension.
+Note that sometimes not all the snippets in a section should be
+executed together, always read the surrounding text to find out.
 
 <p>
 On Linux run the script in the GRASS GIS command line (the system one
@@ -172,8 +174,17 @@ In case you are having problems with projections but you know that the
 projections in fact match, add <code>o</code> flag to <em>r.in.lidar</em>
 and <em>v.in.lidar</em> calls.
 
+<p>
+As you can see the code above goes over all files in a directory but
+it creates vector maps only for the files where the data are actually
+in the current region. The same approach can be used to import data in
+different format with different modules just for the area of interest
+(specified using <em>g.region</em>).
+
 
 <h3>DSM interpolation with parallelization</h3>
+
+<p><em>Note that this parallelization doesn't currently work on Windows.</em></p>
 
 We will interpolate DEM using
 <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">GridModule</a>
@@ -227,6 +238,19 @@ grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
 grd.run()
 </code></pre>
 
+<p>
+Note that parallelization is not always straightforward. Here we call
+<em>v.surf.rst</em> to interpolate raster from vector points in different
+parts of the area. These different calls run at once at different processor
+cores and they don't communicate with each other. Some modules, such as
+<em>r.sim.water</em> where the water needs to continuously flow through
+the whole landscape, cannot be called in parallel in this way.
+Also note that parallelization often comes with some cost. Here
+the different tiles must be patched together at the end. However,
+we actually get the speed improvement because running the interpolating
+at multiple cores at once is much greater improvement than the slow down
+cause by patching.
+
 
 <h3>Working with large amount of maps</h3>
 
@@ -246,6 +270,9 @@ rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
            '2015_06_20_DSM_agi_11GCP']
 for raster_a in rasters:
     for raster_b in rasters:
+        # the two for loops create combination of each map with each map
+        # including the map itself and we don't want to create a difference
+        # of map with itself, so we skip these combinations
         if raster_a == raster_b:
             continue
         # create the name for the difference raster
