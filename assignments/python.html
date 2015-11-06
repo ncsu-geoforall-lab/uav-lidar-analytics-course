@@ -652,7 +652,12 @@ to do it, especially on Windows. If you wish GRASS GIS would be the same, use th
 or the
 <a href="https://grasswiki.osgeo.org/wiki/Working_with_GRASS_without_starting_it_explicitly">wiki</a>
 as a guide. This solution should be fine in some isolated environment
-such as virtual machine.
+such as virtual machine. Less invasive version of this is to set
+just Python packages path (<code>PYTHONPATH</code>) and GRASS installation
+directory (<code>GISBASE</code>) so that you can import GRASS Python packages
+and leave the rest on the GRASS setup functions. Note this can still result
+in problems with different versions of Python on your system (not generally
+an issue on Linux).
 
 <p>
 Note that last two ways are more intended for application developers
