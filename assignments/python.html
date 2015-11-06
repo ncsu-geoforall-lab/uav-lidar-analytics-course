@@ -116,6 +116,15 @@ If not, we change directory to where the files are:
 os.chdir('/path/to/las/files')
 </code></pre>
 
+In GUI the current working directory is changed in
+<em>Settings -> GRASS working environment -> Change working directory</em>.
+In command line, it is done using the <em>cd</em> command.
+Note that directory is changed just for the current process and processes
+started from that process afterwards. So for example, changing directory
+in your script will not influence GUI but when the directory is changed in
+the GUI and then a script is launched, it will have the new working directory.
+
+<p>
 Now change to coordinate system for all files in the current directory:
 
 <pre><code>
