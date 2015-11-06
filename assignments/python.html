@@ -453,11 +453,13 @@ with open('profile_stats.csv', 'w') as f:
             <li>In any case, include also the source text file
                 (but you don't have to include the individual images).
         </ul>
+    <li>Alternatively, you can run your own code or use your own data.
 </ul>
 
 <hr>
 
-The following parts are optional.
+The following parts contain additional material. Trying the things out
+is optional.
 
 
 <h3>Downloading all files linked on a website</h3>
@@ -521,12 +523,68 @@ and the first parameter provided in the command line is at the position 1
 in the list.
 
 
+<h3>A proper structure of a Python script</h3>
+
+A proper Python script starts with a shebang line which is used on Linux
+(see below), then we do all the imports and define all the functions.
+One function, often named <code>main</code>, is called in a if statement
+at the end of the file. The if statement is using
+condition <code>__name__ == "__main__"</code> which says that this particular
+file is being executed (this will be always true for our scripts).
+
+<pre><code>
+#!/usr/bin/env python
+
+import sys
+
+def main():
+    a = 3
+    b = 5
+    print a + b
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+There are different variations of this structure but the main idea is
+that the code is not placed at the top level (without any indentation)
+but within some functions. In general, examples do not show this
+as it is simple to just indent to code more and put it to a function.
+
+
 <h3>More ways of executing Python code with GRASS GIS</h3>
 
 If you change the current working directory to the directory
 where the script is, you can just type <code>python</code>
 and name of the script. This might be a good option for the assignment
 or on MS Windows but otherwise, it is not recommend.
+
+<p>
+On Linux (and Mac), all scripts should contain a <em>shebang</em> line
+which tell the system which interpreter to use. The shebang is a first
+line in a file and starts with <code>#!</code>. For your Python scripts,
+use:
+
+<pre><code>
+#!/usr/bin/env python
+</code></pre>
+
+Besides providing shebang line, you need to make your file executable using,
+for example:
+
+<pre class="other-code"><code>
+chmod u+x /path/to/file.py
+</code></pre>
+
+This is a best practice which most people use. Using this you can call
+the script using:
+
+<pre class="other-code"><code>
+/path/to/file.py
+</code></pre>
+
+Note that there is not <code>python</code> and that the extension of the
+file can be arbitrary.
 
 <p>
 If you want to run the code which uses GRASS GIS packages from your
