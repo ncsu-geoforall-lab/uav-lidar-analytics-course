@@ -77,6 +77,8 @@ Tools:
 First, start GRASS GIS in the Mapset you will be using for the assignment.
 To run the code, put relevant code snippets from each section into a file
 (a script) using your text editor and save it with <code>.py</code> extension.
+Note that sometimes not all the snippets in a section should be
+executed together, always read the surrounding text to find out.
 
 <p>
 On Linux run the script in the GRASS GIS command line (the system one
@@ -146,6 +148,15 @@ If not, we change directory to where the files are:
 </span>os.chdir('/path/to/las/files')
 </code></pre>
 
+In GUI the current working directory is changed in
+<em>Settings -> GRASS working environment -> Change working directory</em>.
+In command line, it is done using the <em>cd</em> command.
+Note that directory is changed just for the current process and processes
+started from that process afterwards. So for example, changing directory
+in your script will not influence GUI but when the directory is changed in
+the GUI and then a script is launched, it will have the new working directory.
+
+<p>
 Now change to coordinate system for all files in the current directory:
 
 <pre><code>import os
@@ -201,8 +212,17 @@ In case you are having problems with projections but you know that the
 projections in fact match, add <code>o</code> flag to <em>r.in.lidar</em>
 and <em>v.in.lidar</em> calls.
 
+<p>
+As you can see the code above goes over all files in a directory but
+it creates vector maps only for the files where the data are actually
+in the current region. The same approach can be used to import data in
+different format with different modules just for the area of interest
+(specified using <em>g.region</em>).
+
 
 <h3>DSM interpolation with parallelization</h3>
+
+<p><em>Note that this parallelization doesn't currently work on Windows.</em></p>
 
 We will interpolate DEM using
 <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">GridModule</a>
@@ -252,6 +272,19 @@ Then run it in parallel (debug=False) and we can see the time needed reduced sig
 grd.run()
 </code></pre>
 
+<p>
+Note that parallelization is not always straightforward. Here we call
+<em>v.surf.rst</em> to interpolate raster from vector points in different
+parts of the area. These different calls run at once at different processor
+cores and they don't communicate with each other. Some modules, such as
+<em>r.sim.water</em> where the water needs to continuously flow through
+the whole landscape, cannot be called in parallel in this way.
+Also note that parallelization often comes with some cost. Here
+the different tiles must be patched together at the end. However,
+we actually get the speed improvement because running the interpolating
+at multiple cores at once is much greater improvement than the slow down
+cause by patching.
+
 
 <h3>Working with large amount of maps</h3>
 
@@ -263,11 +296,16 @@ Set the region to fit one of the raster maps:
 Now we will compute difference between raster maps in a list
 using nested for loops.
 
-<pre><code>rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
+<pre><code>import grass.script as gscript
+
+rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
            '2015_06_20_DSM_agi_11GCP']
 for raster_a in rasters:
     for raster_b in rasters:
-        if raster_a == raster_b:
+<span class="comment">        # the two for loops create combination of each map with each map
+</span><span class="comment">        # including the map itself and we don't want to create a difference
+</span><span class="comment">        # of map with itself, so we skip these combinations
+</span>        if raster_a == raster_b:
             continue
 <span class="comment">        # create the name for the difference raster
 </span>        difference = "diff_{a}_{b}".format(a=raster_a.replace('@', '_'),
@@ -301,7 +339,9 @@ Finally, we render the raster map together with shaded relief using
 Note that we are using <em>d.shade</em> to avoid creating another
 raster which would combine the original raster and its shaded relief.
 
-<pre><code><span class="comment"># get list of rasters we are interested in using a search pattern
+<pre><code>import grass.script as gscript
+
+<span class="comment"># get list of rasters we are interested in using a search pattern
 </span>rasters = gscript.list_strings('raster', pattern='2015_06_*')
 <span class="comment"># initialize a dictionary to hold statistics for each raster
 </span>stats = {}
@@ -426,6 +466,7 @@ And write them into a CSV file:
 
 <ul>
     <li>Try the provided code snippets. Modify them as you wish.
+    <li>Run the script for creating profiles several times with different coordinates.
     <li>Extent the generated report by computing viewshed from a selected point.
     <li>Deliver the generated report as PDF.
         <ul>
@@ -437,14 +478,13 @@ And write them into a CSV file:
             <li>In any case, include also the source text file
                 (but you don't have to include the individual images).
         </ul>
-    <li>Run the script for creating profiles several times with different coordinates.
-    <li>Deliver a short version of a normal report with your notes,
-        observations, selected figures or screenshots.
+    <li>Alternatively, you can run your own code or use your own data.
 </ul>
 
 <hr>
 
-The following parts are optional.
+The following parts contain additional material. Trying the things out
+is optional.
 
 
 <h3>Downloading all files linked on a website</h3>
@@ -506,12 +546,64 @@ and the first parameter provided in the command line is at the position 1
 in the list.
 
 
+<h3>A proper structure of a Python script</h3>
+
+A proper Python script starts with a shebang line which is used on Linux
+(see below), then we do all the imports and define all the functions.
+One function, often named <code>main</code>, is called in a if statement
+at the end of the file. The if statement is using
+condition <code>__name__ == "__main__"</code> which says that this particular
+file is being executed (this will be always true for our scripts).
+
+<pre><code><span class="comment">#!/usr/bin/env python
+</span>
+import sys
+
+def main():
+    a = 3
+    b = 5
+    print a + b
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+There are different variations of this structure but the main idea is
+that the code is not placed at the top level (without any indentation)
+but within some functions. In general, examples do not show this
+as it is simple to just indent to code more and put it to a function.
+
+
 <h3>More ways of executing Python code with GRASS GIS</h3>
 
 If you change the current working directory to the directory
 where the script is, you can just type <code>python</code>
 and name of the script. This might be a good option for the assignment
 or on MS Windows but otherwise, it is not recommend.
+
+<p>
+On Linux (and Mac), all scripts should contain a <em>shebang</em> line
+which tell the system which interpreter to use. The shebang is a first
+line in a file and starts with <code>#!</code>. For your Python scripts,
+use:
+
+<pre><code><span class="comment">#!/usr/bin/env python
+</span></code></pre>
+
+Besides providing shebang line, you need to make your file executable using,
+for example:
+
+<pre class="other-code"><code>chmod u+x /path/to/file.py
+</code></pre>
+
+This is a best practice which most people use. Using this you can call
+the script using:
+
+<pre class="other-code"><code>/path/to/file.py
+</code></pre>
+
+Note that there is not <code>python</code> and that the extension of the
+file can be arbitrary.
 
 <p>
 If you want to run the code which uses GRASS GIS packages from your
