@@ -30,7 +30,38 @@ Tools:
         (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
     </li>
     <li>libLAS installation should include command line tool las2las.
+    <li>You will need to edit files in a text editor with Python support,
+        e.g. Gedit or Notepad++, or a Python editor or IDE such as Spyder.
 </ul>
+
+
+<h3>Running the code</h3>
+
+First, start GRASS GIS in the Mapset you will be using for the assignment.
+To run the code, put relevant code snippets from each section into a file
+(a script) using your text editor and save it with <code>.py</code> extension.
+
+<p>
+On Linux run the script in the GRASS GIS command line (the system one
+with GRASS GIS written in ASCII) using <code>python</code> command
+and full path to the <code>.py</code> file, for example:
+
+<pre class="other-code"><code>
+python /path/to/file.py
+</code></pre>
+
+<p>
+On Windows run the script through the GRASS GIS GUI. In <em>Layer Manager</em>
+main menu, go to <em>File -> Launch script</em>. This will ask you to
+find the file on your disk. It will ask you a question about paths for
+addon. If you are not sure, answer No. Then it will run it in the
+<em>Console</em> in the GUI.
+
+<p>
+To run the script again, use arrow up key and press enter.
+Note that the script might have created some maps or files
+which you might need to remove before running it again.
+See the end of this assignment for more information on executing Python code.
 
 
 <h3>Downloading the data</h3>
@@ -459,3 +490,52 @@ When checking the number of parameters and getting the individual parameters,
 remember that the first (zeroth) parameter is the name of the script
 and the first parameter provided in the command line is at the position 1
 in the list.
+
+
+<h3>More ways of executing Python code with GRASS GIS</h3>
+
+If you change the current working directory to the directory
+where the script is, you can just type <code>python</code>
+and name of the script. This might be a good option for the assignment
+or on MS Windows but otherwise, it is not recommend.
+
+<p>
+If you want to run the code which uses GRASS GIS packages from your
+Python editor you can start the editor from the system command line
+which opens with GRASS GIS. Then the editor is part of the GRASS GIS
+environment and GRASS Python packages will be accessible and GRASS modules
+will recognize the current Location and Mapset.
+
+<p>
+If you want to start GRASS GIS without GUI to just run your Python scripts,
+your can run the <code>grass</code> command in terminal on Linux or
+using the GRASS GIS Command Line application on Windows.
+
+<p>
+If you want to use GRASS Python packages and GRASS modules without starting
+the GRASS GIS application at all, you can do so by setting up the path
+to GRASS Python packages and doing an initialization procedure
+to setup runtime environment for modules and also connect to
+a given GRASS Database, Location and Mapset. Please refer to the
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/script.html#module-script.setup">documentation</a>
+for details.
+
+<p>
+Alternatively, you can set your system environment to be the proper environment
+GRASS modules will work in without a need to actually start GRASS GIS.
+To run something you would need to just set GRASS Database, Location and Mapset.
+There is a reason why GRASS GIS is not doing that, although there is a lot of
+applications which are invading your system in this way or force you
+to do it, especially on Windows. If you wish GRASS GIS would be the same, use the
+<a href="https://grass.osgeo.org/grass70/manuals/variables.html">documentation</a>
+or the
+<a href="https://grasswiki.osgeo.org/wiki/Working_with_GRASS_without_starting_it_explicitly">wiki</a>
+as a guide. This solution should be fine in some isolated environment
+such as virtual machine.
+
+<p>
+Note that last two ways are more intended for application developers
+using Python and GRASS GIS. GIS professionals generally more benefit
+from running the scripts from within GRASS GIS as they can review
+the results right-away and such scripts can be easily turned into
+real GRASS modules with a consistent user interface.
