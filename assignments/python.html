@@ -545,6 +545,17 @@ remember that the first (zeroth) parameter is the name of the script
 and the first parameter provided in the command line is at the position 1
 in the list.
 
+<p>
+GRASS GIS provides its own way of handling parameters which is specialized
+for geospatial data and standardized across GRASS modules. Interface defined
+like this can be used to create command line help, documentation or GUI.
+However, even when used just in a script, first advantage being the usage
+of key-value syntax in the command line as opposed to relying on the order
+of parameters. In comparison to Python packages for command line parsing,
+GRASS GIS provides predefined types related to various values and
+data types used in GRASS GIS. Read more about it in the
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/script_intro.html#providing-grass-module-interface-to-a-script">documentation</a>.
+
 
 <h3>A proper structure of a Python script</h3>
 
