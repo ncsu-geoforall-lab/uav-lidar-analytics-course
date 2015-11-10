@@ -55,7 +55,7 @@ Data:
 		<ul>
 		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
 		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
-		    <li>follow the <a href="instructions_lidar_upload.html">instructions</a> for importing lidar data to GRASS GIS.
+		    <li>follow the <a href="../instructions_lidar_upload.html">instructions</a> for importing lidar data to GRASS GIS.
 		</ul>
 	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
   	
@@ -144,13 +144,9 @@ d.rast mid_pines_dens_ground
 d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
 
-We can examine the density also using v.outlier:
-<pre><code>v.outlier -e input=mid_pines_ground output=dummy outlier=dummy
-</code></pre>
-<pre>
-Estimated point density: 1.111
-Estimated mean distance between points: 0.9487
-</pre>
+Later, we can will examine the density also using v.outlier
+and imported vector points.
+
 
 <h3>Raster binning and classification</h3>
 
@@ -199,7 +195,18 @@ v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_fil
 </code></pre>
 
 <p>
-Remove the vector layers from your Layer Manager if they were added.
+Remove the vector layers from your Layer Manager if they were added
+(you can disable automatic adding of layers in the dialog for the module).
+
+<p>
+Check the point overall point density using v.outlier:
+<pre><code>v.outlier -e input=mid_pines_ground output=dummy outlier=dummy
+</code></pre>
+<pre>
+Estimated point density: 1.111
+Estimated mean distance between points: 0.9487
+</pre>
+
 <p>
 Interpolate with resolution 0.3 meter,
 also create slope and profile curvature map.<br>
@@ -223,24 +230,29 @@ Go to 3D view, set surface resolution 1 and color to map 'classes'.
 
 <h3>Compute the difference of lidar DEM and GCP heights</h3>
 
-First, add the columns:
+First, create a copy of the map:
 
-<pre><code>v.db.addcolumn map=GCP_12_degrees columns="dem_height DOUBLE, height_difference DOUBLE"
+<pre><code>g.copy vector=GCP_12_degrees,GCP_12_differences
+</code></pre>
+
+Then, add the columns:
+
+<pre><code>v.db.addcolumn map=GCP_12_differences columns="dem_height DOUBLE, height_difference DOUBLE"
 </code></pre>
 
 Query (sample) the raster elevation at the locations of GCPs:
 
-<pre><code>v.what.rast -i map=GCP_12_degrees raster=mid_pines_ground_elev column=dem_height
+<pre><code>v.what.rast -i map=GCP_12_differences raster=mid_pines_ground_elev column=dem_height
 </code></pre>
 
 Compute the difference and save it in the attribute column:
 
-<pre><code>v.db.update map=GCP_12_degrees column=height_difference query_column="ASL - dem_height"
+<pre><code>v.db.update map=GCP_12_differences column=height_difference query_column="ASL - dem_height"
 </code></pre>
 
 View the results:
 
-<pre><code>v.db.select map=GCP_12_degrees columns=ASL,dem_height,height_difference
+<pre><code>v.db.select map=GCP_12_differences columns=ASL,dem_height,height_difference
 </code></pre>
 
 Compute extended univariate statistics

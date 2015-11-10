@@ -73,6 +73,15 @@ code {
     font-size: 120%;
 }
 
+pre.other-code {
+    background-color: rgba(220, 220, 210, 0.17);
+}
+
+.comment {
+    color: gray;
+    font-style: italic;
+}
+
 /* main menu navigation */
 
 nav {
