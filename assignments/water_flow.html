@@ -48,22 +48,46 @@ Register our UAV DSM as time series, and use the t* commands to perform temporal
 
 <h3>Workflow in GRASS71</h3>
 
-<p>Water flow simulation from past MEA792: MultiD modeling</p>
+<p>Smooth fusion
+
+Import binned lidar for entire area
 <pre><code>
-grass70
+g.region rast=mid_pines_lidar2013_dsm res=0.2 -p
+r.in.lidar -sgo input=mid_pines_spm_2013.las out=midpines_lidar_02m
 </code></pre>
 
-<p>
-Set the following values in the start up window:
-<ul>
-    <li><em>GRASS data directory</em> to, for example /home/john/grassdata<br>
-    <li>for <em>Location</em> select nc_spm_08_grass7<br>
-    <li>for <em>Mapset</em> select user1<br>
-</ul>
+Import binned UAV for subarea to be updated
+<pre><code>
+lasinfo 2015_06_sample_points_NCspm.las
+# set the region based on the lasinfo output
+g.region n= s= w= e= res=0.2 -p
+r.in.lidar -sgo input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
 
-Then start GRASS session, GUI opens automatically.
-You can work in GUI, in command console in GUI or the system
-command line (terminal, console) which started with GRASS GIS.
+Replace all cells in UAV DSM that fall more than 0.5m below lidar DEM with nulls
+TODO! but make sure lidar nulls do not overwrite you uav data
+<pre><code>
+r.mapcalc "midpines_uav_06_02m_fixed = if(midpines_uav_06_02m_raw-0.3 < midpines_lidar_02m, null(), midpines_uav_06_02m_raw)" 
+</code></pre>
+
+">Set the region back to entire area and patch the binned DEMs together
+<pre><code>
+g.region rast=mid_pines_lidar2013_dsm res=0.2 -p 
+r.mapcalc 
+</code></pre>
+
+<!--
+Then, within this region, we compute a raster with lidar+uas DSM average in the overlap and UAS elsehwere
+<pre><code>
+r.mapcalc "lid_uas_overlap_avg = if(isnull(2015_06_20_DSM_agi_11GCP_cl),(2015_06_20_DSM_agi_11GCP+mid_pines_lidar2013_dsm)/2.,2015_06_20_DSM_agi_11GCP_cl)"
+</code></pre>
+
+We can now merge it with lidar for entire study area and check the patch edges using shaded relief
+<pre><code>
+g.region rast=mid_pines_lidar2013_dsm
+r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
+r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
+-->
+<p>Water flow simulation from past MEA792: MultiD modeling</p>
 
 <p>
 compute spatial pattern of overland flow depth and discharge<br>
