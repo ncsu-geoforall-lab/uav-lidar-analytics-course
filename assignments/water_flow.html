@@ -50,6 +50,7 @@ Register our UAV DSM as time series, and use the t* commands to perform temporal
 
 <p>Smooth fusion
 
+<p>
 Import binned lidar for entire area
 <pre><code>
 g.region rast=mid_pines_lidar2013_dsm res=0.2 -p
@@ -57,11 +58,12 @@ r.in.lidar -sgo input=mid_pines_spm_2013.las out=midpines_lidar_02m
 </code></pre>
 
 Import binned UAV for subarea to be updated
+set the region based on the lasinfo output
 <pre><code>
 lasinfo 2015_06_sample_points_NCspm.las
-# set the region based on the lasinfo output
 g.region n= s= w= e= res=0.2 -p
 r.in.lidar -sgo input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+</code></pre>
 
 Replace all cells in UAV DSM that fall more than 0.5m below lidar DEM with nulls
 TODO! but make sure lidar nulls do not overwrite you uav data
