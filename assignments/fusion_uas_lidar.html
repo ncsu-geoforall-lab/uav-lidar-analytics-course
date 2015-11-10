@@ -157,7 +157,7 @@ to create a lidar-based DSM updated in the fields using UAS data.
 You can use digitizer to create a polygon or 
 get the packed raster representation of fields from the link above.
 
-<pre><code>r.unpack -o fields.pack out=fields use=val
+<pre><code>r.unpack -o fields.pack
 r.mapcalc "uas_june_clpol = 2015_06_20_DSM_agi_11GCP * fields" 
 r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
 r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 

@@ -35,35 +35,57 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h1>Geospatial simulations of dynamic processes: water flow</h1>
+<h2>Geospatial simulations of dynamic processes: water flow</h2>
 
-Outline:
-
+<h3>Outline:</h3>
 <ul>
-    <li>
-        perform simulation of surface water flow for selected areas
-        (select Lake Wheeler road area defined by region rural_1m in nc_spm_08 or Centennial Campus)
-    </li>
+    <li> to update the 2013 DEM to 2015 state of terrain, perform smooth fusion of lidar and UAS data
+    <li> run simulation of surface water flow using path sampling technique on the following DSMs:
+         lidar DEM, UAS DSM, fused lidar+UAS 
     <li>optional: assess impact of changes in topography and landuse on water flow pattern and dynamics
+    <li> visualize your results using animations
 </ul>
 
-Data:
+<p>
+<h3>Data:</h3> use the data from previous assignment, see the <a href="../assignments.html">Assignments web page</a>
 
+<p>
+<h3>Workflow overview</h3>
+<p>
+Smooth Fusion
 <ul>
-    <li>
-        Note that the vector format has changed between GRASS GIS version 6 and version 7,
-        so the best is to use the GRASS GIS 7 version of nc_spm_08 data set.
-        Data for GRASS GIS 6 will still work, you just need to rebuild
-        the topology using the v.build command.
-    </li>
-    <li>Location <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip">nc_spm_08_grass7 from MEA582</a>
-    <li>Location for GRASS GIS 6 <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08.zip">nc_spm_08 from MEA582</a>
-    <li>Mapset for GRASS GIS 6 <a href="../gisdata/cc_south.zip">Centennial Campus South Mapset</a>
-    <!--<li>LOCATION north_carolina_spm used in <a href="a_stc.html">the previous assignment</a>-->
+  <li>Use binning to create a 0.2m resolution DEM from lidar for entire area and a DSM from UAV for the region 
+      area to be updated. (r.in.lidar), the rasters will have holes but that is OK
+  <li>use map algebra to replace all cells in UAV DSM that fall more than 0.5m below lidar DEM with nulls
+      - these are errors that we have observed in the area with trees with points over 10m below the surface
+  <li>use map algebra to replace the lidar data in the fields (use the fields mask) by UAV data 
+      in the binned DEM: you can patch them exactly at the boundary or leave a narrow band of no-data
+  <li> create smooth DEM based on the combined raster with holes to points (select one of the options
+       provided bellow)
+  <ul>
+      <li>reinterpolate the raster with holes with r.fill.nulls
+      <li>export the raster as points or convert it to points and interpolate the smooth raster using v.surf.rst
+       - r.out.xyz may be the easiest, r.to.vect may work too
+      <li>randomly sample the combined DEM with output as 3D vector points and interpolate the smooth raster using v.surf.rst
+  </ul>
 </ul>
+<p>
+Surface water flow modeling
+<ul>
+  <li>run r.watershed to identify watershed boundaries to make sure you run the simulations in area with at least one complete watershed
+  <li>select subregion with a watershed and run path sampling based simulation of water flow (r.sim.water) 
+      using the lidar DEM, UAV DSM and the fused DEM (lidar updated with UAS data).
+  <li>create animation for the results, discuss differences
+  <li>select additional UAS DSM from our time series and run water flow simulation, evaluate for change in flow patterns
+</ul>
+<p>
+Optional: Management and analysis of multitemporal data
+<p>
+Register our UAV DSM as time series, and use the t* commands to perform temporal analysis 
 
-Start GRASS - click on GRASS icon or type
+<h3>Workflow in GRASS71</h3>
 
+<p>Water flow simulation from past MEA792: MultiD modeling</p>
 <pre><code>grass70
 </code></pre>
 

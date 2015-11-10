@@ -40,41 +40,132 @@
 Outline:
 
 <ul>
-    <li>
+    <li>Import lidar points.
+    <li>Interpolate with parallelization.
+    <li>Process multiple maps at once and generate an HTML report.
+    <li>Use matplotlib to show terrain profiles.
 </ul>
 
 Data:
 
 <ul>
-    <li>
+    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k">Lake Wheeler GRASS Location</a>;
+        be sure to use separate Mapset for this assignment
+    <li>selected LAS tiles from
+        <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>
+        (see below for the tiles we will need; you can use the provided
+        Python code to download them)
 </ul>
 
 Tools:
 
 <ul>
     <li>
-        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
+        Your <a href="http://grass.osgeo.org">GRASS GIS 7</a>
         installation should also include <a href="http://www.liblas.org/">libLAS</a> library
-        which is used by GRASS modules v.in.lidar and r.in.lidar
+        which is used by GRASS modules <em></em>v.in.lidar</em> and <em>r.in.lidar</em>
         (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
     </li>
-    <li>libLAS installation should include command line tools lasinfo and las2txt.
-    <!-- <li>libLAS installation should also include support for LAZ (through LAZzip library). -->
-    <li>Note that for merging las tiles (not necessary for this assignment) you need LASlib's lasmerge tool (part of LAStools).
+    <li>libLAS installation should include command line tool las2las.
+    <li>You will need to edit files in a text editor with Python support,
+        e.g. Gedit or Notepad++, or a Python editor or IDE such as Spyder.
 </ul>
+
+This assignment expects at least basic knowledge of Python, GRASS GIS
+and how they are used together. Review the
+<a href="python_intro.html">introduction</a> when in doubts.
+
+
+<h3>Running the code</h3>
+
+First, start GRASS GIS in the Mapset you will be using for the assignment.
+To run the code, put relevant code snippets from each section into a file
+(a script) using your text editor and save it with <code>.py</code> extension.
+Note that sometimes not all the snippets in a section should be
+executed together, always read the surrounding text to find out.
+
+<p>
+On Linux run the script in the GRASS GIS command line (the system one
+with GRASS GIS written in ASCII) using <code>python</code> command
+and full path to the <code>.py</code> file, for example:
+
+<pre class="other-code"><code>python /path/to/file.py
+</code></pre>
+
+<p>
+On Windows run the script through the GRASS GIS GUI. In <em>Layer Manager</em>
+main menu, go to <em>File -> Launch script</em>. This will ask you to
+find the file on your disk. It will ask you a question about paths for
+addon. If you are not sure, answer No. Then it will run it in the
+<em>Console</em> in the GUI.
+
+<p>
+To run the script again, use arrow up key and press enter.
+Note that the script might have created some maps or files
+which you might need to remove before running it again.
+See the end of this assignment for more information on executing Python code.
+
+
+<h3>Downloading the data</h3>
+
+In case you don't have the lidar tiles, download them using Python,
+otherwise skip this step.
+
+First, create a directory where you want to have the files. Then
+set it as current directory in Python:
+
+<pre><code><span class="comment"># use path which applies to you
+</span><span class="comment"># on Windows use something like 'D:\\path\\to\\files'
+</span>os.chdir('/path/to/las/files')
+</code></pre>
+
+Then, download the files using:
+
+<pre><code>import urllib
+
+base_url = 'http://fatra.cnr.ncsu.edu/lidar/'
+
+urllib.urlretrieve(base_url + '0791_005.las', '0791_005.las')
+urllib.urlretrieve(base_url + '0791_011.las', '0791_011.las')
+urllib.urlretrieve(base_url + '0792_017.las', '0792_017.las')
+urllib.urlretrieve(base_url + '0782_020.las', '0782_020.las')
+urllib.urlretrieve(base_url + '0781_008.las', '0781_008.las')
+</code></pre>
+
+The same could be done in much smarter way using a for loop
+and a list of files to download, so you can try that as well.
 
 
 <h3>Working with command line tools</h3>
 
-Change coordinate system of multiple LAS files:
+The LAS files are in different coordinate system, so we need to change it.
+
+<p>
+First, we check if we are in the directory with the files:
+
+<pre><code>print os.getcwd()
+</code></pre>
+
+If not, we change directory to where the files are:
+
+<pre><code><span class="comment"># on Windows use 'D:\\path\\to\\files'
+</span>os.chdir('/path/to/las/files')
+</code></pre>
+
+In GUI the current working directory is changed in
+<em>Settings -> GRASS working environment -> Change working directory</em>.
+In command line, it is done using the <em>cd</em> command.
+Note that directory is changed just for the current process and processes
+started from that process afterwards. So for example, changing directory
+in your script will not influence GUI but when the directory is changed in
+the GUI and then a script is launched, it will have the new working directory.
+
+<p>
+Now change to coordinate system for all files in the current directory:
+
 <pre><code>import os
 from subprocess import call
 
-<span class="comment"># first check where are we
-</span>print os.getcwd()
-<span class="comment"># change directory to where your files are
-</span><span class="comment"># on Windows use 'D:\\path\\to\\files'
-</span>os.chdir('/path/to/las/files')
 for f in os.listdir('.'):
     if f.endswith('.las'):
         name, ext = os.path.splitext(f)
@@ -82,15 +173,19 @@ for f in os.listdir('.'):
               f, '-o', name + '_spm' + ext])
 </code></pre>
 
+In the same step, we could do also some other conversions which are
+supported by las2las, for example format conversion.
+
 
 <h3>Import multiple LAS files to GRASS GIS and merging them</h3>
 
-We are looping through the <a href="http://fatra.cnr.ncsu.edu/lidar/">lidar files</a>
-and importing points only in our region of interest. First set the region in command line:
+We are looping through the lidar files
+and importing points only in our region of interest.
+First set the region in command line:
 
-<pre style="background-color:#FFFFFF"><code>
-g.region n=219637 s=219254 w=636730 e=637193 -p
+<pre class="other-code"><code>g.region n=219637 s=219254 w=636730 e=637193 -p
 </code></pre>
+
 Now run this script (assuming you are in the directory with the las files):
 
 <pre><code>import os
@@ -105,7 +200,7 @@ for lidar_file in os.listdir('.'):
                                     output='foo', flags='g').strip()
         bbox = gscript.parse_key_val(bbox, vsep=' ', val_type=float)
         if (bbox['n'] &lt; region['s'] or bbox['s'] &gt; region['n']
-          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']:
+          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']):
             gscript.info('Skipping tile %s' % lidar_file)
             continue
         name = 'tile_' + lidar_file.rsplit('.', 1)[0]
@@ -117,18 +212,43 @@ gscript.run_command('v.patch', input=vectors, output='merged_points',
 gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
 </code></pre>
 
+In case you are having problems with projections but you know that the
+projections in fact match, add <code>o</code> flag to <em>r.in.lidar</em>
+and <em>v.in.lidar</em> calls.
+
+<p>
+As you can see the code above goes over all files in a directory but
+it creates vector maps only for the files where the data are actually
+in the current region. The same approach can be used to import data in
+different format with different modules just for the area of interest
+(specified using <em>g.region</em>).
+
 
 <h3>DSM interpolation with parallelization</h3>
 
-We will interpolate DEM using <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">
-GridModule</a> which allows to run v.surf.rst
+<p><em>Note that this parallelization doesn't currently work on Windows.</em></p>
+
+We will interpolate DEM using
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">GridModule</a>
+which allows to run <em>v.surf.rst</em>
 in parallel by splitting the region into tiles and interpolating each part
 and then patching them back.
-First we set the region of our area:
-<pre style="background-color:#FFFFFF"><code>
-g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
+First we set the region of our area
+(in this example, we use very low resolution to make the computation fast):
+
+<pre class="other-code"><code>g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
 </code></pre>
 
+Note: You need to change the visible Mapsets to something else than
+the default (current Mapset and PERMANENT Mapset).
+Set the visible Mapsets (SEARCH_PATH) by going to
+<em>Settings -> GRASS working environment -> Mapset access</em>
+and check one of the unchecked Mapsets.
+Otherwise, you will get an error "AttributeError: 'VisibleMapset' object
+has no attribute 'write'",
+see ticket <a href="http://trac.osgeo.org/grass/ticket/2791">#2791</a>.
+
+<p>
 We import GridModule and compute the size of the tiles
 if we want to run it on 4 cores at once:
 <pre><code>import grass.script as gscript
@@ -141,32 +261,79 @@ height = region['rows'] / 2 + 1
 
 First try to run it in not parallel mode (debug=True) to see if it is working.
 <pre><code>grd = GridModule('v.surf.rst', debug=True, width=width, height=height,
-                 overlap=10, processes=4,
+                 overlap=10, processes=4, npmin=100,
                  input='merged_points', elevation='mid_pines_small_dem_1m',
                  tension=30, smooth=1, overwrite=True)
 grd.run()
 </code></pre>
-Note: if you are getting error 'AttributeError: 'VisibleMapset' object has no attribute 'write'',
-you have to first set the SEARCH_PATH by going to Settings -> GRASS working environment -> Mapset access
-and check anything.
 
 <p>
 Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
 <pre><code>grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
-                 overlap=10, processes=4,
+                 overlap=10, processes=4, npmin=100,
                  input='merged_points', elevation='mid_pines_small_dem_1m',
                  tension=30, smooth=1, overwrite=True)
 grd.run()
 </code></pre>
 
+<p>
+Note that parallelization is not always straightforward. Here we call
+<em>v.surf.rst</em> to interpolate raster from vector points in different
+parts of the area. These different calls run at once at different processor
+cores and they don't communicate with each other. Some modules, such as
+<em>r.sim.water</em> where the water needs to continuously flow through
+the whole landscape, cannot be called in parallel in this way.
+Also note that parallelization often comes with some cost. Here
+the different tiles must be patched together at the end. However,
+we actually get the speed improvement because running the interpolating
+at multiple cores at once is much greater improvement than the slow down
+cause by patching.
+
 
 <h3>Working with large amount of maps</h3>
 
-Compute difference each map with each map
+Set the region to fit one of the raster maps:
+
+<pre class="other-code"><code>g.region raster=2015_06_20_pix4d_11GCP_dsm
+</code></pre>
+
+Now we will compute difference between raster maps in a list
+using nested for loops.
+
+<pre><code>import grass.script as gscript
+
+rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
+           '2015_06_20_DSM_agi_11GCP']
+for raster_a in rasters:
+    for raster_b in rasters:
+<span class="comment">        # the two for loops create combination of each map with each map
+</span><span class="comment">        # including the map itself and we don't want to create a difference
+</span><span class="comment">        # of map with itself, so we skip these combinations
+</span>        if raster_a == raster_b:
+            continue
+<span class="comment">        # create the name for the difference raster
+</span>        difference = "diff_{a}_{b}".format(a=raster_a.replace('@', '_'),
+                                           b=raster_b.replace('@', '_'))
+<span class="comment">        # compute difference between the rasters using r.mapcalc
+</span>        gscript.mapcalc('{diff} = {a} - {b}'.format(
+            a=raster_a, b=raster_b, diff=difference))
+<span class="comment">        # set color table to the resulting map
+</span>        gscript.run_command('r.colors', map=difference, color='differences')
+</code></pre>
+
+Before running the code again, we need to remove the created raster maps
+(in the command line):
+
+<pre class="other-code"><code>g.remove type=raster pattern="diff_*" -f
+</code></pre>
 
 
-<h3>Report</h3>
+<h3 id="report">Generating a report</h3>
 
+Using HTML and generated images, we can create a report using Python
+for the analysis we have made.
+
+<p>
 First, we get a list of raster maps we are interested in. We
 use <em>g.list</em> wrapper with <code>pattern</code>
 option. Then we compute univariate statistics
@@ -176,7 +343,9 @@ Finally, we render the raster map together with shaded relief using
 Note that we are using <em>d.shade</em> to avoid creating another
 raster which would combine the original raster and its shaded relief.
 
-<pre><code><span class="comment"># get list of rasters we are interested in using a search pattern
+<pre><code>import grass.script as gscript
+
+<span class="comment"># get list of rasters we are interested in using a search pattern
 </span>rasters = gscript.list_strings('raster', pattern='2015_06_*')
 <span class="comment"># initialize a dictionary to hold statistics for each raster
 </span>stats = {}
@@ -186,7 +355,8 @@ raster which would combine the original raster and its shaded relief.
 </span>    stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
 <span class="comment">    # compute shaded relief, use name of the original raster including mapset
 </span>    shaded_relief = raster.replace('@', '_') + '_shade'
-    gscript.run_command('r.relief', input=raster, output=shaded_relief)
+    gscript.run_command('r.relief', input=raster, output=shaded_relief,
+                        overwrite=True)
     gscript.run_command('r.colors', map=raster, color='elevation')
 <span class="comment">    # render the raster (geographical extent follows current region)
 </span>    gscript.run_command('d.mon', start='cairo', output=raster + '.png',
@@ -210,22 +380,43 @@ We also link images created above to the HTML.
 """
 
 <span class="comment"># write to a file using a template
-</span>with open('file.html', 'w') as output:
+</span>with open('report.html', 'w') as output:
         for raster in sorted(rasters):
             stat = stats[raster]
             output.write(template.format(
                 name=raster, mean=stat['mean'], var=stat['variance']))
 </code></pre>
 
+To remove the created raster maps, we can use (in the command line):
+
+<pre class="other-code"><code>g.remove type=raster pattern="*_shade" -f
+</code></pre>
+
 
 <h3>Terrain profiles</h3>
 
-Compute a profile for multiple rasters and plot them in <a href="http://matplotlib.org/">matplotlib</a>:
+In this example, we will compare profiles from two raster maps,
+2015_10_06_DSM_agi_8GCPs which is in PERMANENT Mapset and
+mid_pines_lidar2013_dem which in DEM created from Mid Pines lidar tile.
+You should have this raster map in some of the Mapsets you used before.
+You need to make map from this Mapset accessible by adding it to
+search path (SEARCH_PATH). This is done in GUI by going to
+<em>Settings -> GRASS working environment -> Mapset access</em>
+and by checking the Mapset there. In command line, use
+<em>g.mapsets</em>. Alternatively, add at-sign and Mapset name
+to the name of the map (<code>mapname@mapsetname</code>).
+
+<p>
+Compute a profile for multiple rasters and plot them in
+<a href="http://matplotlib.org/">matplotlib</a>:
+
 <pre><code>import grass.script as gscript
 import matplotlib.pyplot as plt
 
 rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
-coordinates = [637132,219609,637059,219744]
+coordinates = [637160.446919, 219373.236976,
+               637105.693795, 219392.416036,
+               637072.439779, 219400.613538]
 profiles = {}
 distance = []
 for raster in rasters:
@@ -247,6 +438,7 @@ plt.show()
 </code></pre>
 
 Compute profile statistics using NumPy:
+
 <pre><code>import numpy as np
 
 stats = {}
@@ -260,7 +452,9 @@ for raster in profiles:
     roughness = np.std(np.diff(profile))
     stats[raster] = (minim, maxim, mean, stddev, median, roughness)
 </code></pre>
+
 And write them into a CSV file:
+
 <pre><code>with open('profile_stats.csv', 'w') as f:
     f.write(','.join(['name', 'minim', 'maxim', 'mean',
                       'stddev', 'median', 'roughness']))
@@ -276,6 +470,7 @@ And write them into a CSV file:
 
 <ul>
     <li>Try the provided code snippets. Modify them as you wish.
+    <li>Run the script for creating profiles several times with different coordinates.
     <li>Extent the generated report by computing viewshed from a selected point.
     <li>Deliver the generated report as PDF.
         <ul>
@@ -287,10 +482,189 @@ And write them into a CSV file:
             <li>In any case, include also the source text file
                 (but you don't have to include the individual images).
         </ul>
-    <li>Run the script for creating profiles several times with different coordinates.
-    <li>Deliver a short version of a normal report with your notes,
-        observations, selected figures or screenshots.
+    <li>Alternatively, you can run your own code or use your own data.
 </ul>
+
+<hr>
+
+The following parts contain additional material. Trying the things out
+is optional.
+
+
+<h3>Downloading all files linked on a website</h3>
+
+<pre><code>import urllib
+import re
+
+<span class="comment"># note the slash at the end
+</span>base_url = 'http://fatra.cnr.ncsu.edu/lidar/'
+
+tile_file = 'tile_list.html'
+<span class="comment"># download the file (in one step)
+</span>urllib.urlretrieve(base_url, filename=tile_file)
+
+<span class="comment"># open the file and read it line by line
+</span><span class="comment"># we expect to get HTML with a list of filenames in the given directory
+</span>with open(tile_file) as html:
+    for line in html:
+<span class="comment">        # search for the links (a tags with href attribute)
+</span><span class="comment">        # we expect one link per line in the HTML source code
+</span>        match = re.search(r'&lt;a href="(.*?)"&gt;', line)
+        if not match:
+            continue
+<span class="comment">        # get the content of the href attribute captured before
+</span>        filename = match.group(1)
+<span class="comment">        # download only files we are interested in
+</span>        if not filename.endswith('.las'):
+            continue
+<span class="comment">        # we expect the link to be relative to our base URL
+</span>        urllib.urlretrieve(base_url + filename, filename=filename)
+</code></pre>
+
+
+<h3>Script with parameters</h3>
+
+Putting filenames, paths, map names etc. to a script might see as an
+easy option at the beginning, however later this gets hard to manage
+as one needs to search for them and change them for different data
+especially when one script is used with different data at the same time.
+
+Here, we create a script which adds two numbers and prints the whole
+expression including the result. It should be easy to imagine that
+the parameters would be raster names and the expression would be
+<em>r.mapcalc</em> expression which we could execute.
+
+<pre><code>import sys
+
+if len(sys.argv) != 3:
+    sys.exit("Please, provide two parameters")
+a = float(sys.argv[1])
+b = float(sys.argv[2])
+c = a + b
+print "{a} + {b} = {c}".format(a=a, b=b, c=c)
+</code></pre>
+
+When checking the number of parameters and getting the individual parameters,
+remember that the first (zeroth) parameter is the name of the script
+and the first parameter provided in the command line is at the position 1
+in the list.
+
+<p>
+GRASS GIS provides its own way of handling parameters which is specialized
+for geospatial data and standardized across GRASS modules. Interface defined
+like this can be used to create command line help, documentation or GUI.
+However, even when used just in a script, first advantage being the usage
+of key-value syntax in the command line as opposed to relying on the order
+of parameters. In comparison to Python packages for command line parsing,
+GRASS GIS provides predefined types related to various values and
+data types used in GRASS GIS. Read more about it in the
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/script_intro.html#providing-grass-module-interface-to-a-script">documentation</a>.
+
+
+<h3>A proper structure of a Python script</h3>
+
+A proper Python script starts with a shebang line which is used on Linux
+(see below), then we do all the imports and define all the functions.
+One function, often named <code>main</code>, is called in a if statement
+at the end of the file. The if statement is using
+condition <code>__name__ == "__main__"</code> which says that this particular
+file is being executed (this will be always true for our scripts).
+
+<pre><code><span class="comment">#!/usr/bin/env python
+</span>
+import sys
+
+def main():
+    a = 3
+    b = 5
+    print a + b
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+There are different variations of this structure but the main idea is
+that the code is not placed at the top level (without any indentation)
+but within some functions. In general, examples do not show this
+as it is simple to just indent to code more and put it to a function.
+
+
+<h3>More ways of executing Python code with GRASS GIS</h3>
+
+If you change the current working directory to the directory
+where the script is, you can just type <code>python</code>
+and name of the script. This might be a good option for the assignment
+or on MS Windows but otherwise, it is not recommend.
+
+<p>
+On Linux (and Mac), all scripts should contain a <em>shebang</em> line
+which tell the system which interpreter to use. The shebang is a first
+line in a file and starts with <code>#!</code>. For your Python scripts,
+use:
+
+<pre><code><span class="comment">#!/usr/bin/env python
+</span></code></pre>
+
+Besides providing shebang line, you need to make your file executable using,
+for example:
+
+<pre class="other-code"><code>chmod u+x /path/to/file.py
+</code></pre>
+
+This is a best practice which most people use. Using this you can call
+the script using:
+
+<pre class="other-code"><code>/path/to/file.py
+</code></pre>
+
+Note that there is not <code>python</code> and that the extension of the
+file can be arbitrary.
+
+<p>
+If you want to run the code which uses GRASS GIS packages from your
+Python editor you can start the editor from the system command line
+which opens with GRASS GIS. Then the editor is part of the GRASS GIS
+environment and GRASS Python packages will be accessible and GRASS modules
+will recognize the current Location and Mapset.
+
+<p>
+If you want to start GRASS GIS without GUI to just run your Python scripts,
+your can run the <code>grass</code> command in terminal on Linux or
+using the GRASS GIS Command Line application on Windows.
+
+<p>
+If you want to use GRASS Python packages and GRASS modules without starting
+the GRASS GIS application at all, you can do so by setting up the path
+to GRASS Python packages and doing an initialization procedure
+to setup runtime environment for modules and also connect to
+a given GRASS Database, Location and Mapset. Please refer to the
+<a href="https://grass.osgeo.org/grass70/manuals/libpython/script.html#module-script.setup">documentation</a>
+for details.
+
+<p>
+Alternatively, you can set your system environment to be the proper environment
+GRASS modules will work in without a need to actually start GRASS GIS.
+To run something you would need to just set GRASS Database, Location and Mapset.
+There is a reason why GRASS GIS is not doing that, although there is a lot of
+applications which are invading your system in this way or force you
+to do it, especially on Windows. If you wish GRASS GIS would be the same, use the
+<a href="https://grass.osgeo.org/grass70/manuals/variables.html">documentation</a>
+or the
+<a href="https://grasswiki.osgeo.org/wiki/Working_with_GRASS_without_starting_it_explicitly">wiki</a>
+as a guide. This solution should be fine in some isolated environment
+such as virtual machine. Less invasive version of this is to set
+just Python packages path (<code>PYTHONPATH</code>) and GRASS installation
+directory (<code>GISBASE</code>) so that you can import GRASS Python packages
+and leave the rest on the GRASS setup functions. Note this can still result
+in problems with different versions of Python on your system (not generally
+an issue on Linux).
+
+<p>
+Note that last two ways are more intended for application developers
+using Python and GRASS GIS. GIS professionals generally more benefit
+from running the scripts from within GRASS GIS as they can review
+the results right-away and such scripts can be easily turned into
+real GRASS modules with a consistent user interface.
 
 </main>
 
