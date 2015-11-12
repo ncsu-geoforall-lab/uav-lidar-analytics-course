@@ -115,8 +115,23 @@ g.region rast=mid_pines_lidar2013_dsm
 r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
 r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
 </code></pre>
-We now have smoother transition from UAS to lidar, but you can still identify the edge when viewing the patched DSM
-in 3D view (nviz). We will create a smooth transition when modeling the flow, in this assignment
+<p>
+We now have smoother transition from UAS to lidar, but you can still identify two edges when viewing the patched DSM
+in 3D view (nviz). Therefore we will use weighted average to smooth out the overlap with the following workflow
+(try to explain it in your report):
+
+<pre><code>
+g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
+g.region s=s+10 n=n-10 e=e-10 w=w+10 -p
+r.mapcalc "dummy = 1"
+g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
+r.grow.distance -m input=dummy distance=distance
+g.region rast=mid_pines_lidar2013_dsm
+r.mapcalc "patched_smooth = if(isnull(distance), mid_pines_lidar2013_dsm, (1 - distance/10.) * 2015_06_20_DSM_agi_11GCP_cl +(distance/10) * mid_pines_lidar2013_dsm)"
+</code></pre>
+
+
+We will create a smooth transition when modeling the flow using a different method, in this assignment
 we will explore the viewshed analysis.
 
 <p>
