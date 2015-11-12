@@ -49,7 +49,7 @@ Register our UAV DSM as time series, and use the t* commands to perform temporal
 
 <h3>Workflow in GRASS71</h3>
 
-<p>Smooth fusion
+<p><b>Smooth fusion</b>
 
 <p>
 Import binned lidar for entire area
@@ -90,7 +90,7 @@ g.region rast=mid_pines_lidar2013_dsm
 r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
 r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
 -->
-<p>Water flow simulation from past MEA792: MultiD modeling</p>
+<p><b>Water flow simulation from past MEA792: MultiD modeling</b></p>
 
 <p>
 compute spatial pattern of overland flow depth and discharge<br>
@@ -124,38 +124,6 @@ d.rast disch_2m.020
 <p>
 animate the time series File > Animation tool<br>
 
-compute peak runoff with predefined flow direction<br>
-along the stream inluding culvert under the road<br>
-compute direction (aspect) of the given streams<br>
-
-<pre><code>
-v.to.rast streams out=streams_dir_2m use=dir
-</code></pre>
-
-<p>
-compute stream dx,dy using direction and slope=2deg<br>
-
-<pre><code>
-r.mapcalc "dxstr_2m = tan(2.)*cos(streams_dir_2m)"
-r.mapcalc "dystr_2m = tan(2.)*sin(streams_dir_2m)"
-</code></pre>
-
-<p>
-compute combined DEM and stream dx,dy<br>
-
-<pre><code>
-r.mapcalc "dxdemstr_2m = if(isnull(dxstr_2m), dx_2m, dxstr_2m)"
-r.mapcalc "dydemstr_2m = if(isnull(dystr_2m), dy_2m, dystr_2m)"
-</code></pre>
-
-<p>
-run the model<br>
-
-<pre><code>
-r.sim.water -t elev=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=rain50mmhr infil=infil0 man=man05 \
-      depth=wdpstr_2m disch=dischstr_2m nwalk=400000 niter=25 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0
-d.rast dischstr_2m.020
-</code></pre>
 
 <p>
 Compute runoff for spatially variable landcover
@@ -214,60 +182,6 @@ d.rast distrcov_2m.20
 d.legend distrcov_2m.20 
 </code></pre>
 
-<p>
-run animation<br>
-
-<pre><code>
-</code></pre>
-
-<p>
-compute sediment flow rate and net erosion/deposition using simwe<br>
-set region to the upper part of the watershed<br>
-
-<pre><code>
-g.region s=s+290
-</code></pre>
-
-<p>
-compute input transport capacity and detachment coef. maps<br>
-
-<pre><code>
-r.mapcalc "tranin = 0.001"
-r.mapcalc "detin = 0.001"
-</code></pre>
-
-<p>
-compute input critical shear stress<br>
-
-<pre><code>
-r.mapcalc "tauin = 0.01"
-</code></pre>
-
-<p>
-run the model, use last depth from previous run<br>
-
-<pre><code>
-g.copy rast=wdp_2m.140,wdp_2m
-r.sim.sediment elev=elev_lid792_2m dx=dx_2m dy=dy_2m wdepth=wdp_2m det=detin tran=tranin \
-      tau=tauin man=man05 nwalk=600000 niter=600 tc=tcapacity et=erdepmax flux=sedflow erdep=erdepsimwe
-</code></pre>
-
-<p>
-display these results after few seconds:<br>
-
-<pre><code>
-d.rast tcapacity
-d.rast erdepmax
-</code></pre>
-
-<p>
-display the final results<br>
-
-<pre><code>
-d.rast sedflow 
-d.legend sedflow
-d.rast erdepsimwe
-d.legend erdepsimwe
 <P>Simulations for the Centennial Campus
 </code></pre>
 
