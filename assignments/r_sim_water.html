@@ -7,7 +7,7 @@
 <ul>
 	<li>sparse point clouds for the targeted area from 5 flights in 2015: <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXUzJCVER1TW0zTVU">March (03)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSFM1MWVtbE9GNEE">June (06)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdnJZSHFsQTVLLXc">September (09)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSnpZVnVmdl9wTjg">October 6th (10)</a> and <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXU0ZoVXZSLUhQekU">October 29th (11)</a>
 	<li>lidar 2013 point cloud <a herf="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines</a>
-	<li>orthophotos generated from the flights<a herf="">Mid Pines</a>
+	<li>orthophotos generated from the flights<a herf="https://drive.google.com/open?id=0B1AfQGDB8tPXd05tSTVLZUZBd00">Mid Pines</a>
 </ul>
 <h3>Software</h3>
 GRASS GIS 7.0.1
@@ -16,7 +16,6 @@ GRASS GIS 7.0.1
 <ol>
     <li>Importing the point clouds into GRASS
     <li>Interpolating DSM
-    <li>Terrain analysis
     <li>Water flow simulation
     <li>Animation and visualisation the results
     <li>(optional) Validation using orthophotomaps</li>
@@ -34,13 +33,8 @@ v.in.lidar -t -o -r -b input=2015_03_18_points_6GCP_Ncspm.las output=points_UAV_
 </code></pre>
 <h4>Interpolating DSM</h4>
 <pre><code>
-v.surf.rst input=points_UAV_03 elevation=DSM_03 npmin=80 tension=20 smooth=1
+v.surf.rst -d input=points_UAV_03 elevation=DSM_03 slope=DSM_03_dx aspect=DSM_03_dy npmin=80 tension=20 smooth=1
 g.remove points_UAV_03
-</code></pre>
-<h4>Terrain analysis</h4>
-For running the overland flow hydrologic simulation, we need to compute the terrain derivatives
-<pre><code>
-r.slope.aspect elevation=DSM_03 dx=DSM_03_dx dy=DSM_03_dy
 </code></pre>
 <h4>Water flow simulation</h4>
 <pre><code>
@@ -54,8 +48,13 @@ g.copy raster=DSM_03_depth.40, DSM_03_depth.40b
 g.copy raster=DSM_03_depth.40, DSM_03_depth.40c
 </code></pre>
 Load all the DSM_03_depth maps (included the newly created copies) to the animation tool. Export the animation as .gif file.
-<p>The simulation can be also displayed in 3D wrapped over the DSM. The animation tool for the 3D view does not work on Windows and causes problems in other systems as well. You can simply display the final (.40) map.
-
+<p>The simulation can be also displayed in 3D wrapped over the DSM. The animation tool for the 3D view does not work on Windows and causes problems in other systems as well. You can simply display the final (.40) map.</p>
+<p>The water flow pattern is better visible in 2d when it's wrapped over an shaded relief. 
+<pre><code>
+r.relief input=DSM_03 output=03_relief
+r.shade shade=03_relief color=DSM_03_depth.40 output=shade_10_depth.40
+</code></pre>
+you can also use this shaded maps in the animation tool
 <h4>(optional) Validation using orthophotomaps</h4>
 In order to determine which DSM (lidar based or UAS based) better simulate the water flow, the depth maps can be compared with orthophotos. The flights in March, June and both of the October flights were executed after intense rainfall and some of the remaining water (paddles on the road) is still visible.
 <p>
