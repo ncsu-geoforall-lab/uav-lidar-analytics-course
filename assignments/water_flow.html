@@ -91,14 +91,15 @@ Register our UAV DSM as time series, and use the t* commands to perform temporal
 <p>
 Import binned lidar for entire area
 <pre><code>g.region rast=mid_pines_lidar2013_dsm res=0.2 -p
-r.in.lidar -sgo input=mid_pines_spm_2013.las out=midpines_lidar_02m
+r.in.lidar -o input=mid_pines_spm_2013.las out=midpines_lidar_02m
 </code></pre>
 
-Import binned UAV for subarea to be updated
-set the region based on the lasinfo output
-<pre><code>lasinfo 2015_06_sample_points_NCspm.las
-g.region n= s= w= e= res=0.2 -p
-r.in.lidar -sgo input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+Import binned UAV for subarea to be updated, first find the las extent, 
+it will be n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 b=84.000000 t=139.680000
+then set the region
+<pre><code>r.in.lidar -go input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+g.region n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 res=0.2 -p
+r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
 </code></pre>
 
 Replace all cells in UAV DSM that fall more than 0.5m below lidar DEM with nulls
@@ -123,6 +124,7 @@ r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
 -->
 <p><b>Water flow simulation from past MEA792: MultiD modeling</b></p>
 
+<a href="r_sim_water.html">Instructions for the time series of UAV data</a>
 <p>
 compute spatial pattern of overland flow depth and discharge<br>
 compute input raster maps for uniform land cover and uniform rainfall excess<br>
