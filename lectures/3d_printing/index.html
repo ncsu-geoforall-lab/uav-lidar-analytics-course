@@ -1,0 +1,120 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>3D Printing Terrain Models</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="layout.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="style.css" rel="stylesheet" type="text/css" media="screen">
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image"><p>3D Printing Terrain Models</p></div>
+<nav>
+<ul class="nav">
+<li><a href="index.html">Open source workflow</a></li>
+<!--
+<li><a href="rhino.html">Rhino workflow</a></li>
+-->
+</ul>
+</nav>
+
+</header>
+
+<main>
+
+<h3>Introduction</h3>
+<p>In this workshop we will prepare digital terrain models for 3D printing using open source software. First we will load GRASS elevation rasters in QGIS. Then we will use the GQIS plugin DEMto3D to generate a stereolithography mesh (.stl) for 3D printing. We will check the STL mesh in MeshLab. Finally in Slic3r we will compute slices for 3D printing and and generate g-code instructions for 3D printing.</p>
+
+<h3>Sample Data</h3>
+
+<!--
+<p><a href="http://fatra.cnr.ncsu.edu/3d_printing/">Lake Wheeler UAV Timeseries</a></p>
+<p>GRASS Location: North Carolina State Plane Meters HARN (EPSG 3358)</p>
+-->
+
+<p><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/washington_south_spm.zip">Mount St. Helens Timeseries</a></p>
+<p>GRASS Location: Washington South State Plane Meters HARN (EPSG 2856)</p>
+    
+<h3>Software</h3>
+
+<p><b><a href="http://www.qgis.org/">QGIS</a></b>: a free and open source Geographic Information System (GIS) integrated with GRASS GIS</p>
+
+<p><b><a href="http://demto3d.com/?lang=en">DEMto3D</a></b>: 3D printing plugin for QGIS</p>
+
+<p><b><a href="http://meshlab.sourceforge.net/">MeshLab</a></b>: Open source mesh processing, editing, and rendering</p>
+
+<p><b><a href="http://slic3r.org/">Slic3r</a></b>: Open source g-code generation for 3D printing</p>
+
+<!--
+<ul class="image-list">
+<li>
+<h4><a href="http://www.qgis.org/">QGIS</a></h4>
+<p>A free and open source Geographic Information System (GIS) integrated with GRASS GIS</p>
+</li>
+<li>
+<h4><a href="http://demto3d.com/?lang=en">DEMto3D</a></h4>
+<p>3D printing plugin for QGIS</p>
+</li>
+<li>
+<h4><a href="http://slic3r.org/">Slic3r</a></h4>
+<p>Open source g-code generation for 3D printing</p>
+</li>
+</ul>
+-->
+
+<h3>Workflow</h3>
+
+<h5>Launch QGIS 2.12 with GRASS 6</h5>
+
+<p>In the <i>Plugins</i> menu select <i>Manage and Install Plugins...</i>. Install, update, and check the GRASS 6 and DEMto3D plugins.</p>
+
+<p>In the <i>Browser Panel</i> browse to your GRASS data directory, browse to a mapset, and open a raster elevation map.</p>
+
+<p>In the <i>Raster</i> menu select <i>DEMto3D</i> and then <i>DEM 3D Printing</i>.</p>    
+
+<p>In the <i>DEM 3D Printing</i> dialog set "Layer to Print" to your raster elevation map. Either set "Print extent" to "Select layer extent" or draw an extent. In "model size" first set the spacing to 0.2 mm. Then set the width and height of the model to build dimensions of your 3D printer (for example 100 mm x 100 mm). Then if possible set a good map scale without exceeding the build dimensions of your 3D printer. Set a vertical exaggeration factor if desired. Set the base height to the lowest point. Export to STL.</p>
+
+<h5>Launch MeshLab</h5> 
+
+<p>Import the STL. If neccessary use the tools in the <i>Edit</i> and <i>Filters</i> menus to fix the mesh.</p>
+
+<h5>Launch Slic3r</h5> 
+    
+<p>In the <i>Plater</i> tab select <i>Add...</i> to load your STL file.</p>
+
+<p>In the <i>Print Settings, Filament Settings,</i> and <i>Printer Settings</i> tabs set parameters for your 3D printer.</p>
+    
+<p>Check the slices using the <i>Preview</i> tab at the bottom of the screen. Preview mode renders what the printed model and its support structure should look like. In preview mode use the slider to move a cutting pane and view each slice.</p>
+
+<p>Select <i>Export G-code</i> to generate instructions for your 3D printer.</p>
+
+<!--
+<pre><code>...
+</code></pre>
+-->
+    
+<br/>
+</main>
+<footer>
+<nav>
+<ul>
+<li>
+    <a href="https://github.com/ncsu-osgeorel/uav-lidar-analytics-course" title="Fork on GitHub">
+        <img src="github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2015
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU OSGeoREL</a>
+</li>
+</ul>
+</nav>
+</body>
+</html>
