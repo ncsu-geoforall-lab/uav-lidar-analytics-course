@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>GIS595/MEA792:<br>UAV/lidar Data Analytics</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule.html">Schedule</a></li>
+<li><a href="../lectures.html">Lectures</a></li>
+<li><a href="../assignments.html">Assignments</a></li>
+<li><a href="../projects.html">Projects</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Water flow simulation for UAS and lidar data</h2>
+
+<p>The aim of the processing is to investigate the flow pattern simulated on diffrent DSMs. The lidar 2013 and the timeseries of UAS based DSMs will be used as input for simulation using r.sim.water tool in GRASS. 
+</p>
+
+<h3>Data </h3>
+<ul>
+	<li>sparse point clouds for the targeted area from 5 flights in 2015: <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXUzJCVER1TW0zTVU">March (03)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSFM1MWVtbE9GNEE">June (06)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdnJZSHFsQTVLLXc">September (09)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSnpZVnVmdl9wTjg">October 6th (10)</a> and <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXU0ZoVXZSLUhQekU">October 29th (11)</a>
+	<li>lidar 2013 point cloud <a herf="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a>
+	<li>orthophotos generated from the flights <a herf="https://drive.google.com/open?id=0B1AfQGDB8tPXd05tSTVLZUZBd00">Mid Pines</a>
+</ul>
+<h3>Software</h3>
+GRASS GIS 7.0.1
+<h3>General workflow:</h3>
+
+<ol>
+    <li>Importing the point clouds into GRASS
+    <li>Interpolating DSM
+    <li>Water flow simulation
+    <li>Animation and visualisation the results
+    <li>(optional) Validation using orthophotomaps</li>
+</ol>
+<p>The workflow and commands below compute the flow simulation for one of the DSMs (UAS from March). All the other can be processed using the same procedure (or you can write a Python script for automating it)</p>
+
+<h4>Importing the point clouds into GRASS</h4>
+Create a new mapset in the Lake_Wheeler_NCspm location. For the flow simulation, we will use smaller area, that is covered by all the flights. It contains crops with vegetation in various stages, road and some small gullies. This diverse terrain will allow us to compare the flow pattern simulated on different DSMs.
+<pre><code>g.region n=219657.343931 s=219320.143864 e=637082.551347 w=636731.851429 res=0.3
+</code></pre>
+Importing the point clouds is time condsuming, but using flags -t (do not create attribute table) -b (do not build topology) and -r (limit import to the current region) make the procedure much faster
+<pre><code>v.in.lidar -torb input=2015_03_18_points_6GCP_Ncspm.las output=points_UAV_03
+</code></pre>
+<h4>Interpolating DSM</h4>
+<pre><code>v.surf.rst -d input=points_UAV_03 elevation=DSM_03 slope=DSM_03_dx aspect=DSM_03_dy npmin=80 tension=20 smooth=1
+g.remove points_UAV_03
+</code></pre>
+Note: in this command we also create the spatial derivatives (flag -d is used of that). A differnent method of generating those is:
+ <pre><code>r.slope.aspect elevation=DSM_03 dx=DSM_03_dx dy=DSM_03_dy
+</code></pre>
+Both tools use different algorithms, so the results may differ according to used parameters (for more info see <a href="https://grass.osgeo.org/grass64/manuals/v.surf.rst.html">v.surf.rst</a> and <a href="https://grass.osgeo.org/grass64/manuals/r.slope.aspect.html">r.slope.aspect</a> manuals).
+<h4>Water flow simulation</h4>
+<pre><code>r.sim.water -t elevation= DSM_03 dx=DSM_03_dx dy=DSM_03_dy  rain_value=30 man_value=0.15 depth=DSM_03_depth discharge=DSM_03_disch nwalkers=100000 niterations=40 output_step=2 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+<h4>Animation and visualisation the results</h4>
+Animation tool allows to create animated gifs from a series of raster maps. The last simulation (after 40min) should be emphasized, so we will display it longer. It is not possible to change the time for each individual layer in the animation tool, but the map can be copied couple times and it can anable to have it on screen longer. Using the commands below, create 3 copies of the last depth simulation map
+<pre><code>g.copy raster=DSM_03_depth.40,DSM_03_depth.40a
+g.copy raster=DSM_03_depth.40,DSM_03_depth.40b
+g.copy raster=DSM_03_depth.40,DSM_03_depth.40c
+</code></pre>
+Load all the DSM_03_depth maps (included the newly created copies) to the animation tool. Export the animation as <a href="assignments/img/water_flow/uas_03_depth.gif">.gif file.</a>
+<p>The simulation can be also displayed in 3D wrapped over the DSM. The animation tool for the 3D view does not work on Windows and causes problems in other systems as well. You can simply display the <a href="assignments/img/water_flow/water_flow_3d.png">final (.40) map.</a></p>
+<p>The water flow pattern is better visible in 2d when it's wrapped over an shaded relief. 
+<pre><code>r.relief input=DSM_03 output=03_relief
+r.shade shade=03_relief color=DSM_03_depth.40 output=shade_10_depth.40
+</code></pre>
+you can also use this shaded maps in the animation tool
+<h4>(optional) Validation using orthophotomaps</h4>
+In order to determine which DSM (lidar based or UAS based) better simulate the water flow, the depth maps can be compared with orthophotos. The flights in March, June and both of the October flights were executed after intense rainfall and some of the remaining water (paddles on the road) is still visible.
+<p>
+The region with 0.3m resolution will not allow for a detailed water edges delimitation. In the new mapset run the command	` 
+<pre><code>g.region n=219657.343931 s=219320.143864 e=637082.551347 w=636731.851429
+</code></pre>
+but do not set the resolution.</p>
+<p>
+The orthophotos are available in the .pack format. Use r.unpack for import.</p>
+<p>
+display the depth simulation rasters after 40min (the last in each timeserie) for each simulation. Change the transparenct to see the orthophoro below
+<pre><code>
+</code></pre>
+
+
+
+
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li>
+    <a href="https://github.com/ncsu-osgeorel/uav-lidar-analytics-course" title="Fork on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2015
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU OSGeoREL</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

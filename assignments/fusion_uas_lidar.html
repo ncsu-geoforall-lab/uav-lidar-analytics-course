@@ -144,8 +144,22 @@ We can now merge it with lidar for entire study area and check the patch edges u
 r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
 r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
 </code></pre>
-We now have smoother transition from UAS to lidar, but you can still identify the edge when viewing the patched DSM
-in 3D view (nviz). We will create a smooth transition when modeling the flow, in this assignment
+<p>
+We now have smoother transition from UAS to lidar, but you can still identify two edges when viewing the patched DSM
+in 3D view (nviz). Therefore we will use weighted average to smooth out the overlap with the following workflow
+(try to explain it in your report):
+
+<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
+g.region s=s+10 n=n-10 e=e-10 w=w+10 -p
+r.mapcalc "dummy = 1"
+g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
+r.grow.distance -m input=dummy distance=distance
+g.region rast=mid_pines_lidar2013_dsm
+r.mapcalc "patched_smooth = if(isnull(distance), mid_pines_lidar2013_dsm, (1 - distance/10.) * 2015_06_20_DSM_agi_11GCP_cl +(distance/10) * mid_pines_lidar2013_dsm)"
+</code></pre>
+
+
+We will create a smooth transition when modeling the flow using a different method, in this assignment
 we will explore the viewshed analysis.
 
 <p>
@@ -157,7 +171,7 @@ to create a lidar-based DSM updated in the fields using UAS data.
 You can use digitizer to create a polygon or 
 get the packed raster representation of fields from the link above.
 
-<pre><code>r.unpack -o fields.pack out=fields use=val
+<pre><code>r.unpack -o fields.pack
 r.mapcalc "uas_june_clpol = 2015_06_20_DSM_agi_11GCP * fields" 
 r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
 r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
@@ -205,7 +219,7 @@ Vol. 29, Iss. 12, 2015
         <img src="../img/github_logo.png" alt="GitHub Octocat logo">
     </a>
 </li>
-<li title="Copyright and license">
+<li title="Copyright and license (not applicable to linked materials)">
     &copy; 2015
     <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
     <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU OSGeoREL</a>

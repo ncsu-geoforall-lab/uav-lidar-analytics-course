@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* CSS Document */
+
+pre {
+    color: black;
+    background-color: rgb(90%, 90%, 90%);
+
+	word-wrap:break-word;
+    font-size: 105%;
+    padding-top: .3em;
+    padding-bottom: .3em;
+    padding-left: .5em;
+    padding-right: .2em;
+}
