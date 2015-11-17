@@ -198,6 +198,11 @@ Animation tool allows to create animated gifs from a series of raster maps.
 Load all the *_depth maps to the animation tool.
 Export the animation as GIF file.
 
+You can use <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>
+to add a pause in the end of the simulation:
+<pre><code>convert animation.gif \( +clone -set delay 300 \) animation_with_pause.gif
+</code></pre>
+
 <p>The water flow pattern is better visible in 2d when it's draped over a shaded relief.
 <pre><code>d.shade shade=merged_lidar_uav_full_relief color=merged_depth.20 brighten=30
 </code></pre>
