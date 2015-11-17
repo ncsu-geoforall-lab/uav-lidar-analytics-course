@@ -1,0 +1,9 @@
+ -40 red
+ -1 orange
+ -0.5 yellow
+ -0.1 grey
+ 0 white
+ 0.1 grey
+ 0.5 cyan
+ 1 aqua
+ 40 blue
