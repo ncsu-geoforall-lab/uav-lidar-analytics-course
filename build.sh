@@ -107,4 +107,4 @@ done
 
 # backwards compatibility
 cp $OUTDIR/assignments/lidar_import.html $OUTDIR/instructions_lidar_upload.html
-cp $OUTDIR/assignments/instructions_trimble.html $OUTDIR/instructions_trimble.html
+cp $OUTDIR/assignments/trimble_install.html $OUTDIR/instructions_trimble.html
