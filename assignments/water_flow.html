@@ -47,13 +47,21 @@
 </ul>
 
 <p>
-<h3>Data:</h3> use the data from previous assignment, see the <a href="../assignments.html">Assignments web page</a>
-and sparse point clouds for the targeted area from 5 flights in 2015: <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXUzJCVER1TW0zTVU">March (03)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSFM1MWVtbE9GNEE">June (06)</a>, <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdnJZSHFsQTVLLXc">September (09)</a>, O<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSnpZVnVmdl9wTjg">October 6th (10)</a> and <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXU0ZoVXZSLUhQekU">October 29th (11)</a>
+<h3>Data</h3>
+<ul>
+  <li>Use the data from previous assignment, see the <a href="../assignments.html">Assignments web page</a></li>
+  <li> sparse point clouds for the targeted area from 5 flights in 2015:
+ <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXUzJCVER1TW0zTVU">March (03)</a>,
+ <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSFM1MWVtbE9GNEE">June (06)</a>,
+ <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdnJZSHFsQTVLLXc">September (09)</a>,
+ <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSnpZVnVmdl9wTjg">October 6th (10)</a>
+and <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXU0ZoVXZSLUhQekU">October 29th (11)</a></li>
+  <li>orthophotos generated from the flights <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXd05tSTVLZUZBd00">Mid Pines</a></li>
+</ul>
 
-<p>
 <h3>Workflow overview</h3>
-<p>
-Smooth Fusion
+<h4>Smooth fusion</h4>
+One possible approach:
 <ul>
   <li>Use binning to create a 0.2m resolution DEM from lidar for entire area and a DSM from UAV for the region 
       area to be updated. (r.in.lidar), the rasters will have holes but that is OK
@@ -70,24 +78,62 @@ Smooth Fusion
       <li>randomly sample the combined DEM with output as 3D vector points and interpolate the smooth raster using v.surf.rst
   </ul>
 </ul>
-<p>
-Surface water flow modeling
+<h4>Surface water flow modeling</h4>
 <ul>
-  <li>run r.watershed to identify watershed boundaries to make sure you run the simulations in area with at least one complete watershed
-  <li>select subregion with a watershed and run path sampling based simulation of water flow (r.sim.water) 
+  <li>Run r.watershed to identify watershed boundaries to make sure you run the simulations in area with at least one complete watershed.
+  <li>Select subregion with a watershed and run path sampling based simulation of water flow (r.sim.water)
       using the lidar DEM, UAV DSM and the fused DEM (lidar updated with UAS data).
-  <li>create animation for the results, discuss differences
-  <li>select additional UAS DSM from our time series and run water flow simulation, evaluate for change in flow patterns
+  <li>Create animation for the results, discuss differences.
+  <li>Select additional UAS DSM from our time series and run water flow simulation, evaluate for change in flow patterns.
 </ul>
-<p>
-Optional: Management and analysis of multitemporal data
-<p>
-Register our UAV DSM as time series, and use the t* commands to perform temporal analysis 
 
-<h3>Workflow in GRASS71</h3>
 
-<p><b>Smooth fusion</b>
+<h3>Workflow in GRASS GIS 7</h3>
 
+<h4>Smooth fusion</h4>
+Import UAV data as points, set region and interpolate:
+<p><em>Note: Importing the point clouds is time consuming,
+but using flags -t (do not create attribute table), -b (do not build topology)
+ and -r (limit import to the current region) make the procedure much faster.</em>
+<pre><code>g.region n=219657 s=219320 e=637082 w=636731 res=0.3 -p
+v.in.lidar -trbo input=2015_06_20_Points_11GCP_Ncspm.las output=uav_06_all
+v.surf.rst npmin=100 input=uav_06_all elevation=uav_06_interp tension=30 smooth=1
+</code></pre>
+
+We will create a field mask based on the difference between the UAV surface and lidar DEM.
+Link to lidar DEM is provided on <a href="../assignments.html">Assignments page</a>.
+We will assume that if the difference is larger than 30 cm, then it represents vegetation.
+Set appropriate <a href="resources/dif_lidar_uav.txt">color table</a> for differences
+we used in one of the previous assignments.
+We will use <a href="https://grass.osgeo.org/grass70/manuals/r.grow.html">r.grow</a>
+module to dilate the mask.
+
+<pre><code>r.mapcalc "diff_uav_06_lidar = uav_06_interp - mid_pines_lidar2013_dem"
+r.colors map=diff_uav_06_lidar rules=dif_lidar_uav.txt
+r.mapcalc "diff_uav_06_lidar_mask = if (uav_06_interp - mid_pines_lidar2013_dem > 0.3, 1, null())"
+r.grow input=diff_uav_06_lidar_mask output=diff_uav_06_lidar_mask_grow radius=3.01 new=1
+</code></pre>
+
+The mask now represents areas which will be replaced by lidar data.
+We will fuse interpolated UAV and lidar raster data using raster algebra weighted average expression.
+We compute weights as distance from masked cells.
+We evaluate the results with shaded relief.
+<pre><code>r.grow.distance -m input=diff_uav_06_lidar_mask_grow distance=distance_mask
+r.mapcalc merged_lidar_uav = if(distance_mask > 10, uav_06_interp, (1 - distance_mask/10) * mid_pines_lidar2013_dem + (distance_mask/10) * uav_06_interp)"
+r.relief input=merged_lidar_uav output=merged_lidar_uav_relief zscale=100
+</code></pre>
+
+Now we will merge our result into larger area covered by lidar using the same technique:
+<pre><code>g.region n=n-10 s=s+10 e=e-10 w=w+10
+r.mapcalc "rectangle = 1"
+g.region raster=mid_pines_lidar2013_dem
+r.grow.distance -m input=rectangle distance=distance_rectangle
+r.mapcalc "merged_lidar_uav_full = if(distance_rectangle > 10, mid_pines_lidar2013_dem, (1 - distance_rectangle/10) * merged_lidar_uav + (distance_rectangle/10) * mid_pines_lidar2013_dem)"
+r.relief input=merged_lidar_uav_full output=merged_lidar_uav_full_relief zscale=100
+</code></pre>
+
+
+<!--
 <p>
 Import binned lidar for entire area
 <pre><code>g.region rast=mid_pines_lidar2013_dsm res=0.2 -p
@@ -111,7 +157,7 @@ TODO! but make sure lidar nulls do not overwrite you uav data
 <pre><code>g.region rast=mid_pines_lidar2013_dsm res=0.2 -p 
 r.mapcalc 
 </code></pre>
-
+-->
 <!--
 Then, within this region, we compute a raster with lidar+uas DSM average in the overlap and UAS elsehwere
 <pre><code>r.mapcalc "lid_uas_overlap_avg = if(isnull(2015_06_20_DSM_agi_11GCP_cl),(2015_06_20_DSM_agi_11GCP+mid_pines_lidar2013_dsm)/2.,2015_06_20_DSM_agi_11GCP_cl)"
@@ -122,132 +168,56 @@ We can now merge it with lidar for entire study area and check the patch edges u
 r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
 r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
 -->
-<p><b>Water flow simulation from past MEA792: MultiD modeling</b></p>
+<h4>Water flow simulation</h4>
+The aim of the processing is to investigate the flow pattern
+simulated on different DSMs.
+The lidar 2013 and the timeseries of UAS-based DSMs will be used as input for simulations
+using <a href="https://grass.osgeo.org/grass70/manuals/r.sim.water.html">r.sim.water</a>.
 
-<a href="r_sim_water.html">Instructions for the time series of UAV data</a>
+First, we examine the watershed boundaries to see which area to include:
+<pre><code>r.watershed elevation=merged_lidar_uav_full threshold=50000 accumulation=merged_flowacc basin=merged_basin
+r.to.vect -t input=merged_basin output=merged_basin type=area
+</code></pre>
+
+<p> We will compute water flow on our fused DEM within our selected region.
+We need first order spatial derivatives which can be derived either
+using <a href="https://grass.osgeo.org/grass70/manuals/r.slope.aspect.html">r.slope.aspect</a>
+or during interpolation phase with <a href="https://grass.osgeo.org/grass70/manuals/v.surf.rst.html">v.surf.rst</a>.
+
+<pre><code>g.region n=219727 s=219319 e=637191 w=636701 res=0.3 -p
+r.slope.aspect elevation=merged_lidar_uav_full dx=merged_dx dy=merged_dy
+</code></pre>
+The simulation writes water depth and discharge raster maps
+so we can look at first results soon although the simulation takes a lot of time.
+Depending on your processing power, you can make the region smaller.
+<pre><code>r.sim.water -t elevation=merged_lidar_uav_full dx=merged_dx dy=merged_dy rain_value=30 man_value=0.15 depth=merged_depth discharge=merged_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+
+<h4>Animation and visualisation the results</h4>
+Animation tool allows to create animated gifs from a series of raster maps.
+Load all the *_depth maps to the animation tool.
+Export the animation as GIF file.
+
+You can use <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>
+to add a pause in the end of the simulation:
+<pre><code>convert animation.gif \( +clone -set delay 300 \) animation_with_pause.gif
+</code></pre>
+
+<p>The water flow pattern is better visible in 2d when it's draped over a shaded relief.
+<pre><code>d.shade shade=merged_lidar_uav_full_relief color=merged_depth.20 brighten=30
+</code></pre>
+You can also use shaded maps in the animation tool.
+
+<h4>Validation using orthophotos (optional)</h4>
+In order to determine which DSM (lidar based or UAS based)
+gives more realistic simulation results, the depth maps can be compared with orthophotos.
+The flights in March, June and both of the October flights were executed after
+intense rainfall and some of the remaining water (puddles on the road) is still visible.
 <p>
-compute spatial pattern of overland flow depth and discharge<br>
-compute input raster maps for uniform land cover and uniform rainfall excess<br>
-
-<pre><code>g.region rural_1m res=2 -p
-r.mapcalc "man05 = 0.05"
-r.mapcalc "infil0 = 0."
-r.mapcalc "rain50mmhr = 50."
-</code></pre>
-
+The orthophotos are available in the .pack format. Use r.unpack for import.</p>
 <p>
-calculate partial derivatives to define the gradient of elevation surface<br>
-
-<pre><code>v.surf.rst -d in=elev_lid792_bepts elev=elev_lid792_2m slop=dx_2m asp=dy_2m ten=15 smooth=1.5 npmin=150
-</code></pre>
-
-<p>
-run the model<br>
-remove backslashes when running from GUI command console<br>
-
-<pre><code>r.sim.water -t elev=elev_lid792_2m dx=dx_2m dy=dy_2m rain=rain50mmhr infil=infil0 man=man05 \
-          depth=wdp_2m disch=disch_2m nwalk=400000 niter=25 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0
-d.rast wdp_2m.020
-d.rast disch_2m.020
-</code></pre>
-
-<p>
-animate the time series File > Animation tool<br>
-
-
-<p>
-Compute runoff for spatially variable landcover
-represented by  spatially variable Mannings and infiltration variable Mannings
-(<a href="http://courses.ncsu.edu/gis582/common/grass/data/lu_labels.txt">lu_labels.txt</a>).
-
-<pre><code>r.recode landcover_1m out=mancover_2m
-</code></pre>
-
-<pre><code>1:1:0.9:0.9
-2:2:0.5:0.5
-3:3:0.01:0.01
-4:4:0.03:0.03
-5:5:0.01:0.01
-6:6:0.05:0.05
-7:7:0.1:0.1
-8:8:0.1:0.1
-9:9:0.9:0.9
-10:10:0.03:0.03
-11:11:0.5:0.5
-</code></pre>
-
-<p>
-variable rainfall excess (rainfall intensity - infitration rate)<br>
-
-<pre><code>r.recode landcover_1m out=raincover_2m
-</code></pre>
-
-<pre><code>1:1:50:50
-2:2:5:5
-3:3:40:40
-4:4:35:35
-5:5:50:50
-6:6:40:40
-7:7:25:25
-8:8:15:15
-9:9:50.:50.
-10:10:40:40 
-11:11:10:10 
-</code></pre>
-
-<p>
-run the model<br>
-
-<pre><code>r.sim.water -t elev=elev_lid792_2m dx=dxdemstr_2m dy=dydemstr_2m rain=raincover_2m infil=infil0 \
-               man=mancover_2m depth=wdpstrcov_2m disch=distrcov_2m nwalk=400000 niter=25 outit=1 \
-               hmax=0.2 halpha=8.0 hbeta=1.0
-d.rast wdpstrcov_2m.20
-d.legend wdpstrcov_2m.20
-d.rast distrcov_2m.20
-d.legend distrcov_2m.20 
-</code></pre>
-
-<P>Simulations for the Centennial Campus
-</code></pre>
-
-<p>
-save the provided cc_south MAPSET in the nc_spm_08_grass7 directory<br>
-Using the 2001, 3m resolution NED LE_ned_3m<br>
-perform watershed analysis (flowaccumulation and watershed boundaries),<br>
-generate countours in a subregion<br>
-
-<pre><code>g.region lakeraleigh_3m -p
-r.watershed LR_ned_3m accum=LR_accum basin=LR_basin thre=10000
-g.region lakeraleighzm_3m -p
-r.contour LR_ned_3m out=LR_ned_3m_cont2 step=2
-</code></pre>
-
-<p>
-analyze overland flow for the years 2001<br>
-TODO - ADD NEW DEM for comparison!!!<br>
-compare results for the reprojected USGS LR_ned_3m and lidar-based DEM<br>
-prepare uniform input and run simwe, show the impact of Mannings on the result<br>
-use rain parameter to provide raifall excess (rainfall-infiltration)<br>
-use infil parameter to simulate infiltration of flowing water (flow-infiltration)<br>
-
-<pre><code>r.mapcalc "man015 = 0.15"
-r.mapcalc "man005 = 0.05"
-r.mapcalc "infil0 = 0."
-r.mapcalc "rain25mmhr = 25"
-r.slope.aspect LR_ned_3m dx=ned3m_dx dy=ned3m_dy
-r.sim.water -t elev=LR_ned_3m dx=ned3m_dx dy=ned3m_dy rain=rain25mmhr infil=infil0 man=man015 \
-depth=nedwdp_3m_n015 disch=nedisch_3m_n015 nwalk=100000 niter=30 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0 --o
-r.sim.water -t elev=LR_ned_3m dx=ned3m_dx dy=ned3m_dy rain=rain25mmhr infil=infil0 man=man005 \
-depth=nedwdp_3m_n005 disch=nedisch_3m_n005 nwalk=100000 niter=30 outit=1 hmax=0.2 halpha=8.0 hbeta=1.0 --o
-</code></pre>
-
-<p>
-if the data set has 2013 DEM perform the same analysis and compare the results<br>
-<!--
-#output and animate the particles
-r.sim.water -t elev=elev_rand3m dx=dx_3m dy=dy_3m rain=rain25mmhr infil=infil0 man=man0.15 \
-disch=tdisch_3mn1 outwalk=lr_walk nwalk=100000 niter=30 outit=2 hmax=0.2 halpha=8.0 hbeta=1.0
--->
+Display the depth simulation rasters after 20 min (the last in each time series)
+for each simulation. Change the transparency to see the orthophoto below.
 
 </main>
 
