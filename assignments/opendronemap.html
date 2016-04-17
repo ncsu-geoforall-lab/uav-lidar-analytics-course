@@ -83,9 +83,8 @@ cd /odm_app/
 git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </code></pre>
 </li>
-<li>Install ODM. We will switch first to a branch with the latest development.
+<li>Install ODM.
 <pre><code>cd OpenDroneMap
-git checkout python-port
 ./install.sh
 </code></pre>
 During installation all dependecies are automatically downloaded and compiled.
@@ -160,7 +159,7 @@ To review parameters run:
 
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>cd /odm_data
-/odm_app/OpenDroneMap/run.py --use-opensfm=True --odm_georeferencing-useGcp=True --odm_georeferencing-gcpFile=gcp_odm.txt
+/odm_app/OpenDroneMap/run.py --use-opensfm --odm_georeferencing-useGcp --odm_georeferencing-gcpFile gcp_odm.txt
 </code></pre>
 By using he option <code>--use-opensfm</code> we select project <a href="https://github.com/mapillary/OpenSfM">OpenSfM</a> as backend,
 which seems to be faster and producing better results.
