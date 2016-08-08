@@ -5,12 +5,12 @@ This is a repository for a course website and teaching materials.
 
 For reference about the template the website style see:
 
-* https://github.com/ncsu-osgeorel/course-website-template
-* https://github.com/ncsu-osgeorel/geospatial-modeling-course
+* https://github.com/ncsu-geoforall-lab/course-website-template
+* https://github.com/ncsu-geoforall-lab/geospatial-modeling-course
 
 To learn about Git and GitHub, you can use:
 
-* http://ncsu-osgeorel.github.io/git-and-github-workshop/
+* http://ncsu-geoforall-lab.github.io/git-and-github-workshop/
 
 
 Requirements
@@ -54,8 +54,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 For the website style see:
 
-https://github.com/ncsu-osgeorel/course-website-template
+https://github.com/ncsu-geoforall-lab/course-website-template
 
 For information on lecture slides (presentations) see:
 
-https://github.com/ncsu-osgeorel/lecture-slides-template
+https://github.com/ncsu-geoforall-lab/lecture-slides-template
