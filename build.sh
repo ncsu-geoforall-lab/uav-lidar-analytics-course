@@ -57,7 +57,7 @@ do
     build_page $FILE $FILE
 done
 
-for DIR in assignments
+for DIR in assignments topics
 do
     mkdir -p $OUTDIR/$DIR
 
