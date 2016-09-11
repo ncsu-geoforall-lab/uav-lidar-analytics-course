@@ -40,11 +40,7 @@ or nc_spm_08 from MEA582 can be used as well. Create a new mapset to manage your
 <ul>
     <li>Export a flight plan path that you created to the kml file from Trimble Aerial Imaging .gwt project</li>
     <li>Launch GRASS</li>
-    <li>install the v.import package
-<pre><code>
-g.extension extension=v.import svnurl=http://svn.osgeo.org/grass/grass-addons/grass7
-</code></pre>
-    <li>Import generated kml into GRASS
+    <li>Import generated kml into GRASS with v.import, which will reproject the input on the fly:
 <pre><code>
 <i>#customize name#</i>
 v.import input=exported_kml_file.kml output=flight_track_kml
