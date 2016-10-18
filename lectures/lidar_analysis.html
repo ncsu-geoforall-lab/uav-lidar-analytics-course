@@ -1,0 +1,114 @@
+<section>
+    <h2>Airborne Lidar Data Analysis using GIS tools</h2>
+    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
+
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU OSGeo Research and Education Laboratory">OSGeoREL</a>
+        at
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        <br>
+    </p>
+</section>
+
+<section>
+    <h3>Outline</h3>
+<p>
+<ul>
+  <li>characteristics of lidar-based point cloud data
+  <li>topographic analysis from lidar data
+  <li>voxel-based analysis of point cloud density
+  <li>recent lidar surveys for Wake county and NC
+</ul>
+</section>
+
+<section>
+   <h3>Lidar mapping techologies</h3>
+<p>
+Platform: aerial, terrestrial static and mobile
+<p>
+Sensor: multiple return, waveform, single photon, multispectral
+<p>
+<img height=100 src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Multiple return point cloud</h3>
+<p>
+Multiple return point cloud 3D view
+<p>
+<img class="stretch" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Multiple return point cloud</h3>
+<p>
+Multiple return point cloud profile view of returns
+<p>
+<img class="stretch" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Point cloud data properties</h3>
+<p>
+Horizontal projection of multiple return point location
+<p>
+<img class="stretch" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Point cloud data formats</h3>
+<p>
+Set of (x, y, z, r, i, c, ...) measured points reflected 
+from Earth surface or objects on or above it, 
+where x,y,z are georeferenced coordinates, 
+r is the return number, 
+i is intensity, 
+c is class, 
+r:g:b may be also measured 
+Provided in 
+ASCII (x,y,z, ...) format 
+binary LAS format (header, record info, x,y,z,i, scan dir, edge of flight line, classification, etc.), 
+industry lidar data exchange format, often distributed as compressed LAZ format
+http://grasswiki.osgeo.org/wiki/LIDAR
+</section>
+
+
+
+<section>
+<h3>text on left flight planning</h3>
+<p style="text-align:left;">Flight planning software packages often use low resolution
+DEMs without trees or buildings.
+By bringing flight path into GIS and using latest high resolution DSMs
+we can make sure flight path will not cross any obstacles.
+
+<div style="text-align:left;">
+<p>Analyze and visualize:
+<ul>
+  <li>flight path altitude</li>
+  <li>flight path height above terrain</li>
+  <li>check for any obstacles</li>
+</ul></div>
+</section>
+
+<section>
+<h3>Flight altitude</h3>
+    <img class="stretch"  src="img/mid_pines_altitude.jpg">
+</section>
+
+<section>
+    <h3>Height above terrain</h3>
+        <img class="stretch" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+    <h3>Flights with different GSD and overlap</h3>
+    Yellow flight has GSD 4 cm, blue flight has GSD 2.4 cm
+        <img height="240px" src="img/mid_pines_both_2d.jpg"><br>
+        <img height="210px" src="img/mid_pines_both_3d.jpg">
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="../topics/lidar.html" title="Go to the topic page">&#8962;</a>
+</div>
