@@ -273,7 +273,7 @@ Convert LAS file into text file:
 </code></pre>
 
 <p>
-Set smaller region for creating the 3D raster (TBD):
+Set smaller region for creating the 3D raster:
 
 <pre><code>g.region n=219502 s=219348 w=637070 e=637276 b=110 t=135 res=2 res3=2 tbres=0.5 -p3
 </code></pre>
@@ -285,7 +285,28 @@ Use binning to create point density 3D raster:
 </code></pre>
 
 <p>
-Visualize in 3D view using slices and isosurfaces.
+Set custom color table with r3.colors:
+<pre>
+0% 255:255:100
+5% green
+100% red
+</pre>
+<p>
+Visualize point density in 3D view using slices and isosurfaces:
+<ol>
+    <li>Leave only 3D raster <em>mid_pines_dens</em> in Layer Manager.</li>
+    <li>Set computational region based on the 3D raster and zoom to it.</li>
+    <li>Switch to 3D.</li>
+    <li>On View page set <em>Height</em> to 50 and <em>Z-exag</em> to 2. Nothing is visible yet.</li>
+    <li>On Data page, check <em>Draw wire box</em>, set resolution to 1.</li>
+    <li>Add isosurface and set isosurface value 1 and press Enter.</li>
+    <li>Check <em>toggle normal direction</em> and set different color of isosurface.</li>
+    <li>Experiment with different isosurface levels (press enter to confirm the new value).</li>
+    <li>Remove isosurface, change draw mode to slices, add slice and set its axis to Z.</li>
+    <li>Manipulate with the slice.</li>
+</ol>
+
+<img width="500px" src="img/lidar/3d_trees.png">
 
 </main>
 

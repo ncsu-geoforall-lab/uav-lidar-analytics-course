@@ -176,11 +176,9 @@
             <div class="slides">
 <!-- This is a generated file. Do not edit. -->
 <section>
-    <h2>Aerial Photogrammetry</h2>
-    <h5>- Basic concepts</h5>
+    <h2>Flight plan preparation</h2>
     <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
-    <h3 style="margin-top: 0.5em">
-        Author</h3>
+
     <p class="title-foot">
         <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
         <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU OSGeo Research and Education Laboratory">OSGeoREL</a>
@@ -188,285 +186,101 @@
         <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
         <br>
     </p>
-    <p>Fall 2016</p>
 </section>
 <section>
-    <h2>Objectives (1)</h2>
+    <h2>Objectives</h2>
     <ul>
-        <li class="fragment"><strong>Understand</strong> the remote sensing crucial role in Earth Sicence, especialy in spatial data aquisition</li>
-	<li class="fragment"><strong>Use</strong> the proper terminology and <strong>understand</strong> its meaning</li>
-        <li class="fragment"><strong>Recognize</strong> the significance of aerial photography in collecting spatial data (also a need in historical context)</li>
-        <li class="fragment"><strong>Outline</strong> the improvement of aerial photography and connect it with the knowledge of UAS development</li>    
-        <li class="fragment"><strong>Describe</strong> different types of aerial photography and associated with them challenges for measurements</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Objectives (2)</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> why photrogrammetry needs to be used in order to make mesurements based on aerial photographs</li>
-        <li class="fragment"><strong>Describe</strong> the process of photogrammetric flight planning</li>
-        <li class="fragment"><strong>Understand</strong> lateral and forward overlap, stereoscopic coverage, flight lines and focal length terms</li>
-        <li class="fragment"><strong>Indicate</strong> the specific problems emerging when aerial imagery is aquired by low range UAS equipped in non-photogrammetric camera</li>
-        <li class="fragment"><strong>Distinguish</strong> steps for processing UAS derived data in comparison with traditional photogrammetry</li>
+        <li><strong>Understand</strong> the importance of flight planning for safe mission execution</li>
+        <li><strong>Recognize</strong> the relationship between flight parameters and acquired data quality</li>
+        <li><strong>Choose</strong> appropriate mission area and flight parameters for answering previously stated research question</li>
+        <li><strong>Outline</strong> the workflow for flight planning - in the lab and in the field</li>
+        <li><strong>Analyze</strong> flight path taking into account terrain obstacles, UAS technical limitations and legal issues</li>     
+        <li><strong>Prepare</strong> ready-to-use flight plan for executing the mission</li>
     </ul>
 </section>
 <section>
-    <h2>What is Remote Sensing?</h2>
-    <div class="left">
+<h3>Where yould you like to fly?</h3>
+<p style="text-align:left;">In this assigment you need to justify the choice of the flight area and prove that the geographical and legal conditions allowing for a save flight execution.
+<h3>Why do you want to fly there?</h3>
+<p style="text-align:left;">Considering the technical, meteorological and legal conditions of the possible flight area choice, you shouldn’t forget about the most important element: the aim and purpose of the flight. 
+</section>
+
+<section>
+<h3>Show us your flight idea!</h3>
+<p style="text-align:left;">You will present your idea to the collegues, so try to find an interesting research problem.
+	<ul>
+        <li> The presentation needs to be short (2-3min) and doesn’t need to include all the information from the assignment.</li>
+	</ul>
+<p style="text-align:left;"> Written version of the assignment is based on two tasks: <a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/trimble_workflow.html">Flight planning in Trimble Aerial Imaging</a> and <a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/flight_prep_GIS.html">GIS analysis of flight plan using lidar-based DSM</a> 
+</section>
+
+<section>
+<h3> Report should include:</h3> 
+	<ol>
+        <li> Motivation for choosing the flight area</li>
+        <li> Relief conditions and legal issues</li>
+        <li> Flight parameters adn specifications</li>
+        <li> Remarks regarding the workflow (any problems encoutered? difficultes? suggestions? new solutions?)</li>
+        <li> Attachments</li>
 		<ul>
-		<li class="fragment">Sensing without contact;</li>
-		<li class="fragment">Gathering data from a distance;</li>
-		<li class="fragment">Fundamental to all sentient life forms;</li>
-		<li class="fragment">Two principle senses – <strong>sight</strong> and sound;</li>
-		<li class="fragment">Sight and sound have similar physiological and psychological underpinnings.</li>
+	 	       <li>Map of the flight area</li>
+	 	       <li>Flight plan file (.gwt files) </li>
+	 	       <li>Presentation file</li>
 		</ul>
-    </div>
-    <div class="right">
-        <img src="img/remote_sensing_photogrammetry.png">
-    </div>
+	</ol>
 </section>
 <section>
-    <h2>Psychology of SIGHT</h2>
-    <div class="left">
+<h3> 1. Motivation</h3> 
+<p><strong> State the research problem</strong> 
+	<ul> Why do you want to fly over this area? 
 		<ul>
-		<li class="fragment">Sensors (eyes) take input and pass them along to the brain;</li>
-   		<img class="fragment" src="img/sight1.png" width="80%">
-		<li class="fragment">The brain makes the <strong>interpretations and connections</strong>;</li>
+	 	       <li>what problem are you aiming to solve,</li>
+	 	       <li>what research question to answer, </li>
+	 	       <li>or what object or phenomenon to investigate.</li>
 		</ul>
-    </div>
-    <div class="right">
-		<div class="left">
-			<ul>
-        		<li class="fragment">Stereoscopic vision is amazing brain capability;</li>
-			</ul>
-		</div>
-		<div class="right">
-			<ul>
-        		<img class="fragment" src="img/sight2.png" width="95%">
-			</ul>
-		</div>
-	<li class="fragment">Color production for sight<br>happens <strong>in the brain</strong>;</li>
-	<li class="fragment">Eyes collect data<strong>– brain produces information.</strong></li>
-	</div>
-
-    
+	</ul>
 </section>
 <section>
-    <h2>Remote sensing for mapping explained</h2>
-           <a href="https://www.youtube.com/watch?v=3iaFzafWJQE"><img src="img/movie_remote.png"></a>
+<h3> 2. Relief conditions and legal issues</h3> 
+	<ul> 
+<li>Brief description of geographical conditions (topography, land use, terrain obstacles, ground activity etc.)
+<li>Property of the ground (public, private - is there permission from the landowner?) 
+<li>Formal possibilities of flight execution (does this area have COA, who obtained it, what is the status of the area according to the <a href="https://skyvector.com/">aeronautical charts</a>
 </section>
 <section>
-    
-       <img src="img/photogrammetry_infographic.png">
-</section>
-<section>
-    <h2>Remote Sensing Development</h2>
-    <div class="left">  
-            <ul>
-                <li class="fragment">Invention the photographic process (disputed time – inventor);</li>
-                <li class="fragment">Pictures taken (from the bird’s eye view – buildings and high structures and... Using birds;</li>
-                <li class="fragment">Invention of a flying vehicle aerial photography of larger areas;</li>
-            </ul>  
-    </div>
-    <div class="right">
-        <img src="img/pigeons.png">
-    </div>
-</section>
-
-<section>
-    <h2>Remote sensing development- aerial photography </h2>
-    <div class="left">  
-	<img class= "fragment" src="img/aerial_photography_flow_chart.png" width="150%">            
+<h3>3. Flight parameters adn specifications </h3>
 		<ul>
-                <li class="fragment">Aerial photography – the first form of remote sensing extremely useful for geography</li>
-            	</ul>  
-    </div>
-    <div class="right fragment">
-        <img src="img/boston_1860.png"width="75%">
-    </div>
+	 	       <li>Targeted area (ha or sq. km) </li>
+	 	       <li>Area radius (distance between the ground station location and the furthest spot to be mapped </li>
+	 	       <li>Chosen take off, landing and alternate landing location (short description helping with localization of the spots) </li>
+			<li>Accessibility of the take-off location (brief description of possible obstacles or difficulties to get to the area or set the launcher)</li>
+			<li>Elevation differences between the Digital Surface Model and the flight ceiling (in GIS)</li>
+			<li>Edesired resolution and chosen overlap</li>	
+	</ul>
 </section>
 <section>
-    <h2>Aerial photography</h2>
-    <img class="fragment" src="img/timeline.png" width="80%">
-    <div class="left">  
-            <ul>
-                <li class="fragment">First World War - aerial photography extensively used for recording human geography</li>
-            </ul>  
-    </div>
-    <div class="right fragment">
-        <img src="img/I_world_war.png">
-    </div>
-</section>
-<section>
-    <h2>Photogrammetry – a broad spectrum</h2>
-    <img class="fragment" src="img/object_sensor_specialization.png">
-</section>
+<h3> 4. Remarks regarding the workflow</h3> 
 
-<section>
-    <h2>Remote sensing, photogrammerty and GIS</h2>
-  <img class= "fragment" src="img/remote_sensing_vs_photogrammertry.png" width="70%">
-  <img class= "fragment" src="img/rs_to_GIS.png" width="60%">
-  <p class="small fragment"> Source of diagrams: Schenk (2005), modified </p>
-</section>
-<section>
-    <h2>Geometry of aerial photograph</h2>
-    <div class="left fragment">  
-           <img src="img/geometry.png">  
-    </div>
-    <div class="right fragment">
-        <img src="img/geometry_side.png">
-    </div>
-</section>
-<section>
-    <h2>San Francisco Earthquake</h2>
-<p class="fragment"> Oblique aerial photography from 1906</p>
-     <img class="fragment" src="img/san_francisco.png" width="50%">
-</section>
-<section>
-    <h2>Aerial photography for map making in the past</h2>
-    <ul>
-        <li class="fragment">Mostly the domain of the military;</li>
-        <li class="fragment">Some photographs were taken from a vertical perspective during WW1</li>
-        <li class="fragment">If you piece them together they look like a map</li>
-        <li class="fragment">Widely used tool for mapping (accuracy not all that important at this point)</li>
-     </ul>
-</section>
-<section>
-    <h2>Mapping with Photos</h2>
-    <div class="left fragment">  
-        <img src="img/old_map_making.png" width="70%">
-    </div>
-    <div class="right fragment">
-        <img src="img/photo_vs_map.png" width="70%">
-    </div>
-</section>
-<section>
-    <h2>Making Measurements </h2>
-    <div class="left">  
-            <ul>
-                <li class="fragment">Photo mosaics were useful, but they only give you the overview and are not accurate maps.</li>
-                <li class="fragment">In the late 1800’s the development of the parlor stereoscope was a source of entertainment before radio and TV were invented.</li>
-            </ul>  
-    </div>
-    <div class="right fragment">
-        <img src="img/measurements.png" width="70%">
-    </div>
-</section>
-<section>
-    <h2>Photogrammetry (1)</h2>
-    <ul>
-        <li class="fragment">It is a 3-dimensional coordinate measuring technique that uses PHOTORAPHS as the fundamental medium for measurement;</li>
-        <li class="fragment">The science of taking precise measurements from photographs;</li>
-        <li class="fragment">The most important development in map making;</li>
-        <li class="fragment">Very precise measurements can be taken from stereoscopic images.</li>
-     </ul>
-</section>
-<section>
-    <h2>Photogrammetry (2)</h2>
-    <ul>
-        <li class="fragment">1851: French officer Aime Laussedat develops the first photogrammetrical devices and methods. He is seen as the initiator of photogrammetry;</li>
-        <li class="fragment">1911: The Austrian Th. Scheimpflug finds a way to create rectified photographs. He is considered as the initiator of aerial photogrammetry, since he was the first succeeding to apply the photogrammetrical principles to aerial photographs;</li>
-        <li class="fragment">but... it took 80 years to make it useful for measurements</li>
-     </ul>
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide1.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide2.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide3.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide4.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide5.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide6.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide7.png">
-</section>
-<section>
-    <h2>Photogrammetry (3)</h2>
-    <ul>
-        <li class="fragment">Correct distortions, and you have a remote mapping tool (heights, distances, areas);</li>
-        <li class="fragment">Removes ground survey as a map making method;</li>
-        <li class="fragment">some ground survey still necessary, but only of very small areas</li>
-        <li class="fragment">All topographic maps are produced using this technology.</li>
-     </ul>
-</section>
-<section>
-    <h2>Aerial survey</h2>
-    <div class="left fragment">  
-        <img src="img/aerial_survey.png">
-    </div>
-    <div class="right fragment">
-        <img src="img/flight_track.png">
-    </div>
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_01.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_02.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_03.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_04.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_05.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_06.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_07.png">
+<p>Show us your work!
+	<ul> 
+<li>Maps and photos highly recommended </li>
+<li>Did you encoutered any problems with the software? 
+<li> Did you have any difficulties, eureka moments?
 </section>
 <section> 
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_08.png">
+<h3> 5. Attachments</h3>
+<p> upload files to Moodle
+<ul> 
+<li>Map of the flight area with following elements indicated 
+		<ul>
+	 	       <li>Take off and landing locations </li>
+	 	       <li>Safe, obstacle free take off and landing </li>
+	 	       <li>Borders of the desired mapping area </li>
+		</ul>
+<li>Flight plan file (.gwt, .kml and/or other files in the software of your choice)
+<li>Presentation file
 </section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_09.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_10.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_11.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_12.png">
-</section>
-<section>
-    <h2>Enough theory...</h2>
-<p> Let's do it! - see <a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/flight_plan.html"> Assignment 2</a></p>
+	</ul>
 </section>
         </div>  <!-- slides -->
 
