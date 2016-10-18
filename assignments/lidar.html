@@ -273,6 +273,12 @@ Use binning to create point density 3D raster:
 r3.in.xyz input=mid_pines.txt output=mid_pines_dens method=n separator=comma
 </code></pre>
 
+You can also run <a href="https://grass.osgeo.org/grass73/manuals/r3.in.lidar.html">r3.in.lidar</a>,
+directly on the LAS file, but you have to use latest development version (7.3) of GRASS GIS.
+<pre><code>
+r3.in.lidar input=mid_pines_spm_2013.las n=mid_pines_dens
+</code></pre>
+
 <p>
 Set custom color table with r3.colors:
 <pre>
@@ -294,5 +300,24 @@ Visualize point density in 3D view using slices and isosurfaces:
     <li>Remove isosurface, change draw mode to slices, add slice and set its axis to Z.</li>
     <li>Manipulate with the slice.</li>
 </ol>
-
 <img width="500px" src="img/lidar/3d_trees.png">
+
+<h3>3D raster profiles of 3D raster of proportional density</h3>
+<em>Note: latest version of GRASS GIS is needed (7.3).</em>
+<p>
+Module r3.in.lidar can compute proportional count - 
+count per 3D cell relative to the count per vertical column.
+<pre><code>
+r3.in.lidar input=mid_pines_spm_2013.las n=mid_pines_dens proportional_n=mid_pines_dens_proportional
+</code></pre>
+We will visualize it using vertical 3D raster profiles.
+Download extension r3.profile:
+<pre><code>
+g.extension r3.profile
+</code></pre>
+
+Compute profile between 2 points.
+<pre><code>
+r3.profile input=mid_pines_dens_proportional raster_output=mid_pines_dens_proportional_profile coordinates=637127,219478,637219,219469
+</code></pre>
+Add raster <em>mid_pines_dens_proportional_profile</em> and zoom to it (lower left corner is set to 0, 0).
