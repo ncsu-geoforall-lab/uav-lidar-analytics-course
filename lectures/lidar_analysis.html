@@ -40,8 +40,6 @@
   <li>multispectral
   </ul>
 </ul>
-<p>image composit
-<img height=100 src="img/mid_pines_height_diff.jpg">
 </section>
 
 <section>
@@ -49,8 +47,8 @@
 <p>
 Principle and resulting point cloud data
 <p>
-<img height="200" src="img/mid_pines_height_diff.jpg">
-<img height="200" src="img/mid_pines_height_diff.jpg">
+<img width="30%" src="img/lidar/airborne_lidar_scann.jpg">
+<img width="60%" src="img/lidar/lidarmrpts3dcolored.jpg">
 </section>
 
 <section>
@@ -59,8 +57,8 @@ Principle and resulting point cloud data
 Set of <i>(x, y, z, r, i, c, ...)</i> measured points reflected
 from Earth surface or objects on or above it, where
 <ul>
-<li> <i>(x,y,z)</i> are georeferenced coordinates,
-<li><i>r</i> is the return number,
+<li> <i>(x, y, z)</i> are georeferenced coordinates,
+<li><i>r</i> &nbsp; is the return number,
 <li><i>i</i> is intensity,
 <li><i>c</i> is class,
 </ul>
@@ -73,13 +71,15 @@ Additional data: <i>r:g:b</i>, scan direction, others
 <p>
 <ul>
 <li>ASCII (x,y,z, ...) format - older data, now rarely used
-<li>binary LAS format (header, record info, x,y,z,i, ... ),
+<li>binary LAS format (header, record information, x,y,z,i, ... ),
 industry lidar data exchange format
 <li>compressed LAZ format
 <li>proprietary formats, especially for waveform data
 </ul>
 <p>
 Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS1.4 specification</a>
+and <br>
+<a href="http://pubs.usgs.gov/tm/11b4/pdf/tm11-B4.pdf">USGS Lidar Base Specification</a>
 </section>
 
 <section>
@@ -88,12 +88,12 @@ Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_
 <ul>
 <li>Point cloud data are massive: millions of 3D points
 <li>Vector data display in GIS:  only for smaller data sets
-<li>Custom viewers - adjust rendering to display resolution
+<li>Point cloud viewers - adjust rendering to display resolution
 <li>On-line viewer: plas.io
 </ul>
-<p> screenshot
 <p>
-<img height="200" src="img/mid_pines_height_diff.jpg">
+<img width="55%" src="img/lidar/hunt_uavpointcloud_bldg.jpg">
+<img width="35%" src="img/lidar/hunt_uavpointcloud.jpg">
 </section>
 
 <section>
@@ -101,7 +101,7 @@ Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_
 <p>
 Multiple return point cloud 3D view of returns
 <p>
-<img height="200" src="img/mid_pines_height_diff.jpg">
+<img height="400" src="img/lidar/lidar_secref_3d.png">
 </section>
 
 <section>
@@ -109,7 +109,7 @@ Multiple return point cloud 3D view of returns
 <p>
 Multiple return point cloud profile view of returns
 <p>
-<img height="200" src="img/mid_pines_height_diff.jpg">
+<img height="400" src="img/lidar/Lect_lidar_returns.png">
 </section>
 
 <section>
@@ -175,7 +175,7 @@ composit - JR overlaps and gaps, Wake county, Mammoth cave, coastal?
 
 <section>
    <h3>Computing DEM: TIN</h3>
-Meshes standard in 3D 
+Meshes standard in 3D engineering and design systems:
 <ul>
   <li>variable resolution based on terrain complexity
   <li>if 2D Delauney is used - geometry not optimal for 3D, 
@@ -191,8 +191,8 @@ e.g. triangles on roads, artificial dams in valleys
    <h3>Computing DEM: interpolation to raster</h3>
 <ul>
   <li>supports resolution higher than point density
-  <li>depends on the method used, but most work becuase the data are dense enough
-  <li>results in massive rasters - OK for analytics, converts to TIN for visualization
+  <li>results depend on the method used, but most work because of high point densities
+  <li>high resolution raster DEMs can be massive rasters - OK for analytics, converts to TIN for 3D visualization
   <li>easy to share
 </ul>
 <p> <img height="200" src="img/mid_pines_height_diff.jpg">
@@ -218,6 +218,58 @@ Interpolation at 1m resolution
 </section>
 
 <section>
+   <h3>Topographic analysis from lidar DEMs</h3>
+Deriving slope, aspect, curvatures challenges:
+<ul>
+  <li>DEMs are often noisy and parameters can reflect noise rather than actual topography,
+  <li>high resolution leads to representation of landforms by 10s or 100s of points or grid cells
+  <li>standard topographic analysis using 3x3 neighborhood leads to noisy patterns of topographic parameters
+</ul>
+<p> <img height="400" src="img/mid_pines_height_diff.jpg">
+<p>You can try TIN for comparison - provide data
+</section>
+
+<section>
+   <h3>Topographic analysis using splines</h3>
+Simultaneous computation of parameters with interpolation - based on the original points
+<ul>
+  <li>parameters derived from the original points rather than raster
+  <li>tens or hundreds of points can be used 
+  <li>explicit equations for partial derivatives: RST
+  <li>tuning the level of detail by tension and smoothing parameters
+</ul>
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+<p>references
+</section>
+
+<section>
+   <h3>Topographic analysis using splines</h3>
+Tuning the level of detail with tension parameter
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+<p>animation
+</section>
+
+<section>
+   <h3>Landform analysis from lidar DEMs</h3>
+<ul>
+  <li>differential geometry with user defined window size
+  <li>line of sight based geomorphons
+</ul>
+
+REFRENCES, IMAGES
+</section>
+
+<section>
+   <h3>Stream extraction from lidar DEMs</h3>
+stream extraction and watershed boundaries - handling of depressions
+</section>
+
+<section>
+   <h3>Coastal dune analysis from lidar DEMs</h3>
+least cost path ridge and toe line
+</section>
+
+<section>
  <h3>Lidar data time series</h3>
 <p>
 Issues: vertical and horizontal shifts, differing point densities and patterns,
@@ -227,6 +279,59 @@ varying spatial extent
 Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis of Coastal Lidar Time-Series, Springer Briefs in Computer Science, Springer, New York, 84 p.</a>
 <p>more about lidar in GRASS at
 http://grasswiki.osgeo.org/wiki/LIDAR
+</section>
+
+<section>
+<h3>Lidar time series: core and envelope</h3>
+</section>
+
+<section>
+<h3>Lidar time series: homes</h3>
+</section>
+
+<section>
+<h3>Lidar time series: vector fields</h3>
+Landform migration 
+</section>
+
+<section>
+<h3>Lidar time series: STC JR</h3>
+Landform migration 
+</section>
+
+<section>
+<h3>Lidar time series: STC Umstead</h3>
+stream bank erosion
+</section>
+
+<section>
+<h3>Vegetation height/growth analysis</h3>
+vegetation height 
+</section>
+
+<section>
+<h3>Vegetation structure analysis</h3>
+vegetation  structure, high density point cloud, per cell stats at levels above ground 
+</section>
+
+<section>
+<h3>Point cloud analysis using 3D grid cells</h3>
+</section>
+
+<section>
+<h3>Examples of lidar data analysis</h3>
+Mamoth Cave
+CC
+Coast
+</section> 
+
+<section>
+   <h3>Advances in lidar data acquisition</h3>
+<p>
+Waveform and multispectral lidar, Velodyne (lidar array - small and light)
+<p>
+<img height="200" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
+<img height="200" src="img/lidar/titan.jpg">
 </section>
 
 <section>
