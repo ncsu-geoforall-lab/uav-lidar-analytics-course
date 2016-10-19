@@ -25,15 +25,14 @@
 
 <section>
    <h3>Lidar mapping techologies</h3>
-<p>
 <ul>
-<li><b>Platform:</b> 
+<li><b>Platforms:</b> 
    <ul>
-   <li>aerial piloted and UAS, 
-   <li>terrestrial static and mobile
+   <li>aerial: piloted and UAS, 
+   <li>terrestrial: static and mobile, autonomous
    </ul>
 <p>
-<li><b>Sensor:</b> 
+<li><b>Sensors:</b> 
   <ul>
   <li>multiple return, 
   <li>waveform, 
@@ -42,7 +41,6 @@
   </ul>
 </ul>
 <p>image composit
-<p>
 <img height=100 src="img/mid_pines_height_diff.jpg">
 </section>
 
@@ -56,44 +54,18 @@ Principle and resulting point cloud data
 </section>
 
 <section>
-   <h3>Multiple return point cloud</h3>
-<p>
-Multiple return point cloud profile view of returns
-<p>
-<img height="200" src="img/mid_pines_height_diff.jpg">
-</section>
-
-<section>
-   <h3>Point cloud data properties</h3>
-<p>
-Horizontal projection of multiple return point location
-<p>
-<img height="200" src="img/mid_pines_height_diff.jpg">
-</section>
-
-<section>
-   <h3>Point cloud data properties</h3>
-<p>
-Increased densities (and potential errors) along swath overlaps
-<p>
-composit - JR overlaps and gaps, Wake county, Mammoth cave, coastal?
-<p>
-<img height="200" src="img/mid_pines_height_diff.jpg">
-</section>
-
-<section>
    <h3>Point cloud data definition</h3>
 <p>
-Set of <i>(x, y, z, r, i, c, ...)</i> measured points reflected 
-from Earth surface or objects on or above it, where 
+Set of <i>(x, y, z, r, i, c, ...)</i> measured points reflected
+from Earth surface or objects on or above it, where
 <ul>
-<li> <i>(x,y,z)</i> are georeferenced coordinates, 
-<li>r is the return number, 
-<li>i is intensity, 
-<li>c is class, 
+<li> <i>(x,y,z)</i> are georeferenced coordinates,
+<li><i>r</i> is the return number,
+<li><i>i</i> is intensity,
+<li><i>c</i> is class,
 </ul>
 <p>
-Additional data: r:g:b, scan direction, others  
+Additional data: <i>r:g:b</i>, scan direction, others
 </section>
 
 <section>
@@ -111,30 +83,139 @@ Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_
 </section>
 
 <section>
-   <h3>Point cloud data processing</h3>
+   <h3>Point cloud data visualization</h3>
 <p>
-Processing: 
 <ul>
-<li>filtering outliers (birds etc.)
-<li>bare earth point extraction
-<li>canopy extraction
-<li>structures and power lines extraction 
+<li>Point cloud data are massive: millions of 3D points
+<li>Vector data display in GIS:  only for smaller data sets
+<li>Custom viewers - adjust rendering to display resolution
+<li>On-line viewer: plas.io
 </ul>
+<p> screenshot
 <p>
-LINKS to references for algorithms
+<img height="200" src="img/mid_pines_height_diff.jpg">
 </section>
 
 <section>
-   <h3>Point cloud data sources</h3>
+   <h3>Multiple return point cloud in 3D</h3>
 <p>
-Public data sources (http in Summary slide):
+Multiple return point cloud 3D view of returns
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Multiple return point cloud profiles</h3>
+<p>
+Multiple return point cloud profile view of returns
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Point cloud data properties</h3>
+<p>
+Horizontal projection of multiple return point location
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+
+<section>
+   <h3>Point cloud data processing</h3>
+<p>
 <ul>
-  <li>CLICK: raw point clouds usually in LAS format 
-  <li>NOAA Digital Coast: costal point clouds with on-fly binning
-  <li>NC Floodplain Mapping: bare Earth: points, 20ft DEM and 50ft DEM with carved channels 
-  <li>NC data portal
-  <li>OpenTopography: NCALM data
+<li>analysis of point distribution
+<li>filtering outliers (birds etc.)
+<li>bare earth point extraction
+<li>classification: canopy, buildings ...
+<li>feature extraction: power lines ... 
 </ul>
+<p>
+LINKS to references for algorithms
+<p>
+Many apply to SfM-derived point clouds as well
+</section>
+
+<section>
+   <h3>Analysis of point distribution</h3>
+
+Binning: per-cell point statistics
+<ul>
+ <li> analysis: number of points per grid cell, 
+ <li> analysis: range and stddv of z-values per grid cell
+ <li> identify data gaps, variability in point densities
+ <li> use to select appropriate supported resolution for DEM
+</ul>
+<p>
+Image from Vasek showing variability of point densities
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Analysis of point distribution</h3>
+<p>
+Increased densities (and potential errors) along swath overlaps
+<p>
+composit - JR overlaps and gaps, Wake county, Mammoth cave, coastal?
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Computing DEM: binning</h3>
+<ul>
+ <li>per cell statistics: mean, min, max, or nearest point z-value
+ <li>sufficient for many applications
+ <li>no need to import the points, on-fly raster generation
+ <li>may be noisy, include no-data spots
+</ul>
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Computing DEM: TIN</h3>
+Meshes standard in 3D 
+<ul>
+  <li>variable resolution based on terrain complexity
+  <li>if 2D Delauney is used - geometry not optimal for 3D, 
+e.g. triangles on roads, artificial dams in valleys
+  <li>hard to combine with other data, especially imagery derived layers,
+  <li>limited analytics available
+  <li>hard to share - limited exchange formats
+</ul>
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Computing DEM: interpolation to raster</h3>
+<ul>
+  <li>supports resolution higher than point density
+  <li>depends on the method used, but most work becuase the data are dense enough
+  <li>results in massive rasters - OK for analytics, converts to TIN for visualization
+  <li>easy to share
+</ul>
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Jockey's Ridge example</h3>
+Binning at 1m resolution: many NULL cells
+<p> <img height="400" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Jockey's Ridge example</h3>
+Binning at 3m resolution
+<p> <img height="400" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Jockey's Ridge example</h3>
+Interpolation at 1m resolution
+<p> <img height="400" src="img/mid_pines_height_diff.jpg">
+<p>You can try TIN for comparison - provide data
+</section>
 
 <section>
  <h3>Lidar data time series</h3>
@@ -148,6 +229,20 @@ Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis o
 http://grasswiki.osgeo.org/wiki/LIDAR
 </section>
 
+<section>
+   <h3>Lidar data sources</h3>
+<p>
+Public data sources (http in Summary slide):
+<ul>
+  <li>CLICK: raw point clouds usually in LAS format
+  <li>NOAA Digital Coast: costal point clouds with on-fly binning
+  <li>NC Floodplain Mapping: bare Earth: points, 20ft DEM and 50ft DEM with carved channels
+  <li>NC data portal
+  <li>OpenTopography: NCALM data
+</ul>
+</section>
+
+<!--OLD STUFF KEPT FOR FORMATTING-->
 <section>
 <h3>text on left flight planning</h3>
 <p style="text-align:left;">Flight planning software packages often use low resolution
@@ -167,11 +262,6 @@ we can make sure flight path will not cross any obstacles.
 <section>
 <h3>Flight altitude</h3>
     <img class="stretch"  src="img/mid_pines_altitude.jpg">
-</section>
-
-<section>
-    <h3>Height above terrain</h3>
-        <img class="stretch" src="img/mid_pines_height_diff.jpg">
 </section>
 
 <section>
