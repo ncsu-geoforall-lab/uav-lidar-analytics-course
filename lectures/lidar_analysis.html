@@ -27,13 +27,23 @@
    <h3>Lidar mapping techologies</h3>
 <p>
 <ul>
-<li><b>Platform:</b> aerial piloted and UAS, terrestrial static and mobile
+<li><b>Platform:</b> 
+   <ul>
+   <li>aerial piloted and UAS, 
+   <li>terrestrial static and mobile
+   </ul>
 <p>
-<li><b>Sensor:</b> multiple return, waveform, single photon, multispectral
+<li><b>Sensor:</b> 
+  <ul>
+  <li>multiple return, 
+  <li>waveform, 
+  <li>single photon (very dense single return) 
+  <li>multispectral
+  </ul>
 </ul>
 <p>image composit
 <p>
-<img height=200 src="img/mid_pines_height_diff.jpg">
+<img height=100 src="img/mid_pines_height_diff.jpg">
 </section>
 
 <section>
@@ -41,6 +51,7 @@
 <p>
 Principle and resulting point cloud data
 <p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
 <img height="200" src="img/mid_pines_height_diff.jpg">
 </section>
 
@@ -81,7 +92,8 @@ from Earth surface or objects on or above it, where
 <li>i is intensity, 
 <li>c is class, 
 </ul>
-<li>r:g:b may be also measured 
+<p>
+Additional data: r:g:b, scan direction, others  
 </section>
 
 <section>
@@ -89,15 +101,40 @@ from Earth surface or objects on or above it, where
 <p>
 <ul>
 <li>ASCII (x,y,z, ...) format - older data, now rarely used
-<li>binary LAS format (header, record info, x,y,z,i, scan dir, edge of flight line, classification, etc.),
-industry lidar data exchange format, often distributed as compressed LAZ format
+<li>binary LAS format (header, record info, x,y,z,i, ... ),
+industry lidar data exchange format
 <li>compressed LAZ format
 <li>proprietary formats, especially for waveform data
 </ul>
 <p>
-Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS specification</a>
+Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS1.4 specification</a>
 </section>
 
+<section>
+   <h3>Point cloud data processing</h3>
+<p>
+Processing: 
+<ul>
+<li>filtering outliers (birds etc.)
+<li>bare earth point extraction
+<li>canopy extraction
+<li>structures and power lines extraction 
+</ul>
+<p>
+LINKS to references for algorithms
+</section>
+
+<section>
+   <h3>Point cloud data sources</h3>
+<p>
+Public data sources (http in Summary slide):
+<ul>
+  <li>CLICK: raw point clouds usually in LAS format 
+  <li>NOAA Digital Coast: costal point clouds with on-fly binning
+  <li>NC Floodplain Mapping: bare Earth: points, 20ft DEM and 50ft DEM with carved channels 
+  <li>NC data portal
+  <li>OpenTopography: NCALM data
+</ul>
 
 <section>
  <h3>Lidar data time series</h3>
