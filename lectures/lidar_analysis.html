@@ -1,5 +1,6 @@
 <section>
-    <h2>Airborne Lidar Data Analysis using GIS tools</h2>
+    <h2>Lidar data analysis:</h2>
+    <h3> point clouds, surfaces and voxel models</h3>
     <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
 
     <p class="title-foot">
@@ -15,29 +16,32 @@
     <h3>Outline</h3>
 <p>
 <ul>
-  <li>characteristics of lidar-based point cloud data
-  <li>topographic analysis from lidar data
-  <li>voxel-based analysis of point cloud density
-  <li>recent lidar surveys for Wake county and NC
+<p> <li>characteristics of lidar-based point cloud data
+<p> <li>topographic analysis from lidar data
+<p> <li>voxel-based analysis of point cloud density
+<p> <li>recent lidar surveys for Wake county and NC
 </ul>
 </section>
 
 <section>
    <h3>Lidar mapping techologies</h3>
 <p>
-Platform: aerial, terrestrial static and mobile
+<ul>
+<li><b>Platform:</b> aerial piloted and UAS, terrestrial static and mobile
 <p>
-Sensor: multiple return, waveform, single photon, multispectral
+<li><b>Sensor:</b> multiple return, waveform, single photon, multispectral
+</ul>
+<p>image composit
 <p>
-<img height=100 src="img/mid_pines_height_diff.jpg">
+<img height=200 src="img/mid_pines_height_diff.jpg">
 </section>
 
 <section>
-   <h3>Multiple return point cloud</h3>
+   <h3>Data acquisition</h3>
 <p>
-Multiple return point cloud 3D view
+Principle and resulting point cloud data
 <p>
-<img class="stretch" src="img/mid_pines_height_diff.jpg">
+<img height="200" src="img/mid_pines_height_diff.jpg">
 </section>
 
 <section>
@@ -45,7 +49,7 @@ Multiple return point cloud 3D view
 <p>
 Multiple return point cloud profile view of returns
 <p>
-<img class="stretch" src="img/mid_pines_height_diff.jpg">
+<img height="200" src="img/mid_pines_height_diff.jpg">
 </section>
 
 <section>
@@ -53,27 +57,59 @@ Multiple return point cloud profile view of returns
 <p>
 Horizontal projection of multiple return point location
 <p>
-<img class="stretch" src="img/mid_pines_height_diff.jpg">
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Point cloud data properties</h3>
+<p>
+Increased densities (and potential errors) along swath overlaps
+<p>
+composit - JR overlaps and gaps, Wake county, Mammoth cave, coastal?
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Point cloud data definition</h3>
+<p>
+Set of <i>(x, y, z, r, i, c, ...)</i> measured points reflected 
+from Earth surface or objects on or above it, where 
+<ul>
+<li> <i>(x,y,z)</i> are georeferenced coordinates, 
+<li>r is the return number, 
+<li>i is intensity, 
+<li>c is class, 
+</ul>
+<li>r:g:b may be also measured 
 </section>
 
 <section>
    <h3>Point cloud data formats</h3>
 <p>
-Set of (x, y, z, r, i, c, ...) measured points reflected 
-from Earth surface or objects on or above it, 
-where x,y,z are georeferenced coordinates, 
-r is the return number, 
-i is intensity, 
-c is class, 
-r:g:b may be also measured 
-Provided in 
-ASCII (x,y,z, ...) format 
-binary LAS format (header, record info, x,y,z,i, scan dir, edge of flight line, classification, etc.), 
+<ul>
+<li>ASCII (x,y,z, ...) format - older data, now rarely used
+<li>binary LAS format (header, record info, x,y,z,i, scan dir, edge of flight line, classification, etc.),
 industry lidar data exchange format, often distributed as compressed LAZ format
-http://grasswiki.osgeo.org/wiki/LIDAR
+<li>compressed LAZ format
+<li>proprietary formats, especially for waveform data
+</ul>
+<p>
+Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS specification</a>
 </section>
 
 
+<section>
+ <h3>Lidar data time series</h3>
+<p>
+Issues: vertical and horizontal shifts, differing point densities and patterns,
+varying spatial extent
+<p>
+<a href="http://www.springer.com/us/book/9781493918348">
+Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis of Coastal Lidar Time-Series, Springer Briefs in Computer Science, Springer, New York, 84 p.</a>
+<p>more about lidar in GRASS at
+http://grasswiki.osgeo.org/wiki/LIDAR
+</section>
 
 <section>
 <h3>text on left flight planning</h3>
