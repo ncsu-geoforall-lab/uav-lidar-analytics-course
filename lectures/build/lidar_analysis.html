@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>Lidar data analysis:</h2>
+    <h3> point clouds, surfaces and voxel models</h3>
+    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
+
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU OSGeo Research and Education Laboratory">OSGeoREL</a>
+        at
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        <br>
+    </p>
+</section>
+
+<section>
+    <h3>Outline</h3>
+<p>
+<ul>
+<p> <li>characteristics of lidar-based point cloud data
+<p> <li>topographic analysis from lidar data
+<p> <li>voxel-based analysis of point cloud density
+<p> <li>recent lidar surveys for Wake county and NC
+</ul>
+</section>
+
+<section>
+   <h3>Lidar mapping techologies</h3>
+<p>
+<ul>
+<li><b>Platform:</b> 
+   <ul>
+   <li>aerial piloted and UAS, 
+   <li>terrestrial static and mobile
+   </ul>
+<p>
+<li><b>Sensor:</b> 
+  <ul>
+  <li>multiple return, 
+  <li>waveform, 
+  <li>single photon (very dense single return) 
+  <li>multispectral
+  </ul>
+</ul>
+<p>image composit
+<p>
+<img height=100 src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Data acquisition</h3>
+<p>
+Principle and resulting point cloud data
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Point cloud data definition</h3>
+<p>
+Set of <i>(x, y, z, r, i, c, ...)</i> measured points reflected
+from Earth surface or objects on or above it, where
+<ul>
+<li> <i>(x,y,z)</i> are georeferenced coordinates,
+<li>r is the return number,
+<li>i is intensity,
+<li>c is class,
+</ul>
+<p>
+Additional data: r:g:b, scan direction, others
+</section>
+
+<section>
+   <h3>Point cloud data formats</h3>
+<p>
+<ul>
+<li>ASCII (x,y,z, ...) format - older data, now rarely used
+<li>binary LAS format (header, record info, x,y,z,i, ... ),
+industry lidar data exchange format
+<li>compressed LAZ format
+<li>proprietary formats, especially for waveform data
+</ul>
+<p>
+Read more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS1.4 specification</a>
+</section>
+
+<section>
+   <h3>Point cloud data visualization</h3>
+<p>
+<ul>
+<li>Point cloud data are massive: millions of 3D points
+<li>Vector data display / rendering suitable only for smaller data sets
+<li>Custom viewers - adjust rendering to display resolution
+<li>On-line viewer: plas.io
+</ul>
+<p> screenshot
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Multiple return point cloud in 3D</h3>
+<p>
+Multiple return point cloud 3D view of returns
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Multiple return point cloud profiles</h3>
+<p>
+Multiple return point cloud profile view of returns
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Point cloud data properties</h3>
+<p>
+Horizontal projection of multiple return point location
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+
+<section>
+   <h3>Point cloud data processing</h3>
+<p>
+Processing:
+<ul>
+<li>analysis of point distribution
+<li>filtering outliers (birds etc.)
+<li>bare earth point extraction
+<li>classification: canopy, buildings ...
+<li>feature extraction: power lines ... 
+</ul>
+<p>
+LINKS to references for algorithms
+Many apply to SfM-derived point clouds as well
+</section>
+
+<section>
+   <h3>Analysis of point distribution</h3>
+Binning number of points per grid cell - see MEA582
+ analysis: number of points per cell, range, stddv 
+<p>
+Identify data gaps, variability in point densities, supported resolution
+<p>
+Image from Vasek's paper showing variability of point densities
+<p>
+<img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Analysis of point distribution</h3>
+<p>
+Increased densities (and potential errors) along swath overlaps
+<p>
+composit - JR overlaps and gaps, Wake county, Mammoth cave, coastal?
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Computing DEM/DSM: binning</h3>
+Methods for DEM: mean, min, max, nearest
+sufficient for many applications
+no need to import the points, on-fly raster generation
+may be noisy, include no-data spots
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Computing DEM/DSM: TIN</h3>
+Methods for DEM: mean, min, max, nearest
+sufficient for many applications
+no need to import the points, on-fly raster generation
+may be noisy, include no-data spots
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+   <h3>Computing DEM/DSM: interpolation to raster</h3>
+Methods for DEM: mean, min, max, nearest
+sufficient for many applications
+no need to import the points, on-fly raster generation
+may be noisy, include no-data spots
+<p> <img height="200" src="img/mid_pines_height_diff.jpg">
+</section>
+
+<section>
+ <h3>Lidar data time series</h3>
+<p>
+Issues: vertical and horizontal shifts, differing point densities and patterns,
+varying spatial extent
+<p>
+<a href="http://www.springer.com/us/book/9781493918348">
+Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis of Coastal Lidar Time-Series, Springer Briefs in Computer Science, Springer, New York, 84 p.</a>
+<p>more about lidar in GRASS at
+http://grasswiki.osgeo.org/wiki/LIDAR
+</section>
+
+<section>
+   <h3>Lidar data sources</h3>
+<p>
+Public data sources (http in Summary slide):
+<ul>
+  <li>CLICK: raw point clouds usually in LAS format
+  <li>NOAA Digital Coast: costal point clouds with on-fly binning
+  <li>NC Floodplain Mapping: bare Earth: points, 20ft DEM and 50ft DEM with carved channels
+  <li>NC data portal
+  <li>OpenTopography: NCALM data
+</ul>
+</section>
+
+<!--OLD STUFF KEPT FOR FORMATTING-->
+<section>
+<h3>text on left flight planning</h3>
+<p style="text-align:left;">Flight planning software packages often use low resolution
+DEMs without trees or buildings.
+By bringing flight path into GIS and using latest high resolution DSMs
+we can make sure flight path will not cross any obstacles.
+
+<div style="text-align:left;">
+<p>Analyze and visualize:
+<ul>
+  <li>flight path altitude</li>
+  <li>flight path height above terrain</li>
+  <li>check for any obstacles</li>
+</ul></div>
+</section>
+
+<section>
+<h3>Flight altitude</h3>
+    <img class="stretch"  src="img/mid_pines_altitude.jpg">
+</section>
+
+<section>
+    <h3>Flights with different GSD and overlap</h3>
+    Yellow flight has GSD 4 cm, blue flight has GSD 2.4 cm
+        <img height="240px" src="img/mid_pines_both_2d.jpg"><br>
+        <img height="210px" src="img/mid_pines_both_3d.jpg">
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="../topics/lidar.html" title="Go to the topic page">&#8962;</a>
+</div>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>

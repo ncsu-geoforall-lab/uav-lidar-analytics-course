@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>Aviation Regulatory regarding UAS</h2>
+    <h3>GIS595/MEA792: UAV/lidar Data Analytics</h3>
+    <h3 style="margin-top: 0.5em">
+        Author</h3>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU OSGeo Research and Education Laboratory">OSGeoREL</a>
+        at
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        <br>
+    </p>
+    <p>Fall 2016</p>
+</section>
+<section>
+    <h2>Federal Aviation Adminiostration (FAA)</h2>
+    <div class="left fragment">
+		<ul>
+		<li class="fragment">Created in 1958 in response to a series of fatal accidents and midair collisions involving commercial aircraft;</li>
+		<li class="fragment">Mandated to develop plans and policies for the use of navigable airspace to ensure the safety of aircraft and the efficient use of airspace;</li>
+		<li class="fragment">Since the creation of the FAA, American airspace has become one of the most regulated fields in the United States.</li>
+		</ul>
+    </div>
+    <div class="right fragment">
+        <img src="img/FAA.png">
+    </div>
+</section>
+<section>
+    <h2>National Airspace Sysyem (NAS)</h2>
+    <ul>
+        <li class="fragment">Already congested with piloted aircraft, and adding a swarm of UAVs requires thoughtful planning;</li>
+        <li class="fragment">Main mandate - to ensure that UASs do not endanger current users of the NAS (including manned or other unmanned aircraft) nor compromise the safety of the people and property on the ground</li>
+        <li class="fragment">When it comes to the safe operation and integration of the UAS into the NAS, one of the main concern that the FAA has is <strong>the lack of detect-sense-and avoid capability of the current UAS technology</strong></li>
+    </ul>
+</section>
+<section>
+    <h2><a href="http://www.faa.gov/uas/legislative_programs/section_333/">FAA and UAS</a></h2>
+    <ul>
+        <li class="fragment">The Unmanned Aircraft Program Office (UAPO), FAA Aircraft Certification Service (AIR-160);</li>
+        <li class="fragment">The Production and Airworthiness Division, FAA Aircraft Certification Service (AIR-200);</li>
+        <li class="fragment">The Flight Technologies and Procedures Division, FAA Flight Standards Service (AFS-400);</li>
+        <li class="fragment">The FAA Air Traffic Organization’s Office of System Operations and Safety, (AJR-3);</li>
+    </ul>
+</section>
+<section>
+       <img src="img/timeline_legal_issues.png">
+</section>
+<section>
+    <h2>Certificate of Waiver or Authorization (COA)</h2>
+    <div class="left fragment">
+		<ul>
+		<li class="fragment">available to <strong>government entities </strong>that want to fly a UAS in civil airspace;</li>
+		<li class="fragment">Applicants must submit their COA request through an online system;</li>
+		<li class="fragment">Even for public agencies, COA cannot be guaranteed, and COAs may take different lengths of time or have some restrictions built in.</li>
+		<li class="fragment"><img src="img/COAs_issued.png"></li>
+		</ul>
+    </div>
+    <div class="right">
+        <img src="img/COA_legal.png">
+    </div>
+</section>
+<section>
+    <h2><a href="http://www.faa.gov/uas/media/Sec_331_336_UAS.pdf">Section 333</a> Exemptions</h2>
+
+    <div class="left fragment">
+		<ul>
+		<li class="fragment">available to <strong>government entities </strong>that want to fly a UAS in civil airspace;</li>
+		<li class="fragment">Applicants must submit their COA request through an online system;</li>
+		<li class="fragment">Even for public agencies, COA cannot be guaranteed, and COAs may take different lengths of time or have some restrictions built in.</li>
+		</ul>
+    </div>
+    <div class="right">
+        <img src="img/authorizations_granted.png">
+    </div>
+        <div class="left fragment">
+		<ul>
+		<li class="fragment small">Even with the heavy restrictions that surrounded these exemptions, the move was welcomed by companies who are planning to use UAS for various commercial tasks</li>
+		</ul>
+    </div>
+    <div class="right">
+        <a href="https://www.faa.gov/uas/legislative_programs/section_333/333_authorizations/media/NextGen-Aerial-Photography-12376.pdf"><img src="img/authorization.png"></a>
+     </div>
+</section>
+<section>
+    <h2><a href="http://www.faa.gov/uas/media/Sec_331_336_UAS.pdf">Section 333</a> Exemptions</h2>
+
+    <div class="left">
+		<ul>
+		<li class="fragment">available to <strong>government entities </strong>that want to fly a UAS in civil airspace;</li>
+		<li class="fragment">Applicants must submit their COA request through an online system;</li>
+		<li class="fragment">Even for public agencies, COA cannot be guaranteed, and COAs may take different lengths of time or have some restrictions built in.</li>
+		</ul>
+    </div>
+    <div class="right">
+        <img src="img/authorizations_granted.png">
+    </div>
+        <div class="left fragment">
+		<ul>
+            <li class="fragment small">Even with the heavy restrictions that surrounded these exemptions, the move was welcomed by companies who are planning to use UAS for various commercial tasks</li>
+		</ul>
+    </div>
+    <div class="right">
+        <a href="https://www.faa.gov/uas/legislative_programs/section_333/333_authorizations/media/NextGen-Aerial-Photography-12376.pdf"><img src="img/authorization_NGAT.png"></a>
+     </div>
+</section>
+<section>
+    <h2><a href="http://www.faa.gov/aircraft/air_cert/airworthiness_certification/sp_awcert/experiment/sac/">Special Airworthiness Certificate (SAC)</a></h2>
+    <ul>
+        <li class="fragment">applicants must be able to describe how their system is designed, constructed, and manufactured, including engineering processes, software development and control, configuration management, and quality assurance procedures used, along with how and where they intend to fly.</li>
+            <ul>
+                <li class="fragment">in the <a href="http://www.faa.gov/aircraft/air_cert/airworthiness_certification/sp_awcert/experiment/">Experimental Category </a>– may be used for civil aircraft to perform research and development, crew training, and market surveys; however, carrying persons or property for compensation or hire is prohibited</li>
+                <li class="fragment">in the <a href="http://www.faa.gov/aircraft/air_cert/airworthiness_certification/sp_awcert/experiment/sac/">Restricted Category </a> (14 CFR § 21.25(a)(2) and § 21.185) for a special purpose or a type certificate for production of the UAS under 14 CFR § 21.25(a)(1) or § 21.17</li>
+            </ul>
+    </ul>
+</section>
+<section>
+        <h2> Potential Airworthiness Path for UAS Industry</h2>
+           <img src="img/conceptual_timeline.png">
+</section>
+
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>
