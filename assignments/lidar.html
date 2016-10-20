@@ -49,7 +49,21 @@ Outline:
 Data:
 
 <ul>
-    <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud (merged from 4 tiles) in las format</a>
+    <li>2013 lidar</li>
+      <ul>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud in LAS format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_all.txt">All returns and classes in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_ground.txt">Ground only in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_first.txt">First return only in TXT format</a></li>
+      </ul>
+    <li>2015 lidar</li>
+      <ul>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm.las">Classified point cloud in LAS format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_all.txt">All returns and classes in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_ground.txt">Ground only in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_first.txt">First return only in TXT format</a></li>
+      </ul>
+
  	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
         	<li>for additional point cloud tiles:</li>
 		<ul>
@@ -70,6 +84,11 @@ Tools:
         which is used by GRASS modules v.in.lidar and r.in.lidar
         (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
     </li>
+    <li><strong>Note</strong>: if v.in.lidar or r.in.lidar are not accessible, use
+<a href="https://grass.osgeo.org/grass72/manuals/r.in.xyz.html">r.in.xyz</a>
+and <a href="https://grass.osgeo.org/grass72/manuals/v.in.ascii.html">v.in.ascii</a>
+with text files.
+</li>
     <li>libLAS installation should include command line tools lasinfo and las2txt.
     <!-- <li>libLAS installation should also include support for LAZ (through LAZzip library). -->
     <li>Note that for merging las tiles (not necessary for this assignment) you need LASlib's lasmerge tool (part of LAStools).
@@ -273,7 +292,7 @@ Convert LAS file into text file:
 </code></pre>
 
 <p>
-Set smaller region for creating the 3D raster (TBD):
+Set smaller region for creating the 3D raster:
 
 <pre><code>g.region n=219502 s=219348 w=637070 e=637276 b=110 t=135 res=2 res3=2 tbres=0.5 -p3
 </code></pre>
@@ -284,8 +303,50 @@ Use binning to create point density 3D raster:
 <pre><code>r3.in.xyz input=mid_pines.txt output=mid_pines_dens method=n separator=comma
 </code></pre>
 
+You can also run <a href="https://grass.osgeo.org/grass73/manuals/r3.in.lidar.html">r3.in.lidar</a>,
+directly on the LAS file, but you have to use latest development version (7.3) of GRASS GIS.
+<pre><code>r3.in.lidar input=mid_pines_spm_2013.las n=mid_pines_dens
+</code></pre>
+
 <p>
-Visualize in 3D view using slices and isosurfaces.
+Set custom color table with r3.colors:
+<pre>
+0% 255:255:100
+5% green
+100% red
+</pre>
+<p>
+Visualize point density in 3D view using slices and isosurfaces:
+<ol>
+    <li>Leave only 3D raster <em>mid_pines_dens</em> in Layer Manager.</li>
+    <li>Set computational region based on the 3D raster and zoom to it.</li>
+    <li>Switch to 3D.</li>
+    <li>On View page set <em>Height</em> to 50 and <em>Z-exag</em> to 2. Nothing is visible yet.</li>
+    <li>On Data page, check <em>Draw wire box</em>, set resolution to 1.</li>
+    <li>Add isosurface and set isosurface value 1 and press Enter.</li>
+    <li>Check <em>toggle normal direction</em> and set different color of isosurface.</li>
+    <li>Experiment with different isosurface levels (press enter to confirm the new value).</li>
+    <li>Remove isosurface, change draw mode to slices, add slice and set its axis to Z.</li>
+    <li>Manipulate with the slice.</li>
+</ol>
+<img width="500px" src="img/lidar/3d_trees.png">
+
+<h3>3D raster profiles of 3D raster of proportional density</h3>
+<em>Note: latest version of GRASS GIS is needed (7.3).</em>
+<p>
+Module r3.in.lidar can compute proportional count - 
+count per 3D cell relative to the count per vertical column.
+<pre><code>r3.in.lidar input=mid_pines_spm_2013.las n=mid_pines_dens proportional_n=mid_pines_dens_proportional
+</code></pre>
+We will visualize it using vertical 3D raster profiles.
+Download extension r3.profile:
+<pre><code>g.extension r3.profile
+</code></pre>
+
+Compute profile between 2 points.
+<pre><code>r3.profile input=mid_pines_dens_proportional raster_output=mid_pines_dens_proportional_profile coordinates=637127,219478,637219,219469
+</code></pre>
+Add raster <em>mid_pines_dens_proportional_profile</em> and zoom to it (lower left corner is set to 0, 0).
 
 </main>
 
