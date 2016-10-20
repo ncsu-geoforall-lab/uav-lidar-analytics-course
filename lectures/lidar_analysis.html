@@ -284,7 +284,6 @@ Tuning the level of detail with tension parameter
    <h3>Topographic analysis using splines</h3>
 Tuning the level of detail with tension parameter
 <p> <img height="450" src="img/lidar/lidar_tension_curv.gif">
-<p>animation
 </section>
 
 <section>
@@ -294,16 +293,18 @@ Tuning the level of detail with tension parameter
   <li>line of sight based geomorphons
 </ul>
 <p>
-<img height="450" src="img/lidar/us_geom_26642.jpg">
+<img height="400" src="img/lidar/us_geom_26642.jpg">
 <p>
 REFRENCES, IMAGES
 </section>
 
 <section>
    <h3>Stream extraction from lidar DEMs</h3>
+<p class="small">
 Lidar DEMs have many true depressions and large areas dammed by roads,
 depression filling substantially reduces the accuracy of DEM 
-<p>Least cost path flow tracing is more robust
+<br>Least cost path flow tracing is more robust
+</p>
 <p> <img height="400" src="img/lidar/stream_extraction_lidarc.png">
 </section>
 
@@ -319,9 +320,14 @@ least cost path ridge and toe line
 <p>
 Issues: vertical and horizontal shifts, differing point densities and patterns,
 varying spatial extent
-<p>
+<p> <img width="42%" src="img/lidar/DOTDEMoriggraph3.jpg">
+<img width="42%" src="img/lidar/DOTDEMcorrectedgraph3.jpg">
+<p class="small">
 <a href="http://www.springer.com/us/book/9781493918348">
-Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis of Coastal Lidar Time-Series, Springer Briefs in Computer Science, Springer, New York, 84 p.</a>
+Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis of Coastal Lidar Time-Series, 
+Springer Briefs in Computer Science, Springer, New York, 84 p.</a>
+</p>
+
 </section>
 
 <!--
@@ -353,46 +359,67 @@ Evolution of 16m and 20m contour on Jockey's Ridge
 </section>
 
 <section>
+<h3>Lidar time series: Umstead park</h3>
+Stream bank erosion measured by TLS
+<p>
+<img width="30%" src="img/lidar/Lyonatstreambank_2.jpg">
+<img width="45%" src="img/lidar/pointcloud_bank.jpg">
+
+</section>
+
+<section>
 <h3>Lidar time series: STC Umstead</h3>
-stream bank erosion
+<img width="30%" src="img/lidar/DEMs1stlast_vert.jpg">
+<img width="55%" src="img/lidar/Fig8isosurf_change.png">
 </section>
 
 <section>
-<h3>Vegetation height/growth analysis</h3>
-vegetation height 
-</section>
-
-<section>
-<h3>Vegetation structure analysis</h3>
-vegetation  structure, high density point cloud, per cell stats at levels above ground 
-</section>
-
-<section>
-<h3>Point cloud analysis using 3D grid cells</h3>
-</section>
-
-<section>
-<h3>Examples of lidar data analysis</h3>
-Mamoth Cave
-CC
-Coast
-</section> 
-
-<section>
-  <h3>Mamoth Cave Park</h3>
-Data
+  <h3>Mamoth Cave Park: data</h3>
 <ul>
  <li>classified point cloud in las format 
  <li>raw full waveform in lwv format
  <li>imagery
 </ul>
+<img height="350" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
 </section>
 
 <section>
   <h3>Mamoth Cave Park: canopy</h3>
-<img height="400" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
+<p>
+<img height="450" src="img/lidar/mamothcave_canopy.jpg">
 </section>
 
+<section>
+  <h3>Mamoth Cave Park: bare earth</h3>
+<p>
+<img width="90%" src="img/lidar/mamothcave_bare.jpg">
+</section>
+
+<section>
+  <h3>Voxel models</h3>
+<p>
+<img width="45%" src="img/lidar/raster_3d_slices.png">
+<img width="45%" src="img/lidar/red_green_3d_labels.png">
+<p class="small">
+Petras, V; Petrasova, A; Jeziorska, J; Mitasova, H, 2016, Processing UAV and lidar point clouds in GRASS GIS, ISPRS Archives.
+</p>
+</section>
+
+<section>
+  <h3>Wake county 2013 lidar</h3>
+<p>
+<img width="45%" src="img/lidar/lid2013_1r_3ft_3d.jpg">
+<img width="45%" src="img/lidar/lid2013_be_3ft_3d.jpg">
+</section>
+
+<section>
+  <h3>Wake county 2013 lidar</h3>
+<p>
+<img height="500" src="img/lidar/lid2013_793016_1ret_3ft.jpg">
+</section>
+
+
+<!--
 <section>
   <h3>More cave lidar</h3>
 Domica - paper and image
@@ -406,6 +433,7 @@ Waveform and multispectral lidar, Velodyne (lidar array - small and light)
 <img height="200" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
 <img height="200" src="img/lidar/titan.jpg">
 </section>
+-->
 
 <section>
    <h3>Lidar data sources</h3>
@@ -421,34 +449,6 @@ Public data sources (http in Summary slide):
 <p>more about lidar in GRASS at http://grasswiki.osgeo.org/wiki/LIDAR
 </section>
 
-<!--OLD STUFF KEPT FOR FORMATTING-->
-<section>
-<h3>text on left flight planning</h3>
-<p style="text-align:left;">Flight planning software packages often use low resolution
-DEMs without trees or buildings.
-By bringing flight path into GIS and using latest high resolution DSMs
-we can make sure flight path will not cross any obstacles.
-
-<div style="text-align:left;">
-<p>Analyze and visualize:
-<ul>
-  <li>flight path altitude</li>
-  <li>flight path height above terrain</li>
-  <li>check for any obstacles</li>
-</ul></div>
-</section>
-
-<section>
-<h3>Flight altitude</h3>
-    <img class="stretch"  src="img/mid_pines_altitude.jpg">
-</section>
-
-<section>
-    <h3>Flights with different GSD and overlap</h3>
-    Yellow flight has GSD 4 cm, blue flight has GSD 2.4 cm
-        <img height="240px" src="img/mid_pines_both_2d.jpg"><br>
-        <img height="210px" src="img/mid_pines_both_3d.jpg">
-</section>
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
