@@ -49,7 +49,21 @@ Outline:
 Data:
 
 <ul>
-    <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud (merged from 4 tiles) in las format</a>
+    <li>2013 lidar</li>
+      <ul>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud in LAS format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_all.txt">All returns and classes in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_ground.txt">Ground only in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_first.txt">First return only in TXT format</a></li>
+      </ul>
+    <li>2015 lidar</li>
+      <ul>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm.las">Classified point cloud in LAS format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_all.txt">All returns and classes in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_ground.txt">Ground only in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_first.txt">First return only in TXT format</a></li>
+      </ul>
+
  	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
         	<li>for additional point cloud tiles:</li>
 		<ul>
@@ -70,6 +84,11 @@ Tools:
         which is used by GRASS modules v.in.lidar and r.in.lidar
         (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
     </li>
+    <li><strong>Note</strong>: if v.in.lidar or r.in.lidar are not accessible, use
+<a href="https://grass.osgeo.org/grass72/manuals/r.in.xyz.html">r.in.xyz</a>
+and <a href="https://grass.osgeo.org/grass72/manuals/v.in.ascii.html">v.in.ascii</a>
+with text files.
+</li>
     <li>libLAS installation should include command line tools lasinfo and las2txt.
     <!-- <li>libLAS installation should also include support for LAZ (through LAZzip library). -->
     <li>Note that for merging las tiles (not necessary for this assignment) you need LASlib's lasmerge tool (part of LAStools).
@@ -328,6 +347,7 @@ Compute profile between 2 points.
 <pre><code>r3.profile input=mid_pines_dens_proportional raster_output=mid_pines_dens_proportional_profile coordinates=637127,219478,637219,219469
 </code></pre>
 Add raster <em>mid_pines_dens_proportional_profile</em> and zoom to it (lower left corner is set to 0, 0).
+
 </main>
 
 <footer>
