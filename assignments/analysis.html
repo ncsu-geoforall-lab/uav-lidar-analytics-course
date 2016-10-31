@@ -89,7 +89,7 @@ Which software does generate larger bowl effect?
 <pre><code>
 r.mapcalc expression="agi_trimble = 2015_06_20_DSM_agi_11GCP - 2015_06_20_DSM_Trimble_11GCP"
 r.mapcalc expression="p4d_agi = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_agi_11GCP"
-r.mapcalc expression="p4d_trimble" = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_Trimble_11GCP"
+r.mapcalc expression="p4d_trimble = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_Trimble_11GCP"
 </code></pre>
 Apply the color table that varies from -1m to 1m to visualize results of the comparison
 using <em>r.colors</em> module.
@@ -120,7 +120,7 @@ for example:
 <pre><code>
 r.slope.aspect elevation=sample_DSM slope=sample_DSM_slope aspect=sample_DSM_aspect pcurvature=sample_DSM_curv
 r.relief input=sample_DSM output=sample_DSM_relief
-r.slope.aspect elevation=sample_DSM_noGCP slope=sample_DSM_noGCP_slope aspect=sample_DSM_noGCP_aspect pcurvature=sample_DSM_noGCP_curv
+r.slope.aspect elevation=sample_DSM_noGCPs slope=sample_DSM_noGCP_slope aspect=sample_DSM_noGCP_aspect pcurvature=sample_DSM_noGCP_curv
 r.relief input=sample_DSM output=sample_DSM_noGCP_relief
 </code></pre>
 
