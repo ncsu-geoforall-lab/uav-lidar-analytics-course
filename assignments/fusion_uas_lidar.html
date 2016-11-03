@@ -42,8 +42,7 @@ Outline:
 
 <ul>
     <li>analyze the differences between the lidar and uas DEM/DSM
-    <li>fuse lidar and uas DSM for viewshed analysis: compare simple patching with map algebra 
-        with reinterpolation from maximum elevation points
+    <li>fuse lidar and uas DSM for viewshed analysis
 </ul>
 
 Data: 
@@ -85,7 +84,8 @@ to verify the correction), use Mitasova et al. 2009 for reference
       and compare how the two approaches work for viewshed mapping
 </ul>
 
-Suggested color table for differences, used in the workflow as dif_lidar_uav.txt:
+Suggested color table for differences, used in the workflow as 
+<a href="./resources/dif_lidar_uav.txt">dif_lidar_uav.txt</a>:
 
 <pre data-filename="dif_lidar_uav.txt"><code> -40 red
  -1 orange
@@ -191,7 +191,9 @@ To compare the viewsheds display the resulting maps with transparency.
 Discuss the result.
 <p>
 Note: To find the location and height of the webcam that will capture the entire field during entire
-year we can run r.series on the time series of UAS DSMs to derive the DSM envelope surface
+year we can run 
+<a href="https://grass.osgeo.org/grass72/manuals/r.series.html">r.series</a>
+with method=maximum on the time series of UAS DSMs to derive the DSM series envelope surface
 and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
 the following year.
 
@@ -200,14 +202,6 @@ r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
 r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
 -->
 
-
-<p>
-Further reading:
-<p>
-Fusion of multi-scale DEMs using a regularized super-resolution method.<br>
-Linwei Yue , Huanfeng Shen , Qiangqiang Yuan , Liangpei Zhang.<br>
-International Journal of Geographical Information Science.
-Vol. 29, Iss. 12, 2015
 
 </main>
 
