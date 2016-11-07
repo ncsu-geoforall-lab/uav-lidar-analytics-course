@@ -25,8 +25,9 @@
 <ul class="nav">
 <li><a href="index.html">Syllabus</a></li>
 <li><a href="schedule.html">Schedule</a></li>
-<li><a href="lectures.html">Lectures</a></li>
-<li><a href="assignments.html">Assignments</a></li>
+<li><a href="topics.html">Topics</a></li>
+<li><a href="assignments.html">Course logistics</a></li>
+<!--<li><a href="lectures.html">Lectures</a></li>-->
 <li><a href="projects.html">Projects</a></li>
 </ul>
 </nav>
@@ -63,17 +64,31 @@ We will use Moodle to manage the assignments.
 		</ul>
    </ul>
 <li><strong>Lidar data</strong></li>
-    <ul>
-    	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Mid Pines</a> point clouds</li>
-    	<li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">Secref and Mid Pines</a> interpolated DEM/DSM (use r.unpack)</li>
-    	<li>for additional point cloud tiles:</li>
-		<ul>
-		    <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
-		    <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
-		    <li>follow the <a href="assignments/lidar_import.html">instructions</a> for importing lidar data to GRASS GIS.
-		</ul>
-	<li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
-    </ul>    	
+<ul>
+    <li>2013 lidar</li>
+      <ul>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud in LAS format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_all.txt">All returns and classes in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_ground.txt">Ground only in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_first.txt">First return only in TXT format</a></li>
+      </ul>
+    <li>2015 lidar</li>
+      <ul>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm.las">Classified point cloud in LAS format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_all.txt">All returns and classes in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_ground.txt">Ground only in TXT format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2015_spm_first.txt">First return only in TXT format</a></li>
+      </ul>
+    <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las">Secref</a> las point cloud
+    <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">Secref and Mid Pines</a> interpolated DEM/DSM (use r.unpack)</li>
+    <li>for additional point cloud tiles:</li>
+        <ul>
+        <li>see <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/LAS_overview_2013.pack">the overview vector file</a> in GRASS,
+        <li>download preselected tiles from <a href="http://fatra.cnr.ncsu.edu/lidar">here</a>,
+        <li>follow the <a href="lidar_import.html">instructions</a> for importing lidar data to GRASS GIS.
+        </ul>
+    <li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
+</ul>
 </ul>
 <p>
 <h3>Software </h3>

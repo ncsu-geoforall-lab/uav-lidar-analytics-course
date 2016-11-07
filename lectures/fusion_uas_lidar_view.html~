@@ -1,0 +1,185 @@
+<section>
+    <h2>Comparison and fusion of UAS SfM and lidar data</h2>
+    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
+
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU GeoForAll Laboratory">NCSU GeoForAll Lab</a>
+        at
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        <br>
+    </p>
+</section>
+
+<section>
+    <h3>Outline</h3>
+<p>
+<ul>
+ <p><li>Analysis of lidar and UAS SfM-derived DSMs differences
+ <p><li>Patching and smooth fusion of UAS and lidar DSM
+ <p><li>Fusion for viewshed analysis and watershed modeling
+</ul>
+</section>
+
+<section>
+   <h3>Point clouds from lidar and SfM</h3>
+<ul>
+<li><b>Lidar:</b> 
+   <ul>
+   <li>measured variable is time of return for each pulse
+   <li>georeferencing is based on the position (measured by GPS) 
+       and exterior orientation (measured by inertial navigation system INS) of the platform
+   <li>(x,y,z) is derived from time, GPS positioning and INS parameters
+   </ul>
+</ul>
+</section>
+
+<section>
+   <h3>Point clouds from lidar and SfM</h3>
+<ul>
+<li><b>SfM:</b>
+    <ul>
+    <li>measured variable is reflected energy captured as imagery
+    <li>georeferencing can be done entirely from GCPs (GPS is needed)
+    <li>(x,y,z) is derived from overlapping images and GCPs
+    <li>alternatively: GPS and INS for position and orientation of images and camera parameters
+    </ul>
+<li>Lidar and SfM provide independent set of measurements. 
+<li>Georeferencing accuracy depends on GPS and INS 
+</ul>
+</section>
+
+<section>
+   <h3>Comparison of lidar and SfM point clouds</h3>
+<ul>
+<li>Lidar: passes through vegetation, multiple return, measured profiles in overalpping swaths,
+shifts between swaths, condurroy effect
+<p>
+<li>
+SfM: very high density, but influenced by cast shadows, difficult to map under vegetation
+<li>
+Different distribution of error and distortions
+<p>
+<img width="30%" src="img/fusion_lidar_uav/lidar_points.png">
+<img width="65%" src="img/fusion_lidar_uav/uav_points.png">
+</section>
+
+<section>
+   <h3>Point cloud to DSM</h3>
+<ul>
+  <li>binning
+  <li>meshes / TIN
+  <li>spatial interpolation (gridding)
+  <li>error from this process is usually much smaller than measurement error, because of high point density
+</ul>
+<!--
+<img width="30%" src="img/fusion_lidar_uav/binned_dsm.png">
+<img width="30%" src="img/fusion_lidar_uav/tin_dsm.png">
+<img width="30%" src="img/fusion_lidar_uav/interpolated_dsm.png">
+-->
+</section>
+
+<section>
+   <h3>DSM differencing</h3>
+<ul>
+ <li>Spatial pattern of distortions, systematic errors and noise
+ <li>Difference maps between Lidar DSM and UAS SfM DSM (AGISOFT and PIX4D)
+</ul>
+<p>
+<img width="40%" src="img/fusion_lidar_uav/Brendanlidar_agisoft_difference.png">
+<img width="40%" src="img/fusion_lidar_uav/Brendanlidar_pix4d_difference.png">
+<p class="credit">images by Brendan Harmon</p>
+</section>
+
+<section>
+   <h3>DSM differencing</h3>
+<ul>
+ <li>change in elevation surface due to processes
+ <li>vegetation growth, erosion
+</ul>
+<p>
+<img width="30%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
+<img width="25%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune_gully.jpg">
+<img width="25%" src="img/fusion_lidar_uav/gullyDSC06027.jpg">
+</section>
+
+<section>
+   <h3>Comparing profiles</h3>
+<p>
+<ul>
+<li>identify systematic errors (vertical shifts) 
+<li>differences due to vegetation growth, erosion/deposition
+</ul>
+<p>
+<img width="40%" src="img/fusion_lidar_uav/Anna_profile_fields.jpg">
+<img width="50%" src="img/fusion_lidar_uav/Anna_profile_house.jpg">
+</section>
+
+<section>
+   <h3>Correct for systematic error and distortions</h3>
+<p>
+<ul>
+<li>systematic error - if due to GPS shift: median difference
+<li>systematic error - if tilt, use regression function
+<li>some complex UAS distortions can be reduced using interpolated GPS differences
+or differencing with lidar 
+</ul>
+</section>
+
+<section>
+   <h3>Updating lidar DSM by patching</h3>
+<p>
+<ul>
+<li>replace the grid cells in the updated area by UAS DSM
+<li>averaging over an overlap
+<li>usually creates an edge - can be post-processed
+</ul>
+<p>
+<img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion.png">
+<img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion_relief.png">
+</section>
+
+<section>
+   <h3>Smooth fusion</h3>
+<p>
+<ul>
+<li>derive overlap raster
+<li>weighted smoothing based on the distance from the edge
+</ul>
+<p>
+<img width="45%" src="img/fusion_lidar_uav/Anna_patching.jpg">
+<img width="45%" src="img/fusion_lidar_uav/Anna_fusion.jpg">
+</section>
+
+<section>
+   <h3>Viewsheds</h3>
+<p>
+<ul>
+<li>provide analysis to support siting of a monitoring webcam
+<li>evaluate influence on using different DSMs on the viewshed extent
+</ul>
+<p>
+<img height="400" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
+</section>
+
+<!--
+<section>
+   <h3>Lidar data sources</h3>
+<p>
+Public data sources (http in Summary slide):
+<ul>
+  <li>CLICK: raw point clouds usually in LAS format
+  <li>NOAA Digital Coast: costal point clouds with on-fly binning
+  <li>NC Floodplain Mapping: bare Earth: points, 20ft DEM and 50ft DEM with carved channels
+  <li>NC data portal
+  <li>OpenTopography: NCALM data
+</ul>
+<p>more about lidar in GRASS at http://grasswiki.osgeo.org/wiki/LIDAR
+</section>
+-->
+
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="../topics/lidar.html" title="Go to the topic page">&#8962;</a>
+</div>

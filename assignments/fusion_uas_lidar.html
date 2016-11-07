@@ -25,8 +25,9 @@
 <ul class="nav">
 <li><a href="../index.html">Syllabus</a></li>
 <li><a href="../schedule.html">Schedule</a></li>
-<li><a href="../lectures.html">Lectures</a></li>
-<li><a href="../assignments.html">Assignments</a></li>
+<li><a href="../topics.html">Topics</a></li>
+<li><a href="../assignments.html">Course logistics</a></li>
+<!--<li><a href="../lectures.html">Lectures</a></li>-->
 <li><a href="../projects.html">Projects</a></li>
 </ul>
 </nav>
@@ -40,15 +41,16 @@
 Outline:
 
 <ul>
-    <li>analyze the differences between the lidar and uas DEM/DSM
-    <li>fuse lidar and uas DSM for viewshed analysis: compare simple patching with map algebra 
-        with reinterpolation from maximum elevation points
+    <li>analyze the differences between the lidar (2013, 2015 surveys) and UAS DEM/DSM
+    <li>fuse selected lidar and UAS DSM for viewshed analysis for webcam siting
+    <li>evaluate impact of vegetation change on viewshed extent
 </ul>
 
 Data: 
 
 <ul>
-    <li>you should already have both the lidar and uas DSMs and points clouds.
+    <li>you should already have both the lidar and uas DSMs and points clouds, get anything missing
+        from the <a href="../assignments.html">Course logistics web page</a>.
     <li><a href="./resources/fields.pack">Fields polygon as packed raster</a> use r.unpack in your mapset to import it
 </ul>
 <p>
@@ -68,11 +70,11 @@ Tools:
 
 First we need to evaluate the DSMs to find out which are suitable for fusion
 <ul>
- <li> compare errors at GCPs (lidar, agisoft, trimble or pix4d in june)
- <li> compute the difference between lidar DSM and selected uas: raster, profile/difference along a road and roof
+ <li> compare errors at GCPs computed in previous assignments (lidar 2013, 2015, UAS agisoft, trimble or pix4d)
+ <li> compute the difference between a selected lidar DSM and selected UAS DSMs: raster, profile/difference along a road and roof
  <li> use above to identify potential systematic error (you will see approx constant shift in profiles
 and most difs have the same sign, use mean or median as syst. error estimate, re-do the profile
-to verify the correction), use Mitasova et al. 2009 for reference
+to verify the correction)
  <li> identify distortions - use corrected dsm and lid-uav diff, 
  look for unexpected pattern, verify with profile.
  Put into report and exclude distorted areas from study area.
@@ -84,7 +86,8 @@ to verify the correction), use Mitasova et al. 2009 for reference
       and compare how the two approaches work for viewshed mapping
 </ul>
 
-Suggested color table for differences, used in the workflow as dif_lidar_uav.txt:
+Suggested color table for differences, used in the workflow as 
+<a href="./resources/dif_lidar_uav.txt">dif_lidar_uav.txt</a>:
 
 <pre data-filename="dif_lidar_uav.txt"><code> -40 red
  -1 orange
@@ -190,7 +193,9 @@ To compare the viewsheds display the resulting maps with transparency.
 Discuss the result.
 <p>
 Note: To find the location and height of the webcam that will capture the entire field during entire
-year we can run r.series on the time series of UAS DSMs to derive the DSM envelope surface
+year we can run 
+<a href="https://grass.osgeo.org/grass72/manuals/r.series.html">r.series</a>
+with method=maximum on the time series of UAS DSMs to derive the DSM series envelope surface
 and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
 the following year.
 
@@ -199,14 +204,6 @@ r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
 r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
 -->
 
-
-<p>
-Further reading:
-<p>
-Fusion of multi-scale DEMs using a regularized super-resolution method.<br>
-Linwei Yue , Huanfeng Shen , Qiangqiang Yuan , Liangpei Zhang.<br>
-International Journal of Geographical Information Science.
-Vol. 29, Iss. 12, 2015
 
 </main>
 
