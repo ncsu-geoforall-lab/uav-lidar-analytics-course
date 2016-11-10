@@ -11,4 +11,61 @@
     <p>Fall 2016</p>
 </section>
 <section>
+<h3>Overview of open source tools</h3>
+  <img src="img/opensource_overview.png" class="stretch">
+  <p style="font-size: 65%">
+    Source: Kirk McKelvey, <a href="https://2016.foss4g-na.org/sites/default/files/slides/sfm-foss4gna-2016_0.pdf">
+    From UAV to Orthomosaic: Building a Toolchain</a>, FOSS4G NA 2016<br>
+    Note: VisualSFM is not open source, MicMac is missing
+</section>
+
+<section>
+<img src="img/odm_logo.png" width="600px">
+<p>
+Full pipeline, some parts are using other projects:
+<ul><li>Structure from Motion (SfM): OpenSfM by Mapillary</li>
+  <li>Dense point cloud creation: PMVS / CMVS software</li>
+  <li>Mesh Generation</li>
+  <li>Texturing / Blending</li>
+  <li>Ortho photo creation</li></ul>
+
+</section>
+
+<section>
+  <h3>ODM vision: Open Data Ecosystem</h3>
+The aim is for the toolchain to also be able to optionally push to a variety of online data repositories:
+
+
+  <ul><li>high-resolution orthos to <a href="https://openaerialmap.org/">OpenAerialMap</a></li>
+    <li>point clouds to <a href="https://openaerialmap.org/">OpenTopography</a></li>
+<li>...</li></ul>
+</section>
+<section>
+<h3>ODM drawbacks</h3>
+<ul>
+  <li>GCPs need to be used during reconstruction process to increase precision and avoid 'doming effect'</li>
+  <li>better imagery blending (already in dev branch)</li>
+  <li>missing GUI, especially needed for GCPs identification</li>
+</ul>
+</section>
+<section>
+<h3>ODM advantages</h3>
+<ul><li>Open source project, can be used commercially,</li>
+  <li>support by community,</li>
+  <li>easy for batch processing,</li>
+  <li>active development, new features coming, see
+    <a href="https://github.com/OpenDroneMap/OpenDroneMap/wiki/Roadmap">roadmap</a>,</li>
+  <li>new web interface is being developed</li>
+  <img src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
+</ul>
+</section>
+<section>
+  <h3>MicMac</h3>
+  <ul><li>Developed by French National Geographic Institute (IGN)</li>
+  <li>Set of command-line tools for the different parts of imagery processing</li>
+  <li>Steep learning curve, see <a href="http://logiciels.ign.fr/IMG/pdf/docmicmac-2.pdf">PDF documentation</a></li>
+  <li>Reconstruction results similar or better than other SfM software, see for example this
+     <a href="http://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLI-B5/685/2016/isprs-archives-XLI-B5-685-2016.pdf">
+     paper</a> or a <a href="https://www.youtube.com/watch?v=JCdGJ3yoEE0"> video</a></li>
+     <li>Not very active project, mostly one developer</li>
 </section>
