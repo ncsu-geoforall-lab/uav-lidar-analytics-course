@@ -142,7 +142,7 @@ Run ODM on your host machine. We will use default parameters.
 To review parameters run:
 
 <pre><code>
-/odm_app/OpenDroneMap/run.py --h
+python /odm_app/OpenDroneMap/run.py --h
 </code></pre>
 
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
@@ -160,6 +160,6 @@ is available as a LAS or text file. You can use
 or <a href="https://grass.osgeo.org/grass70/manuals/r.in.xyz.html">r.in.xyz</a>
 to create a DSM by binning as we did in the previous assignment
 or <a href="https://grass.osgeo.org/grass70/manuals/v.surf.rst.html">v.surf.rst</a>
-to interpolate a DSM. The CRS of the point cloud and orthophoto should be in EPSG:3358 (NC state plane meters)
+to interpolate a DSM. The CRS of the point cloud and orthophoto should be in EPSG:3358 (NC state plane meters).
 
 We can also quickly view our results in <a href="http://plas.io/">plas.io</a> (needs browser with WebGL support).
