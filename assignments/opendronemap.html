@@ -25,8 +25,9 @@
 <ul class="nav">
 <li><a href="../index.html">Syllabus</a></li>
 <li><a href="../schedule.html">Schedule</a></li>
-<li><a href="../lectures.html">Lectures</a></li>
-<li><a href="../assignments.html">Assignments</a></li>
+<li><a href="../topics.html">Topics</a></li>
+<li><a href="../assignments.html">Course logistics</a></li>
+<!--<li><a href="../lectures.html">Lectures</a></li>-->
 <li><a href="../projects.html">Projects</a></li>
 </ul>
 </nav>
@@ -63,12 +64,16 @@ mkdir data
 This files describes settings of the virtual machine we are about to create.
 I suggest to change the number of CPUs and available memory based on your computer.
 Change the values in <code>vb.cpus</code> and <code>vb.customize ["modifyvm", :id, "--memory", "4096"]</code>
-depending how much you want to use your coomputer for other things during the computation.
+depending how much you want to use your computer for other things during the computation.
 I recommend however to give it as much memory a you can. If it doesn't have enough memory,
 it will finish with an error.
 </li>
 <li>Copy your <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
-into directory <code>'odm/data'</code>. Unzip it directly into this directory (no subdirectory).</li>
+into directory <code>'odm/data'</code>. Unzip it directly into this directory (no subdirectory).
+Create directory <code>images</code> and move all images in there.</li>
+<pre><code>mkdir images
+mv *.jpg images/
+</code></pre>
 <li>Open your command line and <code>cd</code> to your <code>'odm/vagrant'</code> directory:
 <pre><code>vagrant up
 vagrant ssh
@@ -76,7 +81,8 @@ vagrant ssh
 You have now installed, launched and logged in to an Ubuntu GNU/Linux OS.
 </li>
 <li>On the guest machine install git and download ODM repository:
-<pre><code>sudo apt-get -y install git
+<pre><code>sudo apt-get update
+sudo apt-get -y install git
 sudo mkdir /odm_app
 sudo chown vagrant:vagrant /odm_app/
 cd /odm_app/
@@ -85,7 +91,9 @@ git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </li>
 <li>Install ODM.
 <pre><code>cd OpenDroneMap
-./install.sh
+export PYTHONPATH=$PYTHONPATH:`pwd`/SuperBuild/install/lib/python2.7/dist-packages:`pwd`/SuperBuild/src/opensfm
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`pwd`/SuperBuild/install/lib
+bash configure.sh
 </code></pre>
 During installation all dependecies are automatically downloaded and compiled.
 This will take approximately half an hour.
@@ -124,21 +132,23 @@ tr A-Z a-z < full.csv > full_lowercase.csv
 </code></pre>
 
 Update EXIF with GPS coordinates, focal length, camera model. There will be some warnings, ignore them.
-<pre><code>wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
+<pre><code>cd /odm_data/images
+wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
 python write_exif_GPS.py full_lowercase.csv
+rm write_exif_GPS.py
 </code></pre>
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
 <p>
 Our camera model is not in OpenSfM database yet, so you have to download the updated
 camera database file:
-<pre><code>cd /odm_app/OpenDroneMap/src/OpenSfM/opensfm/data/
+<pre><code>cd /odm_app/OpenDroneMap/SuperBuild/src/opensfm/opensfm/data/
 wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/sensor_data.json -O sensor_data.json
 cd /odm_data
 </code></pre>
 <p>
 To georeference the DSM, we need to prepare a text file with each GCP on one line,
-where the numbers represent GCP X, GCP Y, GCP altitude, image row, image column, image name.
+where the numbers represent GCP X, GCP Y, GCP altitude, image column, image row, image name.
 For example:
 <pre><code>636795.964 219156.17 105.06 1588 2066 DSC01861.jpg
 </code></pre>
@@ -154,30 +164,24 @@ Now we are ready to run OpenDroneMap!
 Run ODM on your host machine. We will use default parameters.
 To review parameters run:
 
-<pre><code>/odm_app/OpenDroneMap/run.py --h
+<pre><code>python /odm_app/OpenDroneMap/run.py --h
 </code></pre>
 
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>cd /odm_data
-/odm_app/OpenDroneMap/run.py --use-opensfm --odm_georeferencing-useGcp --odm_georeferencing-gcpFile gcp_odm.txt
+python /odm_app/OpenDroneMap/run.py --odm_georeferencing-useGcp --odm_georeferencing-gcpFile gcp_odm.txt
 </code></pre>
-By using he option <code>--use-opensfm</code> we select project <a href="https://github.com/mapillary/OpenSfM">OpenSfM</a> as backend,
-which seems to be faster and producing better results.
 
 <h3>Importing results</h3>
-All results are stored in <code>/odm_data/reconstruction-with-image-size-2400-results/</code>.
-We are interested in the point cloud <code>pointcloud_georef.laz</code>.
-To import it to GRASS GIS, we will first convert it to .las file using LAStools installed already during ODM installation.
-Still on the host machine run:
-<pre><code>cd /odm_data/reconstruction-with-image-size-2400-results/
-/odm_app/OpenDroneMap/src/lastools/bin/las2las -i pointcloud_georef.laz -o pointcloud_georef.las
-</code></pre>
-
-and then we use <a href="https://grass.osgeo.org/grass70/manuals/r.in.lidar.html">r.in.lidar</a>
+All results are stored in <code>/odm_data/</code>,
+see <a href="https://github.com/OpenDroneMap/OpenDroneMap/wiki/Output-and-Results">results directory layout</a>.
+We are interested in the point cloud located in <code>/odm_data/odm_georeferencing/</code>, it
+is available as a LAS or text file. You can use
+<a href="https://grass.osgeo.org/grass70/manuals/r.in.lidar.html">r.in.lidar</a>
+or <a href="https://grass.osgeo.org/grass70/manuals/r.in.xyz.html">r.in.xyz</a>
 to create a DSM by binning as we did in the previous assignment
 or <a href="https://grass.osgeo.org/grass70/manuals/v.surf.rst.html">v.surf.rst</a>
-to interpolate a DSM. Use <code>-o</code> flag when importing into GRASS GIS ncspm location - 
-the las file metadata show UTM, but the GCPs coordinates were in ncspm.
+to interpolate a DSM. The CRS of the point cloud and orthophoto should be in EPSG:3358 (NC state plane meters).
 
 We can also quickly view our results in <a href="http://plas.io/">plas.io</a> (needs browser with WebGL support).
 
