@@ -393,6 +393,9 @@ Compute a profile for multiple rasters and plot them in
 
 <pre><code>
 import grass.script as gscript
+# on Windows, uncomment the two following lines
+# import matplotlib  # required by Windows
+# matplotlib.use('wx')  # required by Windows
 import matplotlib.pyplot as plt
 
 rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
