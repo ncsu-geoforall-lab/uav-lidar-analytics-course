@@ -307,7 +307,8 @@ using nested for loops.
 
 <pre><code>import grass.script as gs
 
-rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
+<span class="comment"># adjust the names according to what you used in the previous assignments
+</span>rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
            '2015_06_20_DSM_agi_11GCP']
 for raster_a in rasters:
     for raster_b in rasters:
@@ -421,7 +422,8 @@ Compute a profile for multiple rasters and plot them in
 </span><span class="comment"># matplotlib.use('wx')  # required by Windows
 </span>import matplotlib.pyplot as plt
 
-rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
+<span class="comment"># adjust the names according to what you used in the previous assignments
+</span>rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
 coordinates = [637160.446919, 219373.236976,
                637105.693795, 219392.416036,
                637072.439779, 219400.613538]
