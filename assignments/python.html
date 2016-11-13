@@ -164,27 +164,27 @@ Now run this script (assuming you are in the directory with the las files):
 
 <pre><code>
 import os
-import grass.script as gscript
+import grass.script as gs
 
-region = gscript.region()
+region = gs.region()
 
 vectors = []
 for lidar_file in os.listdir('.'):
     if lidar_file.endswith('_spm.las'):
-        bbox = gscript.read_command('r.in.lidar', input=lidar_file,
-                                    output='foo', flags='g').strip()
-        bbox = gscript.parse_key_val(bbox, vsep=' ', val_type=float)
+        bbox = gs.read_command('r.in.lidar', input=lidar_file,
+                               output='foo', flags='g').strip()
+        bbox = gs.parse_key_val(bbox, vsep=' ', val_type=float)
         if (bbox['n'] &lt; region['s'] or bbox['s'] &gt; region['n']
           or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']):
-            gscript.info('Skipping tile %s' % lidar_file)
+            gs.info('Skipping tile %s' % lidar_file)
             continue
         name = 'tile_' + lidar_file.rsplit('.', 1)[0]
         vectors.append(name)
-        gscript.run_command('v.in.lidar', input=lidar_file, output=name,
-                            flags='rt', class_filter=2)
-gscript.run_command('v.patch', input=vectors, output='merged_points',
-                    flags='b', overwrite=True)
-gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
+        gs.run_command('v.in.lidar', input=lidar_file, output=name,
+                       flags='rt', class_filter=2)
+gs.run_command('v.patch', input=vectors, output='merged_points',
+               flags='b', overwrite=True)
+gs.run_command('g.remove', type='vector', name=vectors, flags='f')
 </code></pre>
 
 In case you are having problems with projections but you know that the
@@ -228,10 +228,10 @@ see ticket <a href="http://trac.osgeo.org/grass/ticket/2791">#2791</a>.
 We import GridModule and compute the size of the tiles
 if we want to run it on 4 cores at once:
 <pre><code>
-import grass.script as gscript
+import grass.script as gs
 from grass.pygrass.modules.grid import GridModule
 
-region = gscript.region()
+region = gs.region()
 width = region['cols'] / 2 + 1
 height = region['rows'] / 2 + 1
 </code></pre>
@@ -281,7 +281,7 @@ Now we will compute difference between raster maps in a list
 using nested for loops.
 
 <pre><code>
-import grass.script as gscript
+import grass.script as gs
 
 rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
            '2015_06_20_DSM_agi_11GCP']
@@ -296,10 +296,10 @@ for raster_a in rasters:
         difference = "diff_{a}_{b}".format(a=raster_a.replace('@', '_'),
                                            b=raster_b.replace('@', '_'))
         # compute difference between the rasters using r.mapcalc
-        gscript.mapcalc('{diff} = {a} - {b}'.format(
+        gs.mapcalc('{diff} = {a} - {b}'.format(
             a=raster_a, b=raster_b, diff=difference))
         # set color table to the resulting map
-        gscript.run_command('r.colors', map=difference, color='differences')
+        gs.run_command('r.colors', map=difference, color='differences')
 </code></pre>
 
 Before running the code again, we need to remove the created raster maps
@@ -326,26 +326,26 @@ Note that we are using <em>d.shade</em> to avoid creating another
 raster which would combine the original raster and its shaded relief.
 
 <pre><code>
-import grass.script as gscript
+import grass.script as gs
 
 # get list of rasters we are interested in using a search pattern
-rasters = gscript.list_strings('raster', pattern='2015_06_*')
+rasters = gs.list_strings('raster', pattern='2015_06_*')
 # initialize a dictionary to hold statistics for each raster
 stats = {}
 # iterate through the list of rasters
 for raster in rasters:
     # save univariate statistics for raster to dictionary
-    stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
+    stats[raster] = gs.parse_command('r.univar', map=raster, flags='g')
     # compute shaded relief, use name of the original raster including mapset
     shaded_relief = raster.replace('@', '_') + '_shade'
-    gscript.run_command('r.relief', input=raster, output=shaded_relief,
-                        overwrite=True)
-    gscript.run_command('r.colors', map=raster, color='elevation')
+    gs.run_command('r.relief', input=raster, output=shaded_relief,
+                   overwrite=True)
+    gs.run_command('r.colors', map=raster, color='elevation')
     # render the raster (geographical extent follows current region)
-    gscript.run_command('d.mon', start='cairo', output=raster + '.png',
-                        width=400, height=400, overwrite=True)
-    gscript.run_command('d.shade', shade=shaded_relief, color=raster)
-    gscript.run_command('d.mon', stop='cairo')
+    gs.run_command('d.mon', start='cairo', output=raster + '.png',
+                   width=400, height=400, overwrite=True)
+    gs.run_command('d.shade', shade=shaded_relief, color=raster)
+    gs.run_command('d.mon', stop='cairo')
 </code></pre>
 
 Now, we create an HTML report from the data collected above.
@@ -396,7 +396,7 @@ Compute a profile for multiple rasters and plot them in
 <a href="http://matplotlib.org/">matplotlib</a>:
 
 <pre><code>
-import grass.script as gscript
+import grass.script as gs
 # on Windows, uncomment the two following lines
 # import matplotlib  # required by Windows
 # matplotlib.use('wx')  # required by Windows
@@ -409,8 +409,8 @@ coordinates = [637160.446919, 219373.236976,
 profiles = {}
 distance = []
 for raster in rasters:
-    profile = gscript.read_command('r.profile', input=raster,
-                                   coordinates=coordinates, quiet=True).strip()
+    profile = gs.read_command('r.profile', input=raster,
+                              coordinates=coordinates, quiet=True).strip()
     # parse output
     if not distance:
         for line in profile.splitlines():

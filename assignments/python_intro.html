@@ -50,13 +50,13 @@ selected general-purpose modules.
 We start by importing GRASS GIS Python Scripting Library:
 
 <pre><code>
-import grass.script as gscript
+import grass.script as gs
 </code></pre>
 
 First, we set the computational extent and resolution to the raster layer <code>elevation</code>.
 
 <pre><code>
-gscript.run_command('g.region', raster='elevation')
+gs.run_command('g.region', raster='elevation')
 </code></pre>
 
 The <code>run_command()</code> function is used most often.
@@ -65,7 +65,7 @@ Here, we apply the focal operation average
 the elevation raster layer.
 
 <pre><code>
-gscript.run_command('r.neighbors', input='elevation', output='elev_smoothed', method='average', flags='c')
+gs.run_command('r.neighbors', input='elevation', output='elev_smoothed', method='average', flags='c')
 </code></pre>
 
 Note that the syntax is similar to the
@@ -81,14 +81,14 @@ the <code>read_command()</code> function.
 First we get the current computational region settings:
 
 <pre><code>
-print(gscript.read_command('g.region', flags='p'))
+print(gs.read_command('g.region', flags='p'))
 </code></pre>
 
 Then we get univariate raster statistics and we add a <code>g</code>
 flag to what we would use in the command line.
 
 <pre><code>
-print(gscript.read_command('r.univar', map='elev_smoothed', flags='g'))
+print(gs.read_command('r.univar', map='elev_smoothed', flags='g'))
 </code></pre>
 
 Certain modules can produce output in key-value format which is enabled
@@ -99,14 +99,14 @@ In the following example, we call <em class="module">g.proj</em> to
 get the projection parameters of the actual location.
 
 <pre><code>
-gscript.parse_command('g.proj', flags='g')
+gs.parse_command('g.proj', flags='g')
 </code></pre>
 
 For comparison, below is the same example, but using the
 <code>read_command()</code> function.
 
 <pre><code>
-print(gscript.read_command('g.proj', flags='g'))
+print(gs.read_command('g.proj', flags='g'))
 </code></pre>
 
 Certain modules require the text input be in a file or provided as
@@ -118,7 +118,7 @@ we are creating a new vector with one point with the
 but its content is passed as the standard input to the subprocess.
 
 <pre><code>
-gscript.write_command('v.in.ascii', input='-', stdin='%s|%s' % (635818.8, 221342.4), output='view_point')
+gs.write_command('v.in.ascii', input='-', stdin='%s|%s' % (635818.8, 221342.4), output='view_point')
 </code></pre>
 
 
@@ -129,7 +129,7 @@ We can obtain the information about the vector layer
 which we just created with the <em class="module">v.info</em> wrapper.
 
 <pre><code>
-gscript.vector_info('view_point')
+gs.vector_info('view_point')
 </code></pre>
 
 It is also possible to retrieve the raster layer history
@@ -140,15 +140,15 @@ The pixel (cell) values are obtained using the
 <code>raster_what()</code> function:
 
 <pre><code>
-gscript.raster_what('elevation', [[635818.8, 221342.4], [635710, 221330]])
+gs.raster_what('elevation', [[635818.8, 221342.4], [635710, 221330]])
 </code></pre>
 
 As another example, the <em class="module">r.mapcalc</em> wrapper for
 raster algebra allows using a long expressions.
 
 <pre><code>
-gscript.mapcalc("elev_strip = if(elevation > 100 &amp;&amp; elevation &lt; 125, elevation, null())")
-print(gscript.read_command('r.univar', map='elev_strip', flags='g'))
+gs.mapcalc("elev_strip = if(elevation > 100 &amp;&amp; elevation &lt; 125, elevation, null())")
+print(gs.read_command('r.univar', map='elev_strip', flags='g'))
 </code></pre>
 
 The <em class="module">g.region</em> wrapper is a convenient way to
@@ -157,7 +157,7 @@ returns a dictionary with values converted to appropriate types (floats
 and ints).
 
 <pre><code>
-region = gscript.region()
+region = gs.region()
 print region
 # cell area in map units (in projected Locations)
 region['nsres'] * region['ewres']
@@ -168,7 +168,7 @@ With this function, the map layers are grouped by mapsets (in this
 example, raster layers):
 
 <pre><code>
-gscript.list_grouped(['raster'])
+gs.list_grouped(['raster'])
 </code></pre>
 
 Here is an example of a different <em class="module">g.list</em> wrapper
@@ -177,8 +177,8 @@ We also obtain current mapset with <em class="module">g.gisenv</em>
 wrapper.
 
 <pre><code>
-current_mapset = gscript.gisenv()['MAPSET']
-gscript.list_pairs('raster', mapset=current_mapset)
+current_mapset = gs.gisenv()['MAPSET']
+gs.list_pairs('raster', mapset=current_mapset)
 </code></pre>
 
 
