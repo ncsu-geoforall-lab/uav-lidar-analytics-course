@@ -74,11 +74,11 @@ Tools:
 
 This assignment expects at least basic knowledge of Python, GRASS GIS
 and how they are used together. Review the
-<a href="python_intro.html">introduction</a> when in doubts.
-Unless you already have your own way of running Python code in GRASS GIS,
-use the Simple Python Editor which comes with GRASS GIS 7.2 or newer
-or use the <em>Paste plus</em> function from the context menu (right
-click) in the interactive Python console in the <em>Python</em> tab.
+<a href="python_intro.html">introduction</a> when in doubts. Unless you
+already have your own way of running Python code in GRASS GIS, use the
+Simple Python Editor which comes with GRASS GIS 7.2 or newer. If you
+want to use the interactive Python console in the <em>Python</em> tab,
+paste there line by line.
 
 
 <h3>Running the code</h3>
@@ -207,7 +207,7 @@ for lidar_file in os.listdir('.'):
                                output='foo', flags='g').strip()
         bbox = gs.parse_key_val(bbox, vsep=' ', val_type=float)
         if (bbox['n'] &lt; region['s'] or bbox['s'] &gt; region['n']
-          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']):
+           or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']):
             gs.info('Skipping tile %s' % lidar_file)
             continue
         name = 'tile_' + lidar_file.rsplit('.', 1)[0]
