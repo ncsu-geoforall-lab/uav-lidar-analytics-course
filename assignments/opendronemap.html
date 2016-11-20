@@ -88,6 +88,9 @@ sudo chown vagrant:vagrant /odm_app/
 cd /odm_app/
 git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </code></pre>
+To get latest improvements (and bugs), switch to development branch:
+<pre><code>git checkout dev
+</code></pre>
 </li>
 <li>Install ODM.
 <pre><code>cd OpenDroneMap
@@ -169,7 +172,7 @@ To review parameters run:
 
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>cd /odm_data
-python /odm_app/OpenDroneMap/run.py --odm_georeferencing-useGcp --odm_georeferencing-gcpFile gcp_odm.txt
+python /odm_app/OpenDroneMap/run.py --project-path /odm_data --odm_georeferencing-useGcp --odm_georeferencing-gcpFile gcp_odm.txt
 </code></pre>
 
 <h3>Importing results</h3>
