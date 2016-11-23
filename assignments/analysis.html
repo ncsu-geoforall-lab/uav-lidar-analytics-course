@@ -25,8 +25,9 @@
 <ul class="nav">
 <li><a href="../index.html">Syllabus</a></li>
 <li><a href="../schedule.html">Schedule</a></li>
-<li><a href="../lectures.html">Lectures</a></li>
-<li><a href="../assignments.html">Assignments</a></li>
+<li><a href="../topics.html">Topics</a></li>
+<li><a href="../assignments.html">Course logistics</a></li>
+<!--<li><a href="../lectures.html">Lectures</a></li>-->
 <li><a href="../projects.html">Projects</a></li>
 </ul>
 </nav>
@@ -121,7 +122,7 @@ Which software does generate larger bowl effect?
 
 <pre><code>r.mapcalc expression="agi_trimble = 2015_06_20_DSM_agi_11GCP - 2015_06_20_DSM_Trimble_11GCP"
 r.mapcalc expression="p4d_agi = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_agi_11GCP"
-r.mapcalc expression="p4d_trimble" = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_Trimble_11GCP"
+r.mapcalc expression="p4d_trimble = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_Trimble_11GCP"
 </code></pre>
 Apply the color table that varies from -1m to 1m to visualize results of the comparison
 using <em>r.colors</em> module.
@@ -150,7 +151,7 @@ Run the <em>r.slope.aspect</em> and <em>r.relief</em> command for chosen DSMs,
 for example:
 <pre><code>r.slope.aspect elevation=sample_DSM slope=sample_DSM_slope aspect=sample_DSM_aspect pcurvature=sample_DSM_curv
 r.relief input=sample_DSM output=sample_DSM_relief
-r.slope.aspect elevation=sample_DSM_noGCP slope=sample_DSM_noGCP_slope aspect=sample_DSM_noGCP_aspect pcurvature=sample_DSM_noGCP_curv
+r.slope.aspect elevation=sample_DSM_noGCPs slope=sample_DSM_noGCP_slope aspect=sample_DSM_noGCP_aspect pcurvature=sample_DSM_noGCP_curv
 r.relief input=sample_DSM output=sample_DSM_noGCP_relief
 </code></pre>
 
@@ -181,7 +182,8 @@ r.skyview input=sample_DSM_noGCPs output=skyview_sample_DSM_noGCPs
 r.mapcalc "diff_jun_oct_agis = 2015_06_20_DSM_agi_11GCP - 2015_10_06_DSM_agi_8GCPs"
 </code></pre>
 Note the accuracy of the DSM along the roads, interpret the observed gain and loss in elevation.
-Use Orthphoto to assist with interpretation.
+Use <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSVZrNzZRLURPWVU">Orthphoto</a></li> to assist with interpretation.
+The orthophoto is provided as a GRASS GIS packed raster, run r.unpack -o to unpack it into your working mapset.
 
 </main>
 
