@@ -89,7 +89,8 @@ cd /odm_app/
 git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </code></pre>
 To get latest improvements (and bugs), switch to development branch:
-<pre><code>git checkout dev
+<pre><code>cd OpenDroneMap
+git checkout dev
 </code></pre>
 </li>
 <li>Install ODM.
@@ -132,13 +133,14 @@ Convert to CSV and lowercase all image names in the CSV file to match the photos
 wget https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py
 python jxl2csv.py full.jxl full.csv
 tr A-Z a-z < full.csv > full_lowercase.csv
+cp full_lowercase.csv images/full_lowercase.csv
 </code></pre>
 
 Update EXIF with GPS coordinates, focal length, camera model. There will be some warnings, ignore them.
 <pre><code>cd /odm_data/images
 wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
 python write_exif_GPS.py full_lowercase.csv
-rm write_exif_GPS.py
+rm write_exif_GPS.py full_lowercase.csv
 </code></pre>
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
