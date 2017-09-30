@@ -1,0 +1,670 @@
+<section>
+    <h2>Imagery processing</h2>
+    <h3><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h3>
+    <h3 style="margin-top: 0.5em">
+        Author</h3>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        and
+        <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
+
+        <br>
+    </p>
+
+</section>
+<section>
+    <h2>Objectives (1)</h2>
+    <ul>
+        <li class="fragment"><strong>Understand</strong> the photogrammetric data processing as a multistep process;</li>
+        <li class="fragment"><strong>Indicate</strong> the sources of imagery disortion and the need of orthorectification of photos;</li>
+        <li class="fragment"><strong>Describe</strong> the concept of orthorectification;</li>
+        <li class="fragment"><strong>Indicate</strong> data needed for orthophoto/DTM generation from aerial imagery;</li>
+        <li class="fragment"><strong>Understand</strong> the difference between interior and exterior orientation of the photo;</li>
+    </ul>
+</section>
+<section>
+    <h2>Objectives (2)</h2>
+    <ul>
+        <li class="fragment"><strong>Understand</strong> the terms: Bundle Block Adjustment, Ground Control Points, flight log;</li>
+        <li class="fragment"><strong>Describe</strong> the workflow of geoprocessing of aerial imagery in designated software (Agisoft Photoscan);</li>
+        <li class="fragment"><strong>Practice</strong> the process of georectification with and without GCPs;</li>
+        <li class="fragment"><strong>Explain</strong> the impact of GCP in the processing for theFF of final results.</li>
+    </ul>
+</section>
+<section>
+    <h2>Photogrammetric process</h2>
+     <img class="fragment" src="img/photogrammetric_proces.png">
+</section> 
+<section>
+    <h2>Why do we need to process the data?</h2>
+    <div class="left">  
+            <img class="fragment" src="img/scale.png" width="60%">
+            <img class="fragment" src="img/orthophoto_why.png" width="80%">
+    </div>
+    <div class="right fragment">
+        <img src="img/disortion.png">
+    </div>
+</section>
+<section>
+    <h2>Why do we need to process the data?</h2>
+    <div class="left fragment">  
+            <img src="img/pespective_vs_orthographic.png" width="90%">
+    </div>
+    <div class="right fragment">
+        <img src="img/pespective_vs_orthographic_image_plane.png">
+    </div>
+</section>
+<section>
+    <h2>Orthorectification</h2>
+
+    <div class="left">  
+    <p class="fragment">Process that removes:</p>
+    <ul>
+        <li class="fragment">effects of relief displacement,</li>
+        <li class="fragment">optical distortions from the sensor,</li>
+        <li class="fragment">geometric perspective</li>
+    </ul>
+        <p class="fragment">from a photograph or digital image</p>
+    </div>
+    <div class="right fragment">
+        <img src="img/DSM_ortho.png" width="40%">
+        <img src="img/ortho_example.png" width="80%">
+    </div>
+     <p class="fragment">The resulting image - an <strong>orthophoto</strong> or <strong>orthoimage.</strong></p>
+</section>
+<section>
+    <h2>Orthophoto</h2>
+      <ul>
+        <li class="fragment">Photo that has the same lack of distortion as a map (geometrically corrected, uniform scale);</li>
+        <li class="fragment">Can be used to measure true distances</li>
+        <img class="fragment" src="img/ortho_example.png">
+</section> 
+<section>
+    <h2>How do we get there?</h2>
+    <div class="left">  
+            <p class="small fragment">Old way: analogue</p>
+                <img class="fragment" src="img/analogue.png" width="90%">
+            <p class="small fragment">Now: digital</p>
+                <img class="fragment" src="img/digital.png" width="90%">
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/orthophoto_how.png">
+    </div>
+</section>
+<section>
+    <h2>Multiple-view geometry questions</h2>
+    <ul>
+        <li class="fragment"><strong>Scene geometry (structure):</strong> <br>Given 2D point matches in two or more images, where are the corresponding points in 3D?</li>
+        <li class="fragment"><strong>Correspondence (stereo matching):</strong> Given a point in just one image, how does it constrain the position of the corresponding point in another image? </li>
+        <li class="fragment"><strong>Camera geometry (motion):</strong> Given a set of corresponding points in two or more images, what are the camera matrices for these views?</li>
+    </ul>
+</section>
+<section>
+    <h2>What do we need?</h2>
+    <ol>
+        <li class="fragment">Digital <strong>imagery</strong>;</li>
+        <li class="fragment">(Digital elevation model or topographic dataset)</li>
+        <li class="fragment">Exterior <strong>orientation parameters </strong> from aerial triangulation or IMU;</li>
+        <li class="fragment">(<strong>Camera calibration</strong> report);</li>
+        <li class="fragment">(Ground Control Points parameters);</li>
+        <li class="fragment">Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
+    </ol>
+</section>
+<section>
+    <h2>1. Digital imagery</h2>
+            <img class="fragment" src="img/digital_imagery.png">
+    <div class="left">  
+            <img class="fragment" src="img/multiview.png">
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/camera_sensor.png" width="80%">
+    </div>
+</section>
+<section>
+    <h2>2. Digital Elevation Model</h2>
+     <div class="left">  
+		<img src="img/disortion.png">
+     </div>
+    <div class="right">
+           <p class="fragment"> <strong>Before:</strong> Shape of the ground surface must be known in order to remove the effects of relief displacement<p>
+    </div>
+             <p class="fragment"> <strong>Now:</strong> computed automatically by Structure from Motion <p>    
+</section>
+
+<section>
+    <h2>Structure from Motion (SfM)</h2>
+    <div class="left">  
+        <ul>
+        <li class="fragment">range imaging technique,</li>
+        <li class="fragment">process of estimating 3D structures from 2D image sequences,</li>
+        <li class="fragment">may be coupled with local motion signals</li>
+        </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/SfM.png">
+    </div>
+</section>
+<section>
+    <h2>3. Exterior orientation (EO) </h2>
+            <p class="fragment">EO= <strong>position</strong> and <strong>orientation</strong> in the object space</p>
+            <p class="fragment">6 elements <strong>necessary</strong> for any photogrammetric processing:</p>
+    <div class="left">  
+    <ul>
+        <li class="fragment">X, Y, and Z of the exposure station position (latitude, longnitude and altitude of the camera),</li>
+        <li class="fragment">angular orientation: ω, φ, and κ (yaw, pich and roll)</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/orientation.png">
+    </div>
+</section>
+<section>
+    <h2>Flight log</h2>
+        <ul>
+        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
+        <li class="fragment">Information is logged into a text file (flight log),</li>
+        <li class="fragment">Contains elements of exterior orientation</li>
+        </ul>
+        <img class="fragment" src="img/log.png">
+</section>
+<section>
+    <h2>4. Interior orientation </h2>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Before: camera calibration report,</li>
+        <li class="fragment">Now: Self-calibration (auto-calibration) is the process of determining intrinsic camera parameters directly from uncalibrated images</li>
+        <li class="fragment">Can be automatically derived using Structure from Motion (SfM) methods</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/interior_orientation.png">
+    </div>
+</section>
+<section>
+    <h2>5. Ground Control Points</h2>
+            <p class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). <br> Accurate, well placed and marked GCPs are essential elements for aerial triangulation</p>
+    <div class="left">  
+        <p class="fragment"><strong>Photo Identifiable (Photo ID):</strong></p>
+    <ul>
+        <li class="fragment">any feature on the ground,</li>
+            <ul>
+                <li class="small fragment">specific (e.g. corners)</li>
+                <li class="small fragment">unmovable,</li>
+                <li class="small fragment">not covered by vegetation</li>
+            </ul>
+        <li class="fragment">it can be surveyed later on.</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/GCPs.png">
+    </div>
+</section>
+<section>
+    <h2>Ground Control Points </h2>
+    <div class="left">  
+        <p class="fragment">Pre-marked (Panels): marking or painting figures or symbols on the ground before the UAS flies</p>
+         <img class="fragment" src="img/GCP_sketch.png" width="80% ">
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/GCP_photo.png">
+    </div>
+</section>
+<section>
+    <h2>Processing software</h2>
+     <img class="fragment" src="img/agisoft.png">
+</section>
+<section>
+    <h2>Agisoft PhotoScan Professional</h2>
+    <div class="right">
+        <p class="small fragment"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
+        <p class="small fragment"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_1_en.pdf"> Manual</a></p>
+        <p class="small fragment">also</p>
+        <p class="small fragment"><a href="http://www.agisoft.com/support/tutorials/beginner-level/"> Tutorials</a></p>
+        <p class="small fragment"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
+        <img class="fragment" src="img/agisoft_demo.png">
+    </div>    
+<div class="left">  
+    <ul>
+        <li class="fragment">Image-based solution aimed at creating 3D content from still images;</li>
+        <li class="fragment">Operates with arbitrary images and is efficient in both controlled and uncontrolled conditions;</li>
+        <li class="fragment">Both image alignment and 3D model reconstruction are fully automated.</li>
+    </ul>
+    </div>
+
+</section>
+<section>
+    <h2>Processing workflow</h2>
+     <h3 class="fragment">Preprocessing stage:</h3>
+            <ul>
+                <li class="small fragment">loading photos into PhotoScan;</li>
+                <li class="small fragment">inspecting loaded images, removing unnecessary images.</li>
+            </ul>
+        <h3 class="fragment">Processing:</h3>
+            <ol>
+                <li class="fragment">Aligning photos;</li>
+                <li class="fragment">Building dense point cloud; <p class=small>(optional: editing dense point cloud)</p></li>
+                <li class="fragment">Building mesh (3D polygonal model); <p class=small>(optional: editing mesh)</p></li>
+                <li class="fragment">Generating texture;</li>
+            </ol>
+        <h3 class="fragment">Exporting results</h3>     
+</section>
+<section>
+    <h2>Possible issues: </h2>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Agisoft Photoscan works with raw text files.<p class="small"> Trimble uses its own file formats that need to be converted in order to use it in another software</p></li>
+        <li class="fragment">if only .jxl is available use <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> </li>
+        <li class="fragment">If a project file (.gwt extension) is available, the text file can be exported from Trimble Access Aerial Imaging software</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/TBC_export.png">
+    </div>
+</section>
+<section>
+    <h2>Preprocessing</h2>
+        <ul>
+        <li class="fragment">Loading photos,</li>
+        <li class="fragment">Loading camera positions (flight log)</li>
+        </ul>
+        <img class="fragment" src="img/agisoft_preprocessing.png" width = "80%">
+</section>
+<section>
+    <h2>1. Aligning photos</h2>
+            <p class="fragment">At this stage Agisoft PhotoScan: <br >implements SfM algorithms to monitor the movement of features through sequence of multiple images:</p>
+    <div class="left">  
+    <ul>
+        <li class="fragment">obtains the relative location of the acquisition positions,</li>
+        <li class="fragment">refines camera calibration parameters, </li>
+        <li class="fragment"><strong>sparse point cloud</strong> and a set of <strong>camera positions</strong> are formed.</li>
+        </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/aligning_photos_funny.png" width="90%">
+    </div>
+</section>
+<section>
+    <h2>Bundle Block Adjustment</h2>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Non-linear method for refining structure and motion</li>
+        <li class="fragment">Minimizing reprojection error</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/Bundle_Block_Adjustment.png">
+    </div>
+</section>
+<section>
+    <h2>Bundle Block Adjustment</h2>
+    <ul>
+        <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
+        <li class="fragment">Subsequently monitoring the movement of those points throughout the sequence of multiple images; </li>
+    </ul>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Using this information as input, the locations of those feature points can be estimated and rendered as a sparse 3D point cloud    </div>
+    <div class="right">
+            <img class="fragment" src="img/Bundle_Block_Adjustment2.png">
+    </div>
+</section>
+<section>
+    <h2>Aligning cameras in PhotoScan</h2>
+    <div class="right">
+            <img class="fragment" src="img/Agisoft_aligning.png" width="120%">
+    </div>
+    <div class="left">
+        <p class="fragment"><strong>Accuracy</strong></p>
+            
+<ul>
+                <li class="fragment"><strong>High</strong> accuracy setting > more accurate camera position estimates (time consuming);</li>
+                <li class="fragment"><strong>Low</strong> accuracy setting > rough camera positions.</li>
+            </ul>
+
+
+</section>
+<section>
+    <h2>2. Building dense point cloud</h2>
+    <div class="left">
+           <img class="fragment" src="img/Agisoft_point_cloud.png" width="120%">
+    </div>
+    <div class="right">
+  <p class="fragment">At the stage of dense point cloud generation reconstruction PhotoScan calculates depth maps for every image</p>
+    </div>
+    <p class="fragment"><strong>Quality</strong></p>
+       <ul>
+                <li class="fragment"><strong>Highest, High, Medium, Low, Lower</strong>>  the higher quality the more accurate camera position estimates but the process is more time consuming</li>
+       </ul>   
+</section>
+<section>
+    <h2>2. Building dense point cloud</h2>
+    <div class="left">     
+        <p class="fragment"><strong>Depth Filtering modes</strong></p>
+ 	<p class="small fragment">Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images)</p> 
+    </div>
+    <div class="right">
+            <img src="img/Agisoft_point_cloud.png">
+    </div>
+       <ul>
+                <li class="fragment"><strong>Mild </strong>depth filtering mode > for <strong>complex geometry </strong>(numerous small details on the foreground), for important features not to be sorted out;</li>
+                <li class="fragment"><strong>Aggressive </strong>depth filtering mode > sorting out most of the outliers;</li>
+                <li class="fragment"><strong>Moderate </strong>depth filtering mode > results in between the Mild and Aggressive</li>
+      </ul>   
+</section>
+<section>
+    <h2>Optional: editing dense point cloud</h2>
+    <ul>
+        <li class="fragment">Automatic filtering based on specified criterion (sparse cloud only):</li>
+            <ul>
+                <li class="small fragment">Reprojection error;</li>
+                <li class="small fragment">Reconstruction uncertainty;</li>
+                <li class="small fragment">Image count.</li>
+            </ul>
+        <li class="fragment">Automatic filtering based on applied masks (dense cloud only);</li>
+        <li class="fragment">Reducing number of points in cloud by setting tie point per photo limit (sparse cloud only);</li>
+        <li class="fragment">Manual points removal</li>
+    </ul>
+</section>
+<section>
+    <h2>3. Building mesh</h2>
+    <div class="right">
+            <img class="fragment" src="img/Agisoft_mesh.png" width="80%">
+    </div>
+    <div class="left">     
+    <ul>
+        <li class="fragment"><strong>Arbitraty</strong> > for modeling of any kind of object</li>
+            <ul>
+                <li class="small fragment">should be selected for closed objects (statues, buildings, etc.);</li>
+                <li class="small fragment">memory consumption: high </li>
+            </ul>
+	<li class="fragment"><strong>High field</strong> > for modeling of planar surfaces</li>
+            <ul>
+               	<li class="small fragment">should be selected for aerial photography;</li>
+                <li class="small fragment">memory consumption: low</li>
+                <li class="small fragment">allows for larger data sets processing.</li>
+            </ul>
+    </ul>
+    </div>
+</section>
+<section>
+    <h2>3. Building mesh</h2>
+   <div class="right">
+            <img src="img/Agisoft_mesh.png" width="80%">
+    </div>
+    <div class="left">     
+    <ul>
+        <li class="fragment"><strong>Source data</strong> > the source for the mesh generation</li>
+            <ul>
+                <li class="small fragment"><strong>Sparse cloud</strong> > fast 3D model generation (low quailty)</li>
+                <li class="small fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
+            </ul>
+ 	<li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh. <p class="small">"Face count set at “0” means that PhotoScan will determine an optimum number of faces</p></li>
+     </ul> 
+	</div>   
+</section>
+<section>
+    <h2>Optional: editing mesh</h2>
+    <div class="left">     
+    <ul>
+        <li class="fragment"><strong>Decimation tool</strong> > decreases the geometric resolution of the model by replacing high resolution mesh with a lower resolution one;</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/Agisoft_editing_mesh.png">
+    </div>
+            <ul>
+                <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong></li>
+            </ul>    
+</section>
+<section>
+    <h2>Optional: editing mesh</h2>
+    <ul>
+        <li class="fragment"><strong>Automatic filtering</strong> based on specified criterion:</li>
+            <ul>
+                <li class="fragment">Connected component size,</li>
+                <li class="fragment">Polygon size.</li>
+            </ul>
+    </ul> 
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_editing_mesh2.png">
+ </div>
+ <div class="left">     
+    <ul>
+        <li class="fragment">Manual polygon removal,</li>
+        <li class="fragment">Fixing mesh topology,</li>
+        <li class="fragment"><strong>Editing mesh in the external program</strong> <br> export mesh for editing in the external program > import edited mesh</li>
+    
+    </ul>
+    </div>   
+</section>
+<section>
+    <h2>4. Generating texture</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_texture.png" width="80%"">
+ </div>
+ <div class="left">     
+    <ul>
+    <li class="fragment">Determines how the object texture will be packed in the texture atlas;</li>
+    <li class="fragment">Effects the quality of the final model;</li>
+
+    <li class="fragment"><strong>Texture mapping modes:</strong></li>
+            <ul>
+                <li class="small fragment">Generic,</li>
+                <li class="small fragment">Adaptive orthophoto,</li>
+                <li class="small fragment">Orthophoto,</li>
+                <li class="small fragment">Spherical,</li>
+                <li class="small fragment">Single photo,</li>
+                <li class="small fragment">Keep uv.</li>
+            </ul>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Texture mapping modes</h2>
+ <div class="right">
+            <img src="img/Agisoft_texture_modes.png" width="60%">
+ </div>
+ <div class="right">
+	<ul>	   
+    	<li class="fragment"><strong>Generic</strong></li> 
+        	<ul>
+        	<li class="fragment">creates as uniform texture as possible.</li>
+       	 	</ul> 
+	 
+     	<li class="fragment"><strong>Adaptive orthophoto</strong></li> 
+	</ul>
+ </div>
+	<ul>
+        	<ul>
+        	<li class="fragment">The object surface split into the flat part and vertical regions;</li>
+        	<li class="fragment">The flat part of the surface textured using the orthographic projection, 
+			while vertical regions textured separately to maintain accurate texture representation in such regions;</li>
+        	<li class="fragment">More compact texture representation for nearly planar scenes + good texture quality 
+			for vertical surfaces.</li>
+        	</ul> 
+	</ul>
+</section>
+<section>
+    <h2>Texture mapping modes</h2>
+	<ul>
+     	<li class="fragment"><strong>Orthophoto</strong></li> 
+        	<ul>
+        	<li class="small fragment">The whole object surface textured in the orthographic projection;</li>
+        	<li class="small fragment">Even more compact texture representation than the Adaptive orthophoto at
+				 the expense of texture quality in vertical regions.</li>
+      		</ul> 
+     	<li class="fragment"><strong>Spherical</strong></li> 
+        	<ul>
+        	<li class="small fragment">Only for objects that have a ball-like form.</li>
+        	</ul> 
+    	<li class="fragment"><strong>Single photo</strong></li> 
+        	<ul>
+        	<li class="small fragment">Texture from a single photo (photo can be selected from 'Texture from' list)</li>
+        	</ul> 
+    	<li class="fragment"><strong>Keep uv</strong></lo> 
+       		<ul>
+        	<li class="small fragment">Generates texture atlas using current texture parametrization;</li>
+        	<li class="small fragment">Rebuilding current texture with different resolution or generating
+			 the atlas parametrized in the external software.</li>
+        	</ul> 
+	</ul>
+</section>
+<section>
+    <h2>Texture generation parameters</h2>
+ <p class="fragment"><strong>Blending mode (not used in Single photo mode)</strong></p> 
+ <p class="small fragment">Selects the way how pixel values will 
+		be combined to the final texture</p>
+ <div class="right">
+            <img src="img/Agisoft_texture_parameters.png" width="80%">
+ </div>
+ <div class="left">     
+    <ul>
+      <li class="fragment"><strong>Mosaic</strong> -  <p class="small">gives more quality for orthophoto and texture atlas than
+			 <strong>Average mode</strong>, since it <strong>does not mix image details of overlapping photos 					but uses most appropriate</strong></li>
+      <li class="fragment"><strong>Average</strong> - <p class="small">uses the average value of all pixels from individual photos</p></li>
+      <li class="fragment"><strong>Max Intensity</strong> - <p class="small">the photo which has maximum intensity 
+		of the corresponding pixel is selected</p></li>
+      
+     </ul>
+ </div>      
+ <div class="right">
+      	<ul>
+		<li class="fragment"><strong>Min Intensity </strong> - <p class="small">the photo which has minimum intensity of the
+		 corresponding pixel is selected</p></li> 
+	</ul>
+ </div>
+</section>
+<section>
+    <h2>Texture generation parameters</h2>
+       <ul>
+	<p class="fragment"><strong>Texture size / count</strong></p> 
+	<p class="fragment">Specifies the size (width & hight) of the texture atlas in pixels and determines the number of files for texture to be exported to:</li>
+            <ul>
+                <li class="fragment">several files > archive greater resolution,</li>
+                <li class="fragment">single file can fail due to RAM limitations. </li>
+              </ul>
+        
+       <p class="fragment"><strong>Enable color correction</strong></p> 
+       		<ul>
+           	 <li class="fragment">for processing of data sets with extreme brightness variation,</li>
+           	 <li class="fragment">takes up a long time.</li>
+        	</ul>
+	</ul> 
+</section>
+<section>
+    <h2>Memory requirements</h2>
+    
+        <p class="fragment"><strong>Aligning Photos</strong></p>
+        <img class="fragment" src="img/memory1.png">
+        <p class="fragment"><strong>Building Model (Height-field mode)</strong></p>
+        <img class="fragment" src="img/memory2.png"> 
+</section>
+<section>
+    <h2>Memory requirements</h2>
+    
+        <p class="fragment"><strong>Building Model (Arbitrary mode)</strong></p>
+        <img class="fragment" src="img/memory3.png">
+        <p class="fragment"><strong>Decimating Model</strong></p>
+        <img class="fragment" src="img/memory4.png"> 
+</section>
+<section>
+    <h2>Exporting results</h2>
+    <h2 class="small"> and saving intermediate results</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_export_intermediate.png" width ="65%">
+ </div>
+ <div class="left">     
+    <ul>
+    <li class="fragment">Point cloud export</li>
+    <li class="fragment">Camera calibration and orientation data export</li>
+    <li class="fragment">Tie points data export (matching points and panoramas) </li>
+    <li class="fragment">3D model export</li>
+    <li class="fragment"><strong>Orthophoto export</strong></li>
+    <li class="fragment"><strong>DEM export</strong></li>
+    <li class="fragment"><strong>Processing report generation</strong></li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Processing report</h2>
+ <div class="right">
+            <img src="img/Agisoft_report.png"width ="90%">
+ </div>
+ <div class="left">   
+<p> Includes: </p> 
+    <ul>
+    <li class="small fragment">Orthophoto and digital elevation model sketch;</li>
+    <li class="small fragment">Camera parameters and survey scheme</li>
+    <li class="small fragment">Tie points data export (matching points and panoramas) </li>
+    <li class="small fragment">Image overlap statistics</li>
+    <li class="small fragment">Camera positioning error estimates</li>
+    <li class="small fragment">Ground control point error estimates</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Batch processing</h2>
+             <img class="fragment" src="img/batch_process.png">
+ </section>
+<section>
+    <h2>Ground Control Points</h2>
+        <ul>
+            <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
+            <li class="fragment">used for:</li>
+
+            <ul>
+                <li class="fragment">setting up a coordinate system,</li>
+                <li class="fragment">photo alignment optimization,</li>
+                <li class="fragment">measuring distances and volumes,</li>
+                <li class="fragment">marker based chunk alignment.</li>
+
+                </ul>
+            <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
+        </ul> 
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+             <img class="fragment" src="img/Agisoft_placing_markers.png" width="90%">
+</section>
+<section>
+    <h2>Placing markers</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_placing_markers2.png" width="90%" >
+ </div>
+ <div class="left">   
+<p> <a href="https://www.youtube.com/watch?v=-fYOB8VPDnk">video tutorial</a></p> 
+    <ul>
+    <li class="small fragment">Click 'Filter Photos by Markers';</li>
+    <li class="small fragment">Open an image by double clicking the thumbnail - the GCP will appear as a grey icon;</li>
+    <li class="small fragment">Drag the marker to the correct measurement position;</li>
+    <li class="small fragment">the marker will appear as a green flag, meaning it is enabled and will be used for further processing.</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Optimize Camera Alignment</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_optimizing.png" width="80%">
+ </div>
+ <div class="left">   
+    <ul>
+    <li class="small fragment">Set the marker coordinates for optimization (check markers /uncheck cameras);</li>
+    <li class="small fragment">Click Settings toolbar button on the Reference pane and set the coordinate system;</li>
+    <li class="small fragment">Specify the assumed accuracy of GCP measurements and marker projections on the source photos</li>
+    <li class="small fragment">click 'Optimize Camera Alignment'.</li>
+    </ul> 
+ </div>   
+</section>
+ <section>
+    <h2>Quality processing with GCPs</h2>
+        <ul>
+            <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
+            <li class="fragment">Point cloud the texture and mesh is generated again.</li>
+            <li class="fragment">In practice: start geoprocessing over, begining from point 2. Build the dense point.</li>
+            <p class="fragment">used for:</p>
+            <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
+        </ul> 
+</section>
+
+

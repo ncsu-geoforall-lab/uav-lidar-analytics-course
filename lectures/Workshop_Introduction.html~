@@ -1,0 +1,44 @@
+
+<section> 
+<section>
+    <h2>Welcome to</h2>
+    <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        and
+        <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
+    </p>
+
+</section>
+<section>
+    <h2>Welcome</h2>
+    <ul>
+        <li><strong>What's your name?</li>
+        <li><strong>What is your job or occupation?</li>
+        <li><strong>Have you ever worked with drones or spatial data?</li>
+        <li><strong>Why have you decited to participate in the workshop?</li>
+        <li><strong>If you could spend a week wherever in the world, what would you choose?</li>
+    </ul>
+</section>
+<section>
+    <h2>Inia Jeziorska</h2>
+    <div class="left fragment">  
+    <ul>
+        <li><strong>Geographer and Cartographer</li>
+        <li><strong>Research Associate in Center for Geospatial Analytics</li>
+        <li><strong>from "the middle of nowhere", Poland</li>
+        <li><strong>likes: mountains, traveling, singing and Pepsi Max</li>
+        <li><strong>dislikes: caraway seeds, Imperial units, introducing herself</li>
+    </ul>
+    </div>
+    <div class="right fragment">
+        <img src="img/new/Inia.png" width="70%">
+	<img src="img/new/polish.png" width="70%">
+    </div>
+</section>
+
+<section>
+    <h2>Tom Zajkowski</h2>
+</section>
+

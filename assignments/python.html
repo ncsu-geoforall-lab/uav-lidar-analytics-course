@@ -74,7 +74,11 @@ Tools:
 
 This assignment expects at least basic knowledge of Python, GRASS GIS
 and how they are used together. Review the
-<a href="python_intro.html">introduction</a> when in doubts.
+<a href="python_intro.html">introduction</a> when in doubts. Unless you
+already have your own way of running Python code in GRASS GIS, use the
+Simple Python Editor which comes with GRASS GIS 7.2 or newer. If you
+want to use the interactive Python console in the <em>Python</em> tab,
+paste there line by line.
 
 
 <h3>Running the code</h3>
@@ -115,7 +119,9 @@ otherwise skip this step.
 First, create a directory where you want to have the files. Then
 set it as current directory in Python:
 
-<pre><code><span class="comment"># use path which applies to you
+<pre><code>import os
+
+<span class="comment"># use path which applies to you
 </span><span class="comment"># on Windows use something like 'D:\\path\\to\\files'
 </span>os.chdir('/path/to/las/files')
 </code></pre>
@@ -190,27 +196,27 @@ First set the region in command line:
 Now run this script (assuming you are in the directory with the las files):
 
 <pre><code>import os
-import grass.script as gscript
+import grass.script as gs
 
-region = gscript.region()
+region = gs.region()
 
 vectors = []
 for lidar_file in os.listdir('.'):
     if lidar_file.endswith('_spm.las'):
-        bbox = gscript.read_command('r.in.lidar', input=lidar_file,
-                                    output='foo', flags='g').strip()
-        bbox = gscript.parse_key_val(bbox, vsep=' ', val_type=float)
+        bbox = gs.read_command('r.in.lidar', input=lidar_file,
+                               output='foo', flags='g').strip()
+        bbox = gs.parse_key_val(bbox, vsep=' ', val_type=float)
         if (bbox['n'] &lt; region['s'] or bbox['s'] &gt; region['n']
-          or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']):
-            gscript.info('Skipping tile %s' % lidar_file)
+           or bbox['e'] &lt; region['w'] or bbox['w'] &gt; region['e']):
+            gs.info('Skipping tile %s' % lidar_file)
             continue
         name = 'tile_' + lidar_file.rsplit('.', 1)[0]
         vectors.append(name)
-        gscript.run_command('v.in.lidar', input=lidar_file, output=name,
-                            flags='rt', class_filter=2)
-gscript.run_command('v.patch', input=vectors, output='merged_points',
-                    flags='b', overwrite=True)
-gscript.run_command('g.remove', type='vector', name=vectors, flags='f')
+        gs.run_command('v.in.lidar', input=lidar_file, output=name,
+                       flags='rt', class_filter=2)
+gs.run_command('v.patch', input=vectors, output='merged_points',
+               flags='b', overwrite=True)
+gs.run_command('g.remove', type='vector', name=vectors, flags='f')
 </code></pre>
 
 In case you are having problems with projections but you know that the
@@ -252,10 +258,10 @@ see ticket <a href="http://trac.osgeo.org/grass/ticket/2791">#2791</a>.
 <p>
 We import GridModule and compute the size of the tiles
 if we want to run it on 4 cores at once:
-<pre><code>import grass.script as gscript
+<pre><code>import grass.script as gs
 from grass.pygrass.modules.grid import GridModule
 
-region = gscript.region()
+region = gs.region()
 width = region['cols'] / 2 + 1
 height = region['rows'] / 2 + 1
 </code></pre>
@@ -301,9 +307,10 @@ Set the region to fit one of the raster maps:
 Now we will compute difference between raster maps in a list
 using nested for loops.
 
-<pre><code>import grass.script as gscript
+<pre><code>import grass.script as gs
 
-rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
+<span class="comment"># adjust the names according to what you used in the previous assignments
+</span>rasters = ['2015_06_20_pix4d_11GCP_dsm', '2015_06_20_DSM_Trimble_11GCP',
            '2015_06_20_DSM_agi_11GCP']
 for raster_a in rasters:
     for raster_b in rasters:
@@ -316,10 +323,10 @@ for raster_a in rasters:
 </span>        difference = "diff_{a}_{b}".format(a=raster_a.replace('@', '_'),
                                            b=raster_b.replace('@', '_'))
 <span class="comment">        # compute difference between the rasters using r.mapcalc
-</span>        gscript.mapcalc('{diff} = {a} - {b}'.format(
+</span>        gs.mapcalc('{diff} = {a} - {b}'.format(
             a=raster_a, b=raster_b, diff=difference))
 <span class="comment">        # set color table to the resulting map
-</span>        gscript.run_command('r.colors', map=difference, color='differences')
+</span>        gs.run_command('r.colors', map=difference, color='differences')
 </code></pre>
 
 Before running the code again, we need to remove the created raster maps
@@ -344,26 +351,26 @@ Finally, we render the raster map together with shaded relief using
 Note that we are using <em>d.shade</em> to avoid creating another
 raster which would combine the original raster and its shaded relief.
 
-<pre><code>import grass.script as gscript
+<pre><code>import grass.script as gs
 
 <span class="comment"># get list of rasters we are interested in using a search pattern
-</span>rasters = gscript.list_strings('raster', pattern='2015_06_*')
+</span>rasters = gs.list_strings('raster', pattern='2015_06_*')
 <span class="comment"># initialize a dictionary to hold statistics for each raster
 </span>stats = {}
 <span class="comment"># iterate through the list of rasters
 </span>for raster in rasters:
 <span class="comment">    # save univariate statistics for raster to dictionary
-</span>    stats[raster] = gscript.parse_command('r.univar', map=raster, flags='g')
+</span>    stats[raster] = gs.parse_command('r.univar', map=raster, flags='g')
 <span class="comment">    # compute shaded relief, use name of the original raster including mapset
 </span>    shaded_relief = raster.replace('@', '_') + '_shade'
-    gscript.run_command('r.relief', input=raster, output=shaded_relief,
-                        overwrite=True)
-    gscript.run_command('r.colors', map=raster, color='elevation')
+    gs.run_command('r.relief', input=raster, output=shaded_relief,
+                   overwrite=True)
+    gs.run_command('r.colors', map=raster, color='elevation')
 <span class="comment">    # render the raster (geographical extent follows current region)
-</span>    gscript.run_command('d.mon', start='cairo', output=raster + '.png',
-                        width=400, height=400, overwrite=True)
-    gscript.run_command('d.shade', shade=shaded_relief, color=raster)
-    gscript.run_command('d.mon', stop='cairo')
+</span>    gs.run_command('d.mon', start='cairo', output=raster + '.png',
+                   width=400, height=400, overwrite=True)
+    gs.run_command('d.shade', shade=shaded_relief, color=raster)
+    gs.run_command('d.mon', stop='cairo')
 </code></pre>
 
 Now, we create an HTML report from the data collected above.
@@ -411,18 +418,22 @@ to the name of the map (<code>mapname@mapsetname</code>).
 Compute a profile for multiple rasters and plot them in
 <a href="http://matplotlib.org/">matplotlib</a>:
 
-<pre><code>import grass.script as gscript
-import matplotlib.pyplot as plt
+<pre><code>import grass.script as gs
+<span class="comment"># on Windows, uncomment the two following lines
+</span><span class="comment"># import matplotlib  # required by Windows
+</span><span class="comment"># matplotlib.use('wx')  # required by Windows
+</span>import matplotlib.pyplot as plt
 
-rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
+<span class="comment"># adjust the names according to what you used in the previous assignments
+</span>rasters = ['2015_10_06_DSM_agi_8GCPs', 'mid_pines_lidar2013_dem']
 coordinates = [637160.446919, 219373.236976,
                637105.693795, 219392.416036,
                637072.439779, 219400.613538]
 profiles = {}
 distance = []
 for raster in rasters:
-    profile = gscript.read_command('r.profile', input=raster,
-                                   coordinates=coordinates, quiet=True).strip()
+    profile = gs.read_command('r.profile', input=raster,
+                              coordinates=coordinates, quiet=True).strip()
 <span class="comment">    # parse output
 </span>    if not distance:
         for line in profile.splitlines():
