@@ -1,5 +1,5 @@
 <section>
-    <h2>Imagery processing</h2>
+    <h2>Imagery processing - Agisoft PhotoScan Professional</h2>
     <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
     <p class="title-foot">
         <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
@@ -9,302 +9,13 @@
     </p>
 
 </section>
-<section>
-    <h2>Objectives (1)</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> the photogrammetric data processing as a multistep process;</li>
-        <li class="fragment"><strong>Indicate</strong> the sources of imagery disortion and the need of orthorectification of photos;</li>
-        <li class="fragment"><strong>Describe</strong> the concept of orthorectification;</li>
-        <li class="fragment"><strong>Indicate</strong> data needed for orthophoto/DTM generation from aerial imagery;</li>
-        <li class="fragment"><strong>Understand</strong> the difference between interior and exterior orientation of the photo;</li>
-    </ul>
-</section>
-<section>
-    <h2>Objectives (2)</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> the terms: Bundle Block Adjustment, Ground Control Points, flight log;</li>
-        <li class="fragment"><strong>Describe</strong> the workflow of geoprocessing of aerial imagery in designated software (Agisoft Photoscan);</li>
-        <li class="fragment"><strong>Practice</strong> the process of georectification with and without GCPs;</li>
-        <li class="fragment"><strong>Explain</strong> the impact of GCP in the processing for the of final results.</li>
-    </ul>
-</section>
-<section>
-    <h2>Photogrammetric process</h2>
-     <img class="fragment" src="img/photogrammetric_proces.png">
-</section> 
-<section>
-    <h2>Why do we need to process the data?</h2>
-    <div class="left">  
-            <img class="fragment" src="img/scale.png" width="60%">
-            <img class="fragment" src="img/orthophoto_why.png" width="80%">
-    </div>
-    <div class="right fragment">
-        <img src="img/disortion.png">
-    </div>
-</section>
-<section>
-    <h2>Why do we need to process the data?</h2>
-    <div class="left fragment">  
-            <img src="img/pespective_vs_orthographic.png" width="90%">
-    </div>
-    <div class="right fragment">
-        <img src="img/pespective_vs_orthographic_image_plane.png">
-    </div>
-</section>
-<section>
-    <h2>Orthorectification</h2>
-
-    <div class="left">  
-    <p class="fragment">Process that removes:</p>
-    <ul>
-        <li class="fragment">effects of relief displacement,</li>
-        <li class="fragment">optical distortions from the sensor,</li>
-        <li class="fragment">geometric perspective</li>
-    </ul>
-        <p class="fragment">from a photograph or digital image</p>
-    </div>
-    <div class="right fragment">
-        <img src="img/DSM_ortho.png" width="40%">
-        <img src="img/new/ortho_example_measure.JPG" width="80%">
-    </div>
-     <p class="fragment">The resulting image - an <strong>orthophoto</strong> or <strong>orthoimage.</strong></p>
-</section>
-<section>
-    <h2>Orthophoto</h2>
-      <ul>
-        <li class="fragment">Photo that has the same lack of distortion as a map (geometrically corrected, uniform scale);</li>
-        <li class="fragment">Can be used to measure true distances</li>
-        <img class="fragment" src="img/new/ortho_example_measure.JPG">
-</section> 
-<section>
-    <h2>How do we get there?</h2>
-    <div class="left">  
-            <p class="small fragment">Old way: analogue</p>
-                <img class="fragment" src="img/analogue.png" width="90%">
-            <p class="small fragment">Now: digital</p>
-                <img class="fragment" src="img/digital.png" width="90%">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/orthophoto_how.png">
-    </div>
-</section>
 
 <section>
-    <h2>What do we need?</h2>
-    <ol>
-        <li class="fragment">Digital <strong>imagery</strong>;</li>
-        <li class="fragment">(Digital elevation model or topographic dataset)</li>
-        <li class="fragment">(Exterior <strong>orientation parameters </strong> from aerial triangulation or IMU);</li>
-        <li class="fragment">(<strong>Camera calibration</strong> report);</li>
-        <li class="fragment">(Ground Control Points parameters);</li>
-        <li class="fragment">Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
-    </ol>
-</section>
-<section>
-    <h2>What do we need?</h2>
-    <ol>
-        <li>Digital <strong>imagery</strong>;</li>
-        <li>.</li>
-        <li> .</br>. </li>
-        <li>.</li>
-        <li>.</li>
-        <li>Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
-    </ol>
-</section>
-<section>
-    <h2>Multiple-view geometry questions</h2>
-    <ul>
-        <li class="fragment"><strong>Scene geometry (structure):</strong> <br>Given 2D point matches in two or more images, where are the corresponding points in 3D?</li>
-        <li class="fragment"><strong>Correspondence (stereo matching):</strong> Given a point in just one image, how does it constrain the position of the corresponding point in another image? </li>
-        <li class="fragment"><strong>Camera geometry (motion):</strong> Given a set of corresponding points in two or more images, what are the camera matrices for these views?</li>
-    </ul>
-</section>
-<section>
-    <h2>Structure from Motion (SfM)</h2>
-    <div class="left">  
-        <ul>
-        <li class="fragment">range imaging technique,</li>
-        <li class="fragment">process of estimating 3D structures from 2D image sequences,</li>
-        <li class="fragment">may be coupled with local motion signals</li>
-        </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/SfM.png">
-    </div>
-</section>
-
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme01-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme02-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme03-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme04-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme05-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme06-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme07-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme08-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme09-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme11-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme12-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme13-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme14-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme15-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme16-02.png" width="90%">
-</section>
-<section>
-    <h2>What do we need?</h2>
-    <ol>
-        <li>Digital <strong>imagery</strong>;</li>
-        <li>(Digital elevation model or topographic dataset)</li>
-        <li>(Exterior <strong>orientation parameters </strong> from aerial triangulation or IMU);</li>
-        <li>(<strong>Camera calibration</strong> report);</li>
-        <li>(Ground Control Points parameters);</li>
-        <li>Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
-    </ol>
-</section>
-
-
-<section>
-    <h2>1. Digital imagery</h2>
-            <img class="fragment" src="img/digital_imagery.png">
-    <div class="left">  
-            <img class="fragment" src="img/multiview.png">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/camera_sensor.png" width="80%">
-    </div>
-</section>
-<section>
-    <h2>2. Digital Elevation Model</h2>
-     <div class="left">  
-		<img src="img/disortion.png">
-     </div>
-    <div class="right">
-           <p class="fragment"> <strong>Before:</strong> Shape of the ground surface must be known in order to remove the effects of relief displacement<p>
-    </div>
-             <p class="fragment"> <strong>Now:</strong> computed automatically by Structure from Motion <p>    
-</section>
-<section>
-    <h2>3. Exterior orientation (EO) </h2>
-            <p class="fragment">EO= <strong>position</strong> and <strong>orientation</strong> in the object space</p>
-            <p class="fragment">6 elements <strong>necessary</strong> for any photogrammetric processing:</p>
-    <div class="left">  
-    <ul>
-        <li class="fragment">X, Y, and Z of the exposure station position (latitude, longnitude and altitude of the camera),</li>
-        <li class="fragment">angular orientation: ω, φ, and κ (yaw, pich and roll)</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/orientation.png">
-    </div>
-</section>
-<section>
-    <h2>Flight log</h2>
-        <ul>
-        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
-        <li class="fragment">Information is logged into a text file (flight log),</li>
-        <li class="fragment">Contains elements of exterior orientation</li>
-        </ul>
-        <img class="fragment" src="img/log.png">
-</section>
-<section>
-    <h2>4. Interior orientation </h2>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Before: camera calibration report,</li>
-        <li class="fragment">Now: Self-calibration (auto-calibration) is the process of determining intrinsic camera parameters directly from uncalibrated images</li>
-        <li class="fragment">Can be automatically derived using Structure from Motion (SfM) methods</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/interior_orientation.png">
-    </div>
-</section>
-<section>
-    <h2>5. Ground Control Points</h2>
-            <p class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). <br> Accurate, well placed and marked GCPs are essential elements for aerial triangulation</p>
-    <div class="left">  
-        <p class="fragment"><strong>Photo Identifiable (Photo ID):</strong></p>
-    <ul>
-        <li class="fragment">any feature on the ground,</li>
-            <ul>
-                <li class="small fragment">specific (e.g. corners)</li>
-                <li class="small fragment">unmovable,</li>
-                <li class="small fragment">not covered by vegetation</li>
-            </ul>
-        <li class="fragment">it can be surveyed later on.</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/GCPs.png">
-    </div>
-</section>
-<section>
-    <h2>Ground Control Points </h2>
-    <div class="left">  
-        <p class="fragment">Pre-marked (Panels): marking or painting figures or symbols on the ground before the UAS flies</p>
-         <img class="fragment" src="img/GCP_sketch.png" width="80% ">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/GCP_photo.png">
-    </div>
-</section>
-<section>
-    <h2>Processing software</h2>
+    <h2>Software capabilities</h2>
      <img class="fragment" src="img/agisoft.png">
 </section>
 <section>
     <h2>Agisoft PhotoScan Professional</h2>
-    <div class="right">
-        <p class="small fragment"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
-        <p class="small fragment"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_1_en.pdf"> Manual</a></p>
-        <p class="small fragment">also</p>
-        <p class="small fragment"><a href="http://www.agisoft.com/support/tutorials/beginner-level/"> Tutorials</a></p>
-        <p class="small fragment"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
-        <img class="fragment" src="img/agisoft_demo.png">
-    </div>    
 <div class="left">  
     <ul>
         <li class="fragment">Image-based solution aimed at creating 3D content from still images;</li>
@@ -312,24 +23,42 @@
         <li class="fragment">Both image alignment and 3D model reconstruction are fully automated.</li>
     </ul>
     </div>
+    <div class="right">
+        <p class="small fragment"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
+        <p class="small fragment"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_3_en.pdf"> Manual</a></p>
+        <p class="small fragment">also tutorials for</p>
+        <p class="small fragment"><a href="http://www.agisoft.com/pdf/PS_1.3%20-Tutorial%20%28BL%29%20-%20Orthophoto,%20DEM%20%28GCPs%29.pdf"> Orthophoto and DSM generation with GCPs</a><br>
+<a href="http://www.agisoft.com/pdf/PS_1.1%20-Tutorial%20%28IL%29%20-%20Classification%20and%20DTM.pdf"> Dense Cloud Classification & DTM Generation</a><br>
+<a href="http://www.agisoft.com/pdf/PS_1.1_Tutorial%20%28IL%29%20-%20Volume%20measurements.pdf"> Mesh-based Area & Volume Measurements</a> </p>
+        <p class="small fragment"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
+        <img class="fragment" src="img/Agisoft_Logo.jpg">
+    </div>    
+
 
 </section>
 <section>
     <h2>Processing workflow</h2>
+<p>see the detailed step-by-step <a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/geoprocessing.html">tutorial </a>;</li>
+     <h4 class="fragment">Preprocessing stage > Processing > Exporting results</h4>
      <h3 class="fragment">Preprocessing stage:</h3>
             <ul>
                 <li class="small fragment">loading photos into PhotoScan;</li>
                 <li class="small fragment">inspecting loaded images, removing unnecessary images.</li>
             </ul>
+</section>
+<section>
+    <h2>Processing workflow</h2>
         <h3 class="fragment">Processing:</h3>
             <ol>
                 <li class="fragment">Aligning photos;</li>
                 <li class="fragment">Building dense point cloud; <p class=small>(optional: editing dense point cloud)</p></li>
                 <li class="fragment">Building mesh (3D polygonal model); <p class=small>(optional: editing mesh)</p></li>
                 <li class="fragment">Generating texture;</li>
+                <li class="fragment">Building DEM and orthomosaic;</li>
             </ol>
         <h3 class="fragment">Exporting results</h3>     
 </section>
+<!--
 <section>
     <h2>Possible issues: </h2>
     <div class="left">  
@@ -343,6 +72,7 @@
             <img class="fragment" src="img/TBC_export.png">
     </div>
 </section>
+-->
 <section>
     <h2>Preprocessing</h2>
         <ul>
@@ -714,7 +444,7 @@
             <img class="fragment" src="img/Agisoft_placing_markers2.png" width="90%" >
  </div>
  <div class="left">   
-<p> <a href="https://www.youtube.com/watch?v=-fYOB8VPDnk">video tutorial</a></p> 
+<p> <a href="https://youtu.be/nnKJWev7Jyc">video tutorial</a></p> 
     <ul>
     <li class="small fragment">Click 'Filter Photos by Markers';</li>
     <li class="small fragment">Open an image by double clicking the thumbnail - the GCP will appear as a grey icon;</li>
