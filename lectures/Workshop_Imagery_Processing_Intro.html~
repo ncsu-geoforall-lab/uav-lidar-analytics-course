@@ -426,7 +426,6 @@
             <img class="fragment" src="img/GCP_photo.png">
     </div>
 </section>
-https://youtu.be/CG11F0RX8WE?t=10
 <section>
     <h2>Processing software - overview</h2>
      <img class="fragment" <a href="http://www.agisoft.com/downloads/installer/"> <img src="img/agisoft.png"</a>>
@@ -464,7 +463,20 @@ Everything boils down to... money (and time)
 <h2>Processing options - software</h2>
 Comprehensive comparison of more than 30 common software platforms used to operate UAVs and analyze resulting aerial imagery avaliable <a href="https://docs.google.com/document/d/1-OTOFNPCJF-ZFke_qXcxdhG7dfKYcJT1Tgy3jGOXJPM/edit#heading=h.23ur3rbl7ab5">here</a>
 <ul>
-
+<li>provides a brief description of each software platform 
+<li>includes corresponding links for additional information and download
+<li>groups software is following categories:
+	<ul>
+	<li class="small">UAV Control
+	<li class="small">Ground Station
+	<li class="small">Image Processing
+	<li class="small"><strong>Image Processing - Photogrammetric</strong>
+	<li class="small"><strong>Image Processing - Structure from Motion / Multi-Stereo View</strong>
+	<li class="small">3D Processing
+	<li class="small">Object Based Classification
+	<li class="small">Data Management/Platforms
+	<li class="small">Computer Vision
+	</ul>
 </ul>
 </section>
 <section>>
