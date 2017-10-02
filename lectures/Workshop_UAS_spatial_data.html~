@@ -61,7 +61,7 @@
         <li class="fragment">There are two different types of coordinate reference systems: Geographic Coordinate Systems and Projected Coordinate Systems</li>
         <li class="fragment">There are global map projections, but most map projections are created and optimized to project smaller areas of the earth’s surface</li>
         <li class="fragment">It is crucial to know what is your data reference system!</li>
-        <li class="fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (ESPG codes)</a></li>
+        <li class="fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (EPSG codes)</a></li>
 
     </div>
     <div class="right">
