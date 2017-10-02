@@ -56,3 +56,14 @@
         <img src="img/new/rotary_vs_fixed.jpg" width="60%">
 </section>
 
+<section>
+    <h2>Drone buing guide</h2>
+<div class="left">
+<a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/workshop/DroneDeploy-Drone-Buyers-Guide-V1.3.pdf">Guide greated by DroneDeploy</a> </br>
+ - focuses on DJI products, but applicable for broader audience 
+</div>
+<div class="right">
+        <img src="img/new/drone_guide.png">
+</div>
+
+</section>

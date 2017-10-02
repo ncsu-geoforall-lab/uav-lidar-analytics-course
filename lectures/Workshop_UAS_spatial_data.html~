@@ -1,0 +1,189 @@
+
+<section> 
+<section>
+    <h2>UAS and spatial data</h2>
+    <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        and
+        <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
+    </p>
+
+</section>
+
+<section>
+    <h2>UAS data </h2>
+    <h4>What do we get after the flight mission?</h4>
+        <img class="fragment"src="img/new/uas_data.jpg">
+
+</section>
+<section>
+    <h2>Digital imagery</h2>
+        <img class="fragment"src="img/digital_imagery.png">
+ <ul>
+        <li class="fragment">usually on the camera SD card</li>
+        <li class="fragment">can be geotagged (depends on camera)</li>
+        <ul>
+        <li class="fragment">Camera lens location is "written into" each photo's EXIF file</li>
+	<li class="fragment">this is not necessary the case...</li>
+	</ul>
+</ul>
+</section>
+<section>
+    <h2>Flight log</h2>
+        <ul>
+        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
+        <li class="fragment">Information is logged into a text file (flight log),</li>
+        <li class="fragment">Contains elements of exterior orientation</li>
+        </ul>
+        <img class="fragment" src="img/log.png">
+</section>
+<section>
+    <h2>GCP coordinates</h2>
+<div class="left">
+        <ul>
+        <li class="fragment">Measured by GPS coordinates of the panels set before the fight</li>
+        <li class="fragment">Photo ID points (distinguishabe ground features)can be surveyed later on </li>
+        <li class="fragment">It is improtant to know the GCPs coorditate system (spatial reference system)</li>
+        </ul>
+</div>
+<div class="right">
+        <img src="img/GCPs.png">
+</div>
+</section>
+
+<section>
+    <h2>Spatial reference system</h2>
+     <div class="left">
+        <ul class="small">
+        <li class="fragment">defines, with the help of coordinates, how the two-dimensional, projected map in your GIS is related to real places on the earth</li>
+        <li class="fragment">There are two different types of coordinate reference systems: Geographic Coordinate Systems and Projected Coordinate Systems</li>
+        <li class="fragment">There are global map projections, but most map projections are created and optimized to project smaller areas of the earth’s surface</li>
+        <li class="fragment">It is crucial to know what is your data reference system!</li>
+        <li class="fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (ESPG codes)</a></li>
+
+    </div>
+    <div class="right">
+        <img src="img/new/projection.JPG">
+    </div>
+</section>
+<section>
+    <h2>Spatial data types</h2>
+        <img class="fragment"src="img/new/vector_raster.png">
+</section>
+<section>
+    <h2>Vector data</h2>
+     <div class="left">
+        <ul>
+        <li class="fragment">comprised of vertices and paths, <strong>not</strong> made up of a grid of pixels</li>
+        <li class="fragment">three basic types: points, lines and polygons (areas)</li>
+        <li class="fragment">can store attributes</li>
+
+    </div>
+    <div class="right">
+        <img src="img/new/vectors.jpg">
+    </div>
+</section>
+<section>
+    <h2>Raster data</h2>
+    <div class="left">
+        <ul>
+        <li class="fragment">made up of pixels (also referred to as grid cells)</li>
+        <li class="fragment">each pixel has only one value</li>
+        	<ul class="small fragment">
+        		<li>image has a red, green and blue (RGB) value</li>
+        		<li>each value in an elevation map represents a specific height</li>
+    </div>
+    <div class="right">
+        <img src="img/new/raster.png" width="60%">
+    </div>
+</section>
+<section>
+    <h2>Raster vs. vector data</h2>
+     <div class="left fragment">
+<h4>RASTER</h4>
+        <ul class="small">
+        <li class="fragment"><strong>+</strong> map algebra with raster data is usually quick and easy to perform</li>
+        <li class="fragment"><strong>+</strong> quantitative analysis is intuitive</li>
+        <li class="fragment"><strong>-</strong> can have a pixelated look and feel</li>
+        <li class="fragment"><strong>-</strong> cannot create network datasets or perform topology rules on rasters</li>
+        <li class="fragment"><strong>-</strong> no attribute tables</li>
+        <li class="fragment"><strong>-</strong> large data size with high resolution rasters</li>
+    </div>
+    <div class="right fragment">
+<h4>VECTOR</h4>
+        <ul class="small">
+        <li class="fragment"><strong>+</strong> graphical output is generally more aesthetically-pleasing</li>
+        <li class="fragment"><strong>+</strong> network analysis and proximity operations use vector data structures</li>
+        <li class="fragment"><strong>-</strong> in order to display continuous data as a vector, it would require substantial generalization</li>
+        <li class="fragment"><strong>-</strong> with a lot of features, vector manipulation algorithms are complex</li>
+    </div>
+</section>
+
+
+<section>
+    <h2>Raster vs. vector data</h2>
+<ul>
+        <li class="fragment"><strong>Do you want to work with pixels or coordinates?</strong> Raster data works with pixels. Vector data consists of coordinates</li>
+        <li class="fragment"><strong>What is your map scale? </strong> Vectors can scale objects up to the size of a billboard. But you don’t get that type of flexibility with raster data</li>
+        <li class="fragment"><strong>Do you have restrictions for file size? </strong> Raster file size can result larger in comparison with vector data sets with the same phenomenon and area.</li>
+</section>
+
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img class="fragment" src="img/new/processing_outputs.JPG">
+</section>
+
+<section>
+    <h2>Orthophoto</h2>
+     <div class="left">
+        <ul>
+        <li class="fragment"> aerial photograph or image geometrically corrected ("orthorectified") such that the scale is uniform: the photo has the same lack of distortion as a map</li>
+        <li class="fragment"> raster: consistis of red, green and blue bands</li>
+    </div>
+    <div class="right">
+        <img src="img/new/ortho_example.jpg">
+    </div>
+</section>
+<section>
+    <h2>Digital Terrain Model</h2>
+<img src="img/new/dtm_dsm.jpg" width="60%">
+        <ul>
+        <li class="fragment"> DEM/DTM - Digital Elevation Model / Digital Terrain Model</li>
+        	<ul class="fragment">       
+		<li> representation of a terrain's elevation</li>
+        	<li> bare-earth raster grid</li>
+		</ul>
+        <li class="fragment"> DSM - Digital Surface Model 
+        	<ul class="fragment">       
+		<li> representation of a visible surface</li>
+        	<li> captures the natural and built features on the Earth’s surface</li>
+		</ul>
+</section>
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img src="img/new/processing_outputs.JPG">
+
+</section>
+<section>
+    <h2>Pointcloud</h2>
+        <ul>
+        <li class="fragment"> representation of the external surface of an object</li>
+        <li class="fragment"> set of vertices in a three-dimensional coordinate system</li>
+        <li class="fragment"> vector or raster?</li>
+        <li class="fragment"> Dale Lutz once said, "point cloud is a badly behaved raster"</li>
+        <li class="fragment"> in GIS, point cloud geometry is often known, rather mistakenly, as LiDAR</li>
+ <div class="left">
+        <img src="img/new/pointclouds.png">
+</div>
+
+   <div class="right">
+        <img src="img/new/Point_cloud_torus.gif">
+    </div>
+</section>
+
+
+
