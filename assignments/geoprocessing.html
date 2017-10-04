@@ -13,6 +13,7 @@ orientation data.</p>
 (depending on computational power of your device and desired quality) 
 <p>In order to minimize the processing time, we will process only fraction of the data collected and we will use imagery downsampled by 50%. It will allow us to generate outputs in the classroom. The resolution of ortophoto and DSM will be lower,  but the high quality and full extent otput of the processing are provided <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXcHlzM01lY0pEd00"> here</a></p>
 
+
 <p>
 General workflow (with GCPs):
 
@@ -137,7 +138,7 @@ containing camera positions information (log file*) in the Open
 dialog.</p>
 
 <figure>
-<img src="img/geoprocessing/import_csv.png">
+<img src="img/geoprocessing/import_csv.png" width="50%">
 </figure>
 
 <p>*Agisoft support the camera orientation files in 5 formats: .csv, .txt, .tel, .xml and and .log. The default format of the Trimble Aerial Imaging log is .jxl. In order to convert the Trimble .jxl log
@@ -184,7 +185,7 @@ stationary and do not need determining yaw pitch and roll angles.</p>
 Create new marker?</em>  will pop up.</p>
 
 <figure>
-<img src="img/geoprocessing/no_match_new_marker.png">
+<img src="img/geoprocessing/no_match_new_marker.png" width="50%">
 </figure>
 
 <p>Choose ‘Yes to All’ – it will create new marker for each of the
@@ -203,8 +204,8 @@ Items &gt; Show cameras)</p>
 
 <p>
 <figure>
-<img src="img/geoprocessing/gcps_cameras.png">
-<img src="img/geoprocessing/gcps_photo.png"></p>
+<img src="img/geoprocessing/gcps_cameras.png" width=50%>
+<img width="50%" src="img/geoprocessing/gcps_photo.png" ></p>
 </figure>
 
 <p>Choose in the context menu of the selected point on the list (right
@@ -218,9 +219,9 @@ click)  &gt;  Filter Photos by Marker. If the marker does not appear on any phot
 appear only the images in which the currently selected GCP is probably*
 visible.</p>
 
-<p>* <em>This is possible because our pictures are geotagged (log indicates the position of each photo), if you will be working with the pictureas that are not geotagged or in the area that you don't know and are not able to "guess" which photo depicts which GCP, it is useful to build the dense ponint cloud or even mesh and texture (see the folloing steps) to see the preliminary model of the area in the Model pane, not just a sparse cloud</p>
+<p>* <em>This is possible because our pictures are geotagged (log indicates the position of each photo), if you will be working with the pictureas that are not geotagged or in the area that you don't know and are not able to "guess" which photo depicts which GCP, it is useful to build the dense ponint cloud or even mesh and texture (see the folloing steps) to see the preliminary model of the area in the Model pane, not just a sparse cloud</em></p>
 <p>Open an image by double clicking the thumbnail. It will open in a
-tab next to the Model pane.</></p>
+tab next to the Model pane.</p>
 
 <p>The GCP will appear as a grey icon
 <img src="img/geoprocessing/gcp_gray.png" class="icon">.
@@ -328,11 +329,11 @@ explained at the end of this section.</p>
 </ul>
 
 <p>*When working with large datasets take into consideration the RAM size requirements for the different
-target qualities with respect to the number of images (in appendix in the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdlAzTk95VjQtZkU"> manual </a>or
+target qualities with respect to the number of images (in appendix in the <a href="http://www.agisoft.com/pdf/photoscan_1_3_en.pdf"> manual </a>or
 in <a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/lectures/04_Imagery_Processing.html#/40"> lecture slides</a>).</p>
 
 <figure>
-<img src="img/geoprocessing/build_dense_cloud_medium_aggressive.png">
+<img src="img/geoprocessing/agi_build_dense_cloud.jpg">
 </figure>
 
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
@@ -351,7 +352,7 @@ optimum number of faces (but this may not be enough to describe all the
 features on terrain)</p>
 
 <figure>
-<img src="img/geoprocessing/build_mesh.png">
+<img src="img/geoprocessing/agi_build_mesh.jpg">
 </figure>
 
 <p>Menu &gt; Workflow &gt;  Build Texture</p>
@@ -366,7 +367,7 @@ features on terrain)</p>
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
 
 <figure>
-<img src="img/geoprocessing/build_texture.png">
+<img src="img/geoprocessing/agi_build_texture.jpg">
 </figure>
 
 <h4>Editing geometry</h4>
@@ -384,7 +385,7 @@ Holes command. It is crucial if you want to perform any volume calculations - in
 closed (in percentage of the total model size).</p>
 
 <figure>
-<img src="img/geoprocessing/close_holes.png">
+<img src="img/geoprocessing/agi_close_holes.jpg">
 </figure>
 
 <p>This does not apply to our data, since we have sufficient image
@@ -429,7 +430,7 @@ above.</p>
 </ol>
 
 <figure>
-<img src="img/geoprocessing/batch_process.png">
+<img src="img/geoprocessing/batch.jpg">
 </figure>
 
 <p>
@@ -464,7 +465,7 @@ for free. (click link and request a trial code via email)</p>
 </ul>
 
 <figure>
-<img src="img/geoprocessing/export_orthophoto.jpg">
+<img src="img/geoprocessing/export_ortho.JPG">
 </figure>
 
 <p>Leave default values. Fill out the desired name and save as type TIFF/GeoTIFF (*.tif)</p>
@@ -475,7 +476,7 @@ for free. (click link and request a trial code via email)</p>
 <p>Menu &gt;  File  &gt;  Export DEM…</p>
 
 <figure>
-<img src="img/geoprocessing/export_dem.jpg">
+<img src="img/geoprocessing/export_dem.JPG">
 </figure>
 <p>Leave default values. Fill out the desired name and save as type TIFF/GeoTIFF (*.tif)</p>
 
@@ -484,7 +485,8 @@ for free. (click link and request a trial code via email)</p>
 
 <p>Menu &gt;  File &gt;  Generate report</p>
 <p>Indicate the name and path for the PDF file</p>
-
+<hr>
+Processing outputs form the OPTION 1 (downsampled images) are provided <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXX201ajRmZVF4aFE">here</a>
 <hr>
 The following export steps are optional.
 
