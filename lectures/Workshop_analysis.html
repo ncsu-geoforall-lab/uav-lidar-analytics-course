@@ -176,7 +176,7 @@
             <div class="slides">
 <!-- This is a generated file. Do not edit. -->
 <section>
-    <h2>Welcome to</h2>
+    <h2>Analysis of the processing outputs</h2>
     <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
     <p class="title-foot">
         <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
@@ -184,52 +184,273 @@
         and
         <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
     </p>
+
+</section>
+<section>
+    <h2>Visualization of the outputs</h2>
+    <ul>
+    <li class="fragment">all georeferenced poutputs - orthophoto, DSM and pointcloud can be displayed and analyzed in the GIS software</li>
+    <li class="fragment">3D model can be loaded onto 3D modeling software</li>
+    <li class="fragment">There are online tools enabling rapid visualization of 3D content</li>
+    </ul> 
 </section>
 
 <section>
-    <h2>Welcome</h2>
+    <h2>Point cloud - plas.io</h2>
+<p> <a href="plas.io">plasi.io</a> an in- browser point cloude rendering tool
+    <img class="fragment" src="img/new/plas_io.JPG">
+</section>
+<section>
+    <h2>3D model - Sketchfab</h2>
+<div class="right">
+            <img src="img/new/sketchfab.png"width ="77%">
+ </div>
+ <div class="left">   
+<p> <a href="https://sketchfab.com/">Sketchfab</a> is a platform to publish, share and discover 3D, VR and AR content </p> 
     <ul>
-        <li>What's your name?</li>
-        <li>What is your job or occupation?</li>
-        <li>Have you ever worked with drones or spatial data?</li>
-        <li>Why have you decided to participate in the workshop?</li>
-        <li>If you could spend a week wherever in the world, what would you choose?</li>
-    </ul>
+    <li class=><p> <a href="https://sketchfab.com/osgeolab/models">OSgeoForALl</a> models on sketchfab</li>
+    <li class="small">Free account has limitations</li>
+    <li class="small">Pro account available for .edu domains</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Analyzing the processing report</h2>
+ <div class="right">
+            <img src="img/new/report_small.png"width ="50%">
+ </div>
+ <div class="left">   
+<p> Includes: </p> 
+    <ul>
+    <li class="small fragment">Orthophoto and digital elevation model sketch;</li>
+    <li class="small fragment">Camera parameters and survey scheme</li>
+    <li class="small fragment">Tie points data export (matching points and panoramas) </li>
+    <li class="small fragment">Image overlap statistics</li>
+    <li class="small fragment">Camera positioning error estimates</li>
+    <li class="small fragment">Ground control point error estimates</li>
+    <li class="small fragment">Processing parameters</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Orthophoto</h2>
+    <img class="fragment" src="img/flights_ortho.png">
+</section>
+<section>
+    <h2>Survey data</h2>
+    <img class="fragment" src="img/flight_image_overlap.png">
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+    <img class="fragment" src="img/flights_GCP_errors.png" width="90%">
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+    <img class="fragment" src="img/flights_GCP_errors_explained.png" width="90%">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img class="fragment" src="img/camera1.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera2.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera3.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera4.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera5.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera6.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera7.png">
+</section>
+<section>
+    <h2>Analyzing the processing report</h2>
+ <div class="right">
+            <img src="img/camera_calibration_report.png">
+ </div>
+ <div class="left">   
+    <ul>
+    <li class="fragment">While carrying out photo alignment PhotoScan estimates both internal and external camera orientation parameters, including nonlinear radial distortions.</li>
+</ul>
+<p class="fragment">Tools > Camera calibration</p>
+ </div>   
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img class="fragment" src="img/image_residuals1.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img src="img/image_residuals2.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img src="img/image_residuals3.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+<pclass="fragment">The <strong>geometric error</strong> corresponding to the <strong>average image distance</strong>, measured in pixels, between:</p>
+    <img class="fragment" src="img/image_residuals_explained.png" width="90%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+<p class="fragment">This <strong>reprojection error</strong> is equivalent to the root mean square (RMS) image residuals used in photogrammetric literature</p>
+<p class="small fragment"> More on image residuals in <a href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3609/epdf">this article</a></p>
+    <img class="fragment" src="img/image_residuals.png">
+</section>
+<section>
+    <h2>Flight path</h2>
+    <img class="fragment" src="img/flight_path.png">
+</section>
+<section>
+    <h2>Flight path in 3D</h2>
+    <img class="fragment" src="img/flight_path3d.png" width="70%">
+</section>
+<section>
+    <h2>Digital Surface Model</h2>
+    <img class="fragment" src="img/flights_dsm_report.png">
+</section>
+<section>
+    <h2>Digital Surface Model</h2>
+    <img class="fragment" src="img/Flight1_DSM.png">
+</section>
+<section>
+    <h2>DSMs comparison by software</h2>
+    <img class="fragment" src="img/flights_software.png">
+</section>
+<section>
+    <h2>DSMs comparison -GCPs</h2>
+    <img class="fragment" src="img/flight_06_20.png">
+</section>
+<section>
+    <h2>'Bowl effect'</h2>
+<p class="fragment">effect can be introduced during photo alignment, in case camera calibration estimates are inaccurate</p>
+    <img class="fragment" src="img/flights_bowl.png">
+</section>
+<section>
+    <h2>'Bowl effect'</h2>
+<p >effect can be introduced during photo alignment, in case camera calibration estimates are inaccurate</p>
+    <img class="left fragment" src="img/pix4d_gcp-pix4d_noGCP_bowl.png" width="50%">
+    <img class="right fragment" src="img/sample_DSM_bowl_effect.png" width="50%">
+</section>
+<section>
+    <h2>'Bowl effect'- solutions to the problem</h2>
+    <ol>
+	<li class="fragment"> If camera calibration is known in advance-  it can be loaded in PhotoScan and fixed during photo alignment.</li>
+	<li class="fragment">Optimization procedure - recommended approach</li>
+		<ul>
+			<li class="fragment">based on <strong>camera</strong> or <strong>GCP</strong> coordinates</li>
+			<li class="fragment">performed after photo alignment</li>
+			<li class="fragment">is recommended to perform optimization based on ground control data in any case, even if precalibrated cameras are used</li>
+		</ul>
+	</ol>
+</section>
+<section>
+    <h2>Optimization</h2>
+    <img class="fragment" src="img/flights_optimization.png" width="90%">
+</section>
+<section>
+    <h2>What is an optimization?</h2>
+    		<ul>
+		<li class="fragment">PhotoScan performs full photogrammetric adjustment taking into account additional constraints introduced by ground control data</li>
+		<li class="fragment">Extrinsic and intrinsic parameters for all cameras are optimized at this step, in contrast to the simple 7-parameter transform used for georeferencing by default</li>
+		<li class="fragment">Optimization helps to significantly improve accuracy of the final solution</li>
+		</ul>
+<p class="fragment"> More on the bowl effect in <a href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3609/epdf">this article</a></p>
+</section>
+<section>
+<section>
+<h2>Terrain analysis</h2>
+<p class="fragment"> computing <a href="https://grass.osgeo.org/grass64/manuals/r.slope.aspect.html">aspect, slope, curvature</a> and <a href="https://grass.osgeo.org/grass70/manuals/r.relief.html">shaded relief</a> maps</p>
+ <img class="left fragment" src="img/analysis_aspect_GCP.png" width="35%">
+ <img class="right fragment" src="img/analysis_slope_GCP.png" width="35%">
+ <img class="left fragment" src="img/analysis_curvature_GCP.png" width="35%">
+ <img class="right fragment" src="img/analysis_relief_GCP.png" width="35%">
+</section>
+<section>
+<h2>Advanced terrain analysis</h2>
+<p class="fragment"> computing <a href="https://grass.osgeo.org/grass70/manuals/addons/r.local.relief.html">local relief</a>,  <a href="https://grass.osgeo.org/grass70/manuals/addons/r.skyview.html">skyview</a> and <a href="https://grass.osgeo.org/grass70/manuals/addons/r.shaded.pca.html">shaded PCA maps</a></p>
+ <img class="left fragment" src="img/analysis_local_relief.png" width="50%">
+ <img class="right fragment" src="img/analysis_skyview.png" width="35%">
+ <img class="left fragment" src="img/analysis_pca_GCPs.png" width="50%">
+</section>
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Change in flow pattern based on sUAS data </h3>
+<p>
+GRASS GIS flow simulation for January and June 2015 
+<p>
+    <img height=350 src="img/talk/simwe_jan.jpg">
+    &nbsp; &nbsp; &nbsp; 
+    <img height=350 src="img/talk/simwe_june.jpg">
 </section>
 
 <section>
-    <h2>Inia Jeziorska</h2>
-    <div class="left">  
-    <ul>
-        <li>Geographer and Cartographer</li>
-        <li>Research Associate in theCenter for Geospatial Analytics</li>
-        <li>from "the middle of nowhere", Poland</li>
-        <li>likes: mountains, traveling, singing and Pepsi Max</li>
-        <li>dislikes: caraway seeds, Imperial units, introducing herself</li>
-    </ul>
-    </div>
-    <div class="right">
-        <img src="img/new/Inia.jpg" width="100%">
-	<img class="fragment"src="img/new/polish_problem.jpg" width="100%">
-    </div>
+    <h2>What do we do with the data?</h2>
+    <h3>Evolving overland flow based on sUAS data </h3>
+    <img width=60% src="img/talk/agisoft_june.gif">
 </section>
-
 <section>
-    <h2>Tom Zajkowski</h2>    
-<div class="left">  
-    <ul>
-        <li>4 Kids 26-13, same wife</li>
-        <li>Holds a Commercial Pilots License</li>
-        <li>Attended first "Unmanned Aerial Vehicle" demonstration September 2001</li>
-        <li>Still can't stand the humidity in NC</li>
-        <li>likes: skiing, hiking, reading</li>
-    </ul>
-    </div>
-    <div class="right">
-        <img src="img/new/Tom.jpg" width="70%">
-    </div>
+    <h2>What do we do with the data?</h2>
+    <h3>Overland flow evolution in time</h3>
+    <img src="img/talk/flow_pattern.png">
 </section>
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Overland flow modeling - Lidar vs. UAS data</h3>
+    <img src="img/talk/flow_pattern_paddle2.png">
+</section>
+<section>
+    <h2>UAS in the Center for Geospatial Analytics</h2>
+    <h3>Education and outreach</h3>
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+<ul>
+<li>innovative curriculum
+</ul>
+    	<div class="left">  
+    <img src="img/talk/class_Corbin.gif">
 
+	</div>
+    	<div class="right">  
+    <img src="img/talk/class_photo.jpg">
+	</div>
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+    <img src="img/talk/students_projects.png">
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+
+    <img width=28% src="img/talk/class_flight_group.png">
+    <img width=65% src="img/talk/class_Travis.gif">
+
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+    <img width=58% src="img/talk/class_Nick.png">
+    <img width=40% src="img/talk/class_flight_thermal3.png">
+
+</section>
         </div>  <!-- slides -->
 
     </div>  <!-- reveal -->
