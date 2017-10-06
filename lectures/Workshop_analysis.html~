@@ -26,14 +26,14 @@
 <section>
     <h2>3D model - Sketchfab</h2>
 <div class="right">
-            <img src="img/new/sketchfab.png"width ="70%">
+            <img src="img/new/sketchfab.png"width ="77%">
  </div>
  <div class="left">   
 <p> <a href="https://sketchfab.com/">Sketchfab</a> is a platform to publish, share and discover 3D, VR and AR content </p> 
     <ul>
-    <li class="fragment"><p> <a href="https://sketchfab.com/osgeolab/models">OSgeoForALl</a> models on sketchfab</li>
-    <li class="small fragment">Free account has limitations</li>
-    <li class="small fragment">Pro account available for .edu domains</li>
+    <li class=><p> <a href="https://sketchfab.com/osgeolab/models">OSgeoForALl</a> models on sketchfab</li>
+    <li class="small">Free account has limitations</li>
+    <li class="small">Pro account available for .edu domains</li>
     </ul> 
  </div>   
 </section>
@@ -142,10 +142,7 @@
     <h2>Flight path in 3D</h2>
     <img class="fragment" src="img/flight_path3d.png" width="70%">
 </section>
-<section>
-    <h2>Digital Surface Model</h2>
-    <img class="fragment" src="img/flights_dsm_report.png">
-</section>
+
 <section>
     <h2>Digital Surface Model</h2>
     <img class="fragment" src="img/Flight1_DSM.png">
@@ -155,8 +152,8 @@
     <img class="fragment" src="img/flights_software.png">
 </section>
 <section>
-    <h2>DSMs comparison -GCPs</h2>
-    <img class="fragment" src="img/flight_06_20.png">
+    <h2>GCPs</h2>
+    <img class="fragment" src="img/new/GCP_report.png">
 </section>
 <section>
     <h2>'Bowl effect'</h2>
