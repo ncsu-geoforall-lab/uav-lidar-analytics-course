@@ -1,7 +1,7 @@
 
 <section> 
 <section>
-    <h2>Drone buing - rotary or fixed wing?</h2>
+    <h2>UAS online resources</h2>
     <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
     <p class="title-foot">
         <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
@@ -13,61 +13,52 @@
 </section>
 
 <section>
-    <h2>It's not only about a drone</h2>
-        <img src="img/new/hardware_software.JPG" width="60%">
+    <h2>UAS news:</h2>
+<ul>
+<li><a href= "https://unmanned-aerial.com/"> Unmanned Aerial</a>
+<li><a href= "https://www.suasnews.com/"> sUAS News</a>
+<li><a href= "http://www.uavexpertnews.com/"> UAV Expert News</a>
+<li><a href= "http://www.unmannedsystemstechnology.com"> Unmanned Systems Technology</a>
+<li><a href= "http://www.uasvision.com/"> UAS Visionl</a>
+</ul>
 </section>
 <section>
-    <h2>Two main types of UAS </h2>
-<div class="right fragment">
-<p>Fixed wing</p>
-        <img src="img/new/fixed.png">
-    </div>
-    <div class="left fragment">
-<p>Multi-rotor (rotary)</p>
-        <img src="img/new/rotary.png">
-    </div>
+    <h2>Agisoft processing:</h2>
+<ul>
+<li><a href= "http://www.agisoft.com/forum/index.php"> Agisoft forum </a>
+<li><a href= "http://www.agisoft.com/downloads/user-manuals/"> Agisoft maual </a>
+<li><a href= "http://www.agisoft.com/support/tutorials/beginner-level/">Agisoft tutorials</a>
+<li><a href= "https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w">Agisoft youtube channel</a>
+</ul>
 </section>
 <section>
-    <h2>Fixed wing </h2>
-<div class="right">
-        <img src="img/new/fixed.png">
-    </div>
-    <div class="left fragment">
-        <img src="img/new/fixed_subtitled.png">
-    </div>
+    <h2>Visualisation and analysis:</h2>
+<ul>
+<li><a href= "https://sketchfab.com/">Sketchfab</a> 3D models
+<li><a href= "plas.io">plas io</a> point clouds
+<li><a href= "http://www.qgis.org/en/site/">QGIS</a>
+<li><a href= "https://grass.osgeo.org/">GRASS GIS</a>
+</ul>
 </section>
 <section>
-    <h2>Multi-rotor</h2>
-<div class="right">
-        <img src="img/new/rotary.png">
-    </div>
-    <div class="left fragment">
-        <img src="img/new/rotary_subtitled.png">
-    </div>
+    <h2>Legal matters</h2>
+<ul>
+<li><a href= "https://www.faa.gov/uas/">FAA</a> UAS official Federal Aviation Administration information on UAS, COAs, Waivers, etc.
+<li><a href= "http://www.ncdot.gov/aviation/uas/">NCDOT UAS Program Office</a>
+    <ul>
+    <li>State statutes, regulations, guidelines
+    <li>Fact Sheets
+    <li>Best Practices
+    <li>Licensing/Permitting Program Information
+    </ul>
+<li><a href= "https://itre.ncsu.edu/focus/aviation/">NGAT Website</a>
+    <ul>
+    <li>Consortium informations
+    <li>Research activities
+    <li>News and Events
+    </ul>
+<li><a href= "http://www.faa.gov/uas/media/RIN_2120-AJ60_Clean_Signed.pdf">Part 107</a> - full text of Unmanned Aircraft Regulations 
+<li><a href= "http://knowbeforeyoufly.org/">Know Before You Fly</a> - FAA UAS Planning Application 
+<li><a href= "www.auvsi.org">AUVSI</a> - Association for Unmanned Vehicles International – the leading international unmanned systems organization
+</ul>
 </section>
-
-<section>
-    <h2>Fixed wing </h2>
-        <img src="img/new/fixed_wing_pros_cons_.jpg">
-</section>
-<section>
-    <h2>Multi-rotor</h2>
-        <img src="img/new/multi_rotor_pros_cons_.jpg">
-</section>
-<section>
-    <h2>Fixed wing vs. Multi-rotor</h2>
-        <img src="img/new/rotary_vs_fixed.jpg" width="60%">
-</section>
-
-<section>
-    <h2>Drone buing guide</h2>
-<div class="left">
-<a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/lectures/pdfs/DroneDeploy-Drone-Buyers-Guide-V1.3.pdf">Guide greated by DroneDeploy</a> </br>
- - focuses on DJI products, but applicable for broader audience 
-</div>
-<div class="right">
-        <img src="img/new/drone_guide.png">
-</div>
-
-</section>
-
