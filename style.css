@@ -21,13 +21,13 @@ body {
 h1 {
     margin: 0px;
     padding: 0px;
-    padding-top: 50px;
+    padding-top: 55px;
     padding-left: 30px;
-    font-size: 50px;
-    font-weight: bold;
     font-size: 40px;
+    font-weight: bold;
+    font-size: 30px;
     color: #006600;
-    text-shadow: 0 0 20px white, 0 0 18px white, 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
+    text-shadow: 0 0 16px white, 0 0 14px white, 0 0 12px white, 0 0 10px white, 0 0 8px white, 0 0 6px white;
 }
 
 /* links */

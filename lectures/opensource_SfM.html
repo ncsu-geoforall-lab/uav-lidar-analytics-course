@@ -231,10 +231,27 @@ The aim is for the toolchain to also be able to optionally push to a variety of 
   <li>support by community,</li>
   <li>easy for batch processing,</li>
   <li>active development, new features coming, see
-    <a href="https://github.com/OpenDroneMap/OpenDroneMap/wiki/Roadmap">roadmap</a>,</li>
-  <li>new web interface is being developed</li>
-  <img src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
+    <a href="https://github.com/OpenDroneMap/OpenDroneMap/wiki/Roadmap">roadmap</a></li>
 </ul>
+</section>
+<section>
+<h3>WebODM - ODM with web browser interface</h3>
+<ul>
+  <li>new web interface is being developed</li> 
+  <li>learn more at <a href="https://opendronemap.github.io/WebODM/">WebODM</a></li>
+  <img src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
+</section>
+<section>
+  <h3>ODM results</h3>
+  Improvements in mosaicing:<br>
+  <img width="45%" src="img/ODM_ortho_old.jpg">
+  <img width="45%" src="img/ODM_ortho_new.jpg">
+</section>
+<section>
+  <h3>ODM results</h3>
+  Difference between lidar and ODM reveals doming effect:<br>
+  <img width="60%" src="img/ODM_diff_lidar.jpg">
+
 </section>
 <section>
   <h3>MicMac</h3>
@@ -249,6 +266,20 @@ The aim is for the toolchain to also be able to optionally push to a variety of 
         </div>  <!-- slides -->
 
     </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
 
         <script src="lib/js/head.min.js"></script>
         <script src="js/reveal.js"></script>

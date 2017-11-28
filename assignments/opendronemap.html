@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+<title>GIS595-004/603; MEA592-006/601:<br>UAS Mapping for 3D Modeling</title>
 
 <link rel="shortcut icon" href=".././img/favicon.ico" />
 
@@ -18,17 +18,18 @@
 
 <header>
 <div id="header-image">
-    <h1>GIS595/MEA792:<br>UAV/lidar Data Analytics</h1>
+    <h1>GIS595-004/603; MEA592-006/601:<br>UAS Mapping for 3D Modeling</h1>
 </div>
 
 <nav>
 <ul class="nav">
 <li><a href="../index.html">Syllabus</a></li>
 <li><a href="../schedule.html">Schedule</a></li>
+<li><a href="../logistics.html">Course logistics</a></li>
 <li><a href="../topics.html">Topics</a></li>
-<li><a href="../assignments.html">Course logistics</a></li>
 <!--<li><a href="../lectures.html">Lectures</a></li>-->
 <li><a href="../projects.html">Projects</a></li>
+<li><a href="../workshop.html">Workshop</a></li>
 </ul>
 </nav>
 
@@ -88,6 +89,10 @@ sudo chown vagrant:vagrant /odm_app/
 cd /odm_app/
 git clone https://github.com/OpenDroneMap/OpenDroneMap.git
 </code></pre>
+To get latest improvements (and bugs), switch to development branch:
+<pre><code>cd OpenDroneMap
+git checkout dev
+</code></pre>
 </li>
 <li>Install ODM.
 <pre><code>cd OpenDroneMap
@@ -129,13 +134,14 @@ Convert to CSV and lowercase all image names in the CSV file to match the photos
 wget https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py
 python jxl2csv.py full.jxl full.csv
 tr A-Z a-z < full.csv > full_lowercase.csv
+cp full_lowercase.csv images/full_lowercase.csv
 </code></pre>
 
 Update EXIF with GPS coordinates, focal length, camera model. There will be some warnings, ignore them.
 <pre><code>cd /odm_data/images
 wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
 python write_exif_GPS.py full_lowercase.csv
-rm write_exif_GPS.py
+rm write_exif_GPS.py full_lowercase.csv
 </code></pre>
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
@@ -169,7 +175,7 @@ To review parameters run:
 
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
 <pre><code>cd /odm_data
-python /odm_app/OpenDroneMap/run.py --odm_georeferencing-useGcp --odm_georeferencing-gcpFile gcp_odm.txt
+python /odm_app/OpenDroneMap/run.py --project-path /odm_data --odm_georeferencing-useGcp --odm_georeferencing-gcpFile gcp_odm.txt
 </code></pre>
 
 <h3>Importing results</h3>
@@ -191,13 +197,12 @@ We can also quickly view our results in <a href="http://plas.io/">plas.io</a> (n
 
 <nav>
 <ul>
-<li><a class="term-changes" href="https://moodle-courses1617.wolfware.ncsu.edu/course/view.php?id=2396">Moodle site</a></li>
+<li><a class="term-changes" href="https://moodle-courses1718.wolfware.ncsu.edu/course/view.php?id=4709">Moodle site</a></li>
 <li><a href="http://help.ncsu.edu/">Computing Help</a></li>
 <li><a href="http://geospatial.ncsu.edu/">GIST Home</a></li>
 <li><a href="http://www.ncsu.edu/policies/prr-disclaimer.php">Disclaimer</a></li>
 <li><a href="http://oit.ncsu.edu/itaccess">Accessibility</a></li>
-<li>
-    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+<li><a href="https://github.com/ncsu-geoforall-lab/uav-lidar-analytics-course" title="Source code for web pages on GitHub">
         <img src="../img/github_logo.png" alt="GitHub Octocat logo">
     </a>
 </li>
