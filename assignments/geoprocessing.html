@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+<title>GIS595-004/603; MEA592-006/601:<br>UAS Mapping for 3D Modeling</title>
 
 <link rel="shortcut icon" href=".././img/favicon.ico" />
 
@@ -18,17 +18,18 @@
 
 <header>
 <div id="header-image">
-    <h1>GIS595/MEA792:<br>UAV/lidar Data Analytics</h1>
+    <h1>GIS595-004/603; MEA592-006/601:<br>UAS Mapping for 3D Modeling</h1>
 </div>
 
 <nav>
 <ul class="nav">
 <li><a href="../index.html">Syllabus</a></li>
 <li><a href="../schedule.html">Schedule</a></li>
+<li><a href="../logistics.html">Course logistics</a></li>
 <li><a href="../topics.html">Topics</a></li>
-<li><a href="../assignments.html">Course logistics</a></li>
 <!--<li><a href="../lectures.html">Lectures</a></li>-->
 <li><a href="../projects.html">Projects</a></li>
+<li><a href="../workshop.html">Workshop</a></li>
 </ul>
 </nav>
 
@@ -40,7 +41,7 @@
 
 <p>Completing this assignment you will generate orthomosaic and Digital
 Surface Model using pictures taken from the UAS Trimble UX5 Rover
-(Flight mission executed on June 20<sup>th</sup> 2015). The Study area
+(Flight mission executed on September 22<sup>nd</sup> 2016). The Study area
 is located at
 <a href="https://www.google.com/maps/d/edit?mid=zi8EsFDQAyqo.kr7lL7Germeo">Lake Wheeler COA</a>. Additionally you will be able to see the processing
 results in the generated report and optionally you will be able to
@@ -48,11 +49,9 @@ export also 3D model and Point cloud as well as Camera calibration and
 orientation data.</p>
 
 <p>The process can be very time consuming
-(depending on computational power of your device and desired quality) so if
-you are unable to execute the whole step the intermediate results are
-provided in the separate project files<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfm9DOEZpYWwyZTFJX040em90NFZMQ3o5amdUSmtZdGRMeFp1VXNzakpOTVk"> here</a></p>
+(depending on computational power of your device and desired quality) 
+<p>In order to minimize the processing time, we will process only fraction of the data collected and we will use imagery downsampled by 50%. It will allow us to generate outputs in the classroom. The resolution of ortophoto and DSM will be lower,  but the high quality and full extent otput of the processing are provided <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXcHlzM01lY0pEd00"> here</a></p>
 
-<p>In order to minimize the processing time, we will process only fraction of the data collected and we will use imagery downsampled by 50%. It will allow us to generate outputs in the classroom. The resolution of ortophoto and DSM will be lower,  but the high quality and full extent files are provided in the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k"> GRASS location</a></p>
 
 <p>
 General workflow (with GCPs):
@@ -69,33 +68,35 @@ General workflow (with GCPs):
 <h3>Preparation</h3>
 
 <h4>Data</h4>
+<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXQTRoRU9MNGh0YjQ">data from today's flight<a>
 <ul>
-<li> OPTION 1: Flight over Mid Pines Area on June 20th 2015, conducted by NGAT with UX5 Aerial Imaging Rover
+<li> OPTION 1: <strong>RECOMMENDED IN THE CLASSROOM</strong> - smaller area, photos downsampled to accelerate processing (but lower the resolution of the outputs)
 	<ul>
-   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos</a> (downsampled to accelerate processing)
-   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXeVhJTTZ4SXM5Sm8">flight log</a> (log with _sample contains only photos used in this processing, but full log is also available)
-    		<li><a href="https://drive.google.com/file/d/0B1AfQGDB8tPXN2FHTzlicWRENUU/view">GCP coordinates </a> of all 12 GCPs measured for Mid Pines area. (In this sample processing we will use 4 of them)
-	</ul>
-
-<li> OPTION 2: Sample from the flight over Mid Pines Area on September 22th 2016, conducted by NGAT with UX5 Aerial Imaging Rover
+   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXbjlKQ3Z0Uk9GUUE">download data</a> - photos, log and coordinates of 3 GCPs
+   	</ul>
+<br>
+<li> OPTION 2: Smaller area (to accelerate processing), but photos not downsampled (to obtain the hihest resolution of the outputs)
 	<ul>
-   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXYlVyM2x5YTNqTjg">photos</a> 
-   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXbThWTHYzZWtfWGM">flight log</a> 
-    		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXYk5IeW84UmhtMEk">GCP coordinates (3 points)</a> 
+   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXYlVyM2x5YTNqTjg">download data</a>  - photos, log and coordinates of 3 GCPs
 	</ul>
-
-<li> OPTION 3: Full flight over Mid Pines Area on September 22th 2016, conducted by NGAT with UX5 Aerial Imaging Rover<br>
+<br>
+<li> OPTION 3: Full flight, photos original resolution <br>
 <b>LONG PROCESSING TIME!</b>
 	<ul>
-   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXaGpBTG5keW5RMUk">photos</a> 
-   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXeGFoTm4wc0s0bEU">flight log</a> 
-    		<li><a href="https://drive.google.com/file/d/0B1AfQGDB8tPXN2FHTzlicWRENUU/view">GCP coordinates (12 points)</a> 
+   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXcHlzM01lY0pEd00">download data</a>  - photos, log and coordinates of 3 GCPs
 	</ul>
+<br>
 <li> OPTION 4: You can use your own data
+<br>
+
+
+
+
+
 <h4>Software</h4>
 
 <ul>
-    <li>Agisoft PhotoScan Professional (<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmlBcmRweDkwLTJ2TjRoc2hOdjhYcXNjUXp0SlN2RGxrdmFsZ005Qk5pNHc">installation file</a>)
+    <li>Agisoft PhotoScan Professional (<a href="http://www.agisoft.com/downloads/installer/">installer</a>)
 </ul>
 
 <h4>Preferences</h4>
@@ -125,21 +126,36 @@ subsequent sessions.</p>
 <p>Advanced tab:</p>
 
 <ul>
-    <li>Project compression level: 6
-    <li>Keep depth maps: enabled
-    <li>Store absolute image paths: disabled
-    <li>Check for updates on program startup: disabled
-    <li>Enable VBO support: enabled if you have an OpenCL-enabled GPU from NVIDIA,
-    <li>Disabled: GPU from another mark (this applies to any Mac)
-    <li>Strip camera extensions during model export: enabled
+	<li>Project Files
+		<ul>
+		<li>Project compression level: 6
+		<li>Keep depth maps: disabled
+		<li>Store absolute image paths: disabled
+		</ul>
+	<li>Export/Import: enable all
+	<li>Misceallaneous:
+		<ul>
+		<li>Enable performance optimization: enabled
+		<li>Refine marker projections based on image content: enabled
+		</ul>
 </ul>
+<p>Network Tab:</p>
 
+<ul>
+    <li>Leave default
+</ul>
+	
+<p>Appearance Tab:</p>
+
+<ul>
+    <li>Leave default (or adjust to personal taste)
+</ul>
 <figure>
-<img src="img/geoprocessing/preferences.png">
+<img src="img/geoprocessing/agi_preferences.JPG">
 </figure>
 
 
-<h3>Stage 1: Building simple geometry (in order to place GCPs)</h3>
+<h3>Stage 1: Aligning photos in low quality (in order to place GCPs)</h3>
 
 <p>In order to localize the GCPs first a preliminary simple model needs to be build.</p>
 
@@ -153,13 +169,10 @@ and select them all.</p> <p>In the Reference pane, you can see that
 the photos has been loaded, but the coordinate system indicates local
 coordinates. It can be changed in the Settings.</p> <p>Click the
 settings icon <img src="img/geoprocessing/settings_icon.png" class="icon">
-&gt;  change coordinate system to WGS 84</p>
+&gt;  change coordinate system to WGS 84 (EPSG:4326)</p>
 
 <figure>
-<img src="img/geoprocessing/settings_in_toolbar.png">
-</figure>
-<figure>
-<img src="img/geoprocessing/settings_wgs84.png">
+<img src="img/geoprocessing/agi_reference.JPG">
 </figure>
 
 
@@ -171,11 +184,11 @@ containing camera positions information (log file*) in the Open
 dialog.</p>
 
 <figure>
-<img src="img/geoprocessing/import_csv.png">
+<img src="img/geoprocessing/import_csv.png" width="50%">
 </figure>
 
 <p>*Agisoft support the camera orientation files in 5 formats: .csv, .txt, .tel, .xml and and .log. The default format of the Trimble Aerial Imaging log is .jxl. In order to convert the Trimble .jxl log
-file please run <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> or use provided already converted log in .txt format</p>
+file please run <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> or use <strong>provided already converted log in .txt format</strong></p>
 
 <p>Make sure that the columns are named properly – you can adjust their
 placement by indicating column number (top right of dialog box)</p>
@@ -184,31 +197,17 @@ placement by indicating column number (top right of dialog box)</p>
 <h4>Aligning photos</h4>
 
 <ul>
-    <li>Accuracy: High
-    <li>Pair preselection: Reference
-    <li>Key point limit: 40000
-    <li>Tie point limit: 1000
+    <li>Accuracy: Low
+    <li>Check: Reference preselection
+    <li>Key point limit: default (4,000,000)
+    <li>Tie point limit: default (100,000)
+    <li>Adaptive camera model fitting: enabled
 </ul>
 
 <p>Menu &gt; Workflow &gt; Align Photos</p>
 
 <figure>
-<img src="img/geoprocessing/align_photos.png">
-</figure>
-<p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
-
-
-<h3>Building dense point cloud (for rapid processing)</h3>
-
-<p>Menu &gt; Workflow &gt; Build Dense Point Cloud</p>
-
-<ul>
-    <li>Quality: Lowest
-    <li>Depth filtering: Aggressive
-</ul>
-
-<figure>
-<img src="img/geoprocessing/build_dense_cloud.png">
+<img src="img/geoprocessing/agi_align.jpg">
 </figure>
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
 
@@ -223,9 +222,7 @@ on the Reference pane toolbar &gt; select file
 containing Ground Control Points coordinates in the Open dialog</p>
 
 <p>Make sure that the columns are named properly – you can adjust their
-placement by indicating column number (top right of dialog box). Notice
-that the file contains Easting and Northing values, which are NOT
-latitude and longitude</p>
+placement by indicating column number (top right of dialog box).</p>
 
 <p>This time you disable the <em>Load orientation</em> option since GCPs are
 stationary and do not need determining yaw pitch and roll angles.</p>
@@ -234,7 +231,7 @@ stationary and do not need determining yaw pitch and roll angles.</p>
 Create new marker?</em>  will pop up.</p>
 
 <figure>
-<img src="img/geoprocessing/no_match_new_marker.png">
+<img src="img/geoprocessing/no_match_new_marker.png" width="50%">
 </figure>
 
 <p>Choose ‘Yes to All’ – it will create new marker for each of the
@@ -245,17 +242,16 @@ the list of photos.</p>
 <h4>Indicating GCPs on the pictures</h4>
 
 <p>Now you need to find each of the GCPs and indicate its localization
-on all photos depicting it.</p>
+on all photos depicting it. You can also see the process on the <a href="https://www.youtube.com/watch?v=nnKJWev7Jyc">instructional video</a>  </p>
 
-<p>The sample used for this processing do not cover all the GCPs. The
-Model pane shows approximate positions of GCPs, it is better visible if
+<p>The Model pane shows approximate positions of GCPs, it is better visible if
 the ‘Show cameras’ option is disabled (Menu &gt; View &gt; Show/Hide
 Items &gt; Show cameras)</p>
 
 <p>
 <figure>
-<img src="img/geoprocessing/gcps_cameras.png">
-<img src="img/geoprocessing/gcps_photo.png"></p>
+<img src="img/geoprocessing/gcps_cameras.png" width=50%>
+<img width="50%" src="img/geoprocessing/gcps_photo.png" ></p>
 </figure>
 
 <p>Choose in the context menu of the selected point on the list (right
@@ -266,9 +262,10 @@ click)  &gt;  Filter Photos by Marker. If the marker does not appear on any phot
 </figure>
 
 <p>In the Photos pane
-appear only the images in which the currently selected GCP is probably
+appear only the images in which the currently selected GCP is probably*
 visible.</p>
 
+<p>* <em>This is possible because our pictures are geotagged (log indicates the position of each photo), if you will be working with the pictureas that are not geotagged or in the area that you don't know and are not able to "guess" which photo depicts which GCP, it is useful to build the dense ponint cloud or even mesh and texture (see the folloing steps) to see the preliminary model of the area in the Model pane, not just a sparse cloud</em></p>
 <p>Open an image by double clicking the thumbnail. It will open in a
 tab next to the Model pane.</p>
 
@@ -291,7 +288,7 @@ You can now slightly drag the marker to enable it (turning it into a
 green flag) or leave it unchanged (gray marker icon) to exclude it from
 processing.</p>
 
-<p>Filter photos my each marker again. Agisoft adjusts the GCPs posisions on the run, so you can locate the GCP on additional images that will appear in the Photos pane.</p>
+<p>Filter photos by each marker again. Agisoft adjusts the GCPs posisions on the run, so you can locate the GCP on additional images that will appear in the Photos pane.</p>
 
 <p>In this sample processing we will include 4 GCPs. Mathematically, you need to indicate marker positions for at least 3
 GCPs. Accurate error estimates can be calculated with at least 4 GCPs,
@@ -309,23 +306,6 @@ terrain distortions especially on flat or undulating terrain types.</p>
 <p>Best results are obtained when the alignment is first optimized based on the camera coordinates only, and a second time based on the GCP only.</p>
 
 
-<h4>Optimizing based on the camera coordinates</h4>
-
-<p>In the Ground Control pane:</p>
-
-<ul>
-    <li>disable all the GCP Marker coordinates
-        (select one &gt; press Ctrl+A &gt; right-click &gt; choose Uncheck).
-    <li>enable all the camera coordinates
-        (select one &gt; press Ctrl+A &gt; right-click &gt; choose Check).
-</ul>
-
-<p>Click Settings icon <img src="img/geoprocessing/settings_icon.png" class="icon"> in the Ground Control toolbar:</p>
-
-<ul>
-    <li>set Camera accuracy (m) = 1,
-    <li>leave the rest at default values,
-</ul>
 
 <p>Click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (leave all options at the default)</p>
 
@@ -344,8 +324,7 @@ terrain distortions especially on flat or undulating terrain types.</p>
 <p>Click Settings icon <img src="img/geoprocessing/settings_icon.png" class="icon"> in the Ground Control toolbar:</p>
 
 <ul>
-    <li>set Marker accuracy (m) = 0.001m
-    <li>leave the rest at default values,
+    <li>leave the  default values (Marker accuracy (m) = 0.005 m)
 </ul>
 
 <p>click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (leave all options at the default)</p>
@@ -357,7 +336,7 @@ terrain distortions especially on flat or undulating terrain types.</p>
 <h3>Stage 3: Building complex geometry (for quality processing)</h3>
 
 
-<p>Before starting the Build Geometry step it is recommended to check
+<p>Before starting the Build Dense Cloud step it is recommended to check
 the bounding box of the reconstruction (to make sure that it includes
 the whole region of interest, in all dimensions). The bounding box
 should also not be too large (increased processing time and memory
@@ -382,7 +361,7 @@ explained at the end of this section.</p>
 
 <p>Menu &gt; Workflow &gt;  Build Dense Cloud</p>
 <ul>
-    <li>Quality* =
+    <li>Quality = Medium* 
         <ul>
             <li>Medium (will downsample the images to get a 3D coordinate every 4 pixels
             <li>High (will downsample the images to get a 3D coordinate every 2 pixels;
@@ -396,11 +375,11 @@ explained at the end of this section.</p>
 </ul>
 
 <p>*When working with large datasets take into consideration the RAM size requirements for the different
-target qualities with respect to the number of images (in appendix in the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXdlAzTk95VjQtZkU"> manual </a>or
+target qualities with respect to the number of images (in appendix in the <a href="http://www.agisoft.com/pdf/photoscan_1_3_en.pdf"> manual </a>or
 in <a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/lectures/04_Imagery_Processing.html#/40"> lecture slides</a>).</p>
 
 <figure>
-<img src="img/geoprocessing/build_dense_cloud_medium_aggressive.png">
+<img src="img/geoprocessing/agi_build_dense_cloud.jpg">
 </figure>
 
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
@@ -410,7 +389,7 @@ in <a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/lectu
 <ul>
     <li>Surface type: Height field
     <li>Source data: Dense cloud
-    <li>Face count*: Custom: 50000000 (50,000,000)
+    <li>Face count: Medium
     <li>Advanced options: leave default
 </ul>
 
@@ -419,7 +398,7 @@ optimum number of faces (but this may not be enough to describe all the
 features on terrain)</p>
 
 <figure>
-<img src="img/geoprocessing/build_mesh.png">
+<img src="img/geoprocessing/agi_build_mesh.jpg">
 </figure>
 
 <p>Menu &gt; Workflow &gt;  Build Texture</p>
@@ -434,7 +413,7 @@ features on terrain)</p>
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
 
 <figure>
-<img src="img/geoprocessing/build_texture.png">
+<img src="img/geoprocessing/agi_build_texture.jpg">
 </figure>
 
 <h4>Editing geometry</h4>
@@ -444,7 +423,7 @@ atlas and exporting the model.</p>
 
 <p>If the overlap of the original images was not sufficient, the model
 can contain holes. In this case to obtain holeless model use Close
-Holes command</p>
+Holes command. It is crucial if you want to perform any volume calculations - in this case, 100% holes need to be closed</p>
 
 <p>Menu &gt;  Tools  &gt;  Mesh  &gt;  Close Holes</p>
 
@@ -452,13 +431,31 @@ Holes command</p>
 closed (in percentage of the total model size).</p>
 
 <figure>
-<img src="img/geoprocessing/close_holes.png">
+<img src="img/geoprocessing/agi_close_holes.jpg">
 </figure>
 
 <p>This does not apply to our data, since we have sufficient image
 overlap. But due to strong dependency on weather conditions, the holes
 in data are common with UAS.</p>
 
+<h4>Building DEM</h4>
+
+<p>Menu &gt;  Workflow &gt;  Build DEM</p>
+<p>
+In this step the parameters of the exported DEM are determined. In order to work in the commonly used in NC reference system, we will won't keep the porject's WGS84 system, but change it to NC State Plane (ESPG:3358)</p>
+	
+<figure>
+<img src="img/geoprocessing/build_dem.jpg">
+</figure>
+
+<h4>Building Orthophoto</h4>
+
+<p>Menu &gt;  Workflow &gt;  Build Orthophoto</p>
+	<p>Orthophoto can be build only in the same coordinate system that the DEM</p>
+	
+<figure>
+<img src="img/geoprocessing/build_ortho.jpg">
+</figure>
 <h4>Batch processing</h4>
 
 <p>Menu &gt;  Workflow &gt;  Batch process  &gt; Add</p>
@@ -470,28 +467,28 @@ intervention. All the parameters should be set the same as explained
 above.</p>
 
 <ol>
-    <li>Build dense point cloud
+    <li>Optimize Alignment (if the GCPs were placed but the optimization not performed, otherwise:skip)
+    <li>Build Dense Cloud
     <li>Build Mesh
-    <li>Decimate Mesh
     <li>Build Texture
+    <li>Build Build DEM
+    <li>Build Build Orthophoto
 </ol>
 
 <figure>
-<img src="img/geoprocessing/batch_process.png">
-<img src="img/geoprocessing/edit_job.png">
+<img src="img/geoprocessing/batch.jpg">
 </figure>
 
 <p>
 If the process takes really long time on your device,
 you can cancel the processing and work with the project files saved on the
-<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfm9DOEZpYWwyZTFJX040em90NFZMQ3o5amdUSmtZdGRMeFp1VXNzakpOTVk">google drive</a>
-(after each time consuming step, the project file was saved and you can work starting from this step).
+<a href="https://drive.google.com/open?id=0B1AfQGDB8tPXVlQxT0J5Z0prSlE">google drive</a>.
 The only adjustment you need to make is to change the path of the pictures
 to the localization of downloaded images on your computer.
 
 <p>
 In order to do that right clik on any of the pictures in the Pictures pane and choose <em>Change Path...</em> and in the dialog window mark the <em>All cameras</em> option. This will automatically apply the updated location to all the pictures in the project.</p>
-<figure><img src="img/geoprocessing/agisoft_changepath.png"> </figure>
+<figure><img src="img/geoprocessing/agi_change_path.jpg"> </figure>
 <h3>Stage 4: Exporting results</h3>
 
 <p>This option will be disabled if you are working in the demo version
@@ -514,36 +511,28 @@ for free. (click link and request a trial code via email)</p>
 </ul>
 
 <figure>
-<img src="img/geoprocessing/export_orthophoto.png">
+<img src="img/geoprocessing/export_ortho.JPG">
 </figure>
 
-<p>Fill out the desired name and save as type TIFF/GeoTIFF (*.tif)</p>
+<p>Leave default values. Fill out the desired name and save as type TIFF/GeoTIFF (*.tif)</p>
 
 
 <h4>Digital surface model</h4>
 
 <p>Menu &gt;  File  &gt;  Export DEM…</p>
 
-<ul>
-    <li>Projection Type = Geographic (default);
-    <li>Datum = WGS 1984
-    <li>Write KML file (footprint) and World file (.tfw) = check if desired (if left unchecked,
-        georeferencing information will still be contained in the GeoTIFF .tif file);
-    <li>Crop invalid DEM =checked;
-    <li>Pixel size: leave default
-</ul>
-
 <figure>
-<img src="img/geoprocessing/export_dem.png">
+<img src="img/geoprocessing/export_dem.JPG">
 </figure>
-<p>Fill out the desired name) and save as type TIFF/GeoTIFF (*.tif)</p>
+<p>Leave default values. Fill out the desired name and save as type TIFF/GeoTIFF (*.tif)</p>
 
 
 <h4>Generating report</h4>
 
 <p>Menu &gt;  File &gt;  Generate report</p>
 <p>Indicate the name and path for the PDF file</p>
-
+<hr>
+Processing outputs form the OPTION 1 (downsampled images) are provided <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXX201ajRmZVF4aFE">here</a>
 <hr>
 The following export steps are optional.
 
@@ -559,6 +548,8 @@ FBX, Autodesk DXF, Google Earth KMZ, U3D, Adobe PDF. Some file formats
 (OBJ, 3DS, VRML, COLLADA, PLY, FBX) save texture image in a separate
 file. The texture file should be kept in the same directory as the main
 file describing the geometry.</p>
+	
+	3D Models are a great visualization tool. <a href="https://skfb.ly/69oyL">Model generated by following the assignment instructions</a> as well as <a href="https://skfb.ly/TEnq">model from full flight processing</a> can be viewed on sketchfab 
 
 
 <h4>Point cloud</h4>
@@ -591,18 +582,17 @@ Exterior orientation, Inpho project file.</p>
 
 <nav>
 <ul>
-<li><a class="term-changes" href="https://moodle-courses1617.wolfware.ncsu.edu/course/view.php?id=2396">Moodle site</a></li>
+<li><a class="term-changes" href="https://moodle-courses1718.wolfware.ncsu.edu/course/view.php?id=4709">Moodle site</a></li>
 <li><a href="http://help.ncsu.edu/">Computing Help</a></li>
 <li><a href="http://geospatial.ncsu.edu/">GIST Home</a></li>
 <li><a href="http://www.ncsu.edu/policies/prr-disclaimer.php">Disclaimer</a></li>
 <li><a href="http://oit.ncsu.edu/itaccess">Accessibility</a></li>
-<li>
-    <a href="https://github.com/ncsu-geoforall-lab/geospatial-modeling-course" title="Source code for web pages on GitHub">
+<li><a href="https://github.com/ncsu-geoforall-lab/uav-lidar-analytics-course" title="Source code for web pages on GitHub">
         <img src="../img/github_logo.png" alt="GitHub Octocat logo">
     </a>
 </li>
 <li title="Copyright and license (not applicable to linked materials)">
-    &copy; 2016
+    &copy; 2018
     <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
     <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU GeoForAll Lab</a>
 </li>

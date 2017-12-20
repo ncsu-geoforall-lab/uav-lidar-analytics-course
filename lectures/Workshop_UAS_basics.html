@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+
+<section> 
+<section>
+    <h2>Introduction to UAS</h2>
+    <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        and
+        <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
+    </p>
+
+</section>
+<!--
+<section>
+    <h2>Objectives</h2>
+    <ul>
+        <li class="fragment"><strong>Use</strong> the proper terminology and <strong>understand</strong> its meaning</li>
+        <li class="fragment"><strong>Describe</strong> the elements of UAS</li>
+        <li class="fragment"><strong>Classify</strong> different UAS according to their make and characteristics</li>
+        <li class="fragment"><strong>Describe</strong> different classes of the UAS</li>
+        <li class="fragment"><strong>Understand</strong> the current state of the UAS development</li>
+        <li class="fragment"><strong>Describe</strong> the objectives beyond the use of the UAS</li>
+    </ul>
+</section>
+-->
+<section>
+    <h2>What is an UAV?</h2>
+    For the brief summary read the <a href="http://www.insidegnss.com/auto/janfeb08-wp.pdf">overview article</a>
+</section>
+
+<section>
+    <h2>UAS or UAV? Or maybe a drone?</h2>
+    <p class="fragment">
+            <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle 
+	</p>
+    <p class="fragment">
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>S</strong>ystems
+		</p>
+    <p class="fragment">
+            <strong>Drone</strong> = <strong>D</strong>ynamic <strong>R</strong>emotely <strong>O</strong>perated <strong>N</strong>avigation <strong>E</strong>quipment
+	</p>
+    <p class="fragment">
+            <strong>RPA</strong> = <strong>R</strong>emotely <strong>P</strong>iloted <strong>A</strong>ircraft
+	</p>
+</section>
+<section>
+    <h2>UAS</h2>
+     <p >
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>ircraft <strong>S</strong>ystems
+	</p>
+    <div class="left">  
+    
+            <ul>
+                <li class="fragment">Unmanned = without a person onboard <p class="small">(operated by automatic or remote control)</p></li>
+                <li class="fragment">Aircraft = able to fly</li>
+   <li class="fragment">System =  associated elements <p class="small">related to safe operations  (may include control stations,control links, support equipment, payloads, flight termination systems, and launch recovery equipment)</p> </li>
+            </ul>  
+    </div>
+
+    <div class="right fragment">
+        <img src="img/Pilot_data_UAV.png" width="95%">
+    </div>
+    <ul>
+     
+                    <ul>
+                    <li class="fragment">consists of three elements:</li>
+                    <li class="small fragment">Unmanned Aircraft;</li>
+                    <li class="small fragment">Control Station;</li>
+                    <li class="small fragment">Data Link.</li>                    
+                    </ul>
+
+    </ul>      
+    
+</section>
+<section>
+    <h2>UAS or UAV? Or maybe a drone?</h2>
+    <div class="left fragment">
+        <p >
+            <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle (?)
+		</p>
+        <ul>
+            <li class="small fragment">Excludes: missiles, weapons, or exploding warheads,</li>
+            <li class="small fragment">Includes: all classes of airplanes, helicopters, airships, and powered-lift aircraft,</li>
+            <li class="small fragment">Doesn’t  include: traditional balloons, rockets, tethered aircraft and un-powered gliders.</li>
+        </ul>
+
+    </div>
+    <div class="right fragment">
+        <img src="img/uav_acronym.png">
+        <p class="small">
+            More about terminology in the article:
+            <a href="http://dissenter.firedoglake.com/2013/10/11/dont-use-the-word-drones-theyre-uavs/">Don’t Use the ‘D’ Word: They’re ‘UAVs’ or ‘RPAs’ But Definitely Not ‘Drones’</a>
+        </p>
+    </div>
+</section>
+
+<section>
+    <h2>How does an UAS look like?</h2>
+    <p class="small">Types and classification of UAS</p>
+</section>
+<section>
+    <h2>Different shapes and sizes…</h2>
+    <img class="small fragment"  src="img/uav_shapes_sizes.png">
+</section>
+<section>
+    <h2>… different designs…</h2>
+    <img class="small fragment" src="img/uas_designs.jpg">
+</section>
+<section>
+    <h2>… and different classifications</h2>
+    <div class="left">
+        <ul class="small">
+        <li>By physical size</li>
+        <li>By weight</li>
+        <li>By endurance</li>
+	<li>By altitude</li>
+	<li>By wing loading</li>
+	<li>By engine type</li>
+	<li>By range</li>
+	<li>By performance</li>
+	<li>By capabilities</li>
+	<li>By type...</li>
+        </ul>
+    </div>
+    <div class="right fragment">
+        <img src="img/uav_classification_bases.png">
+        <p class="small">
+           <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf"> more about classifications in this article (source for the table)</a>
+        </p>
+    </div>
+</section>
+<section>
+    <h2>Simplified classifications</h2>
+    <div class="right fragment">
+        <img src="img/uav_nomenclature_scheme.png">
+    </div>
+    <div class="left fragment">
+        <img src="img/uav_classification_simple.png">
+        <ul>
+            <li class="small fragment">More (much much more) about classifications in the <a href="http://shemesh.larc.nasa.gov/people/jmm/NASA-TM-2013-217969.pdf">article</a></li>
+            <li class="small fragment">Condensed basics including classification can be found in  <a href="http://www.bigs-potsdam.org/images/Policy%20Paper/PolicyPaper-No.1_Civil-Use-of-UAS_Bildschirmversion%20interaktiv.pdf">Unmanned Aircraft Systems for Civilian Missions</a></li>
+        </ul>
+    </div>
+
+</section>
+<section>
+    <h2>How does an UAS work?</h2>
+    <p class="small">System elements</p>
+</section>
+<section>
+    <h2>Generic Unmanned Aircraft System</h2>
+    <div class="right fragment">
+        <img src="img/new/uas_general_scheme.png">
+    </div>
+    <div class="left">
+		<ul>
+		<li class="fragment">Air vehicle</li>
+		<li class="fragment">Mission planning element</li>
+		<li class="fragment">Command and control element</li>
+		<li class="fragment">Communication link</li>
+		<li class="fragment">Launch and recovery element (for some of them)</li>
+		<li class="fragment">Payload</li>
+		</ul> 
+    </div>
+</section>
+<section>
+    <h2>Sensors</h2>
+    <img src="img/uav_sensors.jpg" style="width:60%">
+</section>
+
+<section>
+    <h2>Sensors (2)</h2>
+    <img src="img/uav_sensors2.jpg" width="60%">
+</section>
+
+<section>
+    <h2>Who uses UAS?</h2>
+    <p class="small">Types of UAV operations</p>
+</section>
+<section>
+    <h2>Types of UAS Operations</h2>
+    <ul>
+            <li class="fragment"><strong>Public Operations</strong><br>
+			Governmental, limited by federal statue to certain government operations within U.S. Airspace;</li>
+            <li class="fragment"><strong>Civil Operations</strong><br>
+			Non-Governmental, must be conducted in accordance with all Federal Aviation Administration (FAA) regulations;</li>
+			<li class="fragment"><strong>Model Aircraft</strong><br>
+			Hobby or Recreation <strong>only.</strong></li>
+    </ul>
+</section>
+<section>
+ <h2>FAA – Federal Aviation Administation</h2>
+    <div class="right fragment">
+        <img src="img/NAS.png">
+    </div>
+    <div class="left">
+        <ul>
+            <li class="fragment">NAS – National Airspace System</li>
+        </ul>
+		<p class="small fragment"> The common network of U.S. airspace — air navigation facilities, equipment, and services; airports or landing areas; aeronautical charts, information and services; rules, regulations, and procedures; technical information; and manpower and material. </p>
+    </div>
+
+</section>
+<section>
+    <h2>Integration of UAS into the NAS</h2>
+    <ul>
+        <li class="fragment">review of current policies, regulations, environmental impact, privacy considerations, standards, and procedures;</li>
+        <li class="fragment">identification of <strong>gaps in current UAS</strong> technologies and <strong>regulations,</strong> standards, policies, or procedures;</li>
+		<li class="fragment">development of new technologies and <strong>new or revised regulations, standards, policies, and procedures;</strong></li>
+		<li class="fragment">and the associated development of guidance material, <strong>training, and certification</strong> of aircraft systems, propulsion systems, and airmen.</li>
+    </ul>
+	<p class="fragment">For more info: <a href="http://www.faa.gov/uas/media/uas_roadmap_2013.pdf">Integration of UAS in the NAS Roadmap</a></p>
+</section>
+<section>
+    <h2>Can I use it?</h2>
+    <p class="small">regulations, standards, policies, and procedures</p>
+</section>
+<section>
+    <h2>Know before you fly</h2>
+    <ul>
+        <li class="fragment"><a href="http://knowbeforeyoufly.org/">“Know Before You Fly”</a> is an educational campaign  that provides prospective unmanned aircraft users with the information and guidance they need to fly safely and responsibly.</li>
+        <li class="fragment">Different rules apply to <a href="http://knowbeforeyoufly.org/for-recreational-users/">recreational</a> and <a href="http://knowbeforeyoufly.org/for-business-users/"> business </a>users and <a href="http://knowbeforeyoufly.org/for-public-entities/">government entities </a> </li>
+	<li class="fragment">New regulations (effective on August 29, 2016) known as <a href="https://youtu.be/v-d1RuTFvbs">“Part 107”</a>)  </li>
+</section>
+<section>
+    <h2>What are UAS used for?</h2>
+</section>
+<section>
+    <h2>Army and government</h2>
+    <div class="left">  
+    	<p> <strong>Public Use Aircraft</strong> </p>
+            <ul class="small">
+                <li>Department of Agriculture</li>
+                <li>Department of Commerce</li>
+                <li>Department of Defence</li>
+                <li>Department of Energy</li>
+                <li>Department of Homeland Security</li>
+                <li>Department of Interior</li>
+                <li>Department of Justice</li>
+                <li>NASA</li>
+                <li>NOAA</li>
+                <li>State Universities</li>
+                <li>State Law Enforcement</li>
+            </ul>
+    </div>
+    <div class="right fragment">
+		<p class="fragment"><a href="https://www.youtube.com/watch?v=MkqlwKnvdQo"> Military (movie)</a></p>
+        <img class="fragment" src="img/military_use.png">
+    </div>
+</section>
+<section>
+    <h2>Civilian Application Fields</h2>
+       <img src="img/new/drones_industry.jpg" width=60%>
+
+</section>
+<section>
+    <h2>Application examples (1)</h2>
+
+    <div class="right fragment">
+        <img src="img/use_examples_1.png">
+    </div>    <div class="left">  
+            <ul>
+                <li class="fragment">Agricultural industry:
+                    <ul><li class="fragment">UAS equipped with fertilizer and pesticide dispersing equipment can be used to spray over large fields;</li></ul>
+                <li class="fragment">Telecommunications:
+                    <ul><li class="fragment">As mobile relay platforms as well as in disaster zones for emergency telecommunications;</li></ul>
+            </ul>  
+    </div>
+</section>
+<section>
+    <h2>Application examples (2)</h2>
+    <div class="right fragment">
+        <img src="img/use_examples_2a.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">News broadcasting:
+                    <ul><li class="fragment">In providing aerial video feeds for news events where reporters cannot get into time;</li></ul>
+                <li class="fragment">Air traffic Control and ground traffic control:
+                    <ul><li class="fragment">To monitor traffic and accidents over highways and road in big and densely populated cities, violation of traffic rules;</li></ul>
+               </ul>  
+    </div>
+</section>
+<section>
+    <h2>Application examples (3)</h2>
+    <div class="right fragment">
+        <img src="img/use_examples_2.png">
+    </div>
+    <div class="left ">  
+            <ul>
+                
+                <li class="fragment">Mineral exploration:</li>
+                    <ul><li class="fragment">In aerial survey, to find minerals in desolate and hard-to-reach regions;</li></ul>
+                <li class="fragment">Coastal surveillance:</li>
+                    <ul><li class="fragment">By the coast guard for monitoring coastlines;</li></ul>
+            </ul>  
+    </div>
+    
+</section>
+<section>
+    <h2>UAS for Remote Sensing (1)</h2>
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas1.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">Agricultural and environmental application:</li>
+                    <ul><li class="small fragment">Vegetation and/or biodiversity control, forest fire monitoring, tree classification, monitor stream temperatures, animals detection, bird counts;</li></ul>
+                <li class="fragment">Intelligence, surveillance, and reconnaissance:</li>
+                    <ul><li class="small fragment">Detection of lost persons in difficult-to-access situations, support fire brigades in real-time crisis management, rapid disaster management;</li></ul>
+                            </ul>  
+    </div>
+</section>
+<section>
+    <h2>UAS for Remote Sensing (2)</h2>
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas2.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">Aerial monitoring in engineering:</li>
+                    <ul>
+                    <li class="fragment">Infrastructure inspections and crop monitoring, distributed wind measurement, landslide monitoring;</li>
+                    </ul>
+                <li class="fragment">Cultural heritage:</li>
+                    <ul>
+                    <li class="fragment">Orthophotos of archaeological sites, 3D models of man-made structures;</li>
+                    </ul>
+
+            </ul>  
+          
+    </div>
+
+</section>
+<section>
+    <h2>UAS for Remote Sensing (3)</h2>
+    <div class="right fragment">
+        <img src="img/flight_track.png">
+    </div>
+    <div class="left">  
+            <ul>
+            <li class="fragment">Traditional surveying, conventional mapping and photogrammetry, and cadastral applications:</li>
+                    <ul>
+                    <li class="fragment">cadastral surveying, advantageous alternative to traditional surveying, high-precision parcel boundary determination;</li>
+                    </ul>
+            </ul> 
+    </div>            
+   <div class="right fragment">
+        <p class="fragment">Extended review on UAS in remote sensing in the<a href="http://ac.els-cdn.com/S0924271614000501/1-s2.0-S0924271614000501-main.pdf?_tid=61c0aabe-f9ad-11e4-8a75-00000aacb360&amp;acdnat=1431548559_cae211036258226462ab73873e8d0fb3"> article</a></p>
+    </div>          
+</section>
+<section>
+    <h2>Use your imagination!</h2>
+            <div class="right fragment">
+            <img src="img/uav_pizza_delivery.png">
+            </div>   
+            <div class="left">
+            <ul>
+                <li class="fragment"><a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Pizza delivery</a> - <a href="http://rt.com/news/167936-russia-drones-pizza-delivery/">Russian example</a>, <a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Domino’s DomiCopter</a></li>
+                <li class="fragment"><a href="http://news.sky.com/story/1101379/take-off-for-sushi-restaurants-flying-tray">Sushi delivery</a></li>
+                <li class="fragment"><a href="https://www.youtube.com/watch?v=qmHwXf8JUOw">Beer copter</a></li>
+             </ul> 
+             </div>
+</section>
+<section>
+    <h2>Why shoud you know how to use UAS?</h2>
+        <img class="fragment" src="img/new/uas_statistics.jpg">
+</section>
+<section>
+    <h2>Why shoud you know how to use UAS?</h2>
+    <p class="small"><a href="https://www.youtube.com/watch?v=47TNPodZqH0">How to obtain spatial data?</a></p>
+
+        <img class="fragment"src="img/new/terrestrial_UAS_satelite.jpg">
+</section>
+<section>
+    <h2>Barriers</h2>
+    <ul>
+        <li class="fragment">constantly changing legislation and regulations,</li>
+        <li class="fragment">political and societal acceptance,</li>
+	<li class="fragment">...<br>what do you consider a barrier in UAS development? <br> What obstacles do you see for yourself as a potential UAS user?</li>
+
+    </ul>
+</section>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>

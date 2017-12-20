@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>Analysis of the processing outputs</h2>
+    <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        and
+        <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
+    </p>
+
+</section>
+<section>
+    <h2>Visualization of the outputs</h2>
+    <ul>
+    <li class="fragment">all georeferenced poutputs - orthophoto, DSM and pointcloud can be displayed and analyzed in the GIS software</li>
+    <li class="fragment">3D model can be loaded onto 3D modeling software</li>
+    <li class="fragment">There are online tools enabling rapid visualization of 3D content</li>
+    </ul> 
+</section>
+
+<section>
+    <h2>Point cloud - plas.io</h2>
+<p> <a href="plas.io">plasi.io</a> an in- browser point cloude rendering tool
+    <img class="fragment" src="img/new/plas_io.JPG">
+</section>
+<section>
+    <h2>3D model - Sketchfab</h2>
+<div class="right">
+            <img src="img/new/sketchfab.png"width ="77%">
+ </div>
+ <div class="left">   
+<p> <a href="https://sketchfab.com/">Sketchfab</a> is a platform to publish, share and discover 3D, VR and AR content </p> 
+    <ul>
+    <li class=><p> <a href="https://sketchfab.com/osgeolab/models">OSgeoForALl</a> models on sketchfab</li>
+    <li class="small">Free account has limitations</li>
+    <li class="small">Pro account available for .edu domains</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Analyzing the processing report</h2>
+ <div class="right">
+            <img src="img/new/report_small.png"width ="50%">
+ </div>
+ <div class="left">   
+<p> Includes: </p> 
+    <ul>
+    <li class="small fragment">Orthophoto and digital elevation model sketch;</li>
+    <li class="small fragment">Camera parameters and survey scheme</li>
+    <li class="small fragment">Tie points data export (matching points and panoramas) </li>
+    <li class="small fragment">Image overlap statistics</li>
+    <li class="small fragment">Camera positioning error estimates</li>
+    <li class="small fragment">Ground control point error estimates</li>
+    <li class="small fragment">Processing parameters</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Orthophoto</h2>
+    <img class="fragment" src="img/flights_ortho.png">
+</section>
+<section>
+    <h2>Survey data</h2>
+    <img class="fragment" src="img/flight_image_overlap.png">
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+    <img class="fragment" src="img/flights_GCP_errors.png" width="90%">
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+    <img class="fragment" src="img/flights_GCP_errors_explained.png" width="90%">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img class="fragment" src="img/camera1.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera2.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera3.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera4.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera5.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera6.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera7.png">
+</section>
+<section>
+    <h2>Analyzing the processing report</h2>
+ <div class="right">
+            <img src="img/camera_calibration_report.png">
+ </div>
+ <div class="left">   
+    <ul>
+    <li class="fragment">While carrying out photo alignment PhotoScan estimates both internal and external camera orientation parameters, including nonlinear radial distortions.</li>
+</ul>
+<p class="fragment">Tools > Camera calibration</p>
+ </div>   
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img class="fragment" src="img/image_residuals1.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img src="img/image_residuals2.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img src="img/image_residuals3.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+<pclass="fragment">The <strong>geometric error</strong> corresponding to the <strong>average image distance</strong>, measured in pixels, between:</p>
+    <img class="fragment" src="img/image_residuals_explained.png" width="90%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+<p class="fragment">This <strong>reprojection error</strong> is equivalent to the root mean square (RMS) image residuals used in photogrammetric literature</p>
+<p class="small fragment"> More on image residuals in <a href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3609/epdf">this article</a></p>
+    <img class="fragment" src="img/image_residuals.png">
+</section>
+<section>
+    <h2>Flight path</h2>
+    <img class="fragment" src="img/flight_path.png">
+</section>
+<section>
+    <h2>Flight path in 3D</h2>
+    <img class="fragment" src="img/flight_path3d.png" width="70%">
+</section>
+
+<section>
+    <h2>Digital Surface Model</h2>
+    <img class="fragment" src="img/Flight1_DSM.png">
+</section>
+<section>
+    <h2>DSMs comparison by software</h2>
+    <img class="fragment" src="img/flights_software.png">
+</section>
+<section>
+    <h2>GCPs</h2>
+    <img class="fragment" src="img/new/GCP_report.png">
+</section>
+<section>
+    <h2>'Bowl effect'</h2>
+<p class="fragment">effect can be introduced during photo alignment, in case camera calibration estimates are inaccurate</p>
+    <img class="fragment" src="img/flights_bowl.png">
+</section>
+<section>
+    <h2>'Bowl effect'</h2>
+<p >effect can be introduced during photo alignment, in case camera calibration estimates are inaccurate</p>
+    <img class="left fragment" src="img/pix4d_gcp-pix4d_noGCP_bowl.png" width="50%">
+    <img class="right fragment" src="img/sample_DSM_bowl_effect.png" width="50%">
+</section>
+<section>
+    <h2>'Bowl effect'- solutions to the problem</h2>
+    <ol>
+	<li class="fragment"> If camera calibration is known in advance-  it can be loaded in PhotoScan and fixed during photo alignment.</li>
+	<li class="fragment">Optimization procedure - recommended approach</li>
+		<ul>
+			<li class="fragment">based on <strong>camera</strong> or <strong>GCP</strong> coordinates</li>
+			<li class="fragment">performed after photo alignment</li>
+			<li class="fragment">is recommended to perform optimization based on ground control data in any case, even if precalibrated cameras are used</li>
+		</ul>
+	</ol>
+</section>
+<section>
+    <h2>Optimization</h2>
+    <img class="fragment" src="img/flights_optimization.png" width="90%">
+</section>
+<section>
+    <h2>What is an optimization?</h2>
+    		<ul>
+		<li class="fragment">PhotoScan performs full photogrammetric adjustment taking into account additional constraints introduced by ground control data</li>
+		<li class="fragment">Extrinsic and intrinsic parameters for all cameras are optimized at this step, in contrast to the simple 7-parameter transform used for georeferencing by default</li>
+		<li class="fragment">Optimization helps to significantly improve accuracy of the final solution</li>
+		</ul>
+<p class="fragment"> More on the bowl effect in <a href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3609/epdf">this article</a></p>
+</section>
+<section>
+<section>
+<h2>Terrain analysis</h2>
+<p class="fragment"> computing <a href="https://grass.osgeo.org/grass64/manuals/r.slope.aspect.html">aspect, slope, curvature</a> and <a href="https://grass.osgeo.org/grass70/manuals/r.relief.html">shaded relief</a> maps</p>
+ <img class="left fragment" src="img/analysis_aspect_GCP.png" width="35%">
+ <img class="right fragment" src="img/analysis_slope_GCP.png" width="35%">
+ <img class="left fragment" src="img/analysis_curvature_GCP.png" width="35%">
+ <img class="right fragment" src="img/analysis_relief_GCP.png" width="35%">
+</section>
+<section>
+<h2>Advanced terrain analysis</h2>
+<p class="fragment"> computing <a href="https://grass.osgeo.org/grass70/manuals/addons/r.local.relief.html">local relief</a>,  <a href="https://grass.osgeo.org/grass70/manuals/addons/r.skyview.html">skyview</a> and <a href="https://grass.osgeo.org/grass70/manuals/addons/r.shaded.pca.html">shaded PCA maps</a></p>
+ <img class="left fragment" src="img/analysis_local_relief.png" width="50%">
+ <img class="right fragment" src="img/analysis_skyview.png" width="35%">
+ <img class="left fragment" src="img/analysis_pca_GCPs.png" width="50%">
+</section>
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Change in flow pattern based on sUAS data </h3>
+<p>
+GRASS GIS flow simulation for January and June 2015 
+<p>
+    <img height=350 src="img/talk/simwe_jan.jpg">
+    &nbsp; &nbsp; &nbsp; 
+    <img height=350 src="img/talk/simwe_june.jpg">
+</section>
+
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Evolving overland flow based on sUAS data </h3>
+    <img width=60% src="img/talk/agisoft_june.gif">
+</section>
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Overland flow evolution in time</h3>
+    <img src="img/talk/flow_pattern.png">
+</section>
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Overland flow modeling - Lidar vs. UAS data</h3>
+    <img src="img/talk/flow_pattern_paddle2.png">
+</section>
+<section>
+    <h2>UAS in the Center for Geospatial Analytics</h2>
+    <h3>Education and outreach</h3>
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+<ul>
+<li>innovative curriculum
+</ul>
+    	<div class="left">  
+    <img src="img/talk/class_Corbin.gif">
+
+	</div>
+    	<div class="right">  
+    <img src="img/talk/class_photo.jpg">
+	</div>
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+    <img src="img/talk/students_projects.png">
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+
+    <img width=28% src="img/talk/class_flight_group.png">
+    <img width=65% src="img/talk/class_Travis.gif">
+
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+    <img width=58% src="img/talk/class_Nick.png">
+    <img width=40% src="img/talk/class_flight_thermal3.png">
+
+</section>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>

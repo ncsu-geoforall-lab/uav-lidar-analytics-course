@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+
+<section> 
+<section>
+    <h2>UAS and spatial data</h2>
+    <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        and
+        <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
+    </p>
+
+</section>
+
+<section>
+    <h2>UAS data </h2>
+    <h4>What do we get after the flight mission?</h4>
+        <img class="fragment"src="img/new/uas_data.jpg">
+
+</section>
+<section>
+    <h2>Digital imagery</h2>
+        <img class="fragment"src="img/digital_imagery.png">
+ <ul>
+        <li class="fragment">usually on the camera SD card</li>
+        <li class="fragment">can be geotagged (depends on camera)</li>
+        <ul>
+        <li class="fragment">Camera lens location is "written into" each photo's EXIF file</li>
+	<li class="fragment">this is not necessary the case...</li>
+	</ul>
+</ul>
+</section>
+<section>
+    <h2>Flight log</h2>
+        <ul>
+        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
+        <li class="fragment">Information is logged into a text file (flight log),</li>
+        <li class="fragment">Contains elements of exterior orientation</li>
+        </ul>
+        <img class="fragment" src="img/log.png">
+</section>
+<section>
+    <h2>GCP coordinates</h2>
+<div class="left">
+        <ul>
+        <li class="fragment">Measured by GPS coordinates of the panels set before the fight</li>
+        <li class="fragment">Photo ID points (distinguishabe ground features)can be surveyed later on </li>
+        <li class="fragment">It is improtant to know the GCPs coorditate system (spatial reference system)</li>
+        </ul>
+</div>
+<div class="right">
+        <img src="img/GCPs.png">
+</div>
+</section>
+
+<section>
+    <h2>Spatial reference system</h2>
+     <div class="left">
+        <ul class="small">
+        <li class="fragment">defines, with the help of coordinates, how the two-dimensional, projected map in your GIS is related to real places on the earth</li>
+        <li class="fragment">There are two different types of coordinate reference systems: Geographic Coordinate Systems and Projected Coordinate Systems</li>
+        <li class="fragment">There are global map projections, but most map projections are created and optimized to project smaller areas of the earth’s surface</li>
+        <li class="fragment">It is crucial to know what is your data reference system!</li>
+        <li class="fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (EPSG codes)</a></li>
+
+    </div>
+    <div class="right">
+        <img src="img/new/projection.JPG">
+    </div>
+</section>
+<section>
+    <h2>Spatial data types</h2>
+        <img class="fragment"src="img/new/vector_raster.png">
+</section>
+<section>
+    <h2>Vector data</h2>
+     <div class="left">
+        <ul>
+        <li class="fragment">comprised of vertices and paths, <strong>not</strong> made up of a grid of pixels</li>
+        <li class="fragment">three basic types: points, lines and polygons (areas)</li>
+        <li class="fragment">can store attributes</li>
+
+    </div>
+    <div class="right">
+        <img src="img/new/vectors.jpg">
+    </div>
+</section>
+<section>
+    <h2>Raster data</h2>
+    <div class="left">
+        <ul>
+        <li class="fragment">made up of pixels (also referred to as grid cells)</li>
+        <li class="fragment">each pixel has only one value</li>
+        	<ul class="small fragment">
+        		<li>image has a red, green and blue (RGB) value</li>
+        		<li>each value in an elevation map represents a specific height</li>
+    </div>
+    <div class="right">
+        <img src="img/new/raster.png" width="60%">
+    </div>
+</section>
+<section>
+    <h2>Raster vs. vector data</h2>
+     <div class="left fragment">
+<h4>RASTER</h4>
+        <ul class="small">
+        <li class="fragment"><strong>+</strong> map algebra with raster data is usually quick and easy to perform</li>
+        <li class="fragment"><strong>+</strong> quantitative analysis is intuitive</li>
+        <li class="fragment"><strong>-</strong> can have a pixelated look and feel</li>
+        <li class="fragment"><strong>-</strong> cannot create network datasets or perform topology rules on rasters</li>
+        <li class="fragment"><strong>-</strong> no attribute tables</li>
+        <li class="fragment"><strong>-</strong> large data size with high resolution rasters</li>
+    </div>
+    <div class="right fragment">
+<h4>VECTOR</h4>
+        <ul class="small">
+        <li class="fragment"><strong>+</strong> graphical output is generally more aesthetically-pleasing</li>
+        <li class="fragment"><strong>+</strong> network analysis and proximity operations use vector data structures</li>
+        <li class="fragment"><strong>-</strong> in order to display continuous data as a vector, it would require substantial generalization</li>
+        <li class="fragment"><strong>-</strong> with a lot of features, vector manipulation algorithms are complex</li>
+    </div>
+</section>
+
+
+<section>
+    <h2>Raster vs. vector data</h2>
+<ul>
+        <li class="fragment"><strong>Do you want to work with pixels or coordinates?</strong> Raster data works with pixels. Vector data consists of coordinates</li>
+        <li class="fragment"><strong>What is your map scale? </strong> Vectors can scale objects up to the size of a billboard. But you don’t get that type of flexibility with raster data</li>
+        <li class="fragment"><strong>Do you have restrictions for file size? </strong> Raster file size can result larger in comparison with vector data sets with the same phenomenon and area.</li>
+</section>
+
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img class="fragment" src="img/new/processing_outputs.JPG">
+</section>
+
+<section>
+    <h2>Orthophoto</h2>
+     <div class="left">
+        <ul>
+        <li class="fragment"> aerial photograph or image geometrically corrected ("orthorectified") such that the scale is uniform: the photo has the same lack of distortion as a map</li>
+        <li class="fragment"> raster: consistis of red, green and blue bands</li>
+    </div>
+    <div class="right">
+        <img src="img/new/ortho_example.jpg">
+    </div>
+</section>
+<section>
+    <h2>Digital Surface Model</h2>
+<img src="img/new/dtm_dsm.jpg" width="60%">
+        <ul>
+        <li class="fragment"> DEM/DTM - Digital Elevation Model / Digital Terrain Model</li>
+        	<ul class="fragment">       
+		<li> representation of a terrain's elevation</li>
+        	<li> bare-earth raster grid</li>
+		</ul>
+        <li class="fragment"> DSM - Digital Surface Model 
+        	<ul class="fragment">       
+		<li> representation of a visible surface</li>
+        	<li> captures the natural and built features on the Earth’s surface</li>
+		</ul>
+</section>
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img src="img/new/processing_outputs.JPG">
+
+</section>
+<section>
+    <h2>Pointcloud</h2>
+        <ul>
+        <li class="fragment"> representation of the external surface of an object</li>
+        <li class="fragment"> set of vertices in a three-dimensional coordinate system</li>
+        <li class="fragment"> vector or raster?</li>
+        <li class="fragment"> Dale Lutz once said, "point cloud is a badly behaved raster"</li>
+        <li class="fragment"> in GIS, point cloud geometry is often known, rather mistakenly, as LiDAR</li>
+ <div class="left">
+        <img src="img/new/pointclouds.png">
+</div>
+
+   <div class="right">
+        <img src="img/new/Point_cloud_torus.gif">
+    </div>
+</section>
+
+
+
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>
