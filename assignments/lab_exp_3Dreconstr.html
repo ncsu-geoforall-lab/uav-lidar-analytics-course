@@ -54,6 +54,7 @@ and a smart phone.
 Take the photos from various locations and place features on the physical model
 to explore the best approach for obtaining a model with minimal distortions.
 Use any suitable software for example:
+<a href="https://demuc.de/colmap/">Colmap</a> (see below),
 <a href="http://remake.autodesk.com/try-remake">Remake</a> to create a 3D model and save
 it as .obj files and .rcm models for further analysis. To create a 3D model using your phone
 you can try
@@ -68,6 +69,27 @@ you can try
 Example 3D model obtained from 20 photos using catch123 from Autodesk</a>
 <br><a href="./img/lab_experiment/phscan_lrwprop3.jpg">DEM interpolated in GIS from the point cloud exported from 123D Catch</a>
 </center>
+
+<h3>COLMAP</h3>
+COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline
+with a graphical and command-line interface. COLMAP is open source (GNU GPL) and can be installed on all major platforms.
+<p>
+Binaries can be downloaded from <a href="https://demuc.de/colmap/">COLMAP website</a>.
+<em>Note: Dense reconstruction step requires NVIDIA graphics card with CUDA installed.</em>
+Depending on your computer configuration, install binaries with or without CUDA.
+Once downloaded, unzip and run COLMAP.bat (on Windows). This should start COLMAP's graphical user interface.
+
+<p>
+In this video tutorial (no audio) we upload around 20 images of a scaled physical model to a folder and 
+run all steps of the reconstruction pipeline. Notice we can inspect keypoints,
+matches and links between cameras and reconstructed points.
+<p>
+    Note 1: If you don't have CUDA, you need to stop before dense recontruction step.<br>
+    Note 2: If you have CUDA, stero reconstruction can crash COLMAP, which is due to so called GPU timeouts;
+    More information <a href="https://colmap.github.io/faq.html#fix-gpu-freezes-and-timeouts-during-dense-reconstruction">can be found here</a>
+<p>
+<iframe width="853" height="480" src="https://www.youtube.com/embed/sHW0f6R0rbI?rel=0"
+ frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 
 
@@ -89,7 +111,7 @@ Example 3D model obtained from 20 photos using catch123 from Autodesk</a>
     </a>
 </li>
 <li title="Copyright and license (not applicable to linked materials)">
-    &copy; 2016
+    &copy; 2018
     <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
     <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU GeoForAll Lab</a>
 </li>
