@@ -57,6 +57,24 @@ do
     build_page $FILE $FILE
 done
 
+# Topics index
+FILES="`./extract-links.py "topics/.+html" schedule.html`"
+TITLE="Topics"
+HEAD_TEXT=""
+# if this gets longer, it must go to a file
+FOOT_TEXT="<h3>Related courses</h3>
+
+To learn more about these topics, here are some
+<a href=\"https://geospatial.ncsu.edu/osgeorel/courses.html\">related courses</a>
+which may be useful for you."
+DIR="topics"
+
+TGT_FILE=$OUTDIR/topics.html
+cat < $HEAD_FILE > $TGT_FILE
+echo "<!-- This is a generated file. Do not edit. -->" >> $TGT_FILE
+./generate-index.py "$TITLE" "$HEAD_TEXT" "$FOOT_TEXT" "" ul ul $FILES >> $TGT_FILE
+cat < $FOOT_FILE >> $TGT_FILE
+
 for DIR in assignments topics
 do
     mkdir -p $OUTDIR/$DIR
