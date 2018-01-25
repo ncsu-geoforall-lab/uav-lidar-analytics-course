@@ -3,7 +3,7 @@
     <h4>GIS595-004/603; MEA592-006/601:</h4>
     <h4>UAS Mapping for 3D Modeling</h4>
     <h4 style="margin-top: 0.5em">
-        Justyna Jeziorska</h4>
+        Justyna Jeziorska, Helena Mitasova</h4>
     <p class="title-foot">
         <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
        <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
@@ -11,29 +11,22 @@
 <section>
     <h2>Objectives</h2>
     <ul>
-        <li class="fragment"><strong>Understand</strong> the crucial role of remote sensing and photogrammetry in Earth Science, especialy in spatial data aquisition</li>
-	<li class="fragment"><strong>Use</strong> the proper terminology describing photogrammetry concepts <strong>understand</strong> its meaning (distortion, ortorectification, exterior and interior orientation, focal length, flight lines, side overlap...)</li> 
-        <li class="fragment"><strong>Describe</strong> different types of aerial photography and associated with them challenges for measurements</li>
+        <li class="fragment"><strong>Understand</strong> the role of remote sensing and photogrammetry in geospatial data aquisition</li>
+        <li class="fragment"><strong>Describe</strong> different types of aerial photography and associated challenges for measurements</li>
+        <li class="fragment"><strong>Understand</strong> why photogrammetry needs to be used to make measurements from aerial photographs</li>
+        <li class="fragment"><strong>Understand</strong> Structure from Motion concepts in creating 3D models from 2D images</li>
+<!--	<li class="fragment"><strong>Use</strong> the proper terminology describing photogrammetry concepts <strong>understand</strong> its meaning (distortion, ortorectification, exterior and interior orientation, focal length, flight lines, side overlap...)</li> -->
 </section>
-<section>
-    <h2>Objectives</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> why photogrammetry needs to be used in order to make mesurements based on aerial photographs</li>
-        <li class="fragment"><strong>Describe</strong> the process of photogrammetric flight planning</li>
-        <li class="fragment"><strong>Understand</strong> Structure from Motions concepts in creating 3D models from 2D images</li>
 
-    </ul>
-</section>
 <section>
     <h2>What is Remote Sensing?</h2>
     <div class="left">
 		<ul>
 		<li class="fragment">Sensing without contact;</li>
-		<li class="fragment">Gathering data from a distance;</li>
-<!--		<li class="fragment">Fundamental to all sentient life forms;</li>
-		<li class="fragment">Two principle senses – <strong>sight</strong> and sound;</li>
-		<li class="fragment">Sight and sound have similar physiological and psychological underpinnings.</li>
-		</ul> if we mention sound, we need to mention sonar -->
+		<li class="fragment">Acquiring data from a distance;</li>
+		<li class="fragment">Passive sensors: sensor captures reflected rays</li>
+		<li class="fragment">Active sensors: sensor sends out rays and captures the return signal (lidar, radar, sonar)</li>
+		</ul> 
     </div>
     <div class="right">
         <img src="img/remote_sensing_photogrammetry.png">
@@ -55,9 +48,9 @@
 <section>
     <h2>Photogrammetry</h2>
     <ul>
-        <li class="fragment">It is a 3-dimensional coordinate measuring technique that uses PHOTOGRAPHS as the fundamental medium for measurement (the science of taking precise measurements from photographs);</li>
+        <li class="fragment">3-D coordinate measuring technique that uses PHOTOGRAPHS as the fundamental medium for measurement (the science of taking precise measurements from photographs);</li>
         <li class="fragment">Can be classified into two types: aerial and terrestrial (close range);</li>
-        <li class="fragment">Aerial Photogrammerty was a crucial development in map making;</li>
+        <li class="fragment">Aerial Photogrammerty was a crucial development in map making</li>
      </ul>
 </section>
 
@@ -68,20 +61,19 @@
 
 <section>
     <h2>Vertical aerial photography</h2>
-<p class="fragment"> Jockey's Ridge 1932</p>
-     <img class="fragment" src="img/jr1932.png" width="50%">
+<p> Jockey's Ridge 1932</p>
+     <img src="img/JockeysRidge1932full.jpg" width="75%">
 </section>
 
 <section>
     <h2>Oblique aerial photography</h2>
-<p class="fragment"> San Francisco Earthquake, 1906</p>
-<p class="fragment"> Note the high distortion</p>
-     <img class="fragment" src="img/san_francisco.png" width="50%">
+<p> San Francisco Earthquake, 1906: Note the high distortion</p>
+     <img src="img/san_francisco.png" width="55%">
 </section>
 
 <section>
     <h3>Photogrammetric process</h3>
-     <img class="fragment" src="img/photogrammetric_proces.png">
+     <img class="fragment" src="img/photogrammetric_proces.png" width="90%">
 </section> 
 
 <section>
@@ -90,7 +82,9 @@
         <img src="img/geometry_side.png">
     </div>
     <div class="right fragment">
+    <p>
            <img src="img/geometry.png">
+   </p>
     </div>
 </section>
 
@@ -98,10 +92,12 @@
     <h3>Why do we need to process the images?</h3>
 <p>From perspective to orthographic view </p>
     <div class="left">  
-            <img class="fragment" src="img/scale.png" width="70%">
+            <img src="img/pespective_vs_orthographic.png" width="90%">
     </div>
     <div class="right fragment">
-            <img src="img/pespective_vs_orthographic.png" width="90%">
+    <p>
+            <img class="fragment" src="img/scale.png" width="90%">
+    </p>
     </div>
 </section>
 
@@ -109,7 +105,9 @@
     <h3>Why do we need to process the images?</h3>
 <p>Perspective and relief distortion</p>
     <div class="left fragment">  
+    <p>
         <img src="img/pespective_vs_orthographic_image_plane.png">
+    </p>
     </div>
     <div class="right fragment">
         <img src="img/disortion.png">
@@ -191,37 +189,37 @@
 </section>
 
 <section>
-    <h2>What do we need?</h2>
+    <h3>What do we need?</h3>
   <ol>
-   <li class="fragment">Digital <strong>imagery</strong>;</li>
-   <li class="fragment">(Digital elevation model to remove the relief distortion)</li>
+   <li class="fragment">Digital <strong>imagery</strong> with sufficient overlap;</li>
+   <li class="fragment">(Digital <strong>elevation</strong> model to remove the relief distortion)</li>
    <li class="fragment">(Exterior <strong>orientation parameters </strong> from aerial triangulation or IMU to remove tilt distortion);</li>
    <li class="fragment">(<strong>Camera calibration</strong> report, to transform perspective to ortho projection);</li>
-   <li class="fragment">(Ground Control Points parameters for georeferencing and to reduce distortions);</li>
+   <li class="fragment">(<strong>Ground Control Points</strong> for georeferencing and to reduce distortions);</li>
    <li class="fragment">Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
     </ol>
-Parameters 2,3,4 can be estimated from the overlapping images 
+ <p class="small fragment">Parameters 2,3,4 can be estimated from the images - see lecture on Imagery processing </p>
 </section>
 
 <section>
-    <h2>1. Digital imagery</h2>
+    <h3>1. Digital imagery</h3>
             <img class="fragment" src="img/digital_imagery.png">
     <div class="left">
             <img class="fragment" src="img/multiview.png">
     </div>
     <div class="right">
-            <img class="fragment" src="img/camera_sensor.png" width="80%">
+            <img class="fragment" src="img/camera_sensor.png" width="75%">
     </div>
 </section>
 
 <section>
-    <h2>5. Ground Control Points</h2>
+    <h3>5. Ground Control Points</h3>
 <ul>
     <li class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt)</li>
     <li class="fragment">Accurate, well placed and marked GCPs are essential elements for model accuracy and georeferencing</li>
 </ul>
     <div class="left">
-        <p class="fragment"><strong>Photo Identifiable (Photo ID):</strong></p>
+        <p class="fragment"><strong>Photo Identifiable:</strong></p>
     <ul>
         <li class="fragment">any feature on the ground,</li>
             <ul>
@@ -241,7 +239,7 @@ Parameters 2,3,4 can be estimated from the overlapping images
     <h2>Ground Control Points </h2>
     <div class="left">
         <p class="fragment">Pre-marked (Panels): marking or painting figures or symbols on the ground before the UAS flies</p>
-         <img class="fragment" src="img/GCP_sketch.png" width="80% ">
+         <img class="fragment" src="img/GCP_sketch.png" width="75% ">
     </div>
     <div class="right">
             <img class="fragment" src="img/new/GCP_photo.png">
@@ -254,15 +252,18 @@ Parameters 2,3,4 can be estimated from the overlapping images
                 <ul>
                 <li class="fragment">necessary for georeferencing if photos are not geotagged</li>
                 <li class="fragment">improve precision of the model</li>
-                <li class="fragment">useful for quality control</li>
+                <li class="fragment">important for quality control</li>
                 </ul>
 </section>
 
 <section>
-   <h2>From images to 3D model</h2>
-stereophotogrammetry - extracts 3D information from overlapping images 
-paralax, but we need to know exact camera parameters and manually identify GCP
-on the images
+   <h2>From 2D images to a 3D model</h2>
+<ul>
+<li> orthophoto is a 2D image
+<li> elevation data are derived as part of orthorectification process
+<li> exact camera parameters and manually identified GCPs on the images were needed to derive a DEM
+<li> Structure from Motion: automated point matching, camera parameter estimation and 3D model generation
+</ul>
 </section>
 
 <section>
@@ -276,16 +277,15 @@ on the images
 
 <section>
     <h2>Structure from Motion (SfM)</h2>
-    <div class="left">  
+    <div>  
         <ul>
         <li class="fragment">range imaging technique,</li>
-        <li class="fragment">process of estimating 3D structures from 2D image sequences,</li>
+        <li class="fragment">process of estimating 3D structures from overlapping 2D image sequences,</li>
         <li class="fragment">may be coupled with local motion signals</li>
         </ul>
     </div>
-    <div class="right">
-            <img class="fragment" src="img/SfM.png">
-    </div>
+<!-- better fits into imagery processing
+    <div class="right"> <img class="fragment" src="img/SfM.png"> </div>-->
 </section>
 
 <section>
@@ -359,14 +359,15 @@ on the images
         <li class="fragment"><strong>What</strong> will be the data used for?</li>
     </ul>
 </section>
+
 <section>
-    <h2>Aerial survey</h2>
-<p>
-    <div class="left fragment">
-        <img src="img/aerial_survey.png">
-    </div>
-    <div class="right fragment">
-        <img src="img/flight_track.png">
-    </div>
-</p>
+   <h2>What we have learned</h2>
+<ul>
+<li class="fragment">What is remote sensing and photogrammetry</li>
+<li class="fragment">Properties of aerial image</li>
+<li class="fragment">Why do we need orthrectification to measure from aerial images</li>
+<li class="fragment">What process allows us to extract 3D data from series of overlapping 2D images</li>
+</ul>
 </section>
+
+
