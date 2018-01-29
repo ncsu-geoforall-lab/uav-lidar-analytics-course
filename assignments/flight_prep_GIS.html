@@ -102,9 +102,11 @@ v.to.rast input=flight_track_points output=flight_path_altitude_rast use=z
 <ul>
     <li>Download lidar data for <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a> to your computer</li>
    <li> set region to your study area using g.region or using the zoom function for setting the region 
+   <li> Change working directory <br>Settings > GRASS working environment > Change working directory > select/create any directory
+or type cd (stands for change directory) into the GUI Console and hit Enter <br>
+<i>Now you can use the commands from the assignment requiring the text file without the need to specify the full path to the file</i>
     <li>Import lidar data to grass
-<pre><code><i>#customize name#</i>
-r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
+<pre><code>r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
 r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter=1,2 return=first res=3 zrange=0,300 -oe
 </code></pre>
  </ul>
@@ -115,6 +117,7 @@ r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter
 <pre><code>r.mapcalc expression="elev_diff = flight_path_wide - mid_pines_surface_max"
 r.mapcalc expression="elev_diff = flight_path_wide - secref_surface_max"
 </code></pre>
+<li> <i>NOTE - If you are working on Windows and have the GRASS 7.2.2 installed, the command r.in.lidar might not work for you - please report it and interpolated DEM and DSM will be provided</i>
 </ul>
 <p>Use the acquired diffrence map to evaluate your flight plan, pay close attention to the obstacle free zones</p>
 <h4>Visualize results</h4>
