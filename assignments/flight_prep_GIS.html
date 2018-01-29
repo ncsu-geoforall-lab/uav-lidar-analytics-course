@@ -35,14 +35,16 @@ General workflow (with GCPs):</h4>
 
 For this analysis you can run GRASS GIS with the Lake_Wheeler_NCspm location 
 or nc_spm_08 from MEA582 can be used as well. Create a new mapset to manage your flight analysis. <br>
-!!! <strong>REMEMBER</strong> !!! to set the directory first or use the whole paths for the input files. All the commands with indication: <i>#customize name#</i> cannot be just copied and pasted into the GRASS command line
+!!! <strong>REMEMBER</strong> 
+ Change working directory <br>Settings > GRASS working environment > Change working directory > select/create any directory
+or type cd (stands for change directory) into the GUI Console and hit Enter <br>
+<i>Now you can use the commands from the assignment requiring the text file without the need to specify the full path to the file</i>
 
 <ul>
     <li>Export a flight plan path that you created to the kml file from Trimble Aerial Imaging .gwt project</li>
     <li>Launch GRASS</li>
     <li>Import generated kml into GRASS with v.import, which will reproject the input on the fly:
 <pre><code>
-<i>#customize name#</i>
 v.import input=exported_kml_file.kml output=flight_track_kml
 </code></pre>
     <li>Convert vector line to elevation points. Set the maximum distance between the points as 0.3 m
@@ -67,10 +69,7 @@ r.grow -m input=flight_path_altitude_rast output=flight_path_wide radius=2.5
 <ul>
     <li>Download lidar data for <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a> to your computer</li>
    <li> set region to your study area using g.region or using the zoom function for setting the region 
-   <li> Change working directory <br>Settings > GRASS working environment > Change working directory > select/create any directory
-or type cd (stands for change directory) into the GUI Console and hit Enter <br>
-<i>Now you can use the commands from the assignment requiring the text file without the need to specify the full path to the file</i>
-    <li>Import lidar data to grass
+      <li>Import lidar data to grass
 <pre><code>
 r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
 r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter=1,2 return=first res=3 zrange=0,300 -oe
