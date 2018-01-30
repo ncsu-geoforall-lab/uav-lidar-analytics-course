@@ -187,7 +187,7 @@
 <section>
     <h2>Site evaluation and checklists</h2>
      <img  src="img/plan/site.png">
-
+</section>
 <section>
     <h3>Site evaluation and checklists</h3>
 <p>Preflight inspection is required under Part 107.49; <br>the Remote Pilot in  Comand (RPIC) is required to develop a <strong>preflight inspection checklist</strong> if the manufacture has not developed one.</p>
@@ -264,106 +264,114 @@
     <h3>Trimble Aerial Imaging</h3>
 </section>
 <section>
-        <img src="img/plan/Picture1.jpg">
+        <img src="img/plan/Picture1.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture2.jpg">
+        <img src="img/plan/Picture2.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture3.jpg">
+        <img src="img/plan/Picture3.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture4.jpg">
+        <img src="img/plan/Picture4.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture5.jpg">
+        <img src="img/plan/Picture5.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture6.jpg">
+        <img src="img/plan/Picture6.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture7.jpg">
+        <img src="img/plan/Picture7.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture8.jpg">
+        <img src="img/plan/Picture8.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture9.jpg">
+        <img src="img/plan/Picture9.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture10.jpg">
+        <img src="img/plan/Picture10.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture11.jpg">
+        <img src="img/plan/Picture11.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture12.jpg">
+        <img src="img/plan/Picture12.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture13.jpg">
+        <img src="img/plan/Picture13.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture14.jpg">
+        <img src="img/plan/Picture14.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture15.jpg">
+        <img src="img/plan/Picture15.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture16.jpg">
+        <img src="img/plan/Picture16.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture17.jpg">
+        <img src="img/plan/Picture17.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture18.jpg">
+        <img src="img/plan/Picture18.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture19.jpg">
+        <img src="img/plan/Picture19.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture20.jpg">
+        <img src="img/plan/Picture20.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture21.jpg">
+        <img src="img/plan/Picture21.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture22.jpg">
+        <img src="img/plan/Picture22.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture23.jpg">
+        <img src="img/plan/Picture23.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture24.jpg">
+        <img src="img/plan/Picture24.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture25.jpg">
+        <img src="img/plan/Picture25.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture26.jpg">
+        <img src="img/plan/Picture26.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture27.jpg">
+        <img src="img/plan/Picture27.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture28.jpg">
+        <img src="img/plan/Picture28.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture29.jpg">
+        <img src="img/plan/Picture29.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture30.jpg">
+        <img src="img/plan/Picture30.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture31.jpg">
+        <img src="img/plan/Picture31.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture32.jpg">
+        <img src="img/plan/Picture32.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture33.jpg">
+        <img src="img/plan/Picture33.jpg" width=80%>
 </section>
 <section>
-        <img src="img/plan/Picture34.jpg">
+        <img src="img/plan/Picture34.jpg" width=80%>
 </section>
-
+<section>
+   <h2>What we have learned</h2>
+<ul>
+<li class="fragment">Phases of UAS flight planning</li>
+<li class="fragment">Safety procedures and checklists for safe flight operations</li>
+<li class="fragment">Plan a flight in the Trimble Aerial Imaging sofware</li>
+<li class="fragment">how does our study site look like</li>
+</ul>
+</section>
 
