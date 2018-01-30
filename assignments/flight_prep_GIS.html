@@ -66,7 +66,7 @@ General workflow (with GCPs):</h4>
 <h4>Software</h4>
 
 <ul>
-    <li><a href="http://grass.osgeo.org/">GRASS GIS 7.0.1</a>
+    <li><a href="http://grass.osgeo.org/">GRASS GIS</a>
     <li>Trimble Aerial Imaging <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXRWo0TGl1a3ZVMDQ">installation file (Windows)</a>
 </ul>
 
@@ -108,6 +108,7 @@ v.to.rast input=flight_track_points output=flight_path_altitude_rast use=z
 <pre><code>r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
 r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter=1,2 return=first res=3 zrange=0,300 -oe
 </code></pre>
+<li> <i><strong>NOTE</i></strong> - If you are working on Windows and have the GRASS 7.2.2 installed, the command r.in.lidar might not work for you - in this case you can download the interpolated DSMs for <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_surface_max.pack"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_surface_max.pack"> Mid Pines</a>. <br>Use <code>r.unpack</code> to unpack the rasters.</i>
  </ul>
 
 <h3>Calculate the elevation difference between the flight path and surface</h3>
@@ -116,7 +117,7 @@ r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter
 <pre><code>r.mapcalc expression="elev_diff = flight_path_wide - mid_pines_surface_max"
 r.mapcalc expression="elev_diff = flight_path_wide - secref_surface_max"
 </code></pre>
-<li> <i>NOTE - If you are working on Windows and have the GRASS 7.2.2 installed, the command r.in.lidar might not work for you - please report it and interpolated DEM and DSM will be provided</i>
+
 </ul>
 <p>Use the acquired diffrence map to evaluate your flight plan, pay close attention to the obstacle free zones</p>
 <h4>Visualize results</h4>
