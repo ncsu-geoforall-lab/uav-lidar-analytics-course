@@ -1,0 +1,46 @@
+<section>
+    <h2>Terrain Analysis of the flight site using GIS tools</h2>
+    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
+
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU OSGeo Research and Education Laboratory">OSGeoREL</a>
+        at
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        <br>
+    </p>
+</section>
+<section>
+<h3>Task</h3>
+<p style="text-align:left;">Flight planning software packages often use low resolution
+DEMs without trees or buildings.
+By bringing flight path into GIS and using latest high resolution DSMs
+we can make sure flight path will not cross any obstacles.
+
+<div style="text-align:left;">
+<p>Analyze and visualize:
+<ul>
+  <li>flight path altitude</li>
+  <li>flight path height above terrain</li>
+  <li>check for any obstacles</li>
+</ul></div>
+</section>
+<section>
+<h3>Flight altitude</h3>
+    <img class="stretch"  src="img/mid_pines_altitude.jpg">
+</section>
+<section>
+    <h3>Height above terrain</h3>
+        <img class="stretch" src="img/mid_pines_height_diff.jpg">
+</section>
+<section>
+    <h3>Flights with different GSD and overlap</h3>
+    Yellow flight has GSD 4 cm, blue flight has GSD 2.4 cm
+        <img height="240px" src="img/mid_pines_both_2d.jpg"><br>
+        <img height="210px" src="img/mid_pines_both_3d.jpg">
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="../topics/flight_planning.html" title="Go to the topic page">&#8962;</a>
+</div>

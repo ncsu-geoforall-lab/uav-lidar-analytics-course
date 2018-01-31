@@ -174,7 +174,7 @@
      <img class="fragment" src="img/plan/flowchart_site.png">
 <ul>
 <li class="fragment"> terrain check – high obstacles in the take-off, mission, landing and alternative landing locations</li> 
-<li class="fragment"> ask the locals abou possible air traffic or ground activities</li> 
+<li class="fragment"> ask the locals about possible air traffic or ground activities</li> 
 <li class="fragment"> weather check</li> 
 <ul>
 <li class="small fragment"> temperature effects battery life</li> 
