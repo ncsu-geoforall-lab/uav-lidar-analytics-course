@@ -148,7 +148,7 @@
     </div>
 </section>
 <section>
-    <h2>Digital Terrain Model</h2>
+    <h2>Digital Surface Model</h2>
 <img src="img/new/dtm_dsm.jpg" width="60%">
         <ul>
         <li class="fragment"> DEM/DTM - Digital Elevation Model / Digital Terrain Model</li>

@@ -1,3 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
 <section>
     <h2>Imagery processing</h2>
     <h4>GIS595-004/603; MEA592-006/601:</h4>
@@ -24,137 +201,68 @@
         <li class="fragment"><strong>Understand</strong> the terms: Bundle Block Adjustment, Ground Control Points, flight log;</li>
         <li class="fragment"><strong>Describe</strong> the workflow of geoprocessing of aerial imagery in designated software (Agisoft Photoscan);</li>
         <li class="fragment"><strong>Practice</strong> the process of georectification with and without GCPs;</li>
-        <li class="fragment"><strong>Explain</strong> the impact of GCP in the processing for the of final results.</li>
+        <li class="fragment"><strong>Explain</strong> the impact of GCP in the processing for theFF of final results.</li>
     </ul>
 </section>
-
-
 <section>
     <h2>Photogrammetric process</h2>
      <img class="fragment" src="img/photogrammetric_proces.png">
-     <img class="fragment" src="img/photogrammetric_proces.png">
 </section> 
-
-
 <section>
-    <h2>UAS data </h2>
-    <h4>What do we get after the flight mission?</h4>
-        <img class="fragment"src="img/new/uas_data.jpg">
-
-</section>
-
-<section>
-    <h2>Digital imagery</h2>
-        <img class="fragment"src="img/digital_imagery.png">
- <ul>
-        <li class="fragment">usually on the camera SD card</li>
-        <li class="fragment">can be geotagged (depends on camera)</li>
-        <ul>
-        <li class="fragment">Camera lens location is "written into" each photo's EXIF file</li>
-	<li class="fragment">this is not necessary the case...</li>
-	</ul>
-</ul>
-</section>
-<section>
-    <h2>Flight log</h2>
-        <ul>
-        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
-        <li class="fragment">Information is logged into a text file (flight log),</li>
-        <li class="fragment">Contains elements of exterior orientation</li>
-        </ul>
-        <img class="fragment" src="img/log.png">
-</section>
-<section>
-    <h2>GCP coordinates</h2>
-<div class="left">
-        <ul>
-        <li class="fragment">Measured by GPS coordinates of the panels set before the fight</li>
-        <li class="fragment">Photo ID points (distinguishabe ground features)can be surveyed later on </li>
-        <li class="fragment">It is improtant to know the GCPs coorditate system (spatial reference system)</li>
-        </ul>
-</div>
-<div class="right">
-        <img src="img/GCPs.png">
-</div>
-</section>
-
-<section>
-    <h2>Spatial reference system</h2>
-     <div class="left">
-        <ul>
-        <li class="small fragment">defines, with the help of coordinates, how the two-dimensional, projected map in your GIS is related to real places on the earth</li>
-        <li class="small fragment">It is crucial to know what is your data reference system!</li>
-
+    <h2>Why do we need to process the data?</h2>
+    <div class="left">  
+            <img class="fragment" src="img/scale.png" width="60%">
+            <img class="fragment" src="img/orthophoto_why.png" width="80%">
     </div>
-    <div class="right">
-        <img src="img/new/projection.JPG" width="60%">
+    <div class="right fragment">
+        <img src="img/disortion.png">
     </div>
-<ul>
-        <li class="small fragment">There are global map projections, but most map projections are created and optimized to project smaller areas of the earth’s surface</li>
-        <li class="small fragment">There are two different types of coordinate reference systems: Geographic Coordinate Systems and Projected Coordinate Systems</li>
-        <li class="small fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (EPSG codes)</a></li>
-</ul>
 </section>
-
 <section>
-    <h2>UAS data processing outputs</h2>
-    <h4>What do we get after processing the data?</h4>
-        <img class="fragment" src="img/new/processing_outputs.JPG">
+    <h2>Why do we need to process the data?</h2>
+    <div class="left fragment">  
+            <img src="img/pespective_vs_orthographic.png" width="90%">
+    </div>
+    <div class="right fragment">
+        <img src="img/pespective_vs_orthographic_image_plane.png">
+    </div>
 </section>
+<section>
+    <h2>Orthorectification</h2>
 
+    <div class="left">  
+    <p class="fragment">Process that removes:</p>
+    <ul>
+        <li class="fragment">effects of relief displacement,</li>
+        <li class="fragment">optical distortions from the sensor,</li>
+        <li class="fragment">geometric perspective</li>
+    </ul>
+        <p class="fragment">from a photograph or digital image</p>
+    </div>
+    <div class="right fragment">
+        <img src="img/DSM_ortho.png" width="40%">
+        <img src="img/ortho_example.png" width="80%">
+    </div>
+     <p class="fragment">The resulting image - an <strong>orthophoto</strong> or <strong>orthoimage.</strong></p>
+</section>
 <section>
     <h2>Orthophoto</h2>
-     <div class="left">
-        <ul>
-        <li class="fragment"> aerial photograph or image geometrically corrected ("orthorectified") such that the scale is uniform: the photo has the same lack of distortion as a map</li>
-        <li class="fragment"> raster: consistis of red, green and blue bands</li>
+      <ul>
+        <li class="fragment">Photo that has the same lack of distortion as a map (geometrically corrected, uniform scale);</li>
+        <li class="fragment">Can be used to measure true distances</li>
+        <img class="fragment" src="img/ortho_example.png">
+</section> 
+<section>
+    <h2>How do we get there?</h2>
+    <div class="left">  
+            <p class="small fragment">Old way: analogue</p>
+                <img class="fragment" src="img/analogue.png" width="90%">
+            <p class="small fragment">Now: digital</p>
+                <img class="fragment" src="img/digital.png" width="90%">
     </div>
     <div class="right">
-        <img src="img/new/ortho_example.jpg">
+            <img class="fragment" src="img/orthophoto_how.png">
     </div>
-</section>
-<section>
-    <h2>Digital Surface Model</h2>
-<img src="img/new/dtm_dsm.jpg" width="60%">
-        <ul>
-        <li class="fragment"> DEM/DTM - Digital Elevation Model / Digital Terrain Model</li>
-        	<ul class="fragment">       
-		<li> representation of a terrain's elevation</li>
-        	<li> bare-earth raster grid</li>
-		</ul>
-        <li class="fragment"> DSM - Digital Surface Model 
-        	<ul class="fragment">       
-		<li> representation of a visible surface</li>
-        	<li> captures the natural and built features on the Earth’s surface</li>
-		</ul>
-</section>
-
-<section>
-    <h2>Pointcloud</h2>
-        <ul>
-        <li class="fragment"> representation of the external surface of an object</li>
-        <li class="fragment"> set of vertices in a three-dimensional coordinate system</li>
-        <li class="fragment"> vector or raster?</li>
-        <li class="fragment"> Dale Lutz once said, "point cloud is a badly behaved raster"</li>
-        <li class="fragment"> in GIS, point cloud geometry is often known, rather mistakenly, as LiDAR</li>
- <div class="left">
-        <img src="img/new/pointclouds.png">
-</div>
-
-   <div class="right">
-        <img src="img/new/Point_cloud_torus.gif">
-    </div>
-</section>
-
-
-<section>
-
-        <img class="fragment"src="img/new/uas_data.jpg" width="80%">
-        <img class="fragment" src="img/new/processing_outputs.JPG" width="80%">
-    <h2 class="fragment">How do we get there?</h2>
-</section>
-
-
 </section>
 <section>
     <h2>Multiple-view geometry questions</h2>
@@ -164,7 +272,6 @@
         <li class="fragment"><strong>Camera geometry (motion):</strong> Given a set of corresponding points in two or more images, what are the camera matrices for these views?</li>
     </ul>
 </section>
-
 <section>
     <h2>What do we need?</h2>
     <ol>
@@ -207,7 +314,7 @@
         </ul>
     </div>
     <div class="right">
-            <img class="fragment" src="img/sfm_explained.jpg">
+            <img class="fragment" src="img/SfM.png">
     </div>
 </section>
 <section>
@@ -226,19 +333,12 @@
 </section>
 <section>
     <h2>Flight log</h2>
-    <div class="left">
         <ul>
-        <li class="fragment">Log file contains elements of exterior orientation that are measured by onboard Inertial Measurement Unit (IMU) and written into text file</li>
-</ul>
-</div>
-
-    <div class="right"> 
-        <img src="img/log.png">
-</div>
-<ul>
-        <li class="fragment">Sometimes (most DJI products) exterior orientation parameters are saved in photos EXIF file</li>
-        <li class="fragment">Log contains information about the location of the camera, not location of the depicted object  - <a href="./HM_Photogrammetry_and_SfM.html#/25">more info in this section of lecture 3</a></li>
+        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
+        <li class="fragment">Information is logged into a text file (flight log),</li>
+        <li class="fragment">Contains elements of exterior orientation</li>
         </ul>
+        <img class="fragment" src="img/log.png">
 </section>
 <section>
     <h2>4. Interior orientation </h2>
@@ -255,43 +355,47 @@
 </section>
 <section>
     <h2>5. Ground Control Points</h2>
-    <div class="left">
-        <li class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). </li>
-        <li class="fragment">For more information about placing targets and importance of  GCPs see this<a href="./HM_Photogrammetry_and_SfM.html#/30">this section of lecture 3</a></li>
-</div>
+            <p class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). <br> Accurate, well placed and marked GCPs are essential elements for aerial triangulation</p>
+    <div class="left">  
+        <p class="fragment"><strong>Photo Identifiable (Photo ID):</strong></p>
+    <ul>
+        <li class="fragment">any feature on the ground,</li>
+            <ul>
+                <li class="small fragment">specific (e.g. corners)</li>
+                <li class="small fragment">unmovable,</li>
+                <li class="small fragment">not covered by vegetation</li>
+            </ul>
+        <li class="fragment">it can be surveyed later on.</li>
+    </ul>
+    </div>
     <div class="right">
-            <img src="img/processing/GCP_girls.png">
+            <img class="fragment" src="img/GCPs.png">
     </div>
 </section>
 <section>
-    <h2>Processing options</h2>
-<img class="fragment" src="img/new/processing_options.JPG">
-</section>
-
-<section>
-    <h2>Processing options</h2>
-Everything boils down to... money (and time)
-<ul>
-        <li class="fragment">What is my starting budget and equipment?;</li>
-        <li class="fragment">How frequently will I fly?;</li>
-        <li class="fragment">Do I have the experience/ training necessary for processing (or am I able to hire people who do)?</li>
-        <li class="fragment">Do I have time to process the data by myself?;</li>
-    </ul>
+    <h2>Ground Control Points </h2>
+    <div class="left">  
+        <p class="fragment">Pre-marked (Panels): marking or painting figures or symbols on the ground before the UAS flies</p>
+         <img class="fragment" src="img/GCP_sketch.png" width="80% ">
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/GCP_photo.png">
+    </div>
 </section>
 <section>
-<h2>Processing options - software</h2>
-
-<ul>
-        <li class="fragment"><a href="http://www.agisoft.com/">Agisoft Photoscan</a></li>
-        <li class="fragment"><a href="https://pix4d.com/">Pix4D</a></li>
-        <li class="fragment"><a href="http://uas.trimble.com/tbc-am">Trimble Business Center</a> - Aerial Photogrammetry Module</li>
-        <li class="fragment"><a href="http://www.esri.com/products/drone2map">Drone2Map (ESRI)</a></li>
-        <li class="fragment"><a href="https://dronemapper.com/">DroneMapper</a></li>
-        <li class="fragment"><a href="http://opendronemap.org/">opendronemap</a></li>
-    </ul>
+    <h2>Processing software</h2>
+     <img class="fragment" src="img/agisoft.png">
 </section>
 <section>
     <h2>Agisoft PhotoScan Professional</h2>
+    <div class="right">
+        <p class="small fragment"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
+        <p class="small fragment"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_1_en.pdf"> Manual</a></p>
+        <p class="small fragment">also</p>
+        <p class="small fragment"><a href="http://www.agisoft.com/support/tutorials/beginner-level/"> Tutorials</a></p>
+        <p class="small fragment"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
+        <img class="fragment" src="img/agisoft_demo.png">
+    </div>    
 <div class="left">  
     <ul>
         <li class="fragment">Image-based solution aimed at creating 3D content from still images;</li>
@@ -299,37 +403,26 @@ Everything boils down to... money (and time)
         <li class="fragment">Both image alignment and 3D model reconstruction are fully automated.</li>
     </ul>
     </div>
-    <div class="right">
-        <p class="small fragment"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
-        <p class="small fragment"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_3_en.pdf"> Manual</a></p>
-        <p class="small fragment">also tutorials for</p>
-        <p class="small fragment"><a href="http://www.agisoft.com/pdf/PS_1.3%20-Tutorial%20%28BL%29%20-%20Orthophoto,%20DEM%20%28GCPs%29.pdf"> Orthophoto and DSM generation with GCPs</a><br>
-<a href="http://www.agisoft.com/pdf/PS_1.1%20-Tutorial%20%28IL%29%20-%20Classification%20and%20DTM.pdf"> Dense Cloud Classification & DTM Generation</a><br>
-<a href="http://www.agisoft.com/pdf/PS_1.1_Tutorial%20%28IL%29%20-%20Volume%20measurements.pdf"> Mesh-based Area & Volume Measurements</a> </p>
-        <p class="small fragment"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
-        <img class="fragment" src="img/Agisoft_Logo.jpg">
-    </div>    
-
 
 </section>
 <section>
-    <h3>Processing workflow</h3>
-     <h4 class="fragment">Preprocessing stage:</h4>
+    <h2>Processing workflow</h2>
+     <h3 class="fragment">Preprocessing stage:</h3>
             <ul>
                 <li class="small fragment">loading photos into PhotoScan;</li>
                 <li class="small fragment">inspecting loaded images, removing unnecessary images.</li>
             </ul>
-        <h4 class="fragment">Processing:</h4>
+        <h3 class="fragment">Processing:</h3>
             <ol>
                 <li class="fragment">Aligning photos;</li>
                 <li class="fragment">Building dense point cloud; <p class=small>(optional: editing dense point cloud)</p></li>
                 <li class="fragment">Building mesh (3D polygonal model); <p class=small>(optional: editing mesh)</p></li>
                 <li class="fragment">Generating texture;</li>
             </ol>
-        <h4 class="fragment">Exporting results</h4>     
+        <h3 class="fragment">Exporting results</h3>     
 </section>
 <section>
-    <h3>Possible issues: </h3>
+    <h2>Possible issues: </h2>
     <div class="left">  
     <ul>
         <li class="fragment">Agisoft Photoscan works with raw text files.<p class="small"> Trimble uses its own file formats that need to be converted in order to use it in another software</p></li>
@@ -342,18 +435,15 @@ Everything boils down to... money (and time)
     </div>
 </section>
 <section>
-    <h3>Preprocessing</h3>
+    <h2>Preprocessing</h2>
         <ul>
         <li class="fragment">Loading photos,</li>
         <li class="fragment">Loading camera positions (flight log)</li>
         </ul>
-        <img class="fragment" src="img/agisoft_preprocessing.png" width = "60%">
-        <ul>
-        <li class="fragment">If the EO is in the photos EXIF file, the parameters will load automatically</li>
-        </ul>
+        <img class="fragment" src="img/agisoft_preprocessing.png" width = "80%">
 </section>
 <section>
-    <h3>1. Aligning photos</h3>
+    <h2>1. Aligning photos</h2>
             <p class="fragment">At this stage Agisoft PhotoScan: <br >implements SfM algorithms to monitor the movement of features through sequence of multiple images:</p>
     <div class="left">  
     <ul>
@@ -372,24 +462,23 @@ Everything boils down to... money (and time)
     <ul>
         <li class="fragment">Non-linear method for refining structure and motion</li>
         <li class="fragment">Minimizing reprojection error</li>
-       <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
     </ul>
     </div>
     <div class="right">
-            <img src="img/new/bundle_block_adjustment.JPG">
+            <img class="fragment" src="img/Bundle_Block_Adjustment.png">
     </div>
 </section>
 <section>
-    <h3>Bundle Block Adjustment</h3>
+    <h2>Bundle Block Adjustment</h2>
     <ul>
-
+        <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
         <li class="fragment">Subsequently monitoring the movement of those points throughout the sequence of multiple images; </li>
     </ul>
     <div class="left">  
     <ul>
         <li class="fragment">Using this information as input, the locations of those feature points can be estimated and rendered as a sparse 3D point cloud    </div>
     <div class="right">
-            <img src="img/Bundle_Block_Adjustment2.png">
+            <img class="fragment" src="img/Bundle_Block_Adjustment2.png">
     </div>
 </section>
 <section>
@@ -408,9 +497,9 @@ Everything boils down to... money (and time)
 
 </section>
 <section>
-    <h3>2. Building dense point cloud</h3>
+    <h2>2. Building dense point cloud</h2>
     <div class="left">
-           <img class="fragment" src="img/Agisoft_point_cloud.png">
+           <img class="fragment" src="img/Agisoft_point_cloud.png" width="120%">
     </div>
     <div class="right">
   <p class="fragment">At the stage of dense point cloud generation reconstruction PhotoScan calculates depth maps for every image</p>
@@ -436,7 +525,7 @@ Everything boils down to... money (and time)
       </ul>   
 </section>
 <section>
-    <h3>Optional: editing dense point cloud</h3>
+    <h2>Optional: editing dense point cloud</h2>
     <ul>
         <li class="fragment">Automatic filtering based on specified criterion (sparse cloud only):</li>
             <ul>
@@ -450,7 +539,7 @@ Everything boils down to... money (and time)
     </ul>
 </section>
 <section>
-    <h3>3. Building mesh</h3>
+    <h2>3. Building mesh</h2>
     <div class="right">
             <img class="fragment" src="img/Agisoft_mesh.png" width="80%">
     </div>
@@ -471,9 +560,9 @@ Everything boils down to... money (and time)
     </div>
 </section>
 <section>
-    <h3>3. Building mesh</h3>
+    <h2>3. Building mesh</h2>
    <div class="right">
-            <img src="img/Agisoft_mesh.png" width="50%">
+            <img src="img/Agisoft_mesh.png" width="80%">
     </div>
     <div class="left">     
     <ul>
@@ -482,14 +571,12 @@ Everything boils down to... money (and time)
                 <li class="small fragment"><strong>Sparse cloud</strong> > fast 3D model generation (low quailty)</li>
                 <li class="small fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
             </ul>
-</ul>
-	</div>
-<ul>
  	<li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh. <p class="small">"Face count set at “0” means that PhotoScan will determine an optimum number of faces</p></li>
      </ul> 
+	</div>   
 </section>
 <section>
-    <h3>Optional: editing mesh</h3>
+    <h2>Optional: editing mesh</h2>
     <div class="left">     
     <ul>
         <li class="fragment"><strong>Decimation tool</strong> > decreases the geometric resolution of the model by replacing high resolution mesh with a lower resolution one;</li>
@@ -503,7 +590,7 @@ Everything boils down to... money (and time)
             </ul>    
 </section>
 <section>
-    <h3>Optional: editing mesh</h3>
+    <h2>Optional: editing mesh</h2>
     <ul>
         <li class="fragment"><strong>Automatic filtering</strong> based on specified criterion:</li>
             <ul>
@@ -524,9 +611,9 @@ Everything boils down to... money (and time)
     </div>   
 </section>
 <section>
-    <h3>4. Generating texture</h3>
+    <h2>4. Generating texture</h2>
  <div class="right">
-            <img class="fragment" src="img/Agisoft_texture.png" width="60%"">
+            <img class="fragment" src="img/Agisoft_texture.png" width="80%"">
  </div>
  <div class="left">     
     <ul>
@@ -546,7 +633,7 @@ Everything boils down to... money (and time)
  </div>   
 </section>
 <section>
-    <h3>Texture mapping modes</h3>
+    <h2>Texture mapping modes</h2>
  <div class="right">
             <img src="img/Agisoft_texture_modes.png" width="60%">
  </div>
@@ -571,7 +658,7 @@ Everything boils down to... money (and time)
 	</ul>
 </section>
 <section>
-    <h3>Texture mapping modes</h3>
+    <h2>Texture mapping modes</h2>
 	<ul>
      	<li class="fragment"><strong>Orthophoto</strong></li> 
         	<ul>
@@ -596,28 +683,32 @@ Everything boils down to... money (and time)
 	</ul>
 </section>
 <section>
-    <h3>Texture generation parameters</h3>
- <p class="fragment"><strong>Blending mode</strong> (not used in Single photo mode)- selects the way how pixel values will 
+    <h2>Texture generation parameters</h2>
+ <p class="fragment"><strong>Blending mode (not used in Single photo mode)</strong></p> 
+ <p class="small fragment">Selects the way how pixel values will 
 		be combined to the final texture</p>
  <div class="right">
             <img src="img/Agisoft_texture_parameters.png" width="80%">
  </div>
  <div class="left">     
     <ul>
-      <li class="small fragment"><strong>Mosaic</strong> gives more quality for orthophoto and texture atlas than <strong>Average mode</strong>, since it <strong>does not mix image details of overlapping photos, but uses most appropriate</strong></li>
-      <li class="small fragment"><strong>Average</strong> -uses the average value of all pixels from individual photos</li>
-      <li class="small fragment"><strong>Max Intensity</strong> - selects photo which has maximum intensity of the corresponding pixel</li>
-    
+      <li class="fragment"><strong>Mosaic</strong> -  <p class="small">gives more quality for orthophoto and texture atlas than
+			 <strong>Average mode</strong>, since it <strong>does not mix image details of overlapping photos 					but uses most appropriate</strong></li>
+      <li class="fragment"><strong>Average</strong> - <p class="small">uses the average value of all pixels from individual photos</p></li>
+      <li class="fragment"><strong>Max Intensity</strong> - <p class="small">the photo which has maximum intensity 
+		of the corresponding pixel is selected</p></li>
+      
      </ul>
  </div>      
  <div class="right">
       	<ul>
-		<li class="small fragment"><strong>Min Intensity </strong> - the photo which has minimum intensity of the corresponding pixel is selected</p></li> 
+		<li class="fragment"><strong>Min Intensity </strong> - <p class="small">the photo which has minimum intensity of the
+		 corresponding pixel is selected</p></li> 
 	</ul>
  </div>
 </section>
 <section>
-    <h3>Texture generation parameters</h3>
+    <h2>Texture generation parameters</h2>
        <ul>
 	<p class="fragment"><strong>Texture size / count</strong></p> 
 	<p class="fragment">Specifies the size (width & hight) of the texture atlas in pixels and determines the number of files for texture to be exported to:</li>
@@ -749,3 +840,146 @@ Everything boils down to... money (and time)
 </section>
 
 
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>

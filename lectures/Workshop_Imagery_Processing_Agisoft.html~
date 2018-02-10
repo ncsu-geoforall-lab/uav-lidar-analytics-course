@@ -201,7 +201,7 @@
 <section>
     <h2>3. Building mesh</h2>
    <div class="right">
-            <img src="img/Agisoft_mesh.png" width="80%">
+            <img src="img/Agisoft_mesh.png" width="50%">
     </div>
     <div class="left">     
     <ul>
@@ -210,9 +210,11 @@
                 <li class="small fragment"><strong>Sparse cloud</strong> > fast 3D model generation (low quailty)</li>
                 <li class="small fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
             </ul>
+</ul>
+	</div>
+<ul>
  	<li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh. <p class="small">"Face count set at “0” means that PhotoScan will determine an optimum number of faces</p></li>
      </ul> 
-	</div>   
 </section>
 <section>
     <h2>Optional: editing mesh</h2>
