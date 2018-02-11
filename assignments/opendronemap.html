@@ -143,6 +143,48 @@ images. If you want to limit the memory usage, you need to limit the
 number of processes using the <code>--opensfm-processes</code> command
 line option.
 
+<h3>Running WebODM</h3>
+
+Install additional packages for management of WebODM (assuming you
+already have Docker up and running):
+
+<pre><code>
+sudo apt install docker-compose python-setuptools python-pip
+</code></pre>
+
+Get WebODM code using Git:
+
+<pre><code>
+git clone https://github.com/OpenDroneMap/WebODM --config core.autocrlf=input
+</code></pre>
+
+Go the the course code directory:
+
+<pre><code>
+cd WebODM
+</code></pre>
+
+Start WebODM:
+
+<pre><code>
+./webodm.sh start &amp;
+</code></pre>
+
+Now go to the URL specified in the output, it will be likely
+<tt>http://localhost:8000</tt>. You will be prompted to create an
+administrator account. Create it. It will be the only account we will
+need for the exercise.
+
+Upload images to the task which is already there or create a new one.
+Change the resolution of images to 800 to speed up the upload and
+computation (this reduces the quality of the images).
+
+Now you need to wait for the processing to finish. To follow the
+processing, you can access WebODM from outside the VCL machine. Enter
+the VCL machine IP address as URL to your web browser and add
+<tt>:8000</tt> to it. You should get a login page and you should be able
+to log in using the admin account credentials you created earlier.
+
 <h3>Using the results</h3>
 
 All results are stored in the <code>odm</code> directory,
