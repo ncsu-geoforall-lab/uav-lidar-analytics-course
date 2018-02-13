@@ -11,77 +11,112 @@
 </section>
 <section>
     <h2>Possible issues</h2>
-<p>Processing data from UAS can be challenging. Sources for problems in the processing include
+<p>Processing data from UAS can be challenging.<br> Sources for problems in the processing include:
         <ul>
             <li class="fragment">Data specific issues caused by:</li>
             <ul>
                 <li class="fragment">bad weather,</li>
                 <li class="fragment">failure of hardware (UAS or sensor),</li>
+                <li class="fragment">wrongly chosen sensor or wrong settings</li>
+                <li class="fragment">not enough information about image localization</li>
                 <li class="fragment">challenging terrain,</li>
                 <li class="fragment">bad flight planning</li>
-                <li class="fragment">not enough information about image localization</li>
+
                 </ul>
+</ul>
+</section>
+<section>
+    <h2>Possible issues</h2>
+
         <ul>
             <li class="fragment">Software specific issues caused by:</li>
             <ul>
                 <li class="fragment">incopability between UAS and software (like file extensions)</li>
                 <li class="fragment">memory problems or lack of computational power</li>
                 <li class="fragment">limitation of the software algorithms</li>
-                <li class="fragment">bad flight planning</li>
                 </ul>
 </section>
 <section>
-    <h2>Possible issues: log file</h2>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Agisoft Photoscan works with raw text files.<p class="small"> Trimble uses its own file formats that need to be converted in order to use it in another software</p></li>
-        <li class="fragment">if only .jxl is available use <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> </li>
-        <li class="fragment">If a project file (.gwt extension) is available, the text file can be exported from Trimble Access Aerial Imaging software</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/TBC_export.png">
-    </div>
-</section>
-<section>
-    <h2>Memory requirements</h2>
-    
-        <p class="fragment"><strong>Aligning Photos</strong></p>
-        <img class="fragment" src="img/memory1.png">
-        <p class="fragment"><strong>Building Model (Height-field mode)</strong></p>
-        <img class="fragment" src="img/memory2.png"> 
-</section>
-<section>
-    <h2>Memory requirements</h2>
-    
-        <p class="fragment"><strong>Building Model (Arbitrary mode)</strong></p>
-        <img class="fragment" src="img/memory3.png">
-        <p class="fragment"><strong>Decimating Model</strong></p>
-        <img class="fragment" src="img/memory4.png"> 
+    <h3>Possible issues: bad weather</h3>
+
+        <ul>
+            <li class="fragment">Strong wing causes movement of the UAS (especially fixed wing) and the imagery can be very oblique</li>
+            <li class="fragment">Fog, drizzle or snow can limit the visibility and result in low quality images</li>
+            <li class="fragment">Direct sunshine can produce cast shadows that will interfere with processing</li>
+            </ul>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment"><strong>None.</strong> Repeat the survey in better weather</li>
+                </ul>
+</ul>
 </section>
 
 <section>
-    <h2>Ground Control Points</h2>
+    <h3>Possible issues: failure of hardware</h3>
+
+        <ul>
+            <li class="fragment">UAS can crash</li>
+            <li class="fragment">Camera can not be taking photos (due to battery filure, interrupted connection with UAS...)</li>
+            <li class="fragment">IMU can stop logging the pictures</li>
+            </ul>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment"><strong>Usually - none.</strong> Repeat the survey.</li>
+<ul>
+                <li class="small fragment">Unless you are extremely lucky and UAS crashed after acquiring data you needed and you will be able to retrieve it.</li>
+                <li class="small fragment">Or the camera stopped working just for a while and its not so significant to your data because you still have sufficient overlap without missing pictures</li>
+</ul>
+                <li class="fragment">If only log is missing - see next slide</li>
+                </ul>
+</ul>
+</section>
+<section>
+    <h3>Possible issues: not enough information about image localization</h3>
+
+        <ul>
+            <li class="fragment">It is possible to process data based on the geotags provided by flight log or EXIF data, but:</li>
+		<ul>
+            		<li class="small fragment">geotag contains image location, not the location of the object depicted on photo (more in <a href="..//HM_Photogrammetry_and_SfM.html#/25">this section of the lecture</a>)</li>
+            <li class="small fragment">It is therefore not possible to properly georeference the model without additional information</li>
+</ul>
+            <li class="fragment">without any information about imagery localization it is not possible to georeference or scale the outputs 
+<ul>
+<li class="fragment">(you can produce not georeferenced 3D model or use scale bars for scaling the model)</li>
+            </ul>
+</section>
+<section>
+    <h3>Possible issues: not enough information about image localization</h3>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment"><strong>Use GCPs</strong> Place targets and include them in processing - more info how to process data with GCPs in Agisoft Photoscan in next slides</li>
+                <li class="fragment">Use RTK/PPK equipped UAS - <a href="https://pix4d.com/rtk-ppk-drones-gcp-comparison/">more info here<a></li>
+                </ul>
+</section>
+
+
+
+
+<!--
+
+<section>
+    <h3>Ground Control Points</h3>
         <ul>
             <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
             <li class="fragment">used for:</li>
-
             <ul>
                 <li class="fragment">setting up a coordinate system,</li>
                 <li class="fragment">photo alignment optimization,</li>
                 <li class="fragment">measuring distances and volumes,</li>
                 <li class="fragment">marker based chunk alignment.</li>
-
                 </ul>
             <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
         </ul> 
 </section>
+
+-->
+
 <section>
-    <h2>Ground Control Points</h2>
-             <img class="fragment" src="img/Agisoft_placing_markers.png" width="90%">
-</section>
-<section>
-    <h2>Placing markers</h2>
+    <h3>Placing markers</h3>
  <div class="right">
             <img class="fragment" src="img/Agisoft_placing_markers2.png" width="90%" >
  </div>
@@ -106,9 +141,63 @@
     <li class="small fragment">Click Settings toolbar button on the Reference pane and set the coordinate system;</li>
     <li class="small fragment">Specify the assumed accuracy of GCP measurements and marker projections on the source photos</li>
     <li class="small fragment">click 'Optimize Camera Alignment'.</li>
-
-            <li class="small fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
         </ul> 
 </section>
+<section>
+    <h3>Possible issues: challenging terrain</h3>
 
+        <ul>
+            <li class="fragment">Homogenous surfaces cannot be processed by SfM algorithms</li>
+            <li class="fragment">Large water areas cannot be processed either (still water is too homogenous and waves move)</li>
+            <li class="fragment">Moving objects can be depicted on multiple photos</li>
+            </ul>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment">Avoid large water areas or mask them</li>
+                <li class="fragment">Avoid large moving objects or mask them</li>
+                <li class="fragment">(<a href="http://gmv.cast.uark.edu/photogrammetry/software-photogrammetry/studio-clouds-software-photogrammetry/workflow-studio-clouds-software-photogrammetry/photoscan-pro/">great tutorial</a> on how to work with masks in Agisoft Photoscan)</li>
+                <li class="fragment">Aviod homogenous surfaces or set GCPs (or other objects) on them</li>
+                </ul>
+</ul>
+</section>
+<section>
+    <h3>Possible issues: lack of memory</h3>
+    <h4>Agisoft Photoscan memory requirements</h4>
+    
+        <p class="fragment"><strong>Aligning Photos</strong></p>
+        <img class="fragment" src="img/memory1.png">
+        <p class="fragment"><strong>Building Model (Height-field mode)</strong></p>
+        <img class="fragment" src="img/memory2.png"> 
+</section>
+<section>
+    <h3>Possible issues: lack of memory</h3>
+    <h4>Agisoft Photoscan memory requirements</h4>
+    
+        <p class="fragment"><strong>Building Model (Arbitrary mode)</strong></p>
+        <img class="fragment" src="img/memory3.png">
+        <p class="fragment"><strong>Decimating Model</strong></p>
+        <img class="fragment" src="img/memory4.png"> 
+</section>
+<section>
+    <h3>Possible issues: log file</h3>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Agisoft Photoscan works with raw text files.<p class="small"> Trimble uses its own file formats that need to be converted in order to use it in another software</p></li>
+<h4 class="fragment">Solution</h4>
+        <li class="fragment">If a project file (.gwt extension) is available, the text file can be exported from Trimble Access Aerial Imaging software</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/TBC_export.png">
+    </div>
+<ul>
+        <li class="fragment">if only .jxl is available use <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> </li>
+</ul>
+</section>
+<section>
+    <h2>Possible issues:</h2>
+<h3 class=fragment>... are endless</h3>
+<img class= "fragment" src="img/processing/do_it.gif">
+
+</section>
 
