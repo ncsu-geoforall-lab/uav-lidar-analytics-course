@@ -8,24 +8,17 @@
         <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
        <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
 </section>
-<!--
 <section>
     <h2>Objectives (1)</h2>
     <ul>
         <li class="fragment"><strong>Understand</strong> the photogrammetric data processing as a multistep process;</li>
         <li class="fragment"><strong>Indicate</strong> data needed for orthophoto/DTM generation from aerial imagery;</li>
         <li class="fragment"><strong>Understand</strong> the difference between interior and exterior orientation of the photo;</li>
-    </ul>
-</section>
-<section>
-    <h2>Objectives (2)</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> the terms: Bundle Block Adjustment, Ground Control Points, flight log;</li>
         <li class="fragment"><strong>Describe</strong> the workflow of geoprocessing of aerial imagery in designated software (Agisoft Photoscan);</li>
-        <li class="fragment"><strong>Practice</strong> the process of georectification with and without GCPs;</li>
+
     </ul>
 </section>
--->
+
 <section>
     <h2>Photogrammetric process</h2>
      <img class="fragment" src="img/photogrammetric_proces.png">
@@ -747,9 +740,9 @@ along the normal to the reconstructed surface in that point.</li>
  <section>
 <h3> What did we learn?</h3>
 <ul>
-<li>What is a general workflow for UAS imagery processing?
-<li>How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud
-<li>How to process the data in Agisoft Photoscan Professional and how to set proper parameters in the program
+<li class="fragment">What is a general workflow for UAS imagery processing?
+<li class="fragment">How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud
+<li class="fragment">How to process the data in Agisoft Photoscan Professional and how to set proper parameters in the program?
 </ul>
 
 
