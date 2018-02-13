@@ -186,32 +186,26 @@
        <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
 </section>
 <section>
-    <h2>Objectives (1)</h2>
+    <h2>Objectives</h2>
     <ul>
         <li class="fragment"><strong>Understand</strong> the photogrammetric data processing as a multistep process;</li>
-        <li class="fragment"><strong>Indicate</strong> the sources of imagery disortion and the need of orthorectification of photos;</li>
-        <li class="fragment"><strong>Describe</strong> the concept of orthorectification;</li>
         <li class="fragment"><strong>Indicate</strong> data needed for orthophoto/DTM generation from aerial imagery;</li>
         <li class="fragment"><strong>Understand</strong> the difference between interior and exterior orientation of the photo;</li>
-    </ul>
-</section>
-<section>
-    <h2>Objectives (2)</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> the terms: Bundle Block Adjustment, Ground Control Points, flight log;</li>
         <li class="fragment"><strong>Describe</strong> the workflow of geoprocessing of aerial imagery in designated software (Agisoft Photoscan);</li>
-        <li class="fragment"><strong>Practice</strong> the process of georectification with and without GCPs;</li>
-        <li class="fragment"><strong>Explain</strong> the impact of GCP in the processing for the of final results.</li>
+
     </ul>
 </section>
-
 
 <section>
     <h2>Photogrammetric process</h2>
      <img class="fragment" src="img/photogrammetric_proces.png">
-     <img class="fragment" src="img/photogrammetric_proces.png">
+</section>
+<section>
+    <h2>Photogrammetric process</h2>
+     <img class="fragment" src="img/processing/flowchart_processing.png">
+<h2 class="fragment">Data processing</h2>
+     <img class="fragment" src="img/processing/flowchart_processing_plain.png">
 </section> 
-
 
 <section>
     <h2>UAS data </h2>
@@ -235,17 +229,17 @@
 <section>
     <h2>Flight log</h2>
         <ul>
-        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measure the orientation of airborne sensors,</li>
+        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measures the orientation of airborne sensors,</li>
         <li class="fragment">Information is logged into a text file (flight log),</li>
-        <li class="fragment">Contains elements of exterior orientation</li>
+        <li class="fragment">Contains elements of exterior orientation (EO, more <a href="./2017_Imagery_Processing.html#/18">later in the lecture</a>)</li>
         </ul>
-        <img class="fragment" src="img/log.png">
+        <img class="fragment" src="img/log.png" width="80%">
 </section>
 <section>
     <h2>GCP coordinates</h2>
 <div class="left">
         <ul>
-        <li class="fragment">Measured by GPS coordinates of the panels set before the fight</li>
+        <li class="fragment">Measured by GPS coordinates of the panels set before the flight</li>
         <li class="fragment">Photo ID points (distinguishabe ground features)can be surveyed later on </li>
         <li class="fragment">It is improtant to know the GCPs coorditate system (spatial reference system)</li>
         </ul>
@@ -283,7 +277,7 @@
     <h2>Orthophoto</h2>
      <div class="left">
         <ul>
-        <li class="fragment"> aerial photograph or image geometrically corrected ("orthorectified") such that the scale is uniform: the photo has the same lack of distortion as a map</li>
+        <li class="fragment"> aerial imagery geometrically corrected ("orthorectified") such that the scale is uniform</li>
         <li class="fragment"> raster: consistis of red, green and blue bands</li>
     </div>
     <div class="right">
@@ -313,7 +307,6 @@
         <li class="fragment"> set of vertices in a three-dimensional coordinate system</li>
         <li class="fragment"> vector or raster?</li>
         <li class="fragment"> Dale Lutz once said, "point cloud is a badly behaved raster"</li>
-        <li class="fragment"> in GIS, point cloud geometry is often known, rather mistakenly, as LiDAR</li>
  <div class="left">
         <img src="img/new/pointclouds.png">
 </div>
@@ -325,10 +318,14 @@
 
 
 <section>
-
-        <img class="fragment"src="img/new/uas_data.jpg" width="80%">
-        <img class="fragment" src="img/new/processing_outputs.JPG" width="80%">
-    <h2 class="fragment">How do we get there?</h2>
+        <img class="fragment"src="img/new/uas_data.jpg" width="61%">
+        <img class="fragment"src="img/processing/getting_there.png" width="40%">
+        <img class="fragment" src="img/new/processing_outputs.JPG" width="61%">
+</section>
+<section>
+        <img src="img/new/uas_data.jpg" width="61%">
+        <img src="img/processing/getting_there2.png" width="40%">
+        <img src="img/new/processing_outputs.JPG" width="61%">
 </section>
 
 
@@ -423,18 +420,21 @@
     <ul>
         <li class="fragment">Before: camera calibration report,</li>
         <li class="fragment">Now: Self-calibration (auto-calibration) is the process of determining intrinsic camera parameters directly from uncalibrated images</li>
-        <li class="fragment">Can be automatically derived using Structure from Motion (SfM) methods</li>
     </ul>
     </div>
     <div class="right">
-            <img class="fragment" src="img/interior_orientation.png">
+            <img src="img/interior_orientation.png">
     </div>
+    <ul>
+        <li class="fragment">Can be automatically derived using Structure from Motion (SfM) methods</li>
+    </ul>
 </section>
 <section>
     <h2>5. Ground Control Points</h2>
     <div class="left">
         <li class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). </li>
-        <li class="fragment">For more information about placing targets and importance of  GCPs see this<a href="./HM_Photogrammetry_and_SfM.html#/30">this section of lecture 3</a></li>
+        <li class="fragment">For more information about placing targets and importance of  GCPs see <a href="./HM_Photogrammetry_and_SfM.html#/30">this section of lecture 3</a></li>
+        <li class="fragment">For more information about processing the date with GCPs see <a href="./2017_Imagery_Processing_assignment_intro.html">intro to the assignment</a></li>
 </div>
     <div class="right">
             <img src="img/processing/GCP_girls.png">
@@ -465,6 +465,7 @@ Everything boils down to... money (and time)
         <li class="fragment"><a href="http://www.esri.com/products/drone2map">Drone2Map (ESRI)</a></li>
         <li class="fragment"><a href="https://dronemapper.com/">DroneMapper</a></li>
         <li class="fragment"><a href="http://opendronemap.org/">opendronemap</a></li>
+<li class="fragment">many many more...</li>
     </ul>
 </section>
 <section>
@@ -490,33 +491,35 @@ Everything boils down to... money (and time)
 
 </section>
 <section>
-    <h3>Processing workflow</h3>
+    <h2>Processing workflow</h2>
+        <img src="img/processing/flowchart_processing_plain.png">
      <h4 class="fragment">Preprocessing stage:</h4>
+        <img class="fragment" src="img/processing/flowchart_processing_pre.png">
             <ul>
                 <li class="small fragment">loading photos into PhotoScan;</li>
                 <li class="small fragment">inspecting loaded images, removing unnecessary images.</li>
-            </ul>
-        <h4 class="fragment">Processing:</h4>
+            </ul>  
+</section>
+<section>
+    <h3>Processing workflow</h3>
+        <h4 >Processing stage:</h4>
+        <img src="img/processing/flowchart_processing_exporting.png">
+
             <ol>
                 <li class="fragment">Aligning photos;</li>
                 <li class="fragment">Building dense point cloud; <p class=small>(optional: editing dense point cloud)</p></li>
                 <li class="fragment">Building mesh (3D polygonal model); <p class=small>(optional: editing mesh)</p></li>
                 <li class="fragment">Generating texture;</li>
+                <li class="fragment">Building DSM and orthomosaic</li>
             </ol>
-        <h4 class="fragment">Exporting results</h4>     
+
 </section>
 <section>
-    <h3>Possible issues: </h3>
-    <div class="left">  
-    <ul>
-        <li class="fragment">Agisoft Photoscan works with raw text files.<p class="small"> Trimble uses its own file formats that need to be converted in order to use it in another software</p></li>
-        <li class="fragment">if only .jxl is available use <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> </li>
-        <li class="fragment">If a project file (.gwt extension) is available, the text file can be exported from Trimble Access Aerial Imaging software</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/TBC_export.png">
-    </div>
+    <h3>Processing workflow</h3>
+        <h4 >Exporting results</h4>
+        <img src="img/processing/flowchart_processing_ex.png">
+        <img class="fragment"src="img/new/processing_outputs.JPG">
+     
 </section>
 <section>
     <h3>Preprocessing</h3>
@@ -811,20 +814,49 @@ Everything boils down to... money (and time)
 	</ul> 
 </section>
 <section>
-    <h2>Memory requirements</h2>
-    
-        <p class="fragment"><strong>Aligning Photos</strong></p>
-        <img class="fragment" src="img/memory1.png">
-        <p class="fragment"><strong>Building Model (Height-field mode)</strong></p>
-        <img class="fragment" src="img/memory2.png"> 
+    <h2>Generating DSM</h2>
+ <div class="right">
+            <img src="img/processing/build_DEM.png">
+ </div>
+ <div class="left">   
+<p> Parameters</p> 
+    <ul>
+    <li class="fragment"><strong>Source data:</strong> dense point cloud</li>
+    <li class="fragment"><strong>Interpolation</strong> </li>
+<ul>
+    <li class="small fragment">Disabled: eads  to  accurate  reconstruction  results  since  only  areas
+corresponding to dense point cloud points are reconstructed</li>
+    </ul> 
+ </div>
+<ul>
+<ul>
+    <li class="small fragment">Enabled (recommended):  interpolation mode 
+PhotoScan will calculate DEM for all areas of thescene  that  are  visible  on  at  least  one  image.  </li>
+</ul>
+</ul>
 </section>
 <section>
-    <h2>Memory requirements</h2>
-    
-        <p class="fragment"><strong>Building Model (Arbitrary mode)</strong></p>
-        <img class="fragment" src="img/memory3.png">
-        <p class="fragment"><strong>Decimating Model</strong></p>
-        <img class="fragment" src="img/memory4.png"> 
+    <h2>Generating orthophoto</h2>
+ <div class="right">
+
+            <img src="img/processing/build_ortho.png" width="70%">
+ </div>
+ <div class="left">   
+<p> Parameters</p> 
+    <ul>
+    <li class="fragment"><strong>Surface:</strong> DEM</li>
+    <li class="fragment"><strong>Bleding mode</strong></li>
+<ul>
+    <li class="small fragment">Mosaic  (default): implements  approach  with  data  division  into  several  frequency  domains which are blended independently.</li>
+    </ul> 
+ </div>
+<ul>
+<ul>
+    <li class="small fragment">Average: uses the weighted average value of all pixels from individual photos.</li>
+    <li class="small fragment">Disabled: the color value for the pixel is taken from the photo with the camera view being almost
+along the normal to the reconstructed surface in that point.</li>
+</ul>
+</ul>
 </section>
 <section>
     <h2>Exporting results</h2>
@@ -847,7 +879,7 @@ Everything boils down to... money (and time)
 <section>
     <h2>Processing report</h2>
  <div class="right">
-            <img src="img/Agisoft_report.png"width ="90%">
+            <img src="img/Agisoft_report.png" width ="90%">
  </div>
  <div class="left">   
 <p> Includes: </p> 
@@ -863,67 +895,32 @@ Everything boils down to... money (and time)
 </section>
 <section>
     <h2>Batch processing</h2>
-             <img class="fragment" src="img/batch_process.png">
+             <img class="fragment" src="img/Agisoft_batch.png">
  </section>
-<section>
-    <h2>Ground Control Points</h2>
+
+ <section>
+    <h3>Quality processing with GCPs</h3>
         <ul>
             <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
-            <li class="fragment">used for:</li>
-
+            <li class="fragment">After optimizing alignment based on markers, Point cloud generation and other steps need to be performed</li>
+            <p class="fragment">used for:</p>
+            
             <ul>
                 <li class="fragment">setting up a coordinate system,</li>
                 <li class="fragment">photo alignment optimization,</li>
                 <li class="fragment">measuring distances and volumes,</li>
                 <li class="fragment">marker based chunk alignment.</li>
-
-                </ul>
-            <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
         </ul> 
-</section>
-<section>
-    <h2>Ground Control Points</h2>
-             <img class="fragment" src="img/Agisoft_placing_markers.png" width="90%">
-</section>
-<section>
-    <h2>Placing markers</h2>
- <div class="right">
-            <img class="fragment" src="img/Agisoft_placing_markers2.png" width="90%" >
- </div>
- <div class="left">   
-<p> <a href="https://www.youtube.com/watch?v=-fYOB8VPDnk">video tutorial</a></p> 
-    <ul>
-    <li class="small fragment">Click 'Filter Photos by Markers';</li>
-    <li class="small fragment">Open an image by double clicking the thumbnail - the GCP will appear as a grey icon;</li>
-    <li class="small fragment">Drag the marker to the correct measurement position;</li>
-    <li class="small fragment">the marker will appear as a green flag, meaning it is enabled and will be used for further processing.</li>
-    </ul> 
- </div>   
-</section>
-<section>
-    <h2>Optimize Camera Alignment</h2>
- <div class="right">
-            <img class="fragment" src="img/Agisoft_optimizing.png" width="80%">
- </div>
- <div class="left">   
-    <ul>
-    <li class="small fragment">Set the marker coordinates for optimization (check markers /uncheck cameras);</li>
-    <li class="small fragment">Click Settings toolbar button on the Reference pane and set the coordinate system;</li>
-    <li class="small fragment">Specify the assumed accuracy of GCP measurements and marker projections on the source photos</li>
-    <li class="small fragment">click 'Optimize Camera Alignment'.</li>
-    </ul> 
- </div>   
+            <li class="fragment">more on GCP placing and processing in Agisoft see see <a href="./2017_Imagery_Processing_assignment_intro.html">intro to the assignment</a></li>
 </section>
  <section>
-    <h2>Quality processing with GCPs</h2>
-        <ul>
-            <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
-            <li class="fragment">Point cloud the texture and mesh is generated again.</li>
-            <li class="fragment">In practice: start geoprocessing over, begining from point 2. Build the dense point.</li>
-            <p class="fragment">used for:</p>
-            <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
-        </ul> 
-</section>
+<h3> What did we learn?</h3>
+<ul>
+<li class="fragment">What is a general workflow for UAS imagery processing?
+<li class="fragment">How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud
+<li class="fragment">How to process the data in Agisoft Photoscan Professional and how to set proper parameters in the program?
+</ul>
+
 
 
         </div>  <!-- slides -->
