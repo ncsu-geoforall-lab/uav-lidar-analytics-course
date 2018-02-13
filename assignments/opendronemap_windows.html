@@ -37,7 +37,7 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h2>Processing of UAS imagery in OpenDroneMap</h2>
+<h2>Processing of UAS imagery in command line OpenDroneMap</h2>
 
 We will reconstruct DSM and create orthophoto in <a href="http://opendronemap.github.io/odm/">
 OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
@@ -46,28 +46,33 @@ OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
 
 <h3>Setting up Docker and directory structure</h3>
 
-We will run OpenDroneMap using Docker to simplify setup (the internally used operating system is Ubuntu).
+We will run OpenDroneMap using Docker to simplify setup on different
+operating systems (the internally used operating system is Ubuntu).
 OpenDroneMap doesn't have a desktop GUI, we will run it in command line,
-which is quite simple once we deal with preprocessing.
-We will use Ubuntu VCL (Ubuntu 16.04 LTS).
-Once you launch it:
+which is quite simple once we deal with preprocessing and dependencies.
 
 <ol>
 
-<li>Download and install <a href="https://www.docker.com/">Docker</a>. See
+<li>Download and install <a href="https://www.docker.com/">Docker</a>
+    for your platform if you don't have it already. See
     <a href="https://ncsu-geoforall-lab.github.io/open-science-course/topics/environments.html">an open science class instructions</a>
     for introduction to Docker and recommended download links.
 </li>
 
+<li>We need a command line to run Docker. If you are using Windows,
+    download <a href="http://git-scm.com/download/win">Git for Windows</a>
+    unless you are already using some other shell (command line,
+    terminal).
+</li>
+
 <li>Either in file manager or in command line create a directory
-    called <code>odm</code>. Put it somewhere with enough disk space (home folder).
+    called <code>odm</code>. Put it somewhere with enough disk space.
     Inside the <code>odm</code> directory create directories
     <code>images</code>, <code>orthophoto</code>,
     <code>georeferencing</code>, and <code>texturing</code>.
     On unix-like systems, creating the directories would look something
     like this:
-<pre><code>cd
-mkdir odm
+<pre><code>mkdir odm
 cd odm
 mkdir images
 mkdir orthophoto
@@ -85,86 +90,92 @@ mkdir texturing
 <pre><code>mv unzipped-dir/* images/
 </code></pre>
 </li>
-<li>
-    We will run ODM through Docker. We will download a pre-built image of OpenDroneMap
-    (this will take some time):
-<pre><code>docker pull opendronemap/opendronemap
-</code></pre>
-</li>
+
 </ol>
 
 <h3>Preprocesing of images</h3>
-Before we can run OpenDroneMap, we need to preprocess the images.
+
 OpenDroneMap takes GPS position and focal length from images, not from the log.
-Since the images don't have this information in their
-<a href="https://en.wikipedia.org/wiki/Exif">EXIF data</a>, we will have
-to add them there.
-<ol>
-    <li>First, we will need to convert the <code>.jxl</code> log
+Since the images don't have this information in their EXIF data, we will have
+to add them there. First, we will need to convert the <code>.jxl</code> log
 file into a CSV file using
 <a href="https://github.com/wenzeslaus/jxl2csv">Vashek's script jxl2csv</a>.
-<pre><code><span class="comment"># change directory to folder with images
-</span>cd ~/odm/images
-<span class="comment"># download the script
-</span>wget https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py
-<span class="comment"># run the script - full.jxl is input, full.csv is output
-</span>python jxl2csv.py full.jxl full.csv
-<span class="comment"># convert uppercase file names to lowercase to match the JPG files
-</span>head full.csv
-tr A-Z a-z &lt; full.csv &gt; full_lowercase.csv
-head full_lowercase.csv
-</code></pre>
-</li>
-    <li>Then we need to upload the focal length and GPS into the photos' EXIF data,
-because our photos don't have this information in EXIF. We will use
+Then we need to upload the focal length and GPS into the photos' EXIF data,
+because our photos don't have this information in EXIF.
+We will use
 <a href="https://github.com/petrasovaa/write-EXIF-GPS">Anna's script</a>
-for that. There will be some warnings about missing files and truncating the
+for that. Finally, we will need to identify GCPs in the images.
+
+<p>
+On a Linux machine, it would be straightforward to install the missing
+dependencies and execute the given commands, but it is hard to have
+general instructions how to do it on all operating systems.
+Therefore, we will use Docker to get the unified Linux environment.
+Since we will need to use the OpenDroneMap image later, we will
+use it right now as well just the get the Linux environment.
+All the commands in this section will have the following schema:
+
+<pre><code>docker run -it --rm -v $(pwd)/images:/code/images --entrypoint "bash" -w /code/images opendronemap/opendronemap -c "ls"
+</code></pre>
+
+where <code>-v</code> links our directory <code>images</code> to
+a directory inside Docker container, <code>--entrypoint</code> replaces
+the executable specified by the OpenDroneMap image by <code>bash</code>
+which we will use to execute commands indiside the Docker container,
+<code>-w</code> specifies the current working directory inside the
+container, and finally <code>-c "ls"</code> at the end of the command
+specifies the actual command we want to prefecture inside the container,
+for example <code>ls</code> in this example.
+
+<p>
+The string <code>$(pwd)</code> in the commands stands for the current
+working directory which should be the <code>odm</code> directory
+we created earlier.
+On MS Windows, you many need to change <code>$(pwd)</code> to
+<code>%cd%</code> in all the following commands.
+Alternatively, you can manually replace <code>$(pwd)</code> by the full
+path.
+
+<p>
+Get the script, convert to CSV, and lowercase all image names in the CSV
+file to match the photos' names which are lowercase:
+<pre><code>docker run -it --rm -v $(pwd)/images:/code/images --entrypoint "bash" -w/code/images opendronemap/opendronemap -c "curl https://raw.githubusercontent.com/wenzeslaus/jxl2csv/master/jxl2csv.py > jxl2csv.py"
+docker run -it --rm -v $(pwd)/images:/code/images --entrypoint "bash" -w/code/images opendronemap/opendronemap -c "python jxl2csv.py full.jxl full.csv"
+docker run -it --rm -v $(pwd)/images:/code/images --entrypoint "bash" -w/code/images opendronemap/opendronemap -c "tr A-Z a-z &lt; full.csv &gt; full_lowercase.csv"
+</code></pre>
+
+Update EXIF with GPS coordinates, focal length, camera model. There will
+be some warnings and errors about missing files and truncating the
 entry, ignore them.
+<pre><code>docker run -it --rm -v $(pwd)/images:/code/images --entrypoint "bash" -w /code/images opendronemap/opendronemap -c "curl https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py > write_exif_GPS.py"
+docker run -it --rm -v $(pwd)/images:/code/images --entrypoint "bash" -w /code/images opendronemap/opendronemap -c "apt update &amp;&amp; apt install proj-bin exiv2 &amp;&amp; python write_exif_GPS.py full_lowercase.csv"
+</code></pre>
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
-<pre><code><span class="comment"># download the script
-</span>wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
-<span class="comment"># install libraries the script requires
-</span>sudo apt update &amp;&amp; apt install -y proj-bin exiv2
-<span class="comment"># run the script, input is the CSV we created from jxl file
-</span>python write_exif_GPS.py full_lowercase.csv
+<p>
+To georeference the DSM, we need to prepare a text file with each GCP on one line,
+where the numbers represent GCP X, GCP Y, GCP altitude, image column, image row, image name.
+For example:
+<pre><code>636795.964 219156.17 105.06 1588 2066 DSC01861.jpg
 </code></pre>
-
-</li>
-
-    <li>Finally, we will need to identify GCPs in the images.
-    To georeference the DSM, we need to prepare a text file with each GCP on one line,
-    where the numbers represent GCP X, GCP Y, GCP altitude, image column, image row, image name.
-    For example:
-<pre><code>636795.964 219156.17 105.06 1588 2066 dsc01861.jpg
+Download the <a href="./resources/gcp_odm.txt">prepared GCP file here</a>.
+This file was manually prepared by identifying the GCPs on selected
+images.
+<pre><code>docker run -it --rm -v $(pwd)/images:/code/images --entrypoint "bash" -w /code/images opendronemap/opendronemap -c "curl http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/gcp_odm.txt > gcp_odm.txt"
 </code></pre>
-    Download the <a href="./resources/gcp_odm.txt">prepared GCP file here</a>.
-    This file was manually prepared by identifying the GCPs on selected images.
-<pre><code>wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/gcp_odm.txt
-</code></pre>
-    </li>
-</ol>
 
 Now we are ready to run OpenDroneMap!
 
 <h3>Running OpenDroneMap</h3>
 
-We will use default parameters. To review parameters run:
+Run ODM through Docker. We will use default parameters.
+To review parameters run:
+
 <pre><code>docker run -it --rm opendronemap/opendronemap --help
 </code></pre>
 
 Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
-Some explanation of the <code>docker run</code> command:
-<ul>
-    <li><code>-v</code> links our directory <code>images</code> to
-    a directory inside Docker container</li>
-    <li>The string <code>$(pwd)</code> in the commands stands for the current
-    working directory which should be the <code>odm</code> directory
-    we created earlier.</li>
-</ul>
-
-<pre><code>cd ~/odm
-docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --resize-to 1000 --gcp /code/images/gcp_odm.txt
+<pre><code>docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --gcp /code/images/gcp_odm.txt
 </code></pre>
 
 OpenDroneMap will do the processing in parallel. However, each process
@@ -172,44 +183,6 @@ requires certain amount of memory (RAM) based on the size of input
 images. If you want to limit the memory usage, you need to limit the
 number of processes using the <code>--opensfm-processes</code> command
 line option.
-
-<h3>Running WebODM</h3>
-
-Install additional packages for management of WebODM (assuming you
-already have Docker up and running):
-
-<pre><code>sudo apt install docker-compose python-setuptools python-pip
-</code></pre>
-
-Get WebODM code using Git:
-
-<pre><code>git clone https://github.com/OpenDroneMap/WebODM --config core.autocrlf=input
-</code></pre>
-
-Go the the course code directory:
-
-<pre><code>cd WebODM
-</code></pre>
-
-Start WebODM:
-
-<pre><code>./webodm.sh start &amp;
-</code></pre>
-
-Now go to the URL specified in the output, it will be likely
-<tt>http://localhost:8000</tt>. You will be prompted to create an
-administrator account. Create it. It will be the only account we will
-need for the exercise.
-
-Upload images to the task which is already there or create a new one.
-Change the resolution of images to 800 to speed up the upload and
-computation (this reduces the quality of the images).
-
-Now you need to wait for the processing to finish. To follow the
-processing, you can access WebODM from outside the VCL machine. Enter
-the VCL machine IP address as URL to your web browser and add
-<tt>:8000</tt> to it. You should get a login page and you should be able
-to log in using the admin account credentials you created earlier.
 
 <h3>Using the results</h3>
 
