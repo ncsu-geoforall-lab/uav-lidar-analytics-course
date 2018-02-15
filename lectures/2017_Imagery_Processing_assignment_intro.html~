@@ -141,8 +141,6 @@
     <li class="small fragment">Click Settings toolbar button on the Reference pane and set the coordinate system;</li>
     <li class="small fragment">Specify the assumed accuracy of GCP measurements and marker projections on the source photos</li>
     <li class="small fragment">click 'Optimize Camera Alignment'.</li>
-
-            <li class="small fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
         </ul> 
 </section>
 <section>

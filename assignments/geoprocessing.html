@@ -75,6 +75,9 @@ General workflow (with GCPs):
    		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXbjlKQ3Z0Uk9GUUE">download data</a> - photos, log and coordinates of 3 GCPs
    	</ul>
 <br>
+<strong>Processing outputs</strong> from this option are provided <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXX201ajRmZVF4aFE">here</a>
+<br>
+<br>
 <li> OPTION 2: Smaller area (to accelerate processing), but photos not downsampled (to obtain the hihest resolution of the outputs)
 	<ul>
    		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXYlVyM2x5YTNqTjg">download data</a>  - photos, log and coordinates of 3 GCPs
@@ -83,12 +86,12 @@ General workflow (with GCPs):
 <li> OPTION 3: Full flight, photos original resolution <br>
 <b>LONG PROCESSING TIME!</b>
 	<ul>
-   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXcHlzM01lY0pEd00">download data</a>  - photos, log and coordinates of 3 GCPs
+   		<li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXcHlzM01lY0pEd00">download data</a>  - photos, log and coordinates of 12 GCPs
 	</ul>
 <br>
 <li> OPTION 4: You can use your own data
 <br>
-
+</ul>
 
 
 
@@ -184,7 +187,7 @@ containing camera positions information (log file*) in the Open
 dialog.</p>
 
 <figure>
-<img src="img/geoprocessing/import_csv.png" width="50%">
+<img src="img/geoprocessing/log_load.PNG" width="50%">
 </figure>
 
 <p>*Agisoft support the camera orientation files in 5 formats: .csv, .txt, .tel, .xml and and .log. The default format of the Trimble Aerial Imaging log is .jxl. In order to convert the Trimble .jxl log
@@ -199,15 +202,15 @@ placement by indicating column number (top right of dialog box)</p>
 <ul>
     <li>Accuracy: Low
     <li>Check: Reference preselection
-    <li>Key point limit: default (4,000,000)
-    <li>Tie point limit: default (100,000)
+    <li>Key point limit: default
+    <li>Tie point limit: default
     <li>Adaptive camera model fitting: enabled
 </ul>
 
 <p>Menu &gt; Workflow &gt; Align Photos</p>
 
 <figure>
-<img src="img/geoprocessing/agi_align.jpg">
+<img src="img/geoprocessing/align_photos.PNG">
 </figure>
 <p>Click Save <img src="img/geoprocessing/save_icon.png" class="icon"> in the toolbar</p>
 
@@ -220,14 +223,17 @@ placement by indicating column number (top right of dialog box)</p>
 <p>Click Import button <img src="img/geoprocessing/import_icon.png" class="icon">
 on the Reference pane toolbar &gt; select file
 containing Ground Control Points coordinates in the Open dialog</p>
+<figure>
+<img src="img/geoprocessing/import_GCP.png">
+</figure>
 
 <p>Make sure that the columns are named properly – you can adjust their
 placement by indicating column number (top right of dialog box).</p>
 
-<p>This time you disable the <em>Load orientation</em> option since GCPs are
+<p>This time you uncheck the <em>Rotation</em> box since GCPs are
 stationary and do not need determining yaw pitch and roll angles.</p>
 
-<p>The window with the message: <em>Can’t find match for ‘UAV 1’ entry.
+<p>The window with the message: <em>Can’t find match for ‘UAV 3’ entry.
 Create new marker?</em>  will pop up.</p>
 
 <figure>
@@ -255,7 +261,7 @@ Items &gt; Show cameras)</p>
 </figure>
 
 <p>Choose in the context menu of the selected point on the list (right
-click)  &gt;  Filter Photos by Marker. If the marker does not appear on any photo (the list of thumbnail is empty) it means that this marker is located outside of our sample area and you can remove it (right click &gt; Remove Marker). You should end up with 4 markers</p>
+click)  &gt;  Filter Photos by Marker.</p>
 
 <figure>
 <img src="img/geoprocessing/filter_photos_by_marker.png">
@@ -265,7 +271,7 @@ click)  &gt;  Filter Photos by Marker. If the marker does not appear on any phot
 appear only the images in which the currently selected GCP is probably*
 visible.</p>
 
-<p>* <em>This is possible because our pictures are geotagged (log indicates the position of each photo), if you will be working with the pictureas that are not geotagged or in the area that you don't know and are not able to "guess" which photo depicts which GCP, it is useful to build the dense ponint cloud or even mesh and texture (see the folloing steps) to see the preliminary model of the area in the Model pane, not just a sparse cloud</em></p>
+<p>* <em>This is possible because our pictures are geotagged (log indicates the position of each photo), if you will be working with the pictures that are not geotagged or in the area that you don't know and are not able to "guess" which photo depicts which GCP, it is useful to build the dense ponint cloud or even mesh and texture (see the folloing steps) to see the preliminary model of the area in the Model pane, not just a sparse cloud (this is depicted on the figures above)</em></p>
 <p>Open an image by double clicking the thumbnail. It will open in a
 tab next to the Model pane.</p>
 
@@ -307,7 +313,7 @@ terrain distortions especially on flat or undulating terrain types.</p>
 
 
 
-<p>Click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (leave all options at the default)</p>
+<p>Click Optimize icon <img src="img/geoprocessing/optimize_icon.png" class="icon"> in the Ground Control toolbar (ckeck all the boxes)</p>
 
 
 <h4>Optimizing based on the GCP Markers</h4>
@@ -428,7 +434,7 @@ Holes command. It is crucial if you want to perform any volume calculations - in
 <p>Menu &gt;  Tools  &gt;  Mesh  &gt;  Close Holes</p>
 
 <p>In Close Holes dialog select the size of the largest hole to be
-closed (in percentage of the total model size).</p>
+closed (in percentage of the total model size). <strong>DO NOT CHOOSE 100% unless you are calculating volumes (then you have to close 100% holes)</strong></p>
 
 <figure>
 <img src="img/geoprocessing/agi_close_holes.jpg">
