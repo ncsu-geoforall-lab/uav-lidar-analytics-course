@@ -522,11 +522,9 @@ Everything boils down to... money (and time)
         <ul>
         <li class="fragment">Loading photos,</li>
         <li class="fragment">Loading camera positions (flight log)</li>
-        </ul>
-        <img class="fragment" src="img/agisoft_preprocessing.png" width = "60%">
-        <ul>
         <li class="fragment">If the EO is in the photos EXIF file, the parameters will load automatically</li>
         </ul>
+        <img class="fragment" src="img/processing/camera_positions.PNG" width = "70%">
 </section>
 <section>
     <h3>1. Aligning photos</h3>
@@ -569,13 +567,12 @@ Everything boils down to... money (and time)
     </div>
 </section>
 <section>
-    <h2>Aligning cameras in PhotoScan</h2>
-    <div class="right">
-            <img class="fragment" src="img/Agisoft_aligning.png" width="120%">
-    </div>
-    <div class="left">
+    <h3>Aligning cameras in PhotoScan</h3>
+            <img class="left fragment" src="img/processing/aligned_photos.PNG" width="58.5%">
+            <img class="right fragment" src="img/processing/sparse_cloud.PNG" width="39%">
+        <p class="small right fragment"><strong>sparse point cloud</strong> generation</p>
         <p class="fragment"><strong>Accuracy</strong></p>
-            
+           
 <ul>
                 <li class="fragment"><strong>High</strong> accuracy setting > more accurate camera position estimates (time consuming);</li>
                 <li class="fragment"><strong>Low</strong> accuracy setting > rough camera positions.</li>
@@ -585,26 +582,23 @@ Everything boils down to... money (and time)
 </section>
 <section>
     <h3>2. Building dense point cloud</h3>
-    <div class="left">
-           <img class="fragment" src="img/Agisoft_point_cloud.png">
-    </div>
-    <div class="right">
   <p class="fragment">At the stage of dense point cloud generation reconstruction PhotoScan calculates depth maps for every image</p>
-    </div>
-    <p class="fragment"><strong>Quality</strong></p>
+ 
        <ul>
-                <li class="fragment"><strong>Highest, High, Medium, Low, Lower</strong>>  the higher quality the more accurate camera position estimates but the process is more time consuming</li>
-       </ul>   
+                <li class="fragment">Quality: <strong>Highest, High, Medium, Low, Lower</strong>>  the higher quality the more accurate camera position estimates but the process is more time consuming</li>
+       </ul> 
+
+           <img class="fragment" src= "img/processing/sparse_cloud.PNG" width="40%">
+           <img class="fragment" src= "img/processing/arrows.png" width="10%">
+           <img class="fragment" src= "img/processing/dense_cloud.PNG" width="40%">
+
 </section>
 <section>
-    <h2>2. Building dense point cloud</h2>
-    <div class="left">     
+    <h3>2. Building dense point cloud</h3>
+  
         <p class="fragment"><strong>Depth Filtering modes</strong></p>
- 	<p class="small fragment">Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images)</p> 
-    </div>
-    <div class="right">
-            <img src="img/Agisoft_point_cloud.png">
-    </div>
+ 	<p class="fragment">Algorithms sorting outliers <br>(due to some factors, like poor texture of some elements of the scene, noisy or badly focused images)</p> 
+
        <ul>
                 <li class="fragment"><strong>Mild </strong>depth filtering mode > for <strong>complex geometry </strong>(numerous small details on the foreground), for important features not to be sorted out;</li>
                 <li class="fragment"><strong>Aggressive </strong>depth filtering mode > sorting out most of the outliers;</li>
@@ -613,23 +607,31 @@ Everything boils down to... money (and time)
 </section>
 <section>
     <h3>Optional: editing dense point cloud</h3>
+    <div class="left">
     <ul>
-        <li class="fragment">Automatic filtering based on specified criterion (sparse cloud only):</li>
+
+
+        <li class="fragment">Manual points removal</li>
+        <li class="fragment">Automatic filtering based on applied masks;</li>
+
+        <li class="fragment">Sparse cloud only:</li>
+            <ul>
+        <li class="fragment">Reducing number of points in cloud by setting tie point per photo limit</li>
+	<li class="fragment">Automatic filtering based on:</li>
             <ul>
                 <li class="small fragment">Reprojection error;</li>
                 <li class="small fragment">Reconstruction uncertainty;</li>
                 <li class="small fragment">Image count.</li>
             </ul>
-        <li class="fragment">Automatic filtering based on applied masks (dense cloud only);</li>
-        <li class="fragment">Reducing number of points in cloud by setting tie point per photo limit (sparse cloud only);</li>
-        <li class="fragment">Manual points removal</li>
     </ul>
+    </div>
+    <div class="right">
+           <img src= "img/processing/editing_pointcloud.PNG">
+    </div>
 </section>
 <section>
     <h3>3. Building mesh</h3>
-    <div class="right">
-            <img class="fragment" src="img/Agisoft_mesh.png" width="80%">
-    </div>
+
     <div class="left">     
     <ul>
         <li class="fragment"><strong>Arbitraty</strong> > for modeling of any kind of object</li>
@@ -637,6 +639,11 @@ Everything boils down to... money (and time)
                 <li class="small fragment">should be selected for closed objects (statues, buildings, etc.);</li>
                 <li class="small fragment">memory consumption: high </li>
             </ul>
+</div>
+    <div class="right">
+            <img class="fragment" src="img/processing/mesh.jpg" width="65%">
+    </div>
+    <div class="left">     
 	<li class="fragment"><strong>High field</strong> > for modeling of planar surfaces</li>
             <ul>
                	<li class="small fragment">should be selected for aerial photography;</li>
@@ -645,11 +652,16 @@ Everything boils down to... money (and time)
             </ul>
     </ul>
     </div>
+    <div class="right">
+            <img class="fragment" src="img/processing/mesh_comparison.PNG" width="120%">
+    </div>
+
 </section>
 <section>
     <h3>3. Building mesh</h3>
    <div class="right">
-            <img src="img/Agisoft_mesh.png" width="50%">
+            <img src="img/processing/mesh_low.PNG">
+            <img src="img/processing/mesh_high.PNG">
     </div>
     <div class="left">     
     <ul>
@@ -658,40 +670,39 @@ Everything boils down to... money (and time)
                 <li class="small fragment"><strong>Sparse cloud</strong> > fast 3D model generation (low quailty)</li>
                 <li class="small fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
             </ul>
-</ul>
-	</div>
-<ul>
- 	<li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh. <p class="small">"Face count set at “0” means that PhotoScan will determine an optimum number of faces</p></li>
+ 	<li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh.</li>
      </ul> 
+	</div>
 </section>
 <section>
     <h3>Optional: editing mesh</h3>
     <div class="left">     
     <ul>
-        <li class="fragment"><strong>Decimation tool</strong> > decreases the geometric resolution of the model by replacing high resolution mesh with a lower resolution one;</li>
+               <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong>necessary step for <strong>volumes calculation</strong>;</li>
+
     </ul>
     </div>
     <div class="right">
-            <img class="fragment" src="img/Agisoft_editing_mesh.png">
+            <img class="fragment" src="img/processing/close_holes.png">
     </div>
             <ul>
-                <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong></li>
+         <li class="fragment"><strong>Decimation tool</strong> > decreases the geometric resolution of the model by replacing high resolution mesh with a lower resolution one; </li>
             </ul>    
 </section>
 <section>
     <h3>Optional: editing mesh</h3>
+
+ <div class="right">
+            <img src="img/processing/mesh_editing.PNG" width="80%">
+            <img src="img/processing/mesh_editing2.PNG" width="80%">
+ </div>
+ <div class="left">  
     <ul>
         <li class="fragment"><strong>Automatic filtering</strong> based on specified criterion:</li>
             <ul>
                 <li class="fragment">Connected component size,</li>
                 <li class="fragment">Polygon size.</li>
             </ul>
-    </ul> 
- <div class="right">
-            <img class="fragment" src="img/Agisoft_editing_mesh2.png">
- </div>
- <div class="left">     
-    <ul>
         <li class="fragment">Manual polygon removal,</li>
         <li class="fragment">Fixing mesh topology,</li>
         <li class="fragment"><strong>Editing mesh in the external program</strong> <br> export mesh for editing in the external program > import edited mesh</li>
@@ -701,41 +712,60 @@ Everything boils down to... money (and time)
 </section>
 <section>
     <h3>4. Generating texture</h3>
- <div class="right">
-            <img class="fragment" src="img/Agisoft_texture.png" width="80%">
- </div>
- <div class="left">     
+   
     <ul>
     <li class="fragment">Determines how the object texture will be packed in the texture atlas;</li>
     <li class="fragment">Effects the quality of the final model;</li>
-
+</ul>
+ <div class="right">
+            <img class="fragment" src="img/processing/texture.PNG" width="80%">
+ </div>
+ <div class="left">  
+<ul>
     <li class="fragment"><strong>Texture mapping modes:</strong></li>
+            <ul class="fragment">
+                <li>Generic,</li>
+                <li>Adaptive orthophoto,</li>
+                <li>Orthophoto,</li>
+                <li>Spherical,</li>
+                <li>Single photo,</li>
+                <li>Keep uv.</li>
+            </ul>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h3>4. Generating texture</h3>
+   
+    <ul>
+    <li>Determines how the object texture will be packed in the texture atlas;</li>
+    <li>Effects the quality of the final model;</li>
+</ul>
+ <div class="right">
+            <img src="img/processing/texture.PNG" width="80%">
+ </div>
+ <div class="left">  
+<ul>
+    <li><strong>Texture mapping modes:</strong></li>
             <ul>
-                <li class="small fragment">Generic,</li>
-                <li class="small fragment">Adaptive orthophoto,</li>
-                <li class="small fragment">Orthophoto,</li>
-                <li class="small fragment">Spherical,</li>
-                <li class="small fragment">Single photo,</li>
-                <li class="small fragment">Keep uv.</li>
+                <li><strong>Generic,</li>
+                <li>Adaptive orthophoto,</li>
+                <li>Orthophoto,</strong></li>
+                <li>Spherical,</li>
+                <li>Single photo,</li>
+                <li>Keep uv.</li>
             </ul>
     </ul> 
  </div>   
 </section>
 <section>
     <h3>Texture mapping modes</h3>
- <div class="right">
-            <img src="img/Agisoft_texture_modes.png" width="60%">
- </div>
- <div class="right">
-	<ul>	   
-    	<li class="fragment"><strong>Generic</strong></li> 
-        	<ul>
-        	<li class="fragment">creates as uniform texture as possible.</li>
-       	 	</ul> 
-	 
-     	<li class="fragment"><strong>Adaptive orthophoto</strong></li> 
-	</ul>
- </div>
+<ul>	   
+<li class="fragment"><strong>Generic</strong></li> 
+	<ul>
+	<li class="fragment">creates as uniform texture as possible.</li>
+	</ul> 
+<li class="fragment"><strong>Adaptive orthophoto</strong></li>
 	<ul>
         	<ul>
         	<li class="fragment">The object surface split into the flat part and vertical regions;</li>
@@ -751,46 +781,27 @@ Everything boils down to... money (and time)
 	<ul>
      	<li class="fragment"><strong>Orthophoto</strong></li> 
         	<ul>
-        	<li class="small fragment">The whole object surface textured in the orthographic projection;</li>
-        	<li class="small fragment">Even more compact texture representation than the Adaptive orthophoto at
+        	<li class="fragment">The whole object surface textured in the orthographic projection;</li>
+        	<li class="fragment">Even more compact texture representation than the Adaptive orthophoto at
 				 the expense of texture quality in vertical regions.</li>
       		</ul> 
-     	<li class="fragment"><strong>Spherical</strong></li> 
-        	<ul>
-        	<li class="small fragment">Only for objects that have a ball-like form.</li>
-        	</ul> 
-    	<li class="fragment"><strong>Single photo</strong></li> 
-        	<ul>
-        	<li class="small fragment">Texture from a single photo (photo can be selected from 'Texture from' list)</li>
-        	</ul> 
-    	<li class="fragment"><strong>Keep uv</strong></lo> 
-       		<ul>
-        	<li class="small fragment">Generates texture atlas using current texture parametrization;</li>
-        	<li class="small fragment">Rebuilding current texture with different resolution or generating
-			 the atlas parametrized in the external software.</li>
-        	</ul> 
+     	<li class="small fragment">Spherical - Only for objects that have a ball-like form.</li> 
+        <li class="small fragment">Single photo - Texture from a single photo (photo can be selected from 'Texture from' list)</li>
+        <li class="small fragment">Keep uv: Generates texture atlas using current texture parametrization; Rebuilding current texture with different resolution or generating
+			 the atlas parametrized in the external software.</li> 
 	</ul>
 </section>
 <section>
     <h3>Texture generation parameters</h3>
  <p class="fragment"><strong>Blending mode</strong> (not used in Single photo mode)- selects the way how pixel values will 
 		be combined to the final texture</p>
- <div class="right">
-            <img src="img/Agisoft_texture_parameters.png" width="80%">
- </div>
- <div class="left">     
-    <ul>
-      <li class="small fragment"><strong>Mosaic</strong> gives more quality for orthophoto and texture atlas than <strong>Average mode</strong>, since it <strong>does not mix image details of overlapping photos, but uses most appropriate</strong></li>
-      <li class="small fragment"><strong>Average</strong> -uses the average value of all pixels from individual photos</li>
-      <li class="small fragment"><strong>Max Intensity</strong> - selects photo which has maximum intensity of the corresponding pixel</li>
     
-     </ul>
- </div>      
- <div class="right">
-      	<ul>
-		<li class="small fragment"><strong>Min Intensity </strong> - the photo which has minimum intensity of the corresponding pixel is selected</p></li> 
-	</ul>
- </div>
+    <ul>
+      <li class="fragment"><strong>Average</strong> -uses the average value of all pixels from individual photos</li>
+      <li class="fragment"><strong>Mosaic</strong> gives more quality for orthophoto and texture atlas than <strong>Average mode</strong>, since it <strong>does not mix image details of overlapping photos, but uses most appropriate</strong></li>
+      <li class="fragment"><strong>Max Intensity</strong> - selects photo which has maximum intensity of the corresponding pixel</li>
+	<li class="fragment"><strong>Min Intensity </strong> - the photo which has minimum intensity of the corresponding pixel is selected</p></li> 
+</ul>
 </section>
 <section>
     <h3>Texture generation parameters</h3>
@@ -854,24 +865,85 @@ along the normal to the reconstructed surface in that point.</li>
 </ul>
 </ul>
 </section>
+
 <section>
     <h2>Exporting results</h2>
     <h2 class="small"> and saving intermediate results</h2>
- <div class="right">
-            <img class="fragment" src="img/Agisoft_export_intermediate.png" width ="65%">
- </div>
  <div class="left">     
     <ul>
-    <li class="fragment">Point cloud export</li>
-    <li class="fragment">Camera calibration and orientation data export</li>
-    <li class="fragment">Tie points data export (matching points and panoramas) </li>
-    <li class="fragment">3D model export</li>
     <li class="fragment"><strong>Orthophoto export</strong></li>
-    <li class="fragment"><strong>DEM export</strong></li>
-    <li class="fragment"><strong>Processing report generation</strong></li>
     </ul> 
  </div>   
+ <div class="right">
+            <img class="fragment" src="img/new/ortho_example.jpg">
+ </div>
 </section>
+
+<section>
+    <h2>Exporting results</h2>
+    <h2 class="small"> and saving intermediate results</h2>
+
+ <div class="left">     
+    <ul>
+    <li>Orthophoto export</li>
+    <li><strong>DEM export</strong></li>
+    </ul> 
+ </div> 
+ <div class="right">
+            <img src="img/processing/DSM.png" width ="150%">
+ </div> 
+</section>
+
+<section>
+    <h2>Exporting results</h2>
+    <h2 class="small"> and saving intermediate results</h2>
+
+ <div class="left">     
+    <ul>
+    <li>Orthophoto export</li>
+    <li>DEM export</li>
+    <li><strong>3D model export</strong></li>
+    </ul> 
+ </div> 
+ <div class="right">
+            <img src="img/new/sketchfab.png" width=72%>
+ </div> 
+</section>
+<section>
+    <h2>Exporting results</h2>
+    <h2 class="small"> and saving intermediate results</h2>
+
+ <div class="left">     
+    <ul>
+    <li>Orthophoto export</li>
+    <li>DEM export</li>
+    <li>3D model export</li>
+    <li><strong>Point cloud export</strong></li>
+    </ul> 
+ </div> 
+ <div class="right">
+            <img src="img/processing/pointcloud.png">
+ </div> 
+</section>
+<section>
+    <h2>Exporting results</h2>
+    <h2 class="small"> and saving intermediate results</h2>
+
+ <div class="left">     
+    <ul>
+    <li>Orthophoto export</li>
+    <li>DEM export</li>
+    <li>3D model export</li>
+    <li>Point cloud export</li>
+    <li><strong>Processing report generation</strong></li>
+    </ul> 
+ </div> 
+ <div class="right">
+            <img src="img/new/report_1.JPG" width ="60%">
+            <img src="img/new/report_2.JPG" width ="60%">
+ </div> 
+</section>
+
 <section>
     <h2>Processing report</h2>
  <div class="right">
@@ -910,12 +982,13 @@ along the normal to the reconstructed surface in that point.</li>
             <li class="fragment">more on GCP placing and processing in Agisoft see see <a href="./2017_Imagery_Processing_assignment_intro.html">intro to the assignment</a></li>
 </section>
  <section>
-<h3> What did we learn?</h3>
+<h2> What did we learn?</h2>
 <ul>
 <li class="fragment">What is a general workflow for UAS imagery processing?
-<li class="fragment">How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud
+<li class="fragment">How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud?
 <li class="fragment">How to process the data in Agisoft Photoscan Professional and how to set proper parameters in the program?
 </ul>
+</section>
 
 
 
