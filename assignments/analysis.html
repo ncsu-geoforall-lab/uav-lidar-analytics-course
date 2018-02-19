@@ -47,10 +47,9 @@ Batch processing commands should be in this order:
     <li>Align Photos</li>
     <li>Optimize Alignment (this is only based on camera coordinates)</li>
     <li>Build Dense Point cloud (quality:medium)</li>
-    <li>Build Mesh (face count 50 000 000)</li>
-    <li>Decimate Mesh (face count: 1 000 000)</li>
+    <li>Build Mesh (face count: medium 50 000 000)</li>
     <li>Build Texture</li>
-    <li>Export DEM</li>
+    <li>Generate DEM</li>
 </ol>
 Then calculate the differences in elevation in the DSM generated with GCPs 
 and the new one without GCPs in GRASS GIS using raster map algebra:
