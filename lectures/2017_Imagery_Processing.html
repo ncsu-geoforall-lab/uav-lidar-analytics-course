@@ -63,8 +63,8 @@
 <div class="left">
         <ul>
         <li class="fragment">Measured by GPS coordinates of the panels set before the flight</li>
-        <li class="fragment">Photo ID points (distinguishabe ground features)can be surveyed later on </li>
-        <li class="fragment">It is improtant to know the GCPs coorditate system (spatial reference system)</li>
+        <li class="fragment">Photo ID points (distinguishable ground features)can be surveyed later on </li>
+        <li class="fragment">It is important to know the GCPs coorditate system (spatial reference system)</li>
         </ul>
 </div>
 <div class="right">
@@ -76,7 +76,7 @@
     <h2>Spatial reference system</h2>
      <div class="left">
         <ul>
-        <li class="small fragment">defines, with the help of coordinates, how the two-dimensional, projected map in your GIS is related to real places on the earth</li>
+        <li class="small fragment">defines how the two-dimensional, projected map in your GIS is related to real places on the earth</li>
         <li class="small fragment">It is crucial to know what is your data reference system!</li>
 
     </div>
@@ -86,7 +86,7 @@
 <ul>
         <li class="small fragment">There are global map projections, but most map projections are created and optimized to project smaller areas of the earth’s surface</li>
         <li class="small fragment">There are two different types of coordinate reference systems: Geographic Coordinate Systems and Projected Coordinate Systems</li>
-        <li class="small fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (EPSG codes)</a></li>
+        <li class="small fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (EPSG codes for coordinate reference systems)</a></li>
 </ul>
 </section>
 
@@ -101,7 +101,7 @@
      <div class="left">
         <ul>
         <li class="fragment"> aerial imagery geometrically corrected ("orthorectified") such that the scale is uniform</li>
-        <li class="fragment"> raster: consistis of red, green and blue bands</li>
+        <li class="fragment"> raster: consists of red, green and blue bands</li>
     </div>
     <div class="right">
         <img src="img/new/ortho_example.jpg">
@@ -154,7 +154,7 @@
 
 </section>
 <section>
-    <h2>Multiple-view geometry questions</h2>
+    <h2>Multiple-view geometry</h2>
     <ul>
         <li class="fragment"><strong>Scene geometry (structure):</strong> <br>Given 2D point matches in two or more images, where are the corresponding points in 3D?</li>
         <li class="fragment"><strong>Correspondence (stereo matching):</strong> Given a point in just one image, how does it constrain the position of the corresponding point in another image? </li>
@@ -172,6 +172,7 @@
         <li class="fragment">(Ground Control Points parameters);</li>
         <li class="fragment">Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
     </ol>
+<p class="small">items in brackets are optional<p>
 </section>
 <section>
     <h2>1. Digital imagery</h2>
@@ -189,7 +190,7 @@
 		<img src="img/disortion.png">
      </div>
     <div class="right">
-           <p class="fragment"> <strong>Before:</strong> Shape of the ground surface must be known in order to remove the effects of relief displacement<p>
+           <p class="fragment"> <strong>In the past:</strong> Shape of the ground surface must be known in order to remove the effects of relief displacement<p>
     </div>
              <p class="fragment"> <strong>Now:</strong> computed automatically by Structure from Motion <p>    
 </section>
@@ -213,7 +214,7 @@
             <p class="fragment">6 elements <strong>necessary</strong> for any photogrammetric processing:</p>
     <div class="left">  
     <ul>
-        <li class="fragment">X, Y, and Z of the exposure station position (latitude, longnitude and altitude of the camera),</li>
+        <li class="fragment">X, Y, and Z of the exposure station position (latitude, longitude and altitude of the camera),</li>
         <li class="fragment">angular orientation: ω, φ, and κ (yaw, pich and roll)</li>
     </ul>
     </div>
@@ -237,7 +238,7 @@
     <h2>4. Interior orientation </h2>
     <div class="left">  
     <ul>
-        <li class="fragment">Before: camera calibration report,</li>
+        <li class="fragment">In the past: camera calibration report,</li>
         <li class="fragment">Now: Self-calibration (auto-calibration) is the process of determining intrinsic camera parameters directly from uncalibrated images</li>
     </ul>
     </div>
@@ -253,7 +254,7 @@
     <div class="left">
         <li class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). </li>
         <li class="fragment">For more information about placing targets and importance of  GCPs see <a href="./HM_Photogrammetry_and_SfM.html#/30">this section of lecture 3</a></li>
-        <li class="fragment">For more information about processing the date with GCPs see <a href="./2017_Imagery_Processing_assignment_intro.html">intro to the assignment</a></li>
+        <li class="fragment">For more information about processing the data with GCPs see <a href="./2017_Imagery_Processing_assignment_intro.html">intro to the assignment</a></li>
 </div>
     <div class="right">
             <img src="img/processing/GCP_girls.png">
@@ -271,7 +272,7 @@ Everything boils down to... money (and time)
         <li class="fragment">What is my starting budget and equipment?;</li>
         <li class="fragment">How frequently will I fly?;</li>
         <li class="fragment">Do I have the experience/ training necessary for processing (or am I able to hire people who do)?</li>
-        <li class="fragment">Do I have time to process the data by myself?;</li>
+        <li class="fragment">Do I have time to process the data by myself?</li>
     </ul>
 </section>
 <section>
@@ -457,7 +458,7 @@ Everything boils down to... money (and time)
 
     <div class="left">     
     <ul>
-        <li class="fragment"><strong>Arbitraty</strong> > for modeling of any kind of object</li>
+        <li class="fragment"><strong>Arbitrary</strong> > for modeling of any kind of object</li>
             <ul>
                 <li class="small fragment">should be selected for closed objects (statues, buildings, etc.);</li>
                 <li class="small fragment">memory consumption: high </li>
@@ -475,10 +476,10 @@ Everything boils down to... money (and time)
             </ul>
     </ul>
     </div>
-    <div class="right">
+ <!--   <div class="right">
             <img class="fragment" src="img/processing/mesh_comparison.PNG" width="120%">
     </div>
-
+-->
 </section>
 <section>
     <h3>3. Building mesh</h3>
@@ -614,6 +615,7 @@ Everything boils down to... money (and time)
 			 the atlas parametrized in the external software.</li> 
 	</ul>
 </section>
+<!--
 <section>
     <h3>Texture generation parameters</h3>
  <p class="fragment"><strong>Blending mode</strong> (not used in Single photo mode)- selects the way how pixel values will 
@@ -643,6 +645,7 @@ Everything boils down to... money (and time)
         	</ul>
 	</ul> 
 </section>
+-->
 <section>
     <h2>Generating DSM</h2>
  <div class="right">
@@ -654,7 +657,7 @@ Everything boils down to... money (and time)
     <li class="fragment"><strong>Source data:</strong> dense point cloud</li>
     <li class="fragment"><strong>Interpolation</strong> </li>
 <ul>
-    <li class="small fragment">Disabled: eads  to  accurate  reconstruction  results  since  only  areas
+    <li class="small fragment">Disabled: leads  to  accurate  reconstruction  results  since  only  areas
 corresponding to dense point cloud points are reconstructed</li>
     </ul> 
  </div>
@@ -807,9 +810,9 @@ along the normal to the reconstructed surface in that point.</li>
  <section>
 <h2> What did we learn?</h2>
 <ul>
-<li class="fragment">What is a general workflow for UAS imagery processing?
-<li class="fragment">How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud?
-<li class="fragment">How to process the data in Agisoft Photoscan Professional and how to set proper parameters in the program?
+<li class="fragment">What is a general workflow for UAS imagery processing
+<li class="fragment">How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud
+<li class="fragment">How to process the data in Agisoft Photoscan Professional and how to set proper parameters in the program
 </ul>
 </section>
 
