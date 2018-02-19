@@ -278,6 +278,7 @@
     <ul>
         <li class="fragment">Non-linear method for refining structure and motion</li>
         <li class="fragment">Minimizing reprojection error</li>
+       <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
     </ul>
     </div>
     <div class="right">
@@ -285,9 +286,9 @@
     </div>
 </section>
 <section>
-    <h2>Bundle Block Adjustment</h2>
+    <h3>Bundle Block Adjustment</h3>
     <ul>
-        <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
+
         <li class="fragment">Subsequently monitoring the movement of those points throughout the sequence of multiple images; </li>
     </ul>
     <div class="left">  
@@ -296,7 +297,7 @@
     <div class="right">
             <img class="fragment" src="img/Bundle_Block_Adjustment2.png">
     </div>
-</section>
+</sectio
 <section>
     <h2>Aligning cameras in PhotoScan</h2>
     <div class="right">
@@ -326,7 +327,7 @@
        </ul>   
 </section>
 <section>
-    <h2>2. Building dense point cloud</h2>
+    <h3>2. Building dense point cloud</h3>
     <div class="left">     
         <p class="fragment"><strong>Depth Filtering modes</strong></p>
  	<p class="small fragment">Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images)</p> 
@@ -378,7 +379,7 @@
 <section>
     <h2>3. Building mesh</h2>
    <div class="right">
-            <img src="img/Agisoft_mesh.png" width="80%">
+            <img src="img/Agisoft_mesh.png" width="50%">
     </div>
     <div class="left">     
     <ul>
@@ -387,9 +388,11 @@
                 <li class="small fragment"><strong>Sparse cloud</strong> > fast 3D model generation (low quailty)</li>
                 <li class="small fragment"><strong>Dense cloud</strong> > high quality output based on the previously reconstructed dense point cloud.</li>
             </ul>
+</ul>
+	</div>
+<ul>
  	<li class="fragment"><strong>Face count </strong> > the maximum face count in the final mesh. <p class="small">"Face count set at “0” means that PhotoScan will determine an optimum number of faces</p></li>
      </ul> 
-	</div>   
 </section>
 <section>
     <h2>Optional: editing mesh</h2>

@@ -66,7 +66,7 @@ General workflow (with GCPs):</h4>
 <h4>Software</h4>
 
 <ul>
-    <li><a href="http://grass.osgeo.org/">GRASS GIS 7.0.1</a>
+    <li><a href="http://grass.osgeo.org/">GRASS GIS</a>
     <li>Trimble Aerial Imaging <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXRWo0TGl1a3ZVMDQ">installation file (Windows)</a>
 </ul>
 
@@ -74,14 +74,16 @@ General workflow (with GCPs):</h4>
 
 For this analysis you can run GRASS GIS with the Lake_Wheeler_NCspm location 
 or nc_spm_08 from MEA582 can be used as well. Create a new mapset to manage your flight analysis. <br>
-!!! <strong>REMEMBER</strong> !!! to set the directory first or use the whole paths for the input files. All the commands with indication: <i>#customize name#</i> cannot be just copied and pasted into the GRASS command line
+!!! <strong>REMEMBER</strong> 
+ Change working directory <br>Settings > GRASS working environment > Change working directory > select/create any directory
+or type cd (stands for change directory) into the GUI Console and hit Enter <br>
+<i>Now you can use the commands from the assignment requiring the text file without the need to specify the full path to the file</i>
 
 <ul>
     <li>Export a flight plan path that you created to the kml file from Trimble Aerial Imaging .gwt project</li>
     <li>Launch GRASS</li>
     <li>Import generated kml into GRASS with v.import, which will reproject the input on the fly:
-<pre><code><i>#customize name#</i>
-v.import input=exported_kml_file.kml output=flight_track_kml
+<pre><code>v.import input=exported_kml_file.kml output=flight_track_kml
 </code></pre>
     <li>Convert vector line to elevation points. Set the maximum distance between the points as 0.3 m
 <pre><code>v.to.points -i input=flight_track_kml output=flight_track_points dmax=0.3
@@ -102,11 +104,11 @@ v.to.rast input=flight_track_points output=flight_path_altitude_rast use=z
 <ul>
     <li>Download lidar data for <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_spm_2013.las"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las"> Mid Pines </a> to your computer</li>
    <li> set region to your study area using g.region or using the zoom function for setting the region 
-    <li>Import lidar data to grass
-<pre><code><i>#customize name#</i>
-r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
+      <li>Import lidar data to grass
+<pre><code>r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
 r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter=1,2 return=first res=3 zrange=0,300 -oe
 </code></pre>
+<li> <i><strong>NOTE</i></strong> - If you are working on Windows and have the GRASS 7.2.2 installed, the command r.in.lidar might not work for you - in this case you can download the interpolated DSMs for <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_surface_max.pack"> SECREF</a> and <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_surface_max.pack"> Mid Pines</a>. <br>Use <code>r.unpack</code> to unpack the rasters.</i>
  </ul>
 
 <h3>Calculate the elevation difference between the flight path and surface</h3>
@@ -115,10 +117,11 @@ r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter
 <pre><code>r.mapcalc expression="elev_diff = flight_path_wide - mid_pines_surface_max"
 r.mapcalc expression="elev_diff = flight_path_wide - secref_surface_max"
 </code></pre>
+
 </ul>
 <p>Use the acquired diffrence map to evaluate your flight plan, pay close attention to the obstacle free zones</p>
 <h4>Visualize results</h4>
-<p> You can use screenshots from Trimble Aerial Imaging and GRASS. If you discovered any obstacles  and needed to readjust the flight path - include the picture and description of the issue. You can display the orthophoto, COA boundaries for better understanding of the terrain. Orthophoto is in <a href="http://courses.ncsu.edu/mea582/common/media/01/nc_spm_08_grass7.zip"> nc_spm_08_grass7</a> location and COA in <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k"> Lake_Wheeler_NCspm</a> location.
+<p> You can use screenshots from Trimble Aerial Imaging and GRASS. If you discovered any obstacles  and needed to readjust the flight path - include the picture and description of the issue. You can display the orthophoto, COA boundaries for better understanding of the terrain. Orthophotos (for the Mid Pines area) and and COA (vector) are in <a href="https://drive.google.com/open?id=1o2KwIDxO6FRSW2v3MY5f537fuKM4yTG4"> Lake_Wheeler_NCspm_course</a> location.
 <h4>Explain your choice of the flight area, parameters and takeoff and landing locations based on the performed analysis</h4>
 <p> The aim is to prove that the flight plan that you've created can be used to execute a safe and sucessful flight mission. Describe your thought process - what did you take into account first, what problems did you encouter? Did you need to change your initial plans based on software limitations, legal issues or the relief of the targeted area? <br>
 
@@ -138,7 +141,7 @@ r.mapcalc expression="elev_diff = flight_path_wide - secref_surface_max"
     </a>
 </li>
 <li title="Copyright and license (not applicable to linked materials)">
-    &copy; 2016
+    &copy; 2018
     <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
     <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU GeoForAll Lab</a>
 </li>
