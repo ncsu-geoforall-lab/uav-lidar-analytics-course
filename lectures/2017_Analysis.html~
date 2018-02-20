@@ -137,7 +137,7 @@
 <section>
     <h2>Image residuals</h2>
 <p class="fragment">This <strong>reprojection error</strong> is equivalent to the root mean square (RMS) image residuals used in photogrammetric literature</p>
-<p class="small fragment"> More on image residuals in <a href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3609/epdf">this article</a></p>
+<p class="small fragment"> More on image residuals in <a href="http://onlinelibrary.wiley.com/doi/10.1111/phor.12072/full">this article</a></p>
     <img class="fragment" src="img/image_residuals.png">
 </section>
 <section>
@@ -158,7 +158,8 @@
 </section>
 <section>
     <h2>DSMs comparison</h2>
-    <img class="fragment" src="img/flight_DSMs_difference.png">
+    <img src="img/flight_DSMs_difference1.png" width =70%>
+<p class="small">difference between DSMs generated <br>based on data from two consecutive flights 
 </section>
 <section>
     <h2>DSMs comparison by software</h2>
