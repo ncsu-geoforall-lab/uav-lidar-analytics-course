@@ -40,17 +40,18 @@ Asses the relevance of UAV derived data and processing outputs for solving your 
 
 <p>
 In order to detect the bowl effect, additional DSM needs to be computed.
-This time GCPs shuld not be used in the processing.
-You can repeat all the steps in Agisoft from Assgment 3 - part for quality processing.
+This time GCPs should not be used in the processing.
+You can repeat all the steps in Agisoft from <a href="../geoprocessing.html">Imagery processing assignment</a>
 Batch processing commands should be in this order:
 <ol>
     <li>Align Photos</li>
     <li>Optimize Alignment (this is only based on camera coordinates)</li>
     <li>Build Dense Point cloud (quality:medium)</li>
-    <li>Build Mesh (face count: medium 50 000 000)</li>
+    <li>Build Mesh (face count: medium)</li>
     <li>Build Texture</li>
     <li>Generate DEM</li>
 </ol>
+If you have just the DEMO version of the Agisoft, you can dowload the DSM generated without GCPs (use r.unpack)
 Then calculate the differences in elevation in the DSM generated with GCPs 
 and the new one without GCPs in GRASS GIS using raster map algebra:
 <pre><code>
