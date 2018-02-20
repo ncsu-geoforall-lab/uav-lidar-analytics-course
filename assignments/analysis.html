@@ -4,21 +4,7 @@ In this assignment we analyze the DSMs derived from the UAS imagery in terms
 of their accuracy and type of distortions based on the use of GCPs and different processing software.
 Then we map the terrain change (due to vegetation growth, erosion, and other impacts
 using two different uas surveys).
-<!--
-<p>This assignment requires critical thinking about the processing outputs.
-<ul>
-<li>You can use the timeseries of data from the GRASS location if your project includes changes in terrain in time.
-<li>There are also orthophotomaps and point clouds available from all the flights (dates in DSM file names). If you need any of them – please request the specific file and format. Note that especially orthophotos are quite large files – up to couple GB.
-</ul>
-<p>
-<strong> In the report include:</strong>
-<ul>
-    <li>Your research problem/research question
-    <li>Steps and procedures the you've performed in order to answer this question
-    <li>Obstacles and problems you’ve encountered
-</ul>
-Asses the relevance of UAV derived data and processing outputs for solving your research problem.
--->
+
 
 <ul>
     <li>Including GCPs in geoprocessing improves the results.
@@ -51,11 +37,33 @@ Batch processing commands should be in this order:
     <li>Build Texture</li>
     <li>Generate DEM</li>
 </ol>
-If you have just the DEMO version of the Agisoft, you can use the sample_DSM and sample_DSM_noGCP from the <a href="https://drive.google.com/open?id=1o2KwIDxO6FRSW2v3MY5f537fuKM4yTG4">Lake_Wheeler_NCspm_course</a> location<br>
+
 <strong>NOTE:</strong>Remember to change your working directory <em>Settings > GRASS working environment > Change working directory</em></br>
 
-Then calculate the differences in elevation in the DSM generated with GCPs 
+<h4>Calculate differences between processed sample data</h4>
+Now you should have two DSMs: <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">one generated in processing with 3GCPs</a> in the <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">Imagery processing assignment</a> and the <a href="https://drive.google.com/open?id=1j324mmeqtaYYpCgRLIfC6TE45sIGxghT">one generated in processing without GCPs</a>. (packs provided for those working in DEMO mode, use r.unpack)
+
+Calculate the differences in elevation in the DSM generated with GCPs
 and the new one without GCPs in GRASS GIS using raster map algebra:
+<pre><code>
+g.region DSMagi_2016_09_22_sample
+r.mapcalc expression="GCP_noGCP_class = DSMagi_2016_09_22_sample - DSMagi_2016_09_22_sample_noGCPs"
+</code></pre>
+Change the color map to better see the differences
+(entering the values directly in the dialog <em>r.colors</em> dialog (second tab) will
+probably work the best):
+<pre><code>
+0 red
+15  orange
+20 yellow
+25 grey
+30 cyan
+35 aqua
+42 blue
+</code></pre>
+<h4>Calculate differences between DSMs from larger area</h4>
+Your sample data has very limited extend. To fully understand the phenomenon that is cause by the absence of GCPs, compare the sample DSMs from the
+<a href="https://drive.google.com/open?id=1o2KwIDxO6FRSW2v3MY5f537fuKM4yTG4">Lake_Wheeler_NCspm_course</a> location<br>
 <pre><code>
 g.region rast=sample_DSM
 r.mapcalc expression="GCP_noGCP = sample_DSM - sample_DSM_noGCPs"
@@ -64,14 +72,19 @@ Change the color map to better see the differences
 (entering the values directly in the dialog <em>r.colors</em> dialog (second tab) will
 probably work the best):
 <pre><code>
-35 blue
-36 white
-37 red
+0 red
+35 orange
+36 yellow
+37 cyan
+38 aqua
+39 blue
 </code></pre>
+
+Why are those patterns different? Consider the distribution of the GCPs and the shape of the area.
 
 <h3>Compare DSMs generated in different software</h3>
 
-For the flight from 2015-06-20 there are DSM with GCPs generated in 3 different software environments (Trimble Business Center, Agisoft Photoscan and Pix4D). Additionally there are DSMs generated without GCPs in Agisoft Photoscan and Pix4D.
+For the flight from 2015-06-20, in the Lake_Wheeler_NCspm_course there are DSM with GCPs generated in 3 different software environments (Trimble Business Center, Agisoft Photoscan and Pix4D). Additionally there are DSMs generated without GCPs in Agisoft Photoscan and Pix4D.
 
 <p>
 Check the bowl effect for the Agisoft generated products:
