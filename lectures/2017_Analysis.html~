@@ -1,5 +1,5 @@
 <section>
-    <h2>Analysis of processing outputs</h2>
+    <h2>Analysis of UAS data processing results</h2>
      <h4>GIS595-004/603; MEA592-006/601:</h4>
     <h4>UAS Mapping for 3D Modeling</h4>
     <h4 style="margin-top: 0.5em">
@@ -17,6 +17,7 @@
        <li class="fragment"><strong>Understand</strong> significance of using GCPs in the processing and their impact on the final products</li>
        <li class="fragment"><strong>Recognize</strong> what processing steps need to be modified in order to improve particular errors </li>
         <li class="fragment"><strong>Understand</strong> what causes the 'Bolw effect' and know the solutions to fix it.</li>
+        <li class="fragment"><strong>Execute</strong> simple terrain measurements in Agisoft Photoscan</li>
    </ul>
 </section>
 <section>
@@ -222,27 +223,27 @@
 <li class="fragment">Agisoft has capability of performing simple measurements on DSM and 3D model:</li>
 <li class="fragment"><strong>Profile generation</strong></li>
 </ul>
- <img class="fragment" src="img/analysis/profile.PNG">
+ <img class="fragment" src="img/analysis/profile.PNG" width="80%">
 </section>
 <section>
 <h3>Measurements in Agisoft Photoscan</h3>
 <ul>
-<li class="fragment"><strong>Generating contour lines</strong></li>
+<li><strong>Generating contour lines</strong></li>
 </ul>
- <img class="fragment" src="img/analysis/DEM_contours.PNG">
+ <img class="fragment" src="img/analysis/DEM_contours.PNG" width="80%">
 </section>
 
 <section>
 <h3>Measurements in Agisoft Photoscan</h3>
 <ul>
-<li class="fragment"><strong>Volume and area measurements</strong></li>
+<li><strong>Volume and area measurements</strong></li>
 </ul>
  <img class="fragment" src="img/analysis/volumes_contours.PNG">
 </section>
 
 <section>
 <h2>Terrain analysis in GRASS GIS</h2>
-<p class="fragment"> computing <a href="https://grass.osgeo.org/grass64/manuals/r.slope.aspect.html">aspect, slope</a></p>
+<p> computing <a href="https://grass.osgeo.org/grass64/manuals/r.slope.aspect.html">aspect, slope</a></p>
  <img class="left fragment" src="img/analysis_aspect_GCP.png" width="50%">
  <img class="right fragment" src="img/analysis_slope_GCP.png" width="50%">
 
@@ -259,18 +260,13 @@
  <img class="left fragment" src="img/analysis_local_relief.png" width="50%">
  <img class="right fragment" src="img/analysis_skyview.png" width="50%">
 </section>
-<section>
-<h2>Advanced terrain analysis</h2>
-<p class="fragment"> computing <a href="https://grass.osgeo.org/grass70/manuals/addons/r.shaded.pca.html">shaded PCA maps</a></p>
- <img class="left fragment" src="img/analysis_pca_GCPs.png" width="80%">
-</section>
  <section>
 <h2> What did we learn?</h2>
 <ul>
-<li class="fragment">What are the imagey processing outputs?
-<li class="fragment">How to interpret the processing results based on processing report?
-<li class="fragment">How to compare results of differing processing results (by software and GCPs used)?
-<li class="fragment">How use Agisoft Photoscan for simple measurements?
-<li class="fragment">Where to perform more advanced terrain analysis?
+<li class="fragment">What are the imagery processing outputs
+<li class="fragment">How to interpret the processing results based on processing report
+<li class="fragment">How to compare results of differing processing results (by software and GCPs used)
+<li class="fragment">How use Agisoft Photoscan for simple measurements
+<li class="fragment">Where to perform more advanced terrain analysis
 </ul>
 </section>

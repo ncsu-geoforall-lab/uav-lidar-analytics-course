@@ -62,16 +62,16 @@ Asses the relevance of UAV derived data and processing outputs for solving your 
 <ul>
     <li>Including GCPs in geoprocessing improves the results.
         Does it have an effect on phenomenon that you are investigating?
-    <li>Agisoft is only one example of the software solutions available for the UAV data processing.
+    <li>Agisoft is only one example of the software solutions available for the UAS data processing.
         In the GRASS location there are available DSM generated in different environments:
-        OpenDroneMap, Pix4D and Trimble Business Center (just for one example flight).
+        Agisoft, Pix4D and Trimble Business Center (just for one example flight).
         Compare the differences between these DSMs.
-    <li>In <a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/geoprocessing.html">Assignment 3</a>
+    <li>In <a href="../assignments/geoprocessing.html">Imagery processing assignment</a>
     you’ve used arbitrary given parameter values in each processing step.
     You can change various modes, quality, values and options and investigate
     if it does improve the results.
-    You can find descriptions of the options for each processing step on <a href="http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/lectures/04_Imagery_Processing.html#/">lecture slides</a>
-    and in the <a href="http://www.agisoft.com/pdf/photoscan-pro_1_1_en.pdf">Agisoft Manual</a>.
+    You can find descriptions of the options for each processing step on <a href="../lectures/2017_Imagery_Processing.html#/">lecture slides</a>
+    and in the <a href="http://www.agisoft.com/pdf/photoscan-pro_1_3_en.pdf">Agisoft Manual</a>.
 </ul>
 
 
@@ -79,25 +79,27 @@ Asses the relevance of UAV derived data and processing outputs for solving your 
 
 <p>
 In order to detect the bowl effect, additional DSM needs to be computed.
-This time GCPs shuld not be used in the processing.
-You can repeat all the steps in Agisoft from Assgment 3 - part for quality processing.
+This time GCPs should not be used in the processing.
+You can repeat all the steps in Agisoft from <a href="../assignments/geoprocessing.html">Imagery processing assignment</a>
 Batch processing commands should be in this order:
 <ol>
     <li>Align Photos</li>
     <li>Optimize Alignment (this is only based on camera coordinates)</li>
     <li>Build Dense Point cloud (quality:medium)</li>
-    <li>Build Mesh (face count 50 000 000)</li>
-    <li>Decimate Mesh (face count: 1 000 000)</li>
+    <li>Build Mesh (face count: medium)</li>
     <li>Build Texture</li>
-    <li>Export DEM</li>
+    <li>Generate DEM</li>
 </ol>
+If you have just the DEMO version of the Agisoft, you can dowload the <a href="LINK">DSM generated without GCPs</a> (use r.unpack)<br>
+<strong>NOTE:</strong>Remember to change your working directory <em>Settings > GRASS working environment > Change working directory</em>
+
 Then calculate the differences in elevation in the DSM generated with GCPs 
 and the new one without GCPs in GRASS GIS using raster map algebra:
-<pre><code>g.region rast=sample_DSM -p
+<pre><code>g.region rast=sample_DSM
 r.mapcalc expression="GCP_noGCP = sample_DSM - sample_DSM_noGCPs"
 </code></pre>
 Change the color map to better see the differences
-(entering the values directly in the dialog <em>r.colors</em> dialog will
+(entering the values directly in the dialog <em>r.colors</em> dialog (second tab) will
 probably work the best):
 <pre><code>35 blue
 36 white
@@ -110,7 +112,7 @@ For the flight from 2015-06-20 there are DSM with GCPs generated in 3 different 
 
 <p>
 Check the bowl effect for the Agisoft generated products:
-<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP -p
+<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP
 r.mapcalc expression="agi_GCP_agi_noGCP = 2015_06_20_DSM_agi_11GCP - 2015_06_20_DSM_agi_noGCP"
 </code></pre>
 Change the color table to better see the differences.
