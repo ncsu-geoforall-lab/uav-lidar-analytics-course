@@ -76,11 +76,12 @@ Batch processing commands should be in this order:
     <li>Build Texture</li>
     <li>Generate DEM</li>
 </ol>
-
-<strong>NOTE:</strong>Remember to change your working directory <em>Settings > GRASS working environment > Change working directory</em></br>
+<p>We will use GRASS GIS to compare the DSMs. <br>
+Open GRASS and change your working directory <br><em>Settings > GRASS working environment > Change working directory</em> <br>and then continue with the GRASS part.
 
 <h4>Calculate differences between processed sample data</h4>
-Now you should have two DSMs: <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">one generated in processing with 3GCPs</a> in the <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">Imagery processing assignment</a> and the <a href="https://drive.google.com/open?id=1j324mmeqtaYYpCgRLIfC6TE45sIGxghT">one generated in processing without GCPs</a>. (packs provided for those working in DEMO mode, use r.unpack)<br>
+Now you should have two DSMs: <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">one generated in processing with 3 
+GCPs</a> in the <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">Imagery processing assignment</a> and the <a href="https://drive.google.com/open?id=1j324mmeqtaYYpCgRLIfC6TE45sIGxghT">one generated in processing without GCPs</a>. (packs provided for those working in DEMO mode, use r.unpack)<br>
 
 Calculate the differences in elevation in the DSM generated with GCPs
 and the new one without GCPs in GRASS GIS using raster map algebra:
