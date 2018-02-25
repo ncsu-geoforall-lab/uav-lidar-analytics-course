@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>Point cloud data analysis</h2>
+    <h4>GIS595-004/603; MEA592-006/601:</h4>
+    <h4>UAS Mapping for 3D Modeling</h4>
+    <h4 style="margin-top: 0.5em">
+    Helena Mitasova, Justyna Jeziorska, Vaclav Petras</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+    </p>
+<!--ADD SCALE BARS EVERYWHERE!!!!!! -->
+</section>
+
+<section>
+    <h3>Outline</h3>
+<p>
+<ul>
+<p> <li>characteristics of UAS and lidar-based point cloud data
+<p> <li> point cloud data processing, visualization, and analysis
+<p> <li>computing DEM / DSM,  and topographic parameters
+<p> <li> voxel-based analysis and vertical profiles
+</ul>
+</section>
+
+<section>
+   <h3>What are point clouds?</h3>
+<ul>
+<li> dense set of points (x,y,z) defined in 3D space: 
+  <ul>
+  <li> directy measured using lidar
+  <li> derived from overlapping images using SfM
+  </ul>
+<img width="65%" src="img/lidar/pointcloud.png">
+</ul>
+</section>
+
+<section>
+   <h3>Lidar point cloud acquisition</h3>
+<p>
+<ul>
+<li>Measured time of pulse return is converted to distance between the sensor and object
+<li>3D georeferenced coordinates are derived using on-board GPS and INS 
+</ul>
+<p>
+<img width="30%" src="img/lidar/airborne_lidar_scann.jpg">
+<img width="65%" src="img/lidar/lidar_secref_3d.png">
+</section>
+
+<section>
+   <h3>Multiple return lidar point cloud</h3>
+<p>
+Lidar pulse can penetrate the tree canopy leading to multiple pulse returns
+<p>
+<img width="85%" src="img/lidar/lidarmrpts3dcolored.jpg">
+<br>yellow: first return, dark brown: second return
+</section>
+
+<section>
+   <h3>Multiple return point cloud profiles</h3>
+<p>
+Multiple return point cloud profile view of returns
+<br>
+<img width="80%" src="img/lidar/Lect_lidar_returns.png">
+</section>
+
+<section>
+   <h3>Multiple return points shift</h3>
+<p>
+Horizontal projection of multiple return point location
+<p>
+<img width="85%" src="img/lidar/mr_horiz_shift.jpg">
+</section>
+
+
+<section>
+   <h3>Lidar point cloud data</h3>
+<p>
+Set of <i>[x, y, z, (r, i, c, ...)]</i> measured points reflected
+from Earth surface or objects on or above it, where:
+<ul>
+<li> <i>[x, y, z]</i> are georeferenced coordinates,
+<li><i>r</i> &nbsp; is the return number,
+<li><i>i</i> &nbsp; is intensity,
+<li><i>c</i> &nbsp; is class
+</ul>
+<p>
+Additional data: R:G:B, scan direction
+</section>
+
+<section>
+   <h3>SfM-derived point cloud data</h3>
+<p>
+Set of <i>[x, y, z, (R, G, B)]</i> points derived from 
+overlapping imagery using Structure from Motion technique:
+<ul>
+<p>
+<li> <i>[x, y, z]</i> are georeferenced coordinates,
+<p>
+<li><i>R,G,B</i> are Red, Green, Blue channels derived from imagery
+</ul>
+<p>
+Additional data depend on sensor
+</section>
+
+<section>
+   <h3>Point cloud data formats</h3>
+<p>
+<ul>
+<li>ASCII x,y,z, ... format - older data
+<p>
+<li>binary LAS format (header, record information, x,y,z,i, ... ),
+industry lidar data exchange format
+<p>
+<li>compressed LAZ format
+<p>
+<li>proprietary formats, especially for waveform data
+</ul>
+<p>
+Learn more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS1.4 Specification</a>
+<br>and 
+<a href="http://pubs.usgs.gov/tm/11b4/pdf/tm11-B4.pdf">USGS Lidar Base Specification</a>
+</section>
+
+<section>
+   <h3>Point cloud data processing</h3>
+<p>
+<ul>
+<p>
+<li>preview and analysis of point distribution
+<p>
+<li>filtering outliers 
+<p>
+<li>bare earth point extraction
+<p>
+<li>classification: canopy, buildings ...
+<p>
+<li>feature extraction: buildings, power lines ... 
+</ul>
+<p>
+</section>
+
+<section>
+   <h3>Point cloud data preview</h3>
+<ul>
+<li>Point cloud data are massive: millions of 3D points
+<li>Point cloud viewers - adjust rendering to display resolution
+<li>On-line viewer and analysis: plas.io
+</ul>
+<img width="70%" src="img/lidar/hunt_uavpointcloud_bldg.jpg">
+<!--<img width="42%" src="img/lidar/hunt_uavpointcloud.jpg">-->
+<p class="small">UAS SfM derived point cloud from Midpines viewed at Hunt library</p>
+</section>
+
+<section>
+   <h3>Analysis of point distribution</h3>
+<p>
+Binning: point statistics for each grid cell
+<p>
+<ul>
+<p>
+ <li> number of points per grid cell - map of point densities, 
+<p>
+ <li> range, stddv of z-values - map of within cell vertical variability
+<p>
+ <li> identify data gaps, potential for artifacts 
+<p>
+ <li> use to select appropriate supported resolution for DEM
+</ul>
+</section>
+
+<section>
+   <h3>Analysis of point distribution: lidar</h3>
+<p>
+Increased densities (and potential errors) along swath overlaps
+or close to terrestrial station position
+<p>
+<img height="210" src="img/lidar/lid2013_1r_n_3ftb.png">
+<img height="210" src="img/lidar/lid2013_be_n_3ftb.png">
+<img height="210" src="img/lidar/Ssecr_110309_ptdensity_20cm.png">
+<p class="small">Wake county 2013 lidar all returns and bare earth, TLS at SECREF
+</p>
+</section>
+
+<section>
+   <h3>Analysis of point distribution: SfM</h3>
+<p>
+occlusion, cast shadows
+<p>
+<img height="210" src="img/uas/pointdensity1.png">
+<img height="210" src="img/uas/pointdensity2.png">
+<p class="small">Midpines
+</p>
+</section>
+
+<section>
+   <h3>Analysis of within cell z-range: lidar</h3>
+<p>
+Maps of range of z-values within grid cell for selected resolutions
+<p>
+<img height="210" src="img/lidar/range_10m.png">
+<img height="210" src="img/lidar/range_5m.png">
+<img height="210" src="img/lidar/range_1m.png">
+<p class="small">Wake county 2013 lidar at 10m, 5m and 1m resolution
+</p>
+</section>
+
+<section>
+   <h3>Analysis of within cell z-range: SfM</h3>
+<p>
+Maps of range of z-values within grid cell for selected resolutions
+<p>
+<img height="210" src="img/uas/range_10m.png">
+<img height="210" src="img/uas/range_5m.png">
+<p class="small">Midpines
+</p>
+</section>
+
+<section>
+   <h3>Outliers</h3>
+<p>
+<ul>
+  <li>Lidar: birds, particles, material properties
+  <li>SfM: errors in point matching
+  <li>Filtered by using local z-min, z-max or range thresholds
+</ul>
+<p>
+<img height="210" src="img/lidar/outlier.png">
+<img height="210" src="img/uas/outlier.png">
+<p class="small">Cenetennial, Midpines </p>
+</section>
+
+<section>
+   <h3>Computing DEM: binning</h3>
+<p>
+<ul>
+<p>
+ <li>per cell statistics: mean, min, max, or nearest point z-value
+<p>
+ <li>sufficient for many applications
+<p>
+ <li>no need to import the points, on-fly raster generation
+<p>
+ <li>may be noisy, with no-data areas
+</ul>
+</section>
+
+<section>
+   <h3>Computing DEM: TIN</h3>
+Meshes standard in 3D engineering and design systems:
+<p>
+<ul>
+  <li>variable resolution based on terrain complexity
+  <li>variable level of detail visualization
+  <li>2D triangualtion leads to TIN geometry not optimal for 3D, 
+e.g. triangles on roads, artificial dams in valleys
+  <li>harder to combine with other geospatial data
+  <li>limited analytics available
+  <li>harder to share - limited exchange formats
+</ul>
+</section>
+
+<section>
+   <h3>Computing DEM: interpolation to raster</h3>
+<p>
+<ul>
+  <li>supports resolution higher than point density
+  <li>results depend on the method used, but most work because of high point densities
+  <li>high resolution raster DEMs can be massive - OK for analytics, converts to TIN for 3D visualization
+  <li>easy to share
+</ul>
+</section>
+
+<section>
+   <h3>Jockey's Ridge lidar 1999</h3>
+Point cloud
+<p> <img height="500" src="img/lidar/jr_pointcloud.jpg">
+</section>
+
+<section>
+   <h3>Jockey's Ridge lidar 1999</h3>
+Binning at 1m resolution: many NULL cells
+<p> <img height="500" src="img/lidar/lidstorast1m.jpg">
+</section>
+
+<section>
+   <h3>Jockey's Ridge lidar 1999</h3>
+Binning at 3m resolution
+<p> <img height="500" src="img/lidar/lidstorast.jpg">
+</section>
+
+<section>
+   <h3>Jockey's Ridge lidar 1999</h3>
+Interpolation at 1m resolution
+<p> <img height="500" src="img/lidar/liddfdm1e.jpg">
+<p>You can try TIN for comparison - provide data
+</section>
+
+<section>
+   <h3>Midpines UAS SfM </h3>
+Point cloud derived from overlapping imagery
+<p> <img height="500" src="img/lidar/uaspoints.jpg">
+</section>
+
+<section>
+   <h3>Midpines UAS SfM</h3>
+Low density TIN
+<p> <img height="500" src="img/lidar/uastinlow.jpg">
+</section>
+
+<section>
+   <h3>Midpines's  UAS SfM</h3>
+High density TIN
+<p> <img height="500" src="img/lidar/uastinhigh.jpg">
+</section>
+
+<section>
+   <h3>Midpines's  UAS SfM</h3>
+Raster interpolated from TIN
+<p> <img height="500" src="img/lidar/uastinraster.jpg">
+</section>
+
+
+<section>
+   <h3>Topographic analysis</h3>
+<p>
+Deriving topographic parameters from point cloud based DEMs has challenges:
+<p>
+<ul>
+<p>
+  <li>DEMs are often noisy and parameters can reflect noise or scan pattern rather than actual topography,
+<p>
+  <li>high resolution leads to representation of landforms by 10s or 100s of points or grid cells
+<p>
+  <li>standard topographic analysis using 3x3 neighborhood leads to noisy patterns of topographic parameters
+or bias towards point distribution pattern
+</ul>
+</section>
+
+<section>
+   <h3>Standard topographic analysis</h3>
+<p>
+Slope and profile curvature using the standard 3x3 window polynomial approximation
+<p>
+EXAMPLE IMAGE
+</section>
+
+<section>
+   <h3>Topographic analysis using splines</h3>
+Simultaneous computation of parameters with interpolation 
+<ul>
+  <li>parameters derived from original points rather than raster
+  <li>explicit equations for partial derivatives: RST
+  <li>tens or hundreds of points can be used 
+  <li>tuning the level of detail by tension and smoothing parameters
+</ul>
+<p>
+<p class="small">
+Reference <br>
+<a href="http://www4.ncsu.edu/~hmitaso/gmslab/papers/IEEEGRSL2005.pdf">
+H.Mitasova, H., Mitas, L. and Harmon, R.S., 2005, Simultaneous spline interpolation and topographic analysis for lidar elevation data: methods for Open source GIS, IEEE GRSL 2(4), pp. 375- 379.</a>
+</p>
+</section>
+
+<section>
+   <h3>Topographic analysis using splines</h3>
+Tuning the level of detail with tension parameter
+<p> <img height="450" src="img/lidar/curvatures_tension.jpg">
+</section>
+
+<section>
+   <h3>Topographic analysis using splines</h3>
+Tuning the level of detail with tension parameter
+<p> <img height="450" src="img/lidar/lidar_tension_curv.gif">
+<br>Profile curvature and slope maps draped over 1m res. DEM
+</section>
+
+<section>
+   <h3>Landform analysis</h3>
+<ul>
+  <li>differential geometry with user defined window size
+  <li>line of sight based geomorphons
+</ul>
+<p>
+<img height="100" src="img/lidar/paramscale.jpg">
+<img height="100" src="img/lidar/geomorphon.jpg">
+<p>
+REFERENCES, IMAGES
+</section>
+
+<section>
+   <h3>Stream extraction</h3>
+<p class="small">
+Point-cloud based DEMs have many true depressions and large areas dammed by roads,
+depression filling substantially reduces the accuracy of DEM 
+<br>Least cost path flow tracing is more robust
+</p>
+<p> <img height="400" src="img/lidar/stream_extraction_lidarc.png">
+</section>
+
+<!--
+<section>
+   <h3>Coastal dune analysis from lidar DEMs</h3>
+least cost path ridge and toe line
+</section>
+-->
+
+<section>
+ <h3>Lidar data time series</h3>
+<p>
+Issues: vertical and horizontal shifts, differing point densities and patterns,
+varying spatial extent
+<p> <img width="42%" src="img/lidar/DOTDEMoriggraph3.jpg">
+<img width="42%" src="img/lidar/DOTDEMcorrectedgraph3.jpg">
+<p class="small">
+<a href="http://www.springer.com/us/book/9781493918348">
+Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis of Coastal Lidar Time-Series, 
+Springer Briefs in Computer Science, Springer, New York, 84 p.</a>
+</p>
+
+</section>
+
+<!--
+<section>
+<h3>Lidar time series: core and envelope</h3>
+</section>
+
+<section>
+<h3>Lidar time series: homes</h3>
+</section>
+
+<section>
+<h3>Lidar time series: vector fields</h3>
+Landform migration 
+</section>
+-->
+
+<section>
+<h3>Lidar time series: JR animation</h3>
+Migration and transformation of Jockey's Ridge
+<p> <img height="500" src="img/lidar/JR_animation_2014.gif">
+</section>
+
+<section>
+<h3>Lidar time series: space-time cube</h3>
+Evolution of 16m and 20m contour on Jockey's Ridge
+<p> <img width="45%" src="img/lidar/jr16/animation.gif">
+<img width="45%" src="img/lidar/jr20/animation.gif">
+</section>
+
+<section>
+<h3>Lidar time series: Umstead park</h3>
+Stream bank erosion measured by TLS
+<p>
+<img width="30%" src="img/lidar/Lyonatstreambank_2.jpg">
+<img width="45%" src="img/lidar/pointcloud_bank.jpg">
+
+</section>
+
+<section>
+<h3>Lidar time series: STC Umstead</h3>
+<img width="30%" src="img/lidar/DEMs1stlast_vert.jpg">
+<img width="55%" src="img/lidar/Fig8isosurf_change.png">
+</section>
+
+<section>
+  <h3>Mamoth Cave Park: data</h3>
+<ul>
+ <li>classified point cloud in las format 
+ <li>raw full waveform in lwv format
+ <li>imagery
+</ul>
+<img height="350" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
+</section>
+
+<section>
+  <h3>Mamoth Cave Park: canopy</h3>
+<p>
+<img height="450" src="img/lidar/mamothcave_canopy.jpg">
+</section>
+
+<section>
+  <h3>Mamoth Cave Park: bare earth</h3>
+<p>
+<img width="90%" src="img/lidar/mamothcave_bare.jpg">
+</section>
+
+<section>
+  <h3>Voxel models</h3>
+<p>
+<img width="45%" src="img/lidar/raster_3d_slices.png">
+<img width="45%" src="img/lidar/red_green_3d_labels.png">
+<p class="small">
+Petras, V; Petrasova, A; Jeziorska, J; Mitasova, H, 2016, Processing UAV and lidar point clouds in GRASS GIS, ISPRS Archives.
+</p>
+</section>
+
+<section>
+  <h3>Wake county 2013 lidar</h3>
+<p>
+<img width="45%" src="img/lidar/lid2013_1r_3ft_3d.jpg">
+<img width="45%" src="img/lidar/lid2013_be_3ft_3d.jpg">
+</section>
+
+<section>
+  <h3>Wake county 2013 lidar</h3>
+<p>
+<img height="500" src="img/lidar/lid2013_793016_1ret_3ft.jpg">
+</section>
+
+
+<!--
+<section>
+  <h3>More cave lidar</h3>
+Domica - paper and image
+</section>
+
+<section>
+   <h3>Advances in lidar data acquisition</h3>
+<p>
+Waveform and multispectral lidar, Velodyne (lidar array - small and light)
+<p>
+<img height="200" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
+<img height="200" src="img/lidar/titan.jpg">
+</section>
+-->
+
+<section>
+   <h3>Lidar data sources</h3>
+<p>
+Public data sources (http in Summary slide):
+<ul>
+  <li>CLICK: raw point clouds usually in LAS format
+  <li>NOAA Digital Coast: costal point clouds with on-fly binning
+  <li>NC Floodplain Mapping: bare Earth: points, 20ft DEM and 50ft DEM with carved channels
+  <li>NC data portal
+  <li>OpenTopography: NCALM data
+</ul>
+<p>more about lidar in GRASS at http://grasswiki.osgeo.org/wiki/LIDAR
+</section>
+
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="../topics/lidar.html" title="Go to the topic page">&#8962;</a>
+</div>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>
