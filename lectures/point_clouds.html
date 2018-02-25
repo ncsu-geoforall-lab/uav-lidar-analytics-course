@@ -23,72 +23,36 @@
 </section>
 
 <section>
-   <h3>UAS and lidar point clouds</h3>
+   <h3>What are point clouds?</h3>
 <ul>
-<li> UAS: point cloud derived from overlapping images using SfM
-<li> Lidar: direct measurement of points
+<li> dense set of points (x,y,z) defined in 3D space: 
+  <ul>
+  <li> directy measured using lidar
+  <li> derived from overlapping images using SfM
+  </ul>
+<img width="65%" src="img/lidar/pointcloud.png">
 </ul>
 </section>
 
 <section>
-   <h3>Lidar data acquisition</h3>
+   <h3>Lidar point cloud acquisition</h3>
 <p>
-<p>Measures time of pulse return, converts to distance, derives x,y,z
+<ul>
+<li>Measured time of pulse return is converted to distance between the sensor and object
+<li>3D georeferenced coordinates are derived using on-board GPS and INS 
+</ul>
 <p>
 <img width="30%" src="img/lidar/airborne_lidar_scann.jpg">
 <img width="65%" src="img/lidar/lidar_secref_3d.png">
 </section>
 
 <section>
-   <h3>Lidar point cloud data definition</h3>
-<p>
-Set of <i>(x, y, z, r, i, c, ...)</i> measured points reflected
-from Earth surface or objects on or above it, where
-<ul>
-<li> <i>(x, y, z)</i> are georeferenced coordinates,
-<li><i>r</i> &nbsp; is the return number,
-<li><i>i</i> is intensity,
-<li><i>c</i> is class,
-</ul>
-<p>
-Additional data: R:G:B, scan direction, others
-</section>
-
-<section>
-   <h3>SfM-derived point cloud data definition</h3>
-<p>
-Set of <i>(x, y, z, R, G, B)</i> points derived from 
-overlapping imagery using Structure from Motion technique
-<ul>
-<li> <i>(x, y, z)</i> are georeferenced coordinates,
-<li><i>R,G,B</i> &nbsp; are the red, green, blue channels derived from the imagery
-</ul>
-<p>
-Additional data depend on sensor
-</section>
-
-<section>
-   <h3>Point cloud data formats</h3>
-<p>
-<ul>
-<li>ASCII (x,y,z, ...) format - older data
-<li>binary LAS format (header, record information, x,y,z,i, ... ),
-industry lidar data exchange format
-<li>compressed LAZ format
-<li>proprietary formats, especially for waveform data
-</ul>
-<p>
-Learn more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS1.4 Specification</a>
-<br>and 
-<a href="http://pubs.usgs.gov/tm/11b4/pdf/tm11-B4.pdf">USGS Lidar Base Specification</a>
-</section>
-
-<section>
    <h3>Multiple return lidar point cloud</h3>
 <p>
-Multiple return point cloud 3D view of returns
+Lidar pulse can penetrate the tree canopy leading to multiple pulse returns
 <p>
 <img width="85%" src="img/lidar/lidarmrpts3dcolored.jpg">
+<br>yellow: first return, dark brown: second return
 </section>
 
 <section>
@@ -100,7 +64,7 @@ Multiple return point cloud profile view of returns
 </section>
 
 <section>
-   <h3>Point cloud data properties</h3>
+   <h3>Multiple return points shift</h3>
 <p>
 Horizontal projection of multiple return point location
 <p>
@@ -109,37 +73,82 @@ Horizontal projection of multiple return point location
 
 
 <section>
+   <h3>Lidar point cloud data</h3>
+<p>
+Set of <i>[x, y, z, (r, i, c, ...)]</i> measured points reflected
+from Earth surface or objects on or above it, where:
+<ul>
+<li> <i>[x, y, z]</i> are georeferenced coordinates,
+<li><i>r</i> &nbsp; is the return number,
+<li><i>i</i> &nbsp; is intensity,
+<li><i>c</i> &nbsp; is class
+</ul>
+<p>
+Additional data: R:G:B, scan direction
+</section>
+
+<section>
+   <h3>SfM-derived point cloud data</h3>
+<p>
+Set of <i>[x, y, z, (R, G, B)]</i> points derived from 
+overlapping imagery using Structure from Motion technique:
+<ul>
+<p>
+<li> <i>[x, y, z]</i> are georeferenced coordinates,
+<p>
+<li><i>R,G,B</i> are Red, Green, Blue channels derived from imagery
+</ul>
+<p>
+Additional data depend on sensor
+</section>
+
+<section>
+   <h3>Point cloud data formats</h3>
+<p>
+<ul>
+<li>ASCII x,y,z, ... format - older data
+<p>
+<li>binary LAS format (header, record information, x,y,z,i, ... ),
+industry lidar data exchange format
+<p>
+<li>compressed LAZ format
+<p>
+<li>proprietary formats, especially for waveform data
+</ul>
+<p>
+Learn more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1_4_r13.pdf">ASPRS LAS1.4 Specification</a>
+<br>and 
+<a href="http://pubs.usgs.gov/tm/11b4/pdf/tm11-B4.pdf">USGS Lidar Base Specification</a>
+</section>
+
+<section>
    <h3>Point cloud data processing</h3>
 <p>
 <ul>
 <p>
 <li>preview and analysis of point distribution
 <p>
-<li>filtering outliers (birds etc.)
+<li>filtering outliers 
 <p>
 <li>bare earth point extraction
 <p>
 <li>classification: canopy, buildings ...
 <p>
-<li>feature extraction: power lines ... 
+<li>feature extraction: buildings, power lines ... 
 </ul>
 <p>
-Methods work for SfM-derived point clouds as well
-
 </section>
 
 <section>
-   <h3>Point cloud data visualization</h3>
-<p>
+   <h3>Point cloud data preview</h3>
 <ul>
 <li>Point cloud data are massive: millions of 3D points
-<li>Vector data display in GIS:  only for smaller data sets
 <li>Point cloud viewers - adjust rendering to display resolution
-<li>On-line viewer: plas.io
+<li>On-line viewer and analysis: plas.io
 </ul>
-<p>
-<img width="50%" src="img/lidar/hunt_uavpointcloud_bldg.jpg">
-<img width="42%" src="img/lidar/hunt_uavpointcloud.jpg">
+<img width="70%" src="img/lidar/hunt_uavpointcloud_bldg.jpg">
+<!--<img width="42%" src="img/lidar/hunt_uavpointcloud.jpg">-->
+<p class="small">UAS SfM derived point cloud from Midpines viewed at Hunt library</p>
 </section>
 
 <section>
@@ -160,16 +169,64 @@ Binning: point statistics for each grid cell
 </section>
 
 <section>
-   <h3>Analysis of point distribution</h3>
+   <h3>Analysis of point distribution: lidar</h3>
 <p>
 Increased densities (and potential errors) along swath overlaps
 or close to terrestrial station position
 <p>
-<img height="200" src="img/lidar/lid2013_1r_n_3ftb.png">
-<img height="200" src="img/lidar/lid2013_be_n_3ftb.png">
-<img height="200" src="img/lidar/Ssecr_110309_ptdensity_20cm.png">
+<img height="210" src="img/lidar/lid2013_1r_n_3ftb.png">
+<img height="210" src="img/lidar/lid2013_be_n_3ftb.png">
+<img height="210" src="img/lidar/Ssecr_110309_ptdensity_20cm.png">
 <p class="small">Wake county 2013 lidar all returns and bare earth, TLS at SECREF
 </p>
+</section>
+
+<section>
+   <h3>Analysis of point distribution: SfM</h3>
+<p>
+occlusion, cast shadows
+<p>
+<img height="210" src="img/uas/pointdensity1.png">
+<img height="210" src="img/uas/pointdensity2.png">
+<p class="small">Midpines
+</p>
+</section>
+
+<section>
+   <h3>Analysis of within cell z-range: lidar</h3>
+<p>
+Maps of range of z-values within grid cell for selected resolutions
+<p>
+<img height="210" src="img/lidar/range_10m.png">
+<img height="210" src="img/lidar/range_5m.png">
+<img height="210" src="img/lidar/range_1m.png">
+<p class="small">Wake county 2013 lidar at 10m, 5m and 1m resolution
+</p>
+</section>
+
+<section>
+   <h3>Analysis of within cell z-range: SfM</h3>
+<p>
+Maps of range of z-values within grid cell for selected resolutions
+<p>
+<img height="210" src="img/uas/range_10m.png">
+<img height="210" src="img/uas/range_5m.png">
+<p class="small">Midpines
+</p>
+</section>
+
+<section>
+   <h3>Outliers</h3>
+<p>
+<ul>
+  <li>Lidar: birds, particles, material properties
+  <li>SfM: errors in point matching
+  <li>Filtered by using local z-min, z-max or range thresholds
+</ul>
+<p>
+<img height="210" src="img/lidar/outlier.png">
+<img height="210" src="img/uas/outlier.png">
+<p class="small">Cenetennial, Midpines </p>
 </section>
 
 <section>
@@ -214,32 +271,63 @@ e.g. triangles on roads, artificial dams in valleys
 </section>
 
 <section>
-   <h3>Jockey's Ridge example</h3>
+   <h3>Jockey's Ridge lidar 1999</h3>
+Point cloud
+<p> <img height="500" src="img/lidar/jr_pointcloud.jpg">
+</section>
+
+<section>
+   <h3>Jockey's Ridge lidar 1999</h3>
 Binning at 1m resolution: many NULL cells
 <p> <img height="500" src="img/lidar/lidstorast1m.jpg">
 </section>
 
 <section>
-   <h3>Jockey's Ridge example</h3>
+   <h3>Jockey's Ridge lidar 1999</h3>
 Binning at 3m resolution
 <p> <img height="500" src="img/lidar/lidstorast.jpg">
 </section>
 
 <section>
-   <h3>Jockey's Ridge example</h3>
+   <h3>Jockey's Ridge lidar 1999</h3>
 Interpolation at 1m resolution
 <p> <img height="500" src="img/lidar/liddfdm1e.jpg">
 <p>You can try TIN for comparison - provide data
 </section>
 
 <section>
-   <h3>Topographic analysis from lidar DEMs</h3>
+   <h3>Midpines UAS SfM </h3>
+Point cloud derived from overlapping imagery
+<p> <img height="500" src="img/lidar/uaspoints.jpg">
+</section>
+
+<section>
+   <h3>Midpines UAS SfM</h3>
+Low density TIN
+<p> <img height="500" src="img/lidar/uastinlow.jpg">
+</section>
+
+<section>
+   <h3>Midpines's  UAS SfM</h3>
+High density TIN
+<p> <img height="500" src="img/lidar/uastinhigh.jpg">
+</section>
+
+<section>
+   <h3>Midpines's  UAS SfM</h3>
+Raster interpolated from TIN
+<p> <img height="500" src="img/lidar/uastinraster.jpg">
+</section>
+
+
+<section>
+   <h3>Topographic analysis</h3>
 <p>
-Deriving slope, aspect, curvatures challenges:
+Deriving topographic parameters from point cloud based DEMs has challenges:
 <p>
 <ul>
 <p>
-  <li>DEMs are often noisy and parameters can reflect noise rather than actual topography,
+  <li>DEMs are often noisy and parameters can reflect noise or scan pattern rather than actual topography,
 <p>
   <li>high resolution leads to representation of landforms by 10s or 100s of points or grid cells
 <p>
@@ -249,7 +337,7 @@ or bias towards point distribution pattern
 </section>
 
 <section>
-   <h3>Topographic analysis from lidar DEMs</h3>
+   <h3>Standard topographic analysis</h3>
 <p>
 Slope and profile curvature using the standard 3x3 window polynomial approximation
 <p>
@@ -283,24 +371,26 @@ Tuning the level of detail with tension parameter
    <h3>Topographic analysis using splines</h3>
 Tuning the level of detail with tension parameter
 <p> <img height="450" src="img/lidar/lidar_tension_curv.gif">
+<br>Profile curvature and slope maps draped over 1m res. DEM
 </section>
 
 <section>
-   <h3>Landform analysis from lidar DEMs</h3>
+   <h3>Landform analysis</h3>
 <ul>
   <li>differential geometry with user defined window size
   <li>line of sight based geomorphons
 </ul>
 <p>
-<img height="400" src="img/lidar/us_geom_26642.jpg">
+<img height="100" src="img/lidar/paramscale.jpg">
+<img height="100" src="img/lidar/geomorphon.jpg">
 <p>
-REFRENCES, IMAGES
+REFERENCES, IMAGES
 </section>
 
 <section>
-   <h3>Stream extraction from lidar DEMs</h3>
+   <h3>Stream extraction</h3>
 <p class="small">
-Lidar DEMs have many true depressions and large areas dammed by roads,
+Point-cloud based DEMs have many true depressions and large areas dammed by roads,
 depression filling substantially reduces the accuracy of DEM 
 <br>Least cost path flow tracing is more robust
 </p>
