@@ -50,17 +50,18 @@ Now you should have two DSMs:
     <li><a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">one generated in processing with 3 
 GCPs</a> in the <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">Imagery processing assignment</a> and 
 <li>the <a href="https://drive.google.com/open?id=1j324mmeqtaYYpCgRLIfC6TE45sIGxghT">one generated in processing without GCPs</a>. </ul>
-Packs are provided for those working in DEMO mode, save them in your working directory and use <code>r.unpack</code>
+Packs are provided for those working in DEMO mode, save them in your working directory. 
 
 <h4>Calculate differences between processed sample data</h4>
+
 <p>We will use GRASS GIS to compare the DSMs. <br>
 Open GRASS with the "Lake_Wheeler_NCspm" location and create a new mapset for this assignment (you can call it "analysis").
 Then change your working directory <br><em>Settings > GRASS working environment > Change working directory</em> 
-to where your DSMagi* files downloaded above are.
+to where your DSMs files are.
 
 <pre><code>
-r.unpack DSMagi_2016_09_22_sample_noGCPs -o
-r.unpack DSMagi_2016_09_22_sample -o
+r.unpack DSMagi_2016_09_22_sample_noGCPs.pack -o
+r.unpack DSMagi_2016_09_22_sample.pack -o
 </code></pre>
 * If the code doesn't run. Type <code>r.unpack</code> in the console and click enter twice. A dialog window will pop up, where you can indicate the location of your pack by pressing the <em>Browse</em> button. <br>
 <br>
