@@ -51,7 +51,7 @@ Outline:
 Data:
 <ul>
     <li><a href="https://drive.google.com/drive/folders/0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k">
-GRASS GIS data (location)</a> download Lake_Wheeler_NCspm
+Lake Wheeler data set (formatted as GRASS location): Lake_Wheeler_NCspm</a> (you should already have it from previous assignments)
     <li>2013 lidar point cloud for Midpines</li>
       <ul>
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud in LAS format</a></li>
@@ -59,9 +59,10 @@ GRASS GIS data (location)</a> download Lake_Wheeler_NCspm
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_ground.txt">Ground only in TXT format</a></li>
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_first.txt">First return only in TXT format</a></li>
       </ul>
-    <li>2015 UAS point clouds derived by SfM</li>
+    <li>2015 UAS sample point cloud for Midpines sub-area, derived by SfM</li>
       <ul>
-        <li><a href="https://drive.google.com/drive/folders/0B1AfQGDB8tPXUlc5N2pNQlR1T0E">UAS-based point clouds:</a> download 2015_06_20_Points_11GCP_Ncspm.las
+<!--        <li><a href="https://drive.google.com/drive/folders/0B1AfQGDB8tPXUlc5N2pNQlR1T0E">UAS-based point clouds:</a> download 2015_06_20_Points_11GCP_Ncspm.las 1GB -->
+        <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXaUZGU0FPSW5DNWM">sample point cloud: 2015_06_sample_points_NCsmp.las</a>
      </ul>
     <li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
 </ul>
@@ -79,7 +80,7 @@ with the point clouds provided as text files.
 
 <h3>Quick data exploration in web browser</h3>
 
-First view the lidar and UAS las files "mid_pines_spm_2013.las" and  "2015_06_20_Points_11GCP_Ncspm.las"
+First view the downloaded lidar and UAS las files "mid_pines_spm_2013.las" and  "2015_06_sample_points_NCsmp.las"
 in your web browser using <a href="http://plas.io">plas.io</a>. 
 
 <h3>GIS-based analysis of point clouds</h3>
@@ -87,10 +88,10 @@ in your web browser using <a href="http://plas.io">plas.io</a>.
 Launch GRASS GIS with the "Lake_Wheeler_ncspm" location
 
 <p>
-Change current working directory to the directory where you downloaded
+Change the current working directory to the directory where you downloaded
 the LAS files using <tt>cd</tt> command and path or in case you work
 in command line in GRASS GUI just type <tt>cd</tt> and press enter
-and select directory using a dialog.
+and select the directory using a dialog.
 
 <pre><code>cd ~/Downloads
 </code></pre>
@@ -102,6 +103,8 @@ we will later work with the classes 1 and 2.<br>
 <pre><code>lasinfo mid_pines_spm_2013.las
 </code></pre>
 
+The output shows number of points in each class:
+
 <pre><code>  Point Classifications
 ---------------------------------------------------------
 	1340658 Unclassified (1) 
@@ -112,7 +115,7 @@ we will later work with the classes 1 and 2.<br>
 Class 11 - for the explanation of Categories in this class refer to p. 10 in ASPRS 
 <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> </p>
 <p>
-Get the geographic extent of the point cloud and then set it:
+Get the geographic extent of the point cloud and then set the computational region to tis extent:
 
 <pre><code>r.in.lidar -sgo input=mid_pines_spm_2013.las
 g.region n=220218 s=218694 e=637795 w=636271 -p
@@ -120,7 +123,7 @@ g.region n=220218 s=218694 e=637795 w=636271 -p
 
 <h3>Density of points</h3>
 
-First we set the resolution:
+First we set the resolution to 1 meter:
 
 <pre><code>g.region res=1 -pa
 </code></pre>
@@ -143,9 +146,7 @@ d.rast mid_pines_dens_ground
 d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
 
-Later, we can will examine the density also using v.outlier
-and imported vector points.
-
+Later, we will examine the density using v.outlier and imported vector points.
 
 <h3>Raster binning and classification</h3>
 
@@ -187,7 +188,7 @@ Set colors, copy and paste the following color rules into "or enter values direc
 </code></pre>
 <h3>High resolution DEM/DSM</h3>
 
-Import as points (without attribute table, not necessary to build points):
+Import the point cloud as vector points (without attribute table, not necessary to build points):
 
 <pre><code>v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
 v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
@@ -207,22 +208,36 @@ Estimated mean distance between points: 0.9487
 </pre>
 
 <p>
-Interpolate with resolution 0.3 meter,
-also create slope and profile curvature map.<br>
-
-Set higher npmin to reduce artifacts from segmentation
-visible on slope and curvature maps (will be much slower!):
+Interpolate with resolution 0.3 meter, also create slope and profile curvature map.<br>
 
 <pre><code>g.region res=0.3
 v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv npmin=80 tension=20 smooth=1
 v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv npmin=80 tension=20 smooth=1
 </code></pre>
 
+You can recompute it with higher npmin=150 to reduce artifacts from segmentation visible on slope and curvature maps (will be much slower!).
+
 Visualize DEM and DSM in 3D view, use cross-sections.
 
 <p>
 Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
 Go to 3D view, set surface resolution 1 and color to map 'classes'.
+
+<h3>Explore the UAS point cloud</h3>
+
+Import binned UAV for subarea to be updated, first find the las extent, 
+it will be n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 b=84.000000 t=139.680000
+then set the region
+<pre><code>r.in.lidar -go input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+g.region n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 res=0.2 -p
+r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+</code></pre>
+
+Compute the point density at 1 meter resolution and compare with previously computed lidar point density
+
+<pre><code>g.region res=1 -p
+r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_1m_dens method=n
+</code></pre>
 
 
 <h3>Compute the difference of lidar DEM and GCP heights</h3>
