@@ -20,9 +20,10 @@ Lake Wheeler data set (formatted as GRASS location): Lake_Wheeler_NCspm</a> (you
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_ground.txt">Ground only in TXT format</a></li>
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_first.txt">First return only in TXT format</a></li>
       </ul>
-    <li>2015 UAS point clouds derived by SfM</li>
+    <li>2015 UAS sample point cloud for Midpines sub-area, derived by SfM</li>
       <ul>
-        <li><a href="https://drive.google.com/drive/folders/0B1AfQGDB8tPXUlc5N2pNQlR1T0E">UAS-based point clouds:</a> download 2015_06_20_Points_11GCP_Ncspm.las
+<!--        <li><a href="https://drive.google.com/drive/folders/0B1AfQGDB8tPXUlc5N2pNQlR1T0E">UAS-based point clouds:</a> download 2015_06_20_Points_11GCP_Ncspm.las 1GB -->
+        <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXaUZGU0FPSW5DNWM">sample point cloud: 2015_06_smaple_points_NCsmp.las</a>
      </ul>
     <li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
 </ul>
@@ -198,6 +199,17 @@ Visualize DEM and DSM in 3D view, use cross-sections.
 <p>
 Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
 Go to 3D view, set surface resolution 1 and color to map 'classes'.
+
+<!--
+Import binned UAV for subarea to be updated, first find the las extent, 
+it will be n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 b=84.000000 t=139.680000
+then set the region
+<pre><code>
+r.in.lidar -go input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+g.region n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 res=0.2 -p
+r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+</code></pre>
+-->
 
 
 <h3>Compute the difference of lidar DEM and GCP heights</h3>
