@@ -44,10 +44,7 @@ Batch processing commands should be in this order:
     <li>Build Texture</li>
     <li>Generate DEM</li>
 </ol>
-<p>We will use GRASS GIS to compare the DSMs. <br>
-Open GRASS and change your working directory <br><em>Settings > GRASS working environment > Change working directory</em> <br>and then continue with the GRASS part.
 
-<h4>Calculate differences between processed sample data</h4>
 Now you should have two DSMs: 
 <ul>
     <li><a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnSO6uz-EuXqam">one generated in processing with 3 
@@ -55,6 +52,11 @@ GCPs</a> in the <a href="https://drive.google.com/open?id=1RnYuH8_dhRyjfQ4rmqvnS
 <li>the <a href="https://drive.google.com/open?id=1j324mmeqtaYYpCgRLIfC6TE45sIGxghT">one generated in processing without GCPs</a>. </ul>
 Packs are provided for those working in DEMO mode, save them in your working directory and use <code>r.unpack</code>
 
+<h4>Calculate differences between processed sample data</h4>
+<p>We will use GRASS GIS to compare the DSMs. <br>
+Open GRASS with the "Lake_Wheeler_NCspm" location and create a new mapset for this assignment (you can call it "analysis").
+Then change your working directory <br><em>Settings > GRASS working environment > Change working directory</em> 
+to where your DSMagi* files downloaded above are.
 
 <pre><code>
 r.unpack DSMagi_2016_09_22_sample_noGCPs -o
