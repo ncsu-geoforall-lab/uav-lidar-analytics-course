@@ -208,7 +208,10 @@
   <li> derived from overlapping images using SfM (see previous lectures)
   </ul>
 </ul>
-<img width="65%" src="img/lidar/pointcloud.jpg">
+<p>
+<img width="70%" src="img/lidar/hunt_uavpointcloud_bldg.jpg">
+<p class="small">UAS SfM derived point cloud from Midpines viewed at Hunt library</p>
+<!--<img width="75%" src="img/lidar/NH2008_mrpts2.jpg">-->
 </section>
 
 <section>
@@ -264,6 +267,23 @@ Additional data: R:G:B, scan direction
 </section>
 
 <section>
+   <h3>Lidar point cloud preview</h3>
+<ul>
+<li>visible swath overlap
+</ul>
+<img width="90%" src="img/lidar/midpines_lidar_plasviewco.jpg">
+</section>
+
+<section>
+   <h3>Lidar point cloud preview</h3>
+<ul>
+<li>points distributed throughout canopy
+<li>no points on the wall of the building
+</ul>
+<img width="80%" src="img/lidar/midpines_lidar_plasviewcozoom.jpg">
+</section>
+
+<section>
    <h3>SfM-derived point cloud data</h3>
 <p>
 Set of <i>[x, y, z, (R, G, B)]</i> points derived from 
@@ -276,6 +296,23 @@ overlapping imagery using Structure from Motion technique:
 </ul>
 <p>
 Additional data depend on sensor
+</section>
+
+<section>
+   <h3>UAS SfM point cloud preview</h3>
+<ul>
+<li>only top of tree canopy captured
+<li>building densely sampled including the wall
+</ul>
+<img width="95%" src="img/lidar/midpines_uas_plasviewco2.jpg">
+</section>
+
+<section>
+   <h3>UAS SfM point cloud preview</h3>
+<ul>
+<li>much higher density of points with R:G:B included
+</ul>
+<img width="82%" src="img/lidar/midpines_uas_plasviewrgb.jpg">
 </section>
 
 <section>
@@ -315,6 +352,7 @@ Learn more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1
 <p>
 </section>
 
+<!--
 <section>
    <h3>Point cloud data preview</h3>
 <ul>
@@ -323,48 +361,13 @@ Learn more at <a href="http://www.asprs.org/a/society/committees/standards/LAS_1
 <li>On-line viewer and analysis: plas.io
 </ul>
 <img width="70%" src="img/lidar/hunt_uavpointcloud_bldg.jpg">
-<!--<img width="42%" src="img/lidar/hunt_uavpointcloud.jpg">-->
-<p class="small">UAS SfM derived point cloud from Midpines viewed at Hunt library</p>
 </section>
-
-<section>
-   <h3>Lidar point cloud preview</h3>
-<ul>
-<li>visible swath overlap
-</ul>
-<img width="90%" src="img/lidar/midpines_lidar_plasviewco.jpg">
-</section>
-
-<section>
-   <h3>Lidar point cloud preview</h3>
-<ul>
-<li>points distributed throughout canopy
-<li>no points on the wall of the building
-</ul>
-<img width="80%" src="img/lidar/midpines_lidar_plasviewcozoom.jpg">
-</section>
-
-<section>
-   <h3>UAS SfM point cloud preview</h3>
-<ul>
-<li>only top of tree canopy captured
-<li>building densely sampled including the wall
-</ul>
-<img width="95%" src="img/lidar/midpines_uas_plasviewco2.jpg">
-</section>
-
-<section>
-   <h3>UAS SfM point cloud preview</h3>
-<ul>
-<li>much higher density of points with R:G:B included
-</ul>
-<img width="82%" src="img/lidar/midpines_uas_plasviewrgb.jpg">
-</section>
+-->
 
 <section>
    <h3>Analysis of point distribution</h3>
 <p>
-Binning: point statistics for each grid cell
+Binning: point statistics for each grid cell at selected resolution
 <p>
 <ul>
 <p>
@@ -392,36 +395,34 @@ or close to terrestrial station position
 </section>
 
 <section>
+   <h3>Analysis of point distribution: lidar</h3>
+<p>
+Increased densities (and potential errors) along swath overlaps
+<p>
+<img height="310" src="img/lidar/count_1m_lid_all.jpg">
+<img height="310" src="img/lidar/count_1m_lid_ground.jpg">
+<p class="small">Midpines: number of points per 1m grid cell, for all returns and ground
+</p>
+</section>
+
+<section>
    <h3>Analysis of point distribution: SfM</h3>
 <p>
 occlusion, cast shadows
 <p>
-<img height="210" src="img/uas/pointdensity1.png">
-<img height="210" src="img/uas/pointdensity2.png">
-<p class="small">Midpines
+<img height="310" src="img/lidar/count_1m_uas.jpg">
+<p class="small">Midpines: number of SfM-derived points per 1m grid cell
 </p>
 </section>
 
 <section>
-   <h3>Analysis of within cell z-range: lidar</h3>
+   <h3>Analysis of within cell z-range</h3>
 <p>
 Maps of range of z-values within grid cell for selected resolutions
 <p>
-<img height="210" src="img/lidar/range_10m.png">
-<img height="210" src="img/lidar/range_5m.png">
-<img height="210" src="img/lidar/range_1m.png">
-<p class="small">Wake county 2013 lidar at 10m, 5m and 1m resolution
-</p>
-</section>
-
-<section>
-   <h3>Analysis of within cell z-range: SfM</h3>
-<p>
-Maps of range of z-values within grid cell for selected resolutions
-<p>
-<img height="210" src="img/uas/range_10m.png">
-<img height="210" src="img/uas/range_5m.png">
-<p class="small">Midpines
+<img height="310" src="img/lidar/lidar_range3m_zoom.jpg">
+<img height="310" src="img/lidar/uas_range3m_sample.jpg">
+<p class="small">Midpines lidar and UAS: z-range at 3m resolution
 </p>
 </section>
 
@@ -434,9 +435,8 @@ Maps of range of z-values within grid cell for selected resolutions
   <li>Filtered by using local z-min, z-max or range thresholds
 </ul>
 <p>
-<img height="210" src="img/lidar/outlier.png">
-<img height="210" src="img/uas/outlier.png">
-<p class="small">Cenetennial, Midpines </p>
+<img height="310" src="img/lidar/lid2013_793016_1ret_3ft.jpg">
+<p class="small">Centennial Parkway - outlier present even in processed data </p>
 </section>
 
 <section>
@@ -482,12 +482,6 @@ e.g. triangles on roads, artificial dams in valleys
 
 <section>
    <h3>Jockey's Ridge lidar 1999</h3>
-Point cloud
-<p> <img height="500" src="img/lidar/jr_pointcloud.jpg">
-</section>
-
-<section>
-   <h3>Jockey's Ridge lidar 1999</h3>
 Binning at 1m resolution: many NULL cells
 <p> <img height="500" src="img/lidar/lidstorast1m.jpg">
 </section>
@@ -506,27 +500,29 @@ Interpolation at 1m resolution
 </section>
 
 <section>
-   <h3>Midpines UAS SfM </h3>
-Point cloud derived from overlapping imagery
-<p> <img height="500" src="img/lidar/uaspoints.jpg">
+   <h3>Midpines lidar </h3>
+DTM and DSM
+<p> <img height="300" src="img/lidar/lidar_dsm.jpg">
+<p> <img height="300" src="img/lidar/lidar_dtm.jpg">
 </section>
+
 
 <section>
    <h3>Midpines UAS SfM</h3>
 Low density TIN
-<p> <img height="500" src="img/lidar/uastinlow.jpg">
+<p> <img height="500" src="img/lidar/lowdensity_tin.png">
 </section>
 
 <section>
    <h3>Midpines's  UAS SfM</h3>
 High density TIN
-<p> <img height="500" src="img/lidar/uastinhigh.jpg">
+<p> <img height="500" src="img/lidar/highdensity_tin.png">
 </section>
 
 <section>
    <h3>Midpines's  UAS SfM</h3>
 Raster interpolated from TIN
-<p> <img height="500" src="img/lidar/uastinraster.jpg">
+<p> <img height="500" src="img/lidar/smoothedHDtin.jpg">
 </section>
 
 
@@ -598,81 +594,6 @@ REFERENCES, IMAGES
 </section>
 
 <section>
-   <h3>Stream extraction</h3>
-<p class="small">
-Point-cloud based DEMs have many true depressions and large areas dammed by roads,
-depression filling substantially reduces the accuracy of DEM 
-<br>Least cost path flow tracing is more robust
-</p>
-<p> <img height="400" src="img/lidar/stream_extraction_lidarc.png">
-</section>
-
-<!--
-<section>
-   <h3>Coastal dune analysis from lidar DEMs</h3>
-least cost path ridge and toe line
-</section>
--->
-
-<section>
- <h3>Lidar data time series</h3>
-<p>
-Issues: vertical and horizontal shifts, differing point densities and patterns,
-varying spatial extent
-<p> <img width="42%" src="img/lidar/DOTDEMoriggraph3.jpg">
-<img width="42%" src="img/lidar/DOTDEMcorrectedgraph3.jpg">
-<p class="small">
-<a href="http://www.springer.com/us/book/9781493918348">
-Hardin, E., Mitasova, H., Tateosian, L., Overton, M., 2014, GIS-based Analysis of Coastal Lidar Time-Series, 
-Springer Briefs in Computer Science, Springer, New York, 84 p.</a>
-</p>
-
-</section>
-
-<!--
-<section>
-<h3>Lidar time series: core and envelope</h3>
-</section>
-
-<section>
-<h3>Lidar time series: homes</h3>
-</section>
-
-<section>
-<h3>Lidar time series: vector fields</h3>
-Landform migration 
-</section>
--->
-
-<section>
-<h3>Lidar time series: JR animation</h3>
-Migration and transformation of Jockey's Ridge
-<p> <img height="500" src="img/lidar/JR_animation_2014.gif">
-</section>
-
-<section>
-<h3>Lidar time series: space-time cube</h3>
-Evolution of 16m and 20m contour on Jockey's Ridge
-<p> <img width="45%" src="img/lidar/jr16/animation.gif">
-<img width="45%" src="img/lidar/jr20/animation.gif">
-</section>
-
-<section>
-<h3>Lidar time series: Umstead park</h3>
-Stream bank erosion measured by TLS
-<p>
-<img width="30%" src="img/lidar/Lyonatstreambank_2.jpg">
-<img width="45%" src="img/lidar/pointcloud_bank.jpg">
-
-</section>
-
-<section>
-<h3>Lidar time series: STC Umstead</h3>
-<img width="30%" src="img/lidar/DEMs1stlast_vert.jpg">
-<img width="55%" src="img/lidar/Fig8isosurf_change.png">
-</section>
-
-<section>
   <h3>Mamoth Cave Park: data</h3>
 <ul>
  <li>classified point cloud in las format 
@@ -705,21 +626,6 @@ Petras, V; Petrasova, A; Jeziorska, J; Mitasova, H, 2016, Processing UAV and lid
 </section>
 
 <section>
-  <h3>Wake county 2013 lidar</h3>
-<p>
-<img width="45%" src="img/lidar/lid2013_1r_3ft_3d.jpg">
-<img width="45%" src="img/lidar/lid2013_be_3ft_3d.jpg">
-</section>
-
-<section>
-  <h3>Wake county 2013 lidar</h3>
-<p>
-<img height="500" src="img/lidar/lid2013_793016_1ret_3ft.jpg">
-</section>
-
-
-<!--
-<section>
   <h3>More cave lidar</h3>
 Domica - paper and image
 </section>
@@ -732,7 +638,15 @@ Waveform and multispectral lidar, Velodyne (lidar array - small and light)
 <img height="200" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
 <img height="200" src="img/lidar/titan.jpg">
 </section>
--->
+
+<section>
+   <h3>Lidar and UAS</h3>
+<p>
+Waveform and multispectral lidar, Velodyne (lidar array - small and light)
+<p>
+<img height="200" src="img/lidar/Lidar_waveformALPS_1LG.jpg">
+<img height="200" src="img/lidar/titan.jpg">
+</section>
 
 <section>
    <h3>Lidar data sources</h3>

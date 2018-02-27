@@ -144,7 +144,13 @@ Check the bowl effect for the Agisoft generated products:
 r.mapcalc expression="agi_GCP_agi_noGCP = 2015_06_20_DSM_agi_11GCP - 2015_06_20_DSM_agi_noGCP"
 </code></pre>
 Change the color table to better see the differences.
-
+<pre><code>0 red
+35 orange
+36 yellow
+37 cyan
+38 aqua
+42 blue
+</code></pre>
 <p>
 Check the bowl effect for the Pix4D generated products:
 <pre><code>r.mapcalc expression="p4d_GCP_p4d_noGCP = 2015_06_20_pix4d_11GCP_dsm - 2015_06_20_DSM_pix4d_NoGCP"
@@ -155,7 +161,7 @@ Change the color map to better see the differences. You can experiment with your
 70 yellow
 71 cyan
 72 aqua
-80 blue
+75 blue
 </code></pre>
 Which software does generate larger bowl effect?
 
@@ -188,7 +194,8 @@ to see the differences even more clearly.
 <p>
 Run the <em>r.slope.aspect</em> and <em>r.relief</em> command for chosen DSMs,
 for example:
-<pre><code>r.slope.aspect elevation=sample_DSM slope=sample_DSM_slope aspect=sample_DSM_aspect pcurvature=sample_DSM_curv
+<pre><code>g.region rast=sample_DSM
+r.slope.aspect elevation=sample_DSM slope=sample_DSM_slope aspect=sample_DSM_aspect pcurvature=sample_DSM_curv
 r.relief input=sample_DSM output=sample_DSM_relief
 r.slope.aspect elevation=sample_DSM_noGCPs slope=sample_DSM_noGCP_slope aspect=sample_DSM_noGCP_aspect pcurvature=sample_DSM_noGCP_curv
 r.relief input=sample_DSM output=sample_DSM_noGCP_relief
@@ -202,6 +209,8 @@ You can also install GRASS GIS Addons (via g.extension):
     <li><a href="https://grass.osgeo.org/grass70/manuals/addons/r.skyview.html">r.skyview</a></li>
 </ul>
 and apply this modules to sample data or your data.
+<pre><code>g.region rast=sample_DSM
+</code></pre>
 <pre><code>g.extension extension=r.local.relief operation=add 
 r.local.relief input=sample_DSM output=local_relief_sample_DSM
 r.local.relief input=sample_DSM_noGCPs output=local_relief_sample_DSM_noGCPs
@@ -217,12 +226,25 @@ r.skyview input=sample_DSM_noGCPs output=skyview_sample_DSM_noGCPs
 
 <h3>Detect terrain change using two UAS surveys</h3>
 
-<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP -p
+<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP
 r.mapcalc "diff_jun_oct_agis = 2015_06_20_DSM_agi_11GCP - 2015_10_06_DSM_agi_8GCPs"
 </code></pre>
+Apply the color table that varies from -1m to 1m to visualize results of the comparison
+using <em>r.colors</em> module.
+In the <em>Define</em> tab, type the following rules in the <em>enter values directly</em> option.
+<pre><code> -40 red
+ -1 orange
+ -0.5 yellow
+ -0.1 grey
+ 0 white
+ 0.1 grey
+ 0.5 cyan
+ 1 aqua
+ 35 blue
+</code></pre>
 Note the accuracy of the DSM along the roads, interpret the observed gain and loss in elevation.
-Use <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSVZrNzZRLURPWVU">Orthphoto</a></li> to assist with interpretation.
-The orthophoto is provided as a GRASS GIS packed raster, run r.unpack -o to unpack it into your working mapset.
+Use <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXSVZrNzZRLURPWVU">Orthophoto</a></li> to assist with interpretation (use r.unpack -o). If you have been working in Lake_Wheeler_spm_course location, you have some orthophotos already in the PERMANENT mapset
+
 
 </main>
 
