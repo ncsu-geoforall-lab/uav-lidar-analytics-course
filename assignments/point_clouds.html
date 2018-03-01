@@ -15,7 +15,7 @@ Data:
 Lake Wheeler data set (formatted as GRASS location): Lake_Wheeler_NCspm</a> (you should already have it from previous assignments)
     <li>2013 lidar point cloud for Midpines</li>
       <ul>
-          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud in LAS format</a></li>
+          <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_spm_2013.las">Classified point cloud in LAS format: mid_pines_spm_2013.las</a></li>
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_all.txt">All returns and classes in TXT format</a></li>
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_ground.txt">Ground only in TXT format</a></li>
           <li><a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/midpines_2013_spm_first.txt">First return only in TXT format</a></li>
@@ -28,25 +28,33 @@ Lake Wheeler data set (formatted as GRASS location): Lake_Wheeler_NCspm</a> (you
     <li>ASPRS <a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> with the list of ASPRS Standard LIDAR Point Classes on p.10
 </ul>
 
-Tools: In the assignment we will be using GRASS GIS 7.2.2 or higher, libLAS (included in GRASS GIS
+Software:
+
+<p>In the assignment we will be using GRASS GIS 7.2.2 or higher, libLAS (included in GRASS GIS
 package for MS Windows and Ubuntu), and a web-based point cloud viewer <a href="http://plas.io">plas.io</a> 
 (might not work with older browsers, most functionality is available in Chrome).
 Please refer to the 
 <a href="../logistics.html">Course logistics webpage</a> for links to software in case you don't have it installed already.
 <p>
-<strong>Note</strong>: if v.in.lidar or r.in.lidar are not accessible on your computer, use
-<a href="https://grass.osgeo.org/grass72/manuals/r.in.xyz.html">r.in.xyz</a>
-and <a href="https://grass.osgeo.org/grass72/manuals/v.in.ascii.html">v.in.ascii</a>
+    
+<strong>Note</strong>: On Mac OS GRASS currently does not have 
+<a href="https://grass.osgeo.org/grass74/manuals/r.in.lidar.html">r.in.lidar</a> or
+<a href="https://grass.osgeo.org/grass74/manuals/v.in.lidar.html">v.in.lidar</a>.
+Please use <a href="https://vcl.ncsu.edu/scheduling/">NCSU Virtual Computing Lab (VCL)</a>
+with MS Windows instance called <em>ArcGIS Desktop 10.5.1</em>, which has GRASS GIS.
+Alternatively, you can use 
+<a href="https://grass.osgeo.org/grass74/manuals/r.in.xyz.html">r.in.xyz</a>
+and <a href="https://grass.osgeo.org/grass74/manuals/v.in.ascii.html">v.in.ascii</a>
 with the point clouds provided as text files.
 
 <h3>Quick data exploration in web browser</h3>
 
 First view the downloaded lidar and UAS las files "mid_pines_spm_2013.las" and  "2015_06_sample_points_NCsmp.las"
-in your web browser using <a href="http://plas.io">plas.io</a>. 
+in your web browser using <a href="http://plas.io">plas.io</a>. Try out different settings and tools.
 
 <h3>GIS-based analysis of point clouds</h3>
 
-Launch GRASS GIS with the "Lake_Wheeler_ncspm" location
+Launch GRASS GIS with the "Lake_Wheeler_ncspm" location. Create a new mapset for this assignment.
 
 <p>
 Change the current working directory to the directory where you downloaded
@@ -77,7 +85,8 @@ The output shows number of points in each class:
 	1960603 Reserved for ASPRS Definition (11) 
 </code></pre>
 Class 11 - for the explanation of Categories in this class refer to p. 10 in ASPRS 
-<a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a> </p>
+<a href="http://www.asprs.org/a/society/committees/lidar/LAS_1-4_R6.pdf">LAS specification file</a>.
+In this particular case, the classification scheme was not used - the metadata define class 11 as "withheld". </p>
 <p>
 Get the geographic extent of the point cloud and then set the computational region to tis extent:
 
@@ -86,21 +95,24 @@ r.in.lidar -sgo input=mid_pines_spm_2013.las
 g.region n=220218 s=218694 e=637795 w=636271 -p
 </code></pre>
 
-<h3>Density of points</h3>
+<h3>Explore the density of points</h3>
+<h4>Lidar point cloud</h4>
 
-First we set the resolution to 1 meter:
+First we set the resolution to 1 meter (flag -a ensures region boundaries
+are adjusted to be even multiples of the resolution value):
 
 <pre><code>
 g.region res=1 -pa
 </code></pre>
 
 <p>
-Compute the density of all points:
+Compute the density of all points using binning:
 
 <pre><code>
 r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_dens_all method=n
 d.rast mid_pines_dens_all
 d.legend -f -s -d rast=mid_pines_dens_all at=5,50,7,10
+d.out.file mid_pines_dens_all.png
 </code></pre>
 
 <p>
@@ -111,12 +123,36 @@ and set histogram equalized color table for both densities so that we can compar
 r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_dens_ground class_filter=2 method=n
 r.colors -e map=mid_pines_dens_all,mid_pines_dens_ground color=bcyr
 d.rast mid_pines_dens_ground
-d.legend -f -s -d rast=mid_pines_dens_ground at=5,50,7,10
 </code></pre>
+Compare both rasters and save as images for report.
 
 Later, we will examine the density using v.outlier and imported vector points.
 
-<h3>Raster binning and classification</h3>
+<h4>UAS point cloud</h4>
+
+Import binned UAV for subarea.
+First find the extent, then set the region:
+<pre><code>
+r.in.lidar -go input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+g.region n=219660 s=219288 e=637287 w=636876 res=1 -pa
+</code></pre>
+
+Compute the point density at 1 meter resolution
+and compare with previously computed lidar point density:
+
+<pre><code>
+r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_1m_dens method=n
+r.colors -e map=mid_pines_dens_all,mid_pines_dens_ground,midpines_uav_06_1m_dens color=bcyr
+</code></pre>
+
+Remove legend (right click on it) and add legend of the UAV density:
+<pre><code>
+d.legend -f -s -d rast=midpines_uav_06_1m_dens at=5,50,7,10
+</code></pre>
+
+Zoom to the UAS subarea and compare the lidar and UAS densities, save images.
+
+<h3>Lidar point cloud: raster binning and classification</h3>
 
 Compute different surfaces by binning.
 Explore what different returns and classes show.<br>
@@ -124,49 +160,52 @@ Create a raster map of classes: 1 - ground, 2 - vegetation, 3 - buildings.
 <p>
 Create DSM:
 <pre><code>
+g.region n=220218 s=218694 e=637795 w=636271 res=2 -pa
 r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_all_max method=max resolution=3 class_filter=1,2
 </code></pre>
 
 <p>
-Create surface based on last return (represents canopy):
-
+Create surface based on last return (represents canopy, last return is only
+where there are multiple returns):
 <pre><code>
-r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_last_mean resolution=3 method=mean return_filter=last class_filter=1,2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_last_mean method=mean return_filter=last class_filter=1,2
 </code></pre>
 
 <p>
 Create surface representing ground based on already classified points:
-
 <pre><code>
-r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_ground_mean resolution=3 class_filter=2
+r.in.lidar -o input=mid_pines_spm_2013.las output=mid_pines_ground_mean class_filter=2
 </code></pre>
 
 <p>
 Combine surfaces and create classes: 1 - ground, 2 - vegetation, 3 - buildings:
-
 <pre><code>
-r.mapcalc "classes = if( ! isnull(mid_pines_last_mean), 2, if( !isnull(mid_pines_ground_mean), 1, if( !isnull(mid_pines_all_max),3, null())))"
+r.mapcalc "classes = if( not(isnull(mid_pines_last_mean)), 2, if( not(isnull(mid_pines_ground_mean)), 1, if( not(isnull(mid_pines_all_max)), 3, null())))"
 </code></pre>
 
 <p>
-Set colors, copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules):
-
-<pre><code>
-r.colors map=classes 
-</code></pre>
+Set colors with r.colors (right click on classes layer - Set color table),
+copy and paste the following color rules into "or enter values directly" text field located in Define tab (option rules):
 
 <pre><code>
 1 220:220:180
 2 0:180:0
 3 150:0:0
 </code></pre>
+
+Look at places where our simplistic classification failed to properly identify buildings.
+Save image to file:
+<pre><code>
+d.out.file classes.png
+</code></pre>
+
 <h3>High resolution DEM/DSM</h3>
 
 Import the point cloud as vector points (without attribute table, not necessary to build points):
 
 <pre><code>
-v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
-v.in.lidar -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
+v.in.lidar -b -t -o input=mid_pines_spm_2013.las output=mid_pines_ground class_filter=2
+v.in.lidar -b -t -o input=mid_pines_spm_2013.las output=mid_pines_surface class_filter=1,2 return_filter=first
 </code></pre>
 
 <p>
@@ -176,8 +215,9 @@ Remove the vector layers from your Layer Manager if they were added
 <p>
 Check the point overall point density using v.outlier:
 <pre><code>
-v.outlier -e input=mid_pines_ground output=dummy outlier=dummy
+v.outlier -e input=mid_pines_ground
 </code></pre>
+
 <pre>
 Estimated point density: 1.111
 Estimated mean distance between points: 0.9487
@@ -187,9 +227,10 @@ Estimated mean distance between points: 0.9487
 Interpolate with resolution 0.3 meter, also create slope and profile curvature map.<br>
 
 <pre><code>
-g.region res=0.3
+g.region n=219780 s=219100 e=637250 w=636575 res=0.5 -pa
 v.surf.rst input=mid_pines_ground elevation=mid_pines_ground_elev slope=mid_pines_ground_slope pcurv=mid_pines_ground_profcurv npmin=80 tension=20 smooth=1
 v.surf.rst input=mid_pines_surface elevation=mid_pines_surface_elev slope=mid_pines_surface_slope pcurv=mid_pines_surface_profcurv npmin=80 tension=20 smooth=1
+r.colors map=mid_pines_ground_elev,mid_pines_surface_elev color=elevation
 </code></pre>
 
 You can recompute it with higher npmin=150 to reduce artifacts from segmentation visible on slope and curvature maps (will be much slower!).
@@ -197,26 +238,10 @@ You can recompute it with higher npmin=150 to reduce artifacts from segmentation
 Visualize DEM and DSM in 3D view, use cross-sections.
 
 <p>
-Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend.
-Go to 3D view, set surface resolution 1 and color to map 'classes'.
+Leave just raster map 'mid_pines_surface_elev' in Layer Manager, hide legend,
+zoom to computational region.
+Go to 3D view, set surface resolution 1 and color to map 'classes'. Save images.
 
-<h3>Explore the UAS point cloud</h3>
-
-Import binned UAV for subarea to be updated, first find the las extent, 
-it will be n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 b=84.000000 t=139.680000
-then set the region
-<pre><code>
-r.in.lidar -go input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
-g.region n=219660.060000 s=219288.850000 e=637287.080000 w=636876.930000 res=0.2 -p
-r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
-</code></pre>
-
-Compute the point density at 1 meter resolution and compare with previously computed lidar point density
-
-<pre><code>
-g.region res=1 -p
-r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_1m_dens method=n
-</code></pre>
 
 
 <h3>Compute the difference of lidar DEM and GCP heights</h3>
@@ -251,10 +276,12 @@ View the results:
 v.db.select map=GCP_12_differences columns=ASL,dem_height,height_difference
 </code></pre>
 
-Compute extended univariate statistics
+Compute extended univariate statistics and show thematic map:
 
 <pre><code>
 v.univar -e GCP_12_differences column=height_difference
+d.vect.thematic map=GCP_12_differences column=height_difference algorithm=int nclasses=4 colors=blue,30:144:255,173:216:230,255:192:203 icon=basic/circle size=20
+d.legend.vect at=10,40
 </code></pre>
 
 Alternatively use <em>Attribute Table Manager</em> to view the results.
@@ -275,16 +302,15 @@ g.region n=219502 s=219348 w=637070 e=637276 b=110 t=135 res=2 res3=2 tbres=0.5 
 </code></pre>
 
 <p>
-Use binning to create point density 3D raster:
-
+Use binning to create point density 3D raster.
+Run <a href="https://grass.osgeo.org/grass74/manuals/r3.in.lidar.html">r3.in.lidar</a>,
+directly on the LAS file:
+<pre><code>
+r3.in.lidar -o input=mid_pines_spm_2013.las n=mid_pines_dens
+</code></pre>
+With older GRASS versions where r3.in.lidar was not available yet use an alternative tool:
 <pre><code>
 r3.in.xyz input=mid_pines.txt output=mid_pines_dens method=n separator=comma
-</code></pre>
-
-You can also run <a href="https://grass.osgeo.org/grass73/manuals/r3.in.lidar.html">r3.in.lidar</a>,
-directly on the LAS file, but you have to use latest development version (7.3) of GRASS GIS.
-<pre><code>
-r3.in.lidar input=mid_pines_spm_2013.las n=mid_pines_dens
 </code></pre>
 
 <p>
@@ -300,23 +326,47 @@ Visualize point density in 3D view using slices and isosurfaces:
     <li>Leave only 3D raster <em>mid_pines_dens</em> in Layer Manager.</li>
     <li>Set computational region based on the 3D raster and zoom to it.</li>
     <li>Switch to 3D.</li>
-    <li>On View page set <em>Height</em> to 50 and <em>Z-exag</em> to 2. Nothing is visible yet.</li>
-    <li>On Data page, check <em>Draw wire box</em>, set resolution to 1.</li>
+    <li>On View page press Reset, set <em>Height</em> to 50 and <em>Z-exag</em> to 2. Nothing is visible yet.</li>
+    <li>On Data page - 3D raster, check <em>Draw wire box</em>, set resolution to 1.</li>
     <li>Add isosurface and set isosurface value 1 and press Enter.</li>
     <li>Check <em>toggle normal direction</em> and set different color of isosurface.</li>
     <li>Experiment with different isosurface levels (press enter to confirm the new value).</li>
     <li>Remove isosurface, change draw mode to slices, add slice and set its axis to Z.</li>
     <li>Manipulate with the slice.</li>
+    <li>Save images for report.</li>
 </ol>
 <img width="500px" src="img/lidar/3d_trees.png">
 
-<h3>3D raster profiles of 3D raster of proportional density</h3>
+<h3>Lidar transect visualization (optional)</h3>
+Download extension <a href="https://grass.osgeo.org/grass74/manuals/addons/v.profile.points.html">
+    v.profile.points</a>:
+<pre><code>
+g.extension v.profile.points
+</code></pre>
+
+We will import small sample of lidar points (limited by computational region extent)
+ with attribute table:
+<pre><code>
+g.region n=219452 s=219450 w=637132 e=637134
+v.in.lidar -r -o input=mid_pines_spm_2013.las output=mid_pines_all
+</code></pre>
+
+Compute profile, set the color based on intensity values in attribute table,
+and visualize. You need to zoom to the vector map to see it:
+<pre><code>
+v.profile.points point_input=mid_pines_all output=profile width=5 coordinates=637106,219373,637132,219451
+v.colors map=profile use=attr column=intensity color=grass
+d.vect map=profile color=none width=1 icon=basic/circle
+</code></pre>
+
+<img width="600px" src="img/lidar/3d_profile.png">
+<!-- <h3>3D raster profiles of 3D raster of proportional density</h3>
 <em>Note: latest version of GRASS GIS is needed (7.3).</em>
 <p>
 Module r3.in.lidar can compute proportional count - 
 count per 3D cell relative to the count per vertical column.
 <pre><code>
-r3.in.lidar input=mid_pines_spm_2013.las n=mid_pines_dens proportional_n=mid_pines_dens_proportional
+r3.in.lidar -o input=mid_pines_spm_2013.las n=mid_pines_dens proportional_n=mid_pines_dens_proportional --o
 </code></pre>
 We will visualize it using vertical 3D raster profiles.
 Download extension r3.profile:
@@ -328,4 +378,4 @@ Compute profile between 2 points.
 <pre><code>
 r3.profile input=mid_pines_dens_proportional raster_output=mid_pines_dens_proportional_profile coordinates=637127,219478,637219,219469
 </code></pre>
-Add raster <em>mid_pines_dens_proportional_profile</em> and zoom to it (lower left corner is set to 0, 0).
+Add raster <em>mid_pines_dens_proportional_profile</em> and zoom to it (lower left corner is set to 0, 0). -->
