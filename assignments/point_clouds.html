@@ -128,30 +128,6 @@ Compare both rasters and save as images for report.
 
 Later, we will examine the density using v.outlier and imported vector points.
 
-<h4>UAS point cloud</h4>
-
-Import binned UAV for subarea.
-First find the extent, then set the region:
-<pre><code>
-r.in.lidar -go input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
-g.region n=219660 s=219288 e=637287 w=636876 res=1 -pa
-</code></pre>
-
-Compute the point density at 1 meter resolution
-and compare with previously computed lidar point density:
-
-<pre><code>
-r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_1m_dens method=n
-r.colors -e map=mid_pines_dens_all,mid_pines_dens_ground,midpines_uav_06_1m_dens color=bcyr
-</code></pre>
-
-Remove legend (right click on it) and add legend of the UAV density:
-<pre><code>
-d.legend -f -s -d rast=midpines_uav_06_1m_dens at=5,50,7,10
-</code></pre>
-
-Zoom to the UAS subarea and compare the lidar and UAS densities, save images.
-
 <h3>Lidar point cloud: raster binning and classification</h3>
 
 Compute different surfaces by binning.
@@ -297,8 +273,8 @@ Module v.lidar.mcc uses a multiscale curvature-based classification algorithm
 to distinguish ground and non-ground points:
 <pre><code>
 g.region n=219511 s=219354 w=637071 e=637249 res=1
-v.in.lidar -t -r -o input=2015_06_sample_points_NCspm.las output=midpines_uav_06_sample
-v.lidar.mcc input=midpines_uav_06_sample ground=ground nonground=nonground
+v.in.lidar -t -r -o input=mid_pines_spm_2013.las output=mid_pines_sample
+v.lidar.mcc input=mid_pines_sample ground=ground nonground=nonground
 </code></pre>
 
 Visualize classification results in 2D or 3D.
@@ -382,7 +358,30 @@ d.vect map=profile color=none width=1 icon=basic/circle
 <img width="600px" src="img/lidar/3d_profile.png">
 
 
+<h4>UAS point cloud density (optional)</h4>
+Note: importing this UAV point cloud may not work for you on Windows.
+<p>
+Import binned UAV for subarea.
+First find the extent, then set the region:
+<pre><code>
+r.in.lidar -go input=2015_06_sample_points_NCspm.las out=midpines_uav_06_02m_raw
+g.region n=219660 s=219288 e=637287 w=636876 res=1 -pa
+</code></pre>
 
+Compute the point density at 1 meter resolution
+and compare with previously computed lidar point density:
+
+<pre><code>
+r.in.lidar -o input=2015_06_sample_points_NCspm.las out=midpines_uav_06_1m_dens method=n
+r.colors -e map=mid_pines_dens_all,mid_pines_dens_ground,midpines_uav_06_1m_dens color=bcyr
+</code></pre>
+
+Add legend of the UAV density:
+<pre><code>
+d.legend -f -s -d rast=midpines_uav_06_1m_dens at=5,50,7,10
+</code></pre>
+
+Zoom to the UAS subarea and compare the lidar and UAS densities, save images.
 
 <!-- <h3>3D raster profiles of 3D raster of proportional density</h3>
 <em>Note: latest version of GRASS GIS is needed (7.3).</em>
