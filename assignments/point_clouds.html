@@ -300,6 +300,24 @@ d.legend.vect at=10,40
 
 Alternatively use <em>Attribute Table Manager</em> to view the results.
 
+<h3>Ground classification (optional)</h3>
+Download extension <a href="https://grass.osgeo.org/grass74/manuals/addons/v.lidar.mcc.html">
+    v.lidar.mcc</a>:
+<pre><code>g.extension v.lidar.mcc
+</code></pre>
+
+Module v.lidar.mcc uses a multiscale curvature-based classification algorithm
+to distinguish ground and non-ground points:
+<pre><code>g.region n=219511 s=219354 w=637071 e=637249
+v.in.lidar -t -r -o input=mid_pines_spm_2013.las output=mid_pines_sample
+v.lidar.mcc input=mid_pines_sample ground=ground nonground=nonground
+</code></pre>
+
+Visualize classification results in 2D or 3D.
+
+<img width="600px" src="img/lidar/vlidarmcc.png">
+
+
 <h3>Visualize point density in 3D (optional)</h3>
 
 Convert LAS file into text file:
@@ -367,6 +385,10 @@ d.vect map=profile color=none width=1 icon=basic/circle
 </code></pre>
 
 <img width="600px" src="img/lidar/3d_profile.png">
+
+
+
+
 <!-- <h3>3D raster profiles of 3D raster of proportional density</h3>
 <em>Note: latest version of GRASS GIS is needed (7.3).</em>
 <p>
