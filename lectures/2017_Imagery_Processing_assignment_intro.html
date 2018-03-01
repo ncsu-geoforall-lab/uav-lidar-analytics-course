@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>Imagery processing:</h2>
+	<h3>intro to the assignment</h3>
+    <h4>GIS595-004/603; MEA592-006/601:</h4>
+    <h4>UAS Mapping for 3D Modeling</h4>
+    <h4 style="margin-top: 0.5em">
+        Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+</section>
+<section>
+    <h2>Possible issues</h2>
+<p>Processing data from UAS can be challenging.<br> Sources for problems in the processing include:
+        <ul>
+            <li class="fragment">Data specific issues caused by:</li>
+            <ul>
+                <li class="fragment">bad weather,</li>
+                <li class="fragment">failure of hardware (UAS or sensor),</li>
+                <li class="fragment">wrongly chosen sensor or wrong settings</li>
+                <li class="fragment">not enough information about image localization</li>
+                <li class="fragment">challenging terrain,</li>
+                <li class="fragment">bad flight planning</li>
+
+                </ul>
+</ul>
+</section>
+<section>
+    <h2>Possible issues</h2>
+
+        <ul>
+            <li class="fragment">Software specific issues caused by:</li>
+            <ul>
+                <li class="fragment">incopability between UAS and software (like file extensions)</li>
+                <li class="fragment">memory problems or lack of computational power</li>
+                <li class="fragment">limitation of the software algorithms</li>
+                </ul>
+</section>
+<section>
+    <h3>Possible issues: bad weather</h3>
+
+        <ul>
+            <li class="fragment">Strong wing causes movement of the UAS (especially fixed wing) and the imagery can be very oblique</li>
+            <li class="fragment">Fog, drizzle or snow can limit the visibility and result in low quality images</li>
+            <li class="fragment">Direct sunshine can produce cast shadows that will interfere with processing</li>
+            </ul>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment"><strong>None.</strong> Repeat the survey in better weather</li>
+                </ul>
+</ul>
+</section>
+
+<section>
+    <h3>Possible issues: failure of hardware</h3>
+
+        <ul>
+            <li class="fragment">UAS can crash</li>
+            <li class="fragment">Camera can not be taking photos (due to battery filure, interrupted connection with UAS...)</li>
+            <li class="fragment">IMU can stop logging the pictures</li>
+            </ul>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment"><strong>Usually - none.</strong> Repeat the survey.</li>
+<ul>
+                <li class="small fragment">Unless you are extremely lucky and UAS crashed after acquiring data you needed and you will be able to retrieve it.</li>
+                <li class="small fragment">Or the camera stopped working just for a while and its not so significant to your data because you still have sufficient overlap without missing pictures</li>
+</ul>
+                <li class="fragment">If only log is missing - see next slide</li>
+                </ul>
+</ul>
+</section>
+<section>
+    <h3>Possible issues: not enough information about image localization</h3>
+
+        <ul>
+            <li class="fragment">It is possible to process data based on the geotags provided by flight log or EXIF data, but:</li>
+		<ul>
+            		<li class="small fragment">geotag contains image location, not the location of the object depicted on photo (more in <a href="..//HM_Photogrammetry_and_SfM.html#/25">this section of the lecture</a>)</li>
+            <li class="small fragment">It is therefore not possible to properly georeference the model without additional information</li>
+</ul>
+            <li class="fragment">without any information about imagery localization it is not possible to georeference or scale the outputs 
+<ul>
+<li class="fragment">(you can produce not georeferenced 3D model or use scale bars for scaling the model)</li>
+            </ul>
+</section>
+<section>
+    <h3>Possible issues: not enough information about image localization</h3>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment"><strong>Use GCPs</strong> Place targets and include them in processing - more info how to process data with GCPs in Agisoft Photoscan in next slides</li>
+                <li class="fragment">Use RTK/PPK equipped UAS - <a href="https://pix4d.com/rtk-ppk-drones-gcp-comparison/">more info here<a></li>
+                </ul>
+</section>
+
+
+
+
+<!--
+
+<section>
+    <h3>Ground Control Points</h3>
+        <ul>
+            <li class="fragment">Marker positions are defined by their projections on the source photos;</li>
+            <li class="fragment">used for:</li>
+            <ul>
+                <li class="fragment">setting up a coordinate system,</li>
+                <li class="fragment">photo alignment optimization,</li>
+                <li class="fragment">measuring distances and volumes,</li>
+                <li class="fragment">marker based chunk alignment.</li>
+                </ul>
+            <li class="fragment">more photos used to specify marker position > higher accuracy of marker placement</li>
+        </ul> 
+</section>
+
+-->
+
+<section>
+    <h3>Placing markers</h3>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_placing_markers2.png" width="90%" >
+ </div>
+ <div class="left">   
+<p> <a href="https://www.youtube.com/watch?v=nnKJWev7Jyc">video tutorial</a></p> 
+    <ul>
+    <li class="small fragment">Click 'Filter Photos by Markers';</li>
+    <li class="small fragment">Open an image by double clicking the thumbnail - the GCP will appear as a grey icon;</li>
+    <li class="small fragment">Drag the marker to the correct measurement position;</li>
+    <li class="small fragment">the marker will appear as a green flag, meaning it is enabled and will be used for further processing.</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Optimize Camera Alignment</h2>
+ <div class="right">
+            <img class="fragment" src="img/Agisoft_optimizing.png" width="80%">
+ </div>
+ <div class="left">   
+    <ul>
+    <li class="small fragment">Set the marker coordinates for optimization (check markers /uncheck cameras);</li>
+    <li class="small fragment">Click Settings toolbar button on the Reference pane and set the coordinate system;</li>
+    <li class="small fragment">Specify the assumed accuracy of GCP measurements and marker projections on the source photos</li>
+    <li class="small fragment">click 'Optimize Camera Alignment'.</li>
+        </ul> 
+</section>
+<section>
+    <h3>Possible issues: challenging terrain</h3>
+
+        <ul>
+            <li class="fragment">Homogenous surfaces cannot be processed by SfM algorithms</li>
+            <li class="fragment">Large water areas cannot be processed either (still water is too homogenous and waves move)</li>
+            <li class="fragment">Moving objects can be depicted on multiple photos</li>
+            </ul>
+<h4 class="fragment">Solution</h4>
+	<ul>
+                <li class="fragment">Avoid large water areas or mask them</li>
+                <li class="fragment">Avoid large moving objects or mask them</li>
+                <li class="fragment">(<a href="http://gmv.cast.uark.edu/photogrammetry/software-photogrammetry/studio-clouds-software-photogrammetry/workflow-studio-clouds-software-photogrammetry/photoscan-pro/">great tutorial</a> on how to work with masks in Agisoft Photoscan)</li>
+                <li class="fragment">Aviod homogenous surfaces or set GCPs (or other objects) on them</li>
+                </ul>
+</ul>
+</section>
+<section>
+    <h3>Possible issues: lack of memory</h3>
+    <h4>Agisoft Photoscan memory requirements</h4>
+    
+        <p class="fragment"><strong>Aligning Photos</strong></p>
+        <img class="fragment" src="img/memory1.png">
+        <p class="fragment"><strong>Building Model (Height-field mode)</strong></p>
+        <img class="fragment" src="img/memory2.png"> 
+</section>
+<section>
+    <h3>Possible issues: lack of memory</h3>
+    <h4>Agisoft Photoscan memory requirements</h4>
+    
+        <p class="fragment"><strong>Building Model (Arbitrary mode)</strong></p>
+        <img class="fragment" src="img/memory3.png">
+        <p class="fragment"><strong>Decimating Model</strong></p>
+        <img class="fragment" src="img/memory4.png"> 
+</section>
+<section>
+    <h3>Possible issues: log file</h3>
+    <div class="left">  
+    <ul>
+        <li class="fragment">Agisoft Photoscan works with raw text files.<p class="small"> Trimble uses its own file formats that need to be converted in order to use it in another software</p></li>
+<h4 class="fragment">Solution</h4>
+        <li class="fragment">If a project file (.gwt extension) is available, the text file can be exported from Trimble Access Aerial Imaging software</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/TBC_export.png">
+    </div>
+<ul>
+        <li class="fragment">if only .jxl is available use <a href="https://github.com/wenzeslaus/jxl2csv">script by Vaclav Petras</a> </li>
+</ul>
+</section>
+<section>
+    <h2>Possible issues:</h2>
+<h3 class=fragment>... are endless</h3>
+<img class= "fragment" src="img/processing/do_it.gif">
+
+</section>
+
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>
