@@ -308,9 +308,9 @@ Download extension <a href="https://grass.osgeo.org/grass74/manuals/addons/v.lid
 
 Module v.lidar.mcc uses a multiscale curvature-based classification algorithm
 to distinguish ground and non-ground points:
-<pre><code>g.region n=219511 s=219354 w=637071 e=637249
-v.in.lidar -t -r -o input=mid_pines_spm_2013.las output=mid_pines_sample
-v.lidar.mcc input=mid_pines_sample ground=ground nonground=nonground
+<pre><code>g.region n=219511 s=219354 w=637071 e=637249 res=1
+v.in.lidar -t -r -o input=2015_06_sample_points_NCspm.las output=midpines_uav_06_sample
+v.lidar.mcc input=midpines_uav_06_sample ground=ground nonground=nonground
 </code></pre>
 
 Visualize classification results in 2D or 3D.
