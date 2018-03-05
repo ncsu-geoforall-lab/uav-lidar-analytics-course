@@ -101,6 +101,7 @@
     <ul>
         <li class="fragment">Non-linear method for refining structure and motion</li>
         <li class="fragment">Minimizing reprojection error</li>
+       <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
     </ul>
     </div>
     <div class="right">
@@ -108,9 +109,9 @@
     </div>
 </section>
 <section>
-    <h2>Bundle Block Adjustment</h2>
+    <h3>Bundle Block Adjustment</h3>
     <ul>
-        <li class="fragment">Detecting image feature points (i.e. Various geometrical similarities such as object edges or other speciﬁc details);</li>
+
         <li class="fragment">Subsequently monitoring the movement of those points throughout the sequence of multiple images; </li>
     </ul>
     <div class="left">  
@@ -119,7 +120,7 @@
     <div class="right">
             <img class="fragment" src="img/Bundle_Block_Adjustment2.png">
     </div>
-</section>
+</sectio
 <section>
     <h2>Aligning cameras in PhotoScan</h2>
     <div class="right">
@@ -149,7 +150,7 @@
        </ul>   
 </section>
 <section>
-    <h2>2. Building dense point cloud</h2>
+    <h3>2. Building dense point cloud</h3>
     <div class="left">     
         <p class="fragment"><strong>Depth Filtering modes</strong></p>
  	<p class="small fragment">Algorithms sorting outliers (due to some factors, like poor texture of some elements of the scene, noisy or badly focused images)</p> 

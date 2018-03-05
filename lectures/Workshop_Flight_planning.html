@@ -176,7 +176,7 @@
             <div class="slides">
 <!-- This is a generated file. Do not edit. -->
 <section>
-    <h2>Imagery processing</h2>
+    <h2>Flight planning</h2>
     <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
     <p class="title-foot">
         <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
@@ -186,376 +186,21 @@
     </p>
 
 </section>
-<!--
+
 <section>
-    <h2>Objectives (1)</h2>
+    <h2>Objectives</h2>
     <ul>
-        <li class="fragment"><strong>Understand</strong> the photogrammetric data processing as a multistep process;</li>
-        <li class="fragment"><strong>Indicate</strong> the sources of imagery disortion and the need of orthorectification of photos;</li>
-        <li class="fragment"><strong>Describe</strong> the concept of orthorectification;</li>
-        <li class="fragment"><strong>Indicate</strong> data needed for orthophoto/DTM generation from aerial imagery;</li>
-        <li class="fragment"><strong>Understand</strong> the difference between interior and exterior orientation of the photo;</li>
+        <li class="fragment"><strong>Describe</strong> phases of flight planning</li>
+        <li class="fragment"><strong>Understand</strong> safety procedures and checklists</li>
+        <li class="fragment"><strong>Understand</strong> the role of Ground Control Points and its distirbution and accuracy</li>
+        <li class="fragment"><strong>Utilize</strong> flight planning software</li>
     </ul>
-</section>
-<section>
-    <h2>Objectives (2)</h2>
-    <ul>
-        <li class="fragment"><strong>Understand</strong> the terms: Bundle Block Adjustment, Ground Control Points, flight log;</li>
-        <li class="fragment"><strong>Describe</strong> the workflow of geoprocessing of aerial imagery in designated software (Agisoft Photoscan);</li>
-        <li class="fragment"><strong>Practice</strong> the process of georectification with and without GCPs;</li>
-        <li class="fragment"><strong>Explain</strong> the impact of GCP in the processing for the of final results.</li>
-    </ul>
-</section>
-<-->
-
-<section>
-    <h2>Why do we need to process the data?</h2>
-    <div class="left">  
-            <img class="fragment" src="img/scale.png" width="60%">
-            <img class="fragment" src="img/orthophoto_why.png" width="80%">
-    </div>
-    <div class="right fragment">
-        <img src="img/disortion.png">
-    </div>
-</section>
-<section>
-    <h2>Why do we need to process the data?</h2>
-    <div class="left fragment">  
-            <img src="img/pespective_vs_orthographic.png" width="90%">
-    </div>
-    <div class="right fragment">
-        <img src="img/pespective_vs_orthographic_image_plane.png">
-    </div>
-</section>
-<section>
-    <h2>Orthorectification</h2>
-
-    <div class="left">  
-    <p class="fragment">Process that removes:</p>
-    <ul>
-        <li class="fragment">effects of relief displacement,</li>
-        <li class="fragment">optical distortions from the sensor,</li>
-        <li class="fragment">geometric perspective</li>
-    </ul>
-        <p class="fragment">from a photograph or digital image</p>
-    </div>
-    <div class="right fragment">
-        <img src="img/DSM_ortho.png" width="40%">
-        <img src="img/new/ortho_example.jpg" width="80%">
-    </div>
-     <p class="fragment">The resulting image - an <strong>orthophoto</strong> or <strong>orthoimage.</strong></p>
-</section>
-<section>
-    <h2>Orthophoto</h2>
-    <div class="left">  
-      <ul>
-        <li class="fragment">Photo that has the same lack of distortion as a map (geometrically corrected, uniform scale);</li>
-        <li class="fragment">Can be used to measure true distances</li>
-    </div>
-    <div class="left">
-        <img src="img/new/ortho_example_measure.JPG">
-    </div>
-</section> 
-
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide1.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide2.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide3.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide4.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide5.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide6.png">
-</section>
-<section>
-    <h2>Orthorectification</h2>
-     <img src="img/slide7.png">
-</section>
-
-<section>
-    <h2>How do we get there?</h2>
-    <div class="left">  
-            <p class="small fragment">Old way: analogue</p>
-                <img class="fragment" src="img/analogue.png" width="90%">
-            <p class="small fragment">Now: digital</p>
-                <img class="fragment" src="img/digital.png" width="90%">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/orthophoto_how.png">
-    </div>
-</section>
-
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_01.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_02.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_03.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_04.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_05.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_06.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_07.png">
-</section>
-<section> 
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_08.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_09.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_10.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_11.png">
-</section>
-<section>
-    <h2>Geoprocessing - workflow</h2>
-     <img src="img/Presentation1_Page_12.png">
-</section>
-
-
-
-<section>
-    <h2>What do we need?</h2>
-    <ol>
-        <li class="fragment">Digital <strong>imagery</strong>;</li>
-        <li class="fragment">(Digital elevation model or topographic dataset)</li>
-        <li class="fragment">(Exterior <strong>orientation parameters </strong> from aerial triangulation or IMU);</li>
-        <li class="fragment">(<strong>Camera calibration</strong> report);</li>
-        <li class="fragment">(Ground Control Points parameters);</li>
-        <li class="fragment">Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
-    </ol>
-</section>
-<section>
-    <h2>What do we need?</h2>
-    <ol>
-        <li>Digital <strong>imagery</strong>;</li>
-        <li>.</li>
-        <li> .</br>. </li>
-        <li>.</li>
-        <li>.</li>
-        <li>Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
-    </ol>
-</section>
-
-
-<section>
-    <h3>Location of the photo</h3>
-<p class="fragment"><strong>Geotagging</strong> a photograph - associating a photo with a geographical location (latitude, longnitude and usually altitude)</li></p>
-    <div class="right">
-            <img class="fragment" src="img/mapping/geotag.png">
-    </div>
- <div class="left">
-		<ul>
-		<li class="small fragment">In theory, every part of a picture can be tied to a geographic location, but in the most typical application, only <strong>the position of the sensor</strong> is associated with the <strong>entire digital image</strong></li>
-		<li class="small fragment">GPS in the camera or UAS measures location with very low accuracy</li>
-		</ul> 
-    </div>
-
-</section>
-<section>
-    <h2>Geotagging</h2>
-     <img src="img/mapping/geotag1.png">
-</section>
-<section>
-    <h2>Geotagging</h2>
-     <img src="img/mapping/geotag2.png">
-</section>
-<section>
-    <h2>Geotagging</h2>
-     <img src="img/mapping/geotag3.png">
-</section>
-<section>
-    <h2>Geotagging</h2>
-     <img src="img/mapping/geotag4.png">
-</section>
-<section>
-    <h3>5. Ground Control Points</h3>
-<ul>
-    <li class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt)</li>
-    <li class="fragment">Accurate, well placed and marked GCPs are essential elements for model accuracy and georeferencing</li>
-</ul>
-    <div class="left">
-        <p class="fragment"><strong>Photo Identifiable:</strong></p>
-    <ul>
-        <li class="fragment">any feature on the ground,</li>
-            <ul>
-                <li class="small fragment">specific (e.g. corners)</li>
-                <li class="small fragment">unmovable,</li>
-                <li class="small fragment">not covered by vegetation</li>
-            </ul>
-        <li class="fragment">it can be surveyed later on.</li>
-    </ul>
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/GCPs.png">
-    </div>
-</section>
-
-<section>
-    <h2>Ground Control Points </h2>
-    <div class="left">
-        <p class="fragment">Pre-marked (Panels): marking or painting figures or symbols on the ground before the UAS flies</p>
-         <img class="fragment" src="img/GCP_sketch.png" width="75% ">
-    </div>
-    <div class="right">
-            <img class="fragment" src="img/new/GCP_photo.png">
-    </div>
-</section>
-
-<section>
-    <h2>Why Ground Control Points?</h2>
-            <img class="fragment" src="img/new/relative_absolute_orientation.JPG">
-                <ul>
-                <li class="fragment">necessary for georeferencing if photos are not geotagged</li>
-                <li class="fragment">improve precision of the model</li>
-                <li class="fragment">important for quality control</li>
-                </ul>
-</section>
-<section>
-    <h2>Why Ground Control Points?</h2>
-     <img src="img/mapping/geotag3.png">
-</section>
-<section>
-    <h2>Why Ground Control Points?</h2>
-     <img src="img/mapping/geotagGCP1.png">
-</section>
-<section>
-    <h2>Why Ground Control Points?</h2>
-     <img src="img/mapping/geotagGCP2.png">
-</section>
-<section>
-   <h2>From 2D images to a 3D model</h2>
-<ul>
-<li class="fragment"> orthophoto is a 2D image
-<li class="fragment"> elevation data are derived as part of orthorectification process
-<li class="fragment"> exact camera parameters and manually identified GCPs on the images were needed to derive a DEM
-<li class="fragment"> Structure from Motion: automated point matching, camera parameter estimation and 3D model generation
-</ul>
-</section>
-
-<section>
-    <h2>Multiple-view geometry</h2>
-    <ul>
-        <li class="fragment"><strong>Scene geometry (structure):</strong> <br>Given 2D point matches in two or more images, where are the corresponding points in 3D?</li>
-        <li class="fragment"><strong>Correspondence (stereo matching):</strong> Given a point in just one image, how does it constrain the position of the corresponding point in another image? </li>
-        <li class="fragment"><strong>Camera geometry (motion):</strong> Given a set of corresponding points in two or more images, what are the camera matrices for these views?</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Structure from Motion (SfM)</h2>
-    <div>  
-        <ul>
-        <li class="fragment">range imaging technique,</li>
-        <li class="fragment">process of estimating 3D structures from overlapping 2D image sequences,</li>
-        <li class="fragment">may be coupled with local motion signals</li>
-        </ul>
-    </div>
-<!-- better fits into imagery processing
-    <div class="right"> <img class="fragment" src="img/SfM.png"> </div>-->
-</section>
-
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme01-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme02-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme03-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme04-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme05-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme06-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme07-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme08-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme09-01.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme11-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme12-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme13-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme14-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme15-02.png" width="90%">
-</section>
-<section>
-<h2>Structure from Motion (SfM)</h2>
-<img src="img/new/SfM_scheme16-02.png" width="90%">
 </section>
 
 <section>
     <h2>UAS Photogrammetric process</h2>
-     <img class="fragment" src="img/new/uas_process.JPG">
-<p class="fragment">Throughout the whole process, it is important to remember</>
+     <img class="fragment" src="img/plan/photogrammetric_process.png">
+<p class="fragment">Throughout the whole process, it is important to remember</p>
     <ul>
 
         <li class="fragment"><strong>What</strong> is the aim or the project? and </li>
@@ -564,12 +209,232 @@
 </section>
 
 <section>
-   <h2>What we have learned</h2>
+    <h2>Flight planning <br>- a multistep process</h2>
+     <img class="fragment" src="img/plan/flowchart_green.png">
+<p class="fragment">Throughout the whole process, it is important to remember</p>
+    <ul>
+
+        <li class="fragment"><strong>What</strong> is the aim or the project? and </li>
+        <li class="fragment"><strong>What</strong> will be the data used for?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Project definition</h2>
+     <img src="img/plan/flowchart_project.png">
 <ul>
-<li class="fragment">What is remote sensing and photogrammetry</li>
-<li class="fragment">Properties of aerial image</li>
-<li class="fragment">Why do we need orthrectification to measure from aerial images</li>
-<li class="fragment">What process allows us to extract 3D data from series of overlapping 2D images</li>
+<li class="fragment"> defining the scope of the project </li> 
+<li class="fragment"> choosing UAS and sensor </li> 
+<li class="fragment"> assesing the cost, labor and time consumption</li> 
+<li class="fragment"> collecting information about terrain</li> 
+</ul>
+</section>
+<section>
+    <h2>Project definition</h2>
+     <img src="img/plan/flowchart_project.png">
+<ul>
+<li> defining the area and resolution based on</li> 
+<ul>
+<li class="fragment"> UAS and sensor capabilies</li> 
+<li class="fragment"> size of mapping area</li> 
+<li class="fragment"> terrain constraints</li> 
+<li class="fragment"> project requirements</li> 
+</ul>
+</ul>
+</section>
+<section>
+    <h2>Project definition</h2>
+     <img src="img/plan/flowchart_project.png">
+<ul>
+<li class="fragment"> evaluating the legal constrains, obtaining permissions</li> 
+<li class="fragment"> defining the coordinate system</li>
+<ul>
+<li class="fragment"> dependent on the desired coordinate system of the final data</li> 
+<li class="fragment"> consistent with the coordinate system of GCP survey</li> 
+</ul>
+</section>
+
+<section>
+    <h2>Flight planning</h2>
+     <img src="img/plan/flowchart_planning.png">
+<ul>
+<li class="fragment"> mission area assesment</li> 
+<li class="fragment"> planning geometric parameters</li> 
+<li class="fragment"> choosing flight planning and flight logging platform</li> 
+<li class="fragment"> preliminary weather assesment (climate, season, forecasts)</li> 
+<li class="fragment"> creating a flight plan (software specific)</li> 
+</ul>
+</section>
+
+
+
+
+
+<section>
+    <h3>Placing Ground Control Points (GCPs)</h3>
+<div class="left">
+		<ul>
+		<li class="fragment">A minimum number of 5 GCPs is recommended.</li>
+		<li class="fragment">5 to 10 GCPs are usually enough, even for large projects.</li>
+
+		<li class="fragment">In cases that the topography of the area is complex, use more GCPs</li>
+		</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/gcp.png" width=90%>
+    </div>
+		<ul>
+		<li class="fragment">The GCPs should be distributed evenly in the area</li>
+		<li class="fragment">Do not place the GCPs exactly at the edges of the area</li>
+		</ul>
+</section>
+
+<section>
+    <h3>Placing Ground Control Points (GCPs)</h3>
+
+<div class="left">
+<p>Before measuring the GCPs coordinates, the following items must be defined:</p>
+<ul>
+<li class="fragment"> GCP coordinate system</li> 
+<li class="fragment"> GCP accuracy</li> 
+<li class="fragment"> Topographic equipment (total station or hand held GPS?)</li> 
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/new/GCP_photo.png">
+    </div>
+</section>
+
+
+<section>
+    <h3>GCPs Accuracy</h3>
+
+<div class="left">
+<p class="fragment">Factors for defining GCP acuracy:</p>
+<ul>
+<li class="fragment">Accuracy needed for the final results</li> 
+<li class="fragment">Ground Sampling Distance* of the images:</li>
+<ul> 
+<li class="small fragment">GCP target size: 5-10 x GSD</li> 
+<li class="small fragment">GCP accuracy: at least 0.1 GSD</li>
+</ul>
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/gsd.png" width=75%>
+    </div>
+<ul> 
+<li>* distance between two consecutive pixel centers measured on the ground</li>
+</ul> 
+</section>
+<section>
+    <h2>Ground Sampling Distance</h2>
+
+<div class="left">
+<p class="fragment">Distance between two consecutive pixel centers measured on the ground: </p>
+<ul>
+<li class="fragment">bigger GSD =  lower spatial resolution</li> 
+</ul>
+<p class="fragment">GSD depends on</p>
+<ul>
+<li  class="small fragment">flight altitude</li> 
+<li  class="small fragment">camera focal length</li> 
+<li  class="small fragment">camera resolution (pixel size)</li> 
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/gsd.png">
+    </div>
+</section>
+
+<section>
+    <h2>Site evaluation and checklists</h2>
+     <img class="fragment" src="img/plan/flowchart_site.png">
+<ul>
+<li class="fragment"> terrain check – high obstacles in the take-off, mission, landing and alternative landing locations</li> 
+<li class="fragment"> ask the locals about possible air traffic or ground activities</li> 
+<li class="fragment"> weather check</li> 
+<ul>
+<li class="small fragment"> temperature effects battery life</li> 
+<li class="small fragment"> most of the UAS can’t operate in rain. </li> 
+</ul>
+<li class="fragment"> use checklists, don't rely on your memory!
+<li class="fragment"> sample checklists: <a href="https://phantompilots.com/attachments/drone-checklist-pdf.41608/">paper (for Phantom)</a> and <a href="https://www.rmus.com/pages/rmus-uav-pilot-preflight-compliance-checklist">RMUS app</a>
+</ul>
+</section>
+<section>
+    <h2>Site evaluation and checklists</h2>
+     <img  src="img/plan/site.png">
+</section>
+<section>
+    <h3>Site evaluation and checklists</h3>
+<p>Preflight inspection is required under Part 107.49; <br>the Remote Pilot in  Comand (RPIC) is required to develop a <strong>preflight inspection checklist</strong> if the manufacture has not developed one.</p>
+<div class="left">
+<p class="small fragment"><a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=5&cad=rja&uact=8&ved=0ahUKEwi5oMOcj_7YAhWN71MKHaugClAQFghAMAQ&url=https%3A%2F%2Fconnect.ncdot.gov%2Fresources%2FAviation%2520Resources%2520Documents%2FNCDOT_Operational_Procedures_Template.docx&usg=AOvVaw0kdoCv8PlKVsnEPkF3rkoQ">NCDOT UAS Operational Procedures Guide</a>
+<ul>
+<li class="small fragment">The checklist is usually integrated into the UAS flight software or can be obtained from the UAS vendor</li> 
+<li class="small fragment">In case that is not available, a standard Flight Checklist should be made and followed by the flight crew</li> 
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/checklistNC.jpg">
+    </div>
+
+</section>
+<section>
+    <h2>Flight control</h2>
+     <img class="fragment" src="img/plan/flowchart_control.png">
+<ul>
+
+<li class="fragment">The UAS RPIC should launch, operate, and recover from preset locations so that the aircraft will fly according to the mission plan.</li> 
+<li class="fragment">After the UAS is launched, the flight crew should have a clear view of the aircraft at all times, called Visual Line of Sight (VLOS). Observation locations should be selected for the maximum line of sight throughout the planned flight operations area (Part 107.31).</li> 
+<ul>
+</section>
+<section>
+    <h2>Flight control</h2>
+     <img src="img/plan/flowchart_control.png">
+<ul>
+<li class="fragment">To ensure the flight is going according to the flight plan, the RP, PMC and VO (if used) must be able to maintain effective communication with each other at all times (Part 107.33).</li> 
+
+<li class="fragment">Upon any failure during the flight or any loss of visual contact with the UAS, the RPIC should command the aircraft back to the recovery location or utilize the built-in fail-safe features to recover the aircraft</li> 
+<ul>
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/LW_google.png">
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/LakeWheeler_COA.png">
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/lake_wheeler1.png">
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/lake_wheeler2.png">
+</section>
+<section>
+    <h2>Flight planning</h2>
+</section>
+<section>
+    <h2>Flight planning software</h2>
+
+<ul>
+<li class="fragment">Multiple available platforms</li> 
+<li class="fragment">Some are dedicated for specific UAS and sold with the system by the manufacturer</li> 
+<ul class="fragment">
+<li class="small"><a href="http://www.trimble.com/survey/unmanned-aircraft-systems">Trimble UAS<a> - <a href="http://apps.trimbleaccess.com/help/en/AerialImaging=2.2.6">Trimble Aerial Imaging</a>
+<li class="small"><a href="https://sensefly.com/">senseFly UAS<a> - <a href="https://sensefly.com/software/emotion/">eMotion 3</a>
+<li class="small"><a href="https://www.dji.com/">DJI<a> - <a href="https://www.dji.com/ground-station-pro">DJI Ground Station Pro</a> <a href=”https://flylitchi.com/">Litchi</a>
+<li class="small"><a href="https://www.microdrones.com/en/">Microdrones<a> - <a href=”https://www.microdrones.com/en/mdaircraft/software/mdcockpit/">mdCOCKPIT</a>
+<li class="small"><a href="http://us.yuneec.com/">Yuneec<a> - <a href=”http://uavtoolbox.com/”>UAV Toolbox</a>
+</ul>
+<li class="fragment">Some are more universal and can work with variety of platforms:
+<ul class="fragment">
+<li><a href="https://www.ugcs.com/">UgCS</a>
+<li>Open Source <a href=”http://ardupilot.org/planner/docs/mission-planner-overview.html”>Mission Planner</a> - mostly for DIY drones</li>
 </ul>
 </section>
 
