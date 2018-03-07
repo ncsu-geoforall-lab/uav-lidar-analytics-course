@@ -1,15 +1,13 @@
 <h2>Fusion of uas and lidar data</h2>
 
 Outline:
-
 <ul>
     <li>analyze the differences between the lidar (2013, 2015 surveys) and UAS DEM/DSM
-    <li>fuse selected lidar and UAS DSM for viewshed analysis for webcam siting
-    <li>evaluate impact of vegetation change on viewshed extent
+    <li>fuse selected lidar and UAS DSM
+    <li>evaluate impact of fusion technique on water flow simulation
 </ul>
 
 Data: 
-
 <ul>
     <li>you should already have both the lidar and uas DSMs and points clouds, get anything missing
         from the <a href="../assignments.html">Course logistics web page</a>.
@@ -17,7 +15,6 @@ Data:
 </ul>
 <p>
 Tools:
-
 <ul>
     <li>
         Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
@@ -28,24 +25,23 @@ Tools:
     <li>libLAS installation should include command line tools lasinfo and las2txt.
 </ul>
 
+<!-- cleanup the description of workflows, keep only necessary/interesting parts, add the relevant parts from water_flow.html-->
+
 <h3>Analyze the difference between the lidar and UAS DSM </h3>
+
+Workflow overview:
 
 First we need to evaluate the DSMs to find out which are suitable for fusion
 <ul>
- <li> compare errors at GCPs computed in previous assignments (lidar 2013, 2015, UAS agisoft, trimble or pix4d)
- <li> compute the difference between a selected lidar DSM and selected UAS DSMs: raster, profile/difference along a road and roof
- <li> use above to identify potential systematic error (you will see approx constant shift in profiles
-and most difs have the same sign, use mean or median as syst. error estimate, re-do the profile
-to verify the correction)
- <li> identify distortions - use corrected dsm and lid-uav diff, 
- look for unexpected pattern, verify with profile.
- Put into report and exclude distorted areas from study area.
- Why are the distortions / errors low along the road but high in the fields?
- What would you have to do if you needed to correct the distorted area
-(add gcps using stable features in lidar and reprocess)
- <li> now you have two DSMs: corrected lidar DSM and (corrected) low-distortion subset of UAS DSM:
+ <li> compute the difference between a selected lidar DSM and selected UAS DSMs: 
+      entire raster,  along a stable linear feature (road and roof)
+ <li> use the results to evaluate whether there is a significant systematic error, such as vertical shift in profiles
+along the road
+ <li> use the raster differences to identify distortions, look for unexpected patterns, verify with profile,
+and exclude distorted areas from study area.
+ <li> you have two DSMs: lidar DSM and a low-distortion subset of UAS DSM:
       create a new DSM for the entire area using at least two approaches
-      and compare how the two approaches work for viewshed mapping
+      and compare how the two approaches work for water flow modeling
 </ul>
 
 Suggested color table for differences, used in the workflow as 
@@ -63,31 +59,36 @@ Suggested color table for differences, used in the workflow as
  35 blue
 </code></pre>
 
-Compute the differences between the lidar and uav DSMs
-
+Compute the differences between the lidar and UAS DSMs and evaluate their spatial distribution and
+summary statistical properties
 <pre><code>
 g.region rast=mid_pines_lidar2013_dsm -p
 r.mapcalc "diff_lidardsm_agi_june = mid_pines_lidar2013_dsm - 2015_06_20_DSM_agi_11GCP"
 r.colors diff_lidardsm_agi_june rules=dif_lidar_uav.txt
+r.univar diff_lidardsm_agi_june
 r.mapcalc "diff_lidardsm_pix4d_june = mid_pines_lidar2013_dsm - 2015_06_20_pix4d_11GCP_dsm"
 r.colors diff_lidardsm_pix4d_june rules=dif_lidar_uav.txt
+r.univar diff_lidardsm_pix4d_june
 </code></pre>
 
 Evaluate possible systematic shift along stable features using the profile tool or the following commands
-
 <pre><code>
 r.profile -g input=diff_lidardsm_agi_june output=road.txt coordinates=637208,219491,637059,219734
 v.in.ascii input=road.txt output=profile_road separator=space columns="x double,y double,profile double,diff double"
 v.univar map=profile_road column=diff
 </code></pre>
 
-Because the shift in lidar is small we will ignore it in our first set of fusion examples, but we will
+hy are the distortions / errors low along the road but high in the fields?
+Because the shift in the lidar and UAS DSM is small we will ignore it in our first set of fusion examples, but we will
 use the analysis above top select the region with minimal distortion in the UAS DSM and compute clipped DSM
 
 <pre><code> 
 g.region n=219720.9 s=219257.1 w=636762.9 e=637190.4 res=0.3 -p
 r.mapcalc "2015_06_20_DSM_agi_11GCP_cl = 2015_06_20_DSM_agi_11GCP"
 </code></pre>
+
+<h3>Patch and fuse the lidar and UAS DSM </h3>
+<!-- remove the part with simple average: replace with smooth fusion-->
 
 Patch UAS DSM with lidar DSM to cover the entire Mid Pines study area and use shaded relief 
 to check for patch edges
@@ -132,48 +133,52 @@ g.region rast=mid_pines_lidar2013_dsm
 r.mapcalc "patched_smooth = if(isnull(distance), mid_pines_lidar2013_dsm, (1 - distance/10.) * 2015_06_20_DSM_agi_11GCP_cl +(distance/10) * mid_pines_lidar2013_dsm)"
 </code></pre>
 
+We will now create a smooth transition  with spatially variable overlap
 
-We will create a smooth transition when modeling the flow using a different method, in this assignment
-we will explore the viewshed analysis.
+<!-- move the relevant part for the smooth fusion here -->
 
-<p>
-We would like to set up a webcam to monitor this area 
-during the growing season so we need to update the lidar-based DSM with the  UAS data and
-analyze the viewshed while taking into account the corn growing in the field.
-First we need to make sure that we take into account entire field
-to create a lidar-based DSM updated in the fields using UAS data.
-You can use digitizer to create a polygon or 
-get the packed raster representation of fields from the link above.
+<h3>Compare surface flow pattern on patched and fused DSMs </h3>
+The aim of the processing is to investigate the flow pattern
+simulated on different DSMs.
+The lidar 2013 and the timeseries of UAS-based DSMs will be used as input for simulations
+using <a href="https://grass.osgeo.org/grass70/manuals/r.sim.water.html">r.sim.water</a>.
 
-<pre><code> 
-r.unpack -o fields.pack
-r.mapcalc "uas_june_clpol = 2015_06_20_DSM_agi_11GCP * fields" 
-r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
-r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
+First, we examine the watershed boundaries to see which area to include:
+<pre><code>
+r.watershed elevation=merged_lidar_uav_full threshold=50000 accumulation=merged_flowacc basin=merged_basin
+r.to.vect -t input=merged_basin output=merged_basin type=area
 </code></pre>
 
-We compute viewshed from the point 637100,219360 using
-lidar only, uas only, and patched lidar+uas, 
-<pre><code> 
-r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar coordinates=637100,219360
-r.viewshed input=2015_06_20_DSM_agi_11GCP output=viewshed_uas coordinates=637100,219360
-r.viewshed input=lid_uas_patch_polygon output=viewshed_liduaspatchpoly coordinates=637100,219360 --o
-r.colors viewshed_lidar co=reds
-r.colors viewshed_uas co=greens
-r.colors viewshed_liduaspatchpoly co=blues
-</code></pre>
-To compare the viewsheds display the resulting maps with transparency.
-Discuss the result.
-<p>
-Note: To find the location and height of the webcam that will capture the entire field during entire
-year we can run 
-<a href="https://grass.osgeo.org/grass72/manuals/r.series.html">r.series</a>
-with method=maximum on the time series of UAS DSMs to derive the DSM series envelope surface
-and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
-the following year.
+<p> We will compute water flow on our fused DEM within our selected region.
+We need first order spatial derivatives which can be derived either
+using <a href="https://grass.osgeo.org/grass70/manuals/r.slope.aspect.html">r.slope.aspect</a>
+or during interpolation phase with <a href="https://grass.osgeo.org/grass70/manuals/v.surf.rst.html">v.surf.rst</a>.
 
-<!--
-r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
-r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
--->
+<pre><code>
+g.region n=219727 s=219319 e=637191 w=636701 res=0.3 -p
+r.slope.aspect elevation=merged_lidar_uav_full dx=merged_dx dy=merged_dy
+</code></pre>
+The simulation writes water depth and discharge raster maps
+so we can look at first results soon although the simulation takes a lot of time.
+Depending on your processing power, you can make the region smaller.
+<pre><code>
+r.sim.water -t elevation=merged_lidar_uav_full dx=merged_dx dy=merged_dy rain_value=30 man_value=0.15 depth=merged_depth discharge=merged_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+
+<h4>Animation and visualisation the results</h4>
+Animation tool allows to create animated gifs from a series of raster maps.
+Load all the *_depth maps to the animation tool.
+Export the animation as GIF file.
+
+You can use <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>
+to add a pause in the end of the simulation:
+<pre><code>
+convert animation.gif \( +clone -set delay 300 \) animation_with_pause.gif
+</code></pre>
+
+<p>The water flow pattern is better visible in 2d when it's draped over a shaded relief.
+<pre><code>
+d.shade shade=merged_lidar_uav_full_relief color=merged_depth.20 brighten=30
+</code></pre>
+You can also use shaded maps in the animation tool.
 
