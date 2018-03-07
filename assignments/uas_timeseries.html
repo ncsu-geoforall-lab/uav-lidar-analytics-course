@@ -1,0 +1,83 @@
+<h2>Analysis of multitemporal UAS data and its applications</h2>
+
+Outline:
+
+<ul>
+    <li>introduction to GRASS temporal framework
+    <li>analyze the time series of UAS DEMs
+    <li>estimate crop biomas and its temporal change
+    <li>evaluate impact of vegetation change on viewshed extent
+    <li>estimate volume of eroded and deposited soil
+</ul>
+
+Data: 
+
+<ul>
+    <li>you should already have UAS DSMs and points clouds, get anything missing
+        from the <a href="../assignments.html">Course logistics web page</a>.
+    <li><a href="./resources/fields.pack">Fields polygon as packed raster</a> use r.unpack in your mapset to import it
+</ul>
+<p>
+Tools:
+
+<ul>
+    <li>
+        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
+        installation should also include <a href="http://www.liblas.org/">libLAS</a> library
+        which is used by GRASS modules v.in.lidar and r.in.lidar
+        (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
+    </li>
+    <li>libLAS installation should include command line tools lasinfo and las2txt.
+</ul>
+
+<h3>Analyze time series of UAS DSMs</h3>
+
+Register the time series in temporal framework
+
+Find the area mapped by all surveys - how large it is?
+
+Find the minimum elevation (core) - how close it is to lidar bare ground?
+
+<h3>Estimate crop biomass</h3>
+
+
+<h3>Evaluate impact of vegetation change on viewshed extent</h3>
+Analyze the viewshed while taking into account the corn growing in the field.
+First we need to make sure that we take into account entire field
+to create a lidar-based DSM updated in the fields using UAS data.
+You can use digitizer to create a polygon or 
+get the packed raster representation of fields from the link above.
+
+<pre><code> 
+r.unpack -o fields.pack
+r.mapcalc "uas_june_clpol = 2015_06_20_DSM_agi_11GCP * fields" 
+r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
+r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
+</code></pre>
+
+We compute viewshed from the point 637100,219360 using
+lidar only, uas only, and patched lidar+uas, 
+<pre><code> 
+r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar coordinates=637100,219360
+r.viewshed input=2015_06_20_DSM_agi_11GCP output=viewshed_uas coordinates=637100,219360
+r.viewshed input=lid_uas_patch_polygon output=viewshed_liduaspatchpoly coordinates=637100,219360 --o
+r.colors viewshed_lidar co=reds
+r.colors viewshed_uas co=greens
+r.colors viewshed_liduaspatchpoly co=blues
+</code></pre>
+To compare the viewsheds display the resulting maps with transparency.
+Discuss the result.
+<p>
+Note: To find the location and height of the webcam that will capture the entire field during entire
+year we can run 
+<a href="https://grass.osgeo.org/grass72/manuals/r.series.html">r.series</a>
+with method=maximum on the time series of UAS DSMs to derive the DSM series envelope surface
+and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
+the following year.
+
+<h3>Estimate volume of eroded and deposited soil</h3>
+<!--
+r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
+r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
+-->
+
