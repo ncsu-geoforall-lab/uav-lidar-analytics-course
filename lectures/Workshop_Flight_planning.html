@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>Flight planning</h2>
+    <h4><a href="https://cnr.ncsu.edu/geospatial/uas-workshop/" title="UAS Workshop">UAS Operations and Analytics Workshop</a></h4>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        and
+        <a href="https://itre.ncsu.edu/focus/aviation/ngat/" title="NGAT">NGAT</a>
+    </p>
+
+</section>
+
+<section>
+    <h2>Objectives</h2>
+    <ul>
+        <li class="fragment"><strong>Describe</strong> phases of flight planning</li>
+        <li class="fragment"><strong>Understand</strong> safety procedures and checklists</li>
+        <li class="fragment"><strong>Understand</strong> the role of Ground Control Points and its distirbution and accuracy</li>
+        <li class="fragment"><strong>Utilize</strong> flight planning software</li>
+    </ul>
+</section>
+
+<section>
+    <h2>UAS Photogrammetric process</h2>
+     <img class="fragment" src="img/plan/photogrammetric_process.png">
+<p class="fragment">Throughout the whole process, it is important to remember</p>
+    <ul>
+
+        <li class="fragment"><strong>What</strong> is the aim or the project? and </li>
+        <li class="fragment"><strong>What</strong> will be the data used for?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Flight planning <br>- a multistep process</h2>
+     <img class="fragment" src="img/plan/flowchart_green.png">
+<p class="fragment">Throughout the whole process, it is important to remember</p>
+    <ul>
+
+        <li class="fragment"><strong>What</strong> is the aim or the project? and </li>
+        <li class="fragment"><strong>What</strong> will be the data used for?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Project definition</h2>
+     <img src="img/plan/flowchart_project.png">
+<ul>
+<li class="fragment"> defining the scope of the project </li> 
+<li class="fragment"> choosing UAS and sensor </li> 
+<li class="fragment"> assesing the cost, labor and time consumption</li> 
+<li class="fragment"> collecting information about terrain</li> 
+</ul>
+</section>
+<section>
+    <h2>Project definition</h2>
+     <img src="img/plan/flowchart_project.png">
+<ul>
+<li> defining the area and resolution based on</li> 
+<ul>
+<li class="fragment"> UAS and sensor capabilies</li> 
+<li class="fragment"> size of mapping area</li> 
+<li class="fragment"> terrain constraints</li> 
+<li class="fragment"> project requirements</li> 
+</ul>
+</ul>
+</section>
+<section>
+    <h2>Project definition</h2>
+     <img src="img/plan/flowchart_project.png">
+<ul>
+<li class="fragment"> evaluating the legal constrains, obtaining permissions</li> 
+<li class="fragment"> defining the coordinate system</li>
+<ul>
+<li class="fragment"> dependent on the desired coordinate system of the final data</li> 
+<li class="fragment"> consistent with the coordinate system of GCP survey</li> 
+</ul>
+</section>
+
+<section>
+    <h2>Flight planning</h2>
+     <img src="img/plan/flowchart_planning.png">
+<ul>
+<li class="fragment"> mission area assesment</li> 
+<li class="fragment"> planning geometric parameters</li> 
+<li class="fragment"> choosing flight planning and flight logging platform</li> 
+<li class="fragment"> preliminary weather assesment (climate, season, forecasts)</li> 
+<li class="fragment"> creating a flight plan (software specific)</li> 
+</ul>
+</section>
+
+
+
+
+
+<section>
+    <h3>Placing Ground Control Points (GCPs)</h3>
+<div class="left">
+		<ul>
+		<li class="fragment">A minimum number of 5 GCPs is recommended.</li>
+		<li class="fragment">5 to 10 GCPs are usually enough, even for large projects.</li>
+
+		<li class="fragment">In cases that the topography of the area is complex, use more GCPs</li>
+		</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/gcp.png" width=90%>
+    </div>
+		<ul>
+		<li class="fragment">The GCPs should be distributed evenly in the area</li>
+		<li class="fragment">Do not place the GCPs exactly at the edges of the area</li>
+		</ul>
+</section>
+
+<section>
+    <h3>Placing Ground Control Points (GCPs)</h3>
+
+<div class="left">
+<p>Before measuring the GCPs coordinates, the following items must be defined:</p>
+<ul>
+<li class="fragment"> GCP coordinate system</li> 
+<li class="fragment"> GCP accuracy</li> 
+<li class="fragment"> Topographic equipment (total station or hand held GPS?)</li> 
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/new/GCP_photo.png">
+    </div>
+</section>
+
+
+<section>
+    <h3>GCPs Accuracy</h3>
+
+<div class="left">
+<p class="fragment">Factors for defining GCP acuracy:</p>
+<ul>
+<li class="fragment">Accuracy needed for the final results</li> 
+<li class="fragment">Ground Sampling Distance* of the images:</li>
+<ul> 
+<li class="small fragment">GCP target size: 5-10 x GSD</li> 
+<li class="small fragment">GCP accuracy: at least 0.1 GSD</li>
+</ul>
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/gsd.png" width=75%>
+    </div>
+<ul> 
+<li>* distance between two consecutive pixel centers measured on the ground</li>
+</ul> 
+</section>
+<section>
+    <h2>Ground Sampling Distance</h2>
+
+<div class="left">
+<p class="fragment">Distance between two consecutive pixel centers measured on the ground: </p>
+<ul>
+<li class="fragment">bigger GSD =  lower spatial resolution</li> 
+</ul>
+<p class="fragment">GSD depends on</p>
+<ul>
+<li  class="small fragment">flight altitude</li> 
+<li  class="small fragment">camera focal length</li> 
+<li  class="small fragment">camera resolution (pixel size)</li> 
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/gsd.png">
+    </div>
+</section>
+
+<section>
+    <h2>Site evaluation and checklists</h2>
+     <img class="fragment" src="img/plan/flowchart_site.png">
+<ul>
+<li class="fragment"> terrain check – high obstacles in the take-off, mission, landing and alternative landing locations</li> 
+<li class="fragment"> ask the locals about possible air traffic or ground activities</li> 
+<li class="fragment"> weather check</li> 
+<ul>
+<li class="small fragment"> temperature effects battery life</li> 
+<li class="small fragment"> most of the UAS can’t operate in rain. </li> 
+</ul>
+<li class="fragment"> use checklists, don't rely on your memory!
+<li class="fragment"> sample checklists: <a href="https://phantompilots.com/attachments/drone-checklist-pdf.41608/">paper (for Phantom)</a> and <a href="https://www.rmus.com/pages/rmus-uav-pilot-preflight-compliance-checklist">RMUS app</a>
+</ul>
+</section>
+<section>
+    <h2>Site evaluation and checklists</h2>
+     <img  src="img/plan/site.png">
+</section>
+<section>
+    <h3>Site evaluation and checklists</h3>
+<p>Preflight inspection is required under Part 107.49; <br>the Remote Pilot in  Comand (RPIC) is required to develop a <strong>preflight inspection checklist</strong> if the manufacture has not developed one.</p>
+<div class="left">
+<p class="small fragment"><a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=5&cad=rja&uact=8&ved=0ahUKEwi5oMOcj_7YAhWN71MKHaugClAQFghAMAQ&url=https%3A%2F%2Fconnect.ncdot.gov%2Fresources%2FAviation%2520Resources%2520Documents%2FNCDOT_Operational_Procedures_Template.docx&usg=AOvVaw0kdoCv8PlKVsnEPkF3rkoQ">NCDOT UAS Operational Procedures Guide</a>
+<ul>
+<li class="small fragment">The checklist is usually integrated into the UAS flight software or can be obtained from the UAS vendor</li> 
+<li class="small fragment">In case that is not available, a standard Flight Checklist should be made and followed by the flight crew</li> 
+</ul>
+    </div>
+    <div class="right">
+        <img src="img/plan/checklistNC.jpg">
+    </div>
+
+</section>
+<section>
+    <h2>Flight control</h2>
+     <img class="fragment" src="img/plan/flowchart_control.png">
+<ul>
+
+<li class="fragment">The UAS RPIC should launch, operate, and recover from preset locations so that the aircraft will fly according to the mission plan.</li> 
+<li class="fragment">After the UAS is launched, the flight crew should have a clear view of the aircraft at all times, called Visual Line of Sight (VLOS). Observation locations should be selected for the maximum line of sight throughout the planned flight operations area (Part 107.31).</li> 
+<ul>
+</section>
+<section>
+    <h2>Flight control</h2>
+     <img src="img/plan/flowchart_control.png">
+<ul>
+<li class="fragment">To ensure the flight is going according to the flight plan, the RP, PMC and VO (if used) must be able to maintain effective communication with each other at all times (Part 107.33).</li> 
+
+<li class="fragment">Upon any failure during the flight or any loss of visual contact with the UAS, the RPIC should command the aircraft back to the recovery location or utilize the built-in fail-safe features to recover the aircraft</li> 
+<ul>
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/LW_google.png">
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/LakeWheeler_COA.png">
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/lake_wheeler1.png">
+</section>
+<section>
+    <h3>Lake Wheeler test site</h3>
+        <img src="img/plan/lake_wheeler2.png">
+</section>
+<section>
+    <h2>Flight planning</h2>
+</section>
+<section>
+    <h2>Flight planning software</h2>
+
+<ul>
+<li class="fragment">Multiple available platforms</li> 
+<li class="fragment">Some are dedicated for specific UAS and sold with the system by the manufacturer</li> 
+<ul class="fragment">
+<li class="small"><a href="http://www.trimble.com/survey/unmanned-aircraft-systems">Trimble UAS<a> - <a href="http://apps.trimbleaccess.com/help/en/AerialImaging=2.2.6">Trimble Aerial Imaging</a>
+<li class="small"><a href="https://sensefly.com/">senseFly UAS<a> - <a href="https://sensefly.com/software/emotion/">eMotion 3</a>
+<li class="small"><a href="https://www.dji.com/">DJI<a> - <a href="https://www.dji.com/ground-station-pro">DJI Ground Station Pro</a> <a href=”https://flylitchi.com/">Litchi</a>
+<li class="small"><a href="https://www.microdrones.com/en/">Microdrones<a> - <a href=”https://www.microdrones.com/en/mdaircraft/software/mdcockpit/">mdCOCKPIT</a>
+<li class="small"><a href="http://us.yuneec.com/">Yuneec<a> - <a href=”http://uavtoolbox.com/”>UAV Toolbox</a>
+</ul>
+<li class="fragment">Some are more universal and can work with variety of platforms:
+<ul class="fragment">
+<li><a href="https://www.ugcs.com/">UgCS</a>
+<li>Open Source <a href=”http://ardupilot.org/planner/docs/mission-planner-overview.html”>Mission Planner</a> - mostly for DIY drones</li>
+</ul>
+</section>
+
+
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+        <script type="text/javascript"
+    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    </body>
+</html>
