@@ -217,8 +217,9 @@
    <h3>Lidar point cloud acquisition</h3>
 <p>
 <ul>
-<li>Measured time of pulse return is converted to distance between the sensor and object
-<li>3D georeferenced coordinates are derived using on-board GPS and INS 
+<li>measured time of pulse return is converted to distance 
+<li>georeferencing is based on the position (measured by GPS)
+    and exterior orientation (measured by inertial navigation system INS) of the platform
 </ul>
 <p>
 <img width="30%" src="img/lidar/airborne_lidar_scann.jpg">
@@ -564,7 +565,7 @@ Smoothed high density TIN
 
 <section>
    <h3>Midpines UAS SFM </h3>
-Smoothed high density TIN with texture
+High density point could imported to GRASS GIS and interpolated by spline method
 <p> <img height="300" src="img/lidar/agisoft_detail.png">
 </section>
 
@@ -633,7 +634,7 @@ Tuning the level of detail with tension parameter
 <section>
    <h3>Vertical point cloud analysis</h3>
 Voxel-based point analysis and 3D fragmentation index
-<p> <img height="450" src="img/lidar/profiles_points_and_ff.png">
+<p> <img height="400" src="img/lidar/profiles_points_and_ff.png">
 </section>
 
 <section>
@@ -703,7 +704,7 @@ here)</a>:
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
-    <a href="../topics/lidar.html" title="Go to the topic page">&#8962;</a>
+    <a href="../topics/pointclouds.html" title="Go to the topic page">&#8962;</a>
 </div>
         </div>  <!-- slides -->
 
