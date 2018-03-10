@@ -37,7 +37,7 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h2>Fusion of uas and lidar data</h2>
+<h2>Fusion of UAS and lidar data</h2>
 
 Outline:
 <ul>
@@ -219,29 +219,41 @@ We need first order spatial derivatives which can be derived either
 using <a href="https://grass.osgeo.org/grass74/manuals/r.slope.aspect.html">r.slope.aspect</a>
 or during interpolation phase with <a href="https://grass.osgeo.org/grass74/manuals/v.surf.rst.html">v.surf.rst</a>.
 
-<pre><code>g.region n=219727 s=219319 e=637191 w=636701 res=0.3 -pa
+<pre><code>g.region n=219728.7 s=219435 w=636708.9 e=637122.6 res=0.3 -pa
 r.slope.aspect elevation=lid_uas_patch dx=lid_uas_patch_dx dy=lid_uas_patch_dy
 </code></pre>
 The simulation writes water depth and discharge raster maps
 so we can look at first results soon although the simulation takes a lot of time.
 Depending on your processing power, you can make the region smaller.
-<pre><code>r.sim.water -t elevation=lid_uas_patch dx=lid_uas_patch_dx dy=lid_uas_patch_dy rain_value=30 man_value=0.15 depth=merged_depth discharge=merged_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+<pre><code>r.sim.water -t elevation=lid_uas_patch dx=lid_uas_patch_dx dy=lid_uas_patch_dy rain_value=30 man_value=0.15 depth=lid_uas_patch_depth discharge=lid_uas_patch_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
 </code></pre>
+
+Now we will compute the water flow simulation on the DSM patched using smooth fusion:
+<pre><code>r.slope.aspect elevation=patched_smooth_20 dx=patched_smooth_20_dx dy=patched_smooth_20_dy
+r.sim.water -t elevation=patched_smooth_20 dx=patched_smooth_20_dx dy=patched_smooth_20_dy rain_value=30 man_value=0.15 depth=patched_smooth_20_depth discharge=patched_smooth_20_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+Now compare the results (<code>lid_uas_patch_depth.20</code> and <code>patched_smooth_20_depth.20</code>) at the edge of the datasets.
+<p>
+Finally, we will simulate water flow on the bare ground fused from UAV DSM and lidar DEM:
+<pre><code>r.slope.aspect elevation=lidar_uas_ground_smooth dx=lidar_uas_ground_smooth_dx dy=lidar_uas_ground_smooth_dy
+r.sim.water -t elevation=lidar_uas_ground_smooth dx=lidar_uas_ground_smooth_dx dy=lidar_uas_ground_smooth_dy rain_value=30 man_value=0.15 depth=ground_depth discharge=ground_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+Compare <code>ground_depth.20</code> with the previous results.
 
 <h4>Animation and visualisation the results</h4>
-Animation tool allows to create animated gifs from a series of raster maps.
-Load all the *_depth maps to the animation tool.
+<a href="https://grass.osgeo.org/grass74/manuals/wxGUI.animation.html">
+GRASS GIS Animation Tool</a> allows to create animations from series of raster and vector maps and export animated gifs.
+Pick one or more of the simulated flows and load all the corresponding *_depth maps to the animation tool.
+The water flow pattern is better visible in 2d when it's draped over a shaded relief, so
+add corresponding relief raster and set its transparency to 50%.
 Export the animation as GIF file.
+<p>Look at this <a href="https://www.youtube.com/watch?v=Pi1ESk9iPwk">youtube video</a> to see how to control Animation Tool.
 
-You can use <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>
+
+<!-- You can use <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>
 to add a pause in the end of the simulation:
 <pre><code>convert animation.gif \( +clone -set delay 300 \) animation_with_pause.gif
-</code></pre>
-
-<p>The water flow pattern is better visible in 2d when it's draped over a shaded relief.
-<pre><code>d.shade shade=merged_lidar_uav_full_relief color=merged_depth.20 brighten=30
-</code></pre>
-You can also use shaded maps in the animation tool.
+</code></pre> -->
 
 
 </main>
