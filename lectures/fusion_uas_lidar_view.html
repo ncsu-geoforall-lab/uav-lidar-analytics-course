@@ -218,7 +218,7 @@
     <ul>
     <li>measured variable is reflected energy captured as imagery
     <li>georeferencing can be done entirely from GCPs (GPS is needed)
-    <li>(x,y,z) is derived from overlapping images and GCPs
+    <li>(x, y, z) is derived from overlapping images and GCPs
     <li>alternatively: GPS and INS for position and orientation of images and camera parameters
     </ul>
 <li>Lidar and SfM provide independent set of measurements. 
@@ -229,13 +229,13 @@
 <section>
    <h3>Comparison of lidar and SfM point clouds</h3>
 <ul>
-<li>Lidar: passes through vegetation, multiple return, measured profiles in overalpping swaths,
-shifts between swaths, condurroy effect
+<li>Lidar: passes through vegetation, multiple return, measured profiles in overlapping swaths,
+shifts between swaths, cordurroy effect
 <p>
 <li>
 SfM: very high density, but influenced by cast shadows, difficult to map under vegetation
 <li>
-Different distribution of error and distortions
+Different distribution of errors and distortions
 <p>
 <img width="30%" src="img/fusion_lidar_uav/lidar_points.png">
 <img width="65%" src="img/fusion_lidar_uav/uav_points.png">
@@ -281,16 +281,24 @@ Different distribution of error and distortions
 </section>
 
 <section>
-   <h3>Comparing profiles</h3>
-<p>
+   <h3>Comparing profiles (1)</h3>
 <ul>
 <li>identify systematic errors (vertical shifts) 
 <li>differences due to vegetation growth, erosion/deposition
 </ul>
-<p>
-<img width="40%" src="img/fusion_lidar_uav/Anna_profile_fields.jpg">
-<img width="50%" src="img/fusion_lidar_uav/Anna_profile_house.jpg">
+<img width="100%" src="img/fusion_lidar_uav/Anna_profile_fields.jpg">
 </section>
+
+<section>
+   <h3>Comparing profiles (2)</h3>
+<ul>
+<li>identify systematic errors (vertical shifts) 
+<li>differences due to vegetation growth, erosion/deposition
+</ul>
+<br>
+<img width="100%" src="img/fusion_lidar_uav/Anna_profile_house.jpg">
+</section>
+
 
 <section>
    <h3>Correct for systematic error and distortions</h3>
@@ -329,6 +337,79 @@ or differencing with lidar
 </section>
 
 <section>
+<h2>Fusion method</h2>
+<p style="text-align:left;font-size:90%">
+    Linear combination of elevation surfaces $z_{A}$ and $z_{B}$
+    with weights given by overlap width $s$ and distance $d$ to the edge of $z_{A}$:
+<div class="left" style="max-width:54% !important">
+    <p style="font-size:80%">
+        $$
+        z_{AB} = z_{A} w + z_{B}(1 - w),
+    \\[10pt]
+        w = f(s, d) =
+        \begin{cases} 
+              \frac{d}{s} & 0 \leq d < s \\
+              1 & d \geq s
+        \end{cases}
+        $$
+</div>
+<img class="right" src="img/fusion_lidar_uav/schema2.png" style="max-width:45% !important">
+</section>
+<section>
+    <h2>Influence of overlap width $s$</h2>
+    <img width="100%" src="img/fusion_lidar_uav/sm_all.png">
+</section>
+
+<section class="textimg">
+    <h2>Fusion with spatially variable $s$</h2>
+    <div style="max-width:50% !important">
+    <p style="font-size:90%"> By taking into account spatially variable differences <span class="mexpr">$\Delta z$</span>
+        between DEMs <span class="mexpr">$A$</span> and <span class="mexpr">$B$</span> along the overlap:
+        <ul class="pl">
+            <li>we get more gradual transition where differences are high</li>
+            <li>we preserve subtle features of both DEMs where differences are small</li>
+        </ul>
+    </div>
+    <br>
+    <img src="img/fusion_lidar_uav/schema3.png" style="max-width:47% !important">
+
+</section>
+
+<section>
+    <h2>Fusion with spatially variable $s$</h2>
+        <img class="stretch" src="img/fusion_lidar_uav/fusionv2.png">
+</section>
+
+<section>
+    <h2>Examples from assignment</h2>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_patched.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_fused.jpg">
+        <p style="font-size:80%">
+            Simply patched vs. fused UAS and lidar DSMs with overlap width $s = 20\ m$
+</section>
+<section>
+    <h2>Examples from assignment</h2>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_uas_ground.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_fused_ground.jpg">
+        <p style="font-size:80%">
+            UAS-derived DSM's vegetated parts replaced with lidar DEM.
+</section>
+<section>
+    <h2>Examples from assignment</h2>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_patched.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_smooth_patched.jpg">
+        <p style="font-size:80%">
+            Water flow on DSM created by simple patching vs. smooth patching
+</section>
+<section>
+    <h2>Examples from assignment</h2>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_smooth_patched.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_ground.jpg">
+        <p style="font-size:80%">
+            Water flow on DSM vs. bare ground fused from UAS DSM and lidar DEM
+</section>
+<!-- 
+<section>
    <h3>Viewsheds</h3>
 <p>
 <ul>
@@ -337,7 +418,7 @@ or differencing with lidar
 </ul>
 <p>
 <img height="400" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
-</section>
+</section> -->
 
 <!--
 <section>
@@ -358,7 +439,7 @@ Public data sources (http in Summary slide):
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
-    <a href="../topics/lidar.html" title="Go to the topic page">&#8962;</a>
+    <a href="../topics/fusion_uas_lidar.html" title="Go to the topic page">&#8962;</a>
 </div>
         </div>  <!-- slides -->
 
@@ -482,11 +563,6 @@ Public data sources (http in Summary slide):
                     { src: 'plugin/math/math.js', async: true },
                     { src: 'plugin/chalkboard/chalkboard.js' }
                 ],
-
-                math: {
-                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
-                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
-                },
                 keyboard: {
                     67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
                     66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
@@ -497,9 +573,5 @@ Public data sources (http in Summary slide):
             });
 
         </script>
-        <script type="text/javascript"
-    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
     </body>
 </html>
