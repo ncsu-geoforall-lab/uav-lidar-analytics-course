@@ -231,6 +231,115 @@ or differencing with lidar
         <p style="font-size:80%">
             Water flow on DSM vs. bare ground fused from UAS DSM and lidar DEM
 </section>
+
+<!-- Python -->
+<section>
+    <h2>Intro to Python in GRASS GIS</h2>
+</section>
+<section>
+    <h2>Motivation</h2>
+    <div class="fragment" >
+    <p style="text-align:left">What is scripting good for?
+        <ul><li>running tasks and workflows repeatedly on many datasets</li>
+            <li>sharing your workflow with colleagues</li>
+            <li>making your work reproducible (for your own benefit)</li>
+        </ul></div><div class="fragment" >
+    <p style="text-align:left">Why Python?
+        <ul><li>most widely used language in geospatial applications</li>
+            <li>easy to learn</li>
+            <li>active community, many libraries</li>
+        </ul></div>
+</section>
+<section>
+    <h2>Running Python in GRASS</h2>
+    <img class="stretch" src="img/python_editor.png">
+    <p>Python shell for one-line statements, editor for  scripts
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li>Enables to run GRASS GIS modules</li>
+    <li>Import:
+    <pre><code data-trim class="python">
+        import grass.script as gs
+	</code></pre></li>
+    <li><strong>run_command:</strong> most commonly used, for modules without text output, with raster/vector output
+    <pre><code data-trim class="python">
+gs.run_command('g.region', raster='elevation')
+gs.run_command('r.neighbors', input='elevation',
+               output='elev_smoothed',
+               method='average', flags='c')
+    </code></pre></li>
+    <li>Compare to GRASS command line syntax:
+        <pre><code data-trim class="nohighlight">
+g.region raster=elevation
+r.neighbors input=elevation output=elev_smoothed method=average -c
+        </code></pre>
+    </li>
+</ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li><strong>read_command:</strong> used when we are interested in text output
+    <pre><code data-trim class="python">
+gs.read_command('r.univar', map='elev_smoothed', flags='g')
+    </code></pre>
+    <pre>
+n=1142647
+null_cells=207394
+cells=1350041
+min=110.196601867676
+max=128.924560546875
+...
+</pre></li></ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li><strong>parse_command:</strong> used with modules producing text output as key=value pair
+    <pre><code data-trim class="python">
+gs.parse_command('r.univar', map='elev_smoothed', flags='g')
+    </code></pre>
+    <pre>
+{'min': '110.1966018', 'max': u'128.9245605', 'cells': u'1350041', ...}
+</pre>
+<br>
+Allows convenient access to variable in dictionary:
+<pre><code data-trim class="python">
+gs.parse_command('r.univar', map='elev_smoothed', flags='g')['range']
+</code></pre>
+<pre>
+18.72795867
+</pre></li></ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li><strong>write_command:</strong> for modules expecting text input from either standard input or file
+    <pre><code data-trim class="python">
+gs.write_command('v.in.ascii', input='-',
+                 stdin='%s|%s' % (635818.8, 221342.4),
+                 output='view_point')
+    </code></pre>
+</ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li>Other functions: calling r.mapcalc
+    <pre><code data-trim class="python">
+gs.mapcalc("elev_strip = if(elevation > 100 && elevation < 125,
+            elevation, null())")
+    </code></pre>
+</ul>
+</section>
+
 <!-- 
 <section>
    <h3>Viewsheds</h3>
