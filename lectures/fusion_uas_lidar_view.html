@@ -176,15 +176,14 @@
             <div class="slides">
 <!-- This is a generated file. Do not edit. -->
 <section>
-    <h2>Comparison and fusion of UAS SfM and lidar data</h2>
-    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
-
+    <h2>UAS and lidar data: comparison, fusion, and analysis</h2>
+    <h4>GIS595-004/603; MEA592-006/601:</h4>
+    <h4>UAS Mapping for 3D Modeling</h4>
+    <h4 style="margin-top: 0.5em">
+    Helena Mitasova, Anna Petrasova, Justyna Jeziorska</h4>
     <p class="title-foot">
-        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
-        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU GeoForAll Laboratory">NCSU GeoForAll Lab</a>
-        at
-        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
-        <br>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics,</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
     </p>
 </section>
 
@@ -192,96 +191,132 @@
     <h3>Outline</h3>
 <p>
 <ul>
- <p><li>Analysis of lidar and UAS SfM-derived DSMs differences
+ <p><li>Motivation for combining lidar and UAS SfM data
+ <p><li>Analysis of lidar and UAS SfM DSMs differences
  <p><li>Patching and smooth fusion of UAS and lidar DSM
- <p><li>Fusion for flow modeling
+ <p><li>Overland flow simulation on fused DEM
 </ul>
 </section>
 
-<section>
-   <h3>Point clouds from lidar and SfM</h3>
-<ul>
-<li><b>Lidar:</b> 
-   <ul>
-   <li>measured variable is time of return for each pulse
-   <li>georeferencing is based on the position (measured by GPS) 
-       and exterior orientation (measured by inertial navigation system INS) of the platform
-   <li>(x,y,z) is derived from time, GPS positioning and INS parameters
-   </ul>
-</ul>
-</section>
-
-<section>
-   <h3>Point clouds from lidar and SfM</h3>
-<ul>
-<li><b>SfM:</b>
-    <ul>
-    <li>measured variable is reflected energy captured as imagery
-    <li>georeferencing can be done entirely from GCPs (GPS is needed)
-    <li>(x, y, z) is derived from overlapping images and GCPs
-    <li>alternatively: GPS and INS for position and orientation of images and camera parameters
-    </ul>
-<li>Lidar and SfM provide independent set of measurements. 
-<li>Georeferencing accuracy depends on GPS and INS 
-</ul>
-</section>
-
-<section>
-   <h3>Comparison of lidar and SfM point clouds</h3>
-<ul>
-<li>Lidar: passes through vegetation, multiple return, measured profiles in overlapping swaths,
-shifts between swaths, cordurroy effect
-<p>
-<li>
-SfM: very high density, but influenced by cast shadows, difficult to map under vegetation
-<li>
-Different distribution of errors and distortions
-<p>
-<img width="30%" src="img/fusion_lidar_uav/lidar_points.png">
-<img width="65%" src="img/fusion_lidar_uav/uav_points.png">
-</section>
-
-<section>
-   <h3>Point cloud to DSM</h3>
-<ul>
-  <li>binning
-  <li>meshes / TIN
-  <li>spatial interpolation (gridding)
-  <li>error from this process is usually much smaller than measurement error, because of high point density
-</ul>
 <!--
-<img width="30%" src="img/fusion_lidar_uav/binned_dsm.png">
-<img width="30%" src="img/fusion_lidar_uav/tin_dsm.png">
-<img width="30%" src="img/fusion_lidar_uav/interpolated_dsm.png">
+<section>
+    <h2>UAS Photogrammetric process</h2>
+     <img class="fragment" src="img/plan/photogrammetric_process.png">
+<p class="fragment">Throughout the whole process, it is important to remember</p>
+    <ul>
+
+        <li class="fragment"><strong>What</strong> is the aim or the project? and </li>
+        <li class="fragment"><strong>What</strong> will be the data used for?</li>
+    </ul>
+</section>
 -->
+
+<section>
+   <h3>Point clouds from lidar</h3>
+<ul>
+   <li class="fragment">measured variable is time of return for each pulse</li>
+   <li class="fragment">georeferencing is based on the position (measured by GPS) and exterior orientation (measured by inertial navigation system INS) of the platform</li>
+   <li class="fragment">(x,y,z) is derived from time, GPS positioning and INS parameters</li>
+</ul>
+<p><img  height="200" class="fragment" src="img/lidar/midpines_lidar_plasviewcozoom.jpg"></p>
 </section>
 
 <section>
-   <h3>DSM differencing</h3>
+   <h3>Point clouds from SfM</h3>
 <ul>
- <li>Spatial pattern of distortions, systematic errors and noise
- <li>Difference maps between Lidar DSM and UAS SfM DSM (AGISOFT and PIX4D)
+    <li class="fragment">measured variable is reflected energy captured as imagery</li>
+    <li class="fragment">georeferencing can be done entirely from GCPs (GPS is needed)</li>
+    <li class="fragment">(x, y, z) is derived from overlapping images and GCPs</li>
+    <li class="fragment">alternatively: GPS and INS for position and orientation of images and camera parameters</li>
+</ul>
+<p><img  height="200" class="fragment" src="img/lidar/midpines_uas_plasviewco2.jpg"></p>
+</section>
+
+<section>
+   <h3>Comparison of point cloud properties</h3>
+<ul>
+<li>Airborne Lidar: 
+  <ul>
+  <li class="fragment">passes through vegetation,multiple return, 
+  <li class="fragment">shifts between swaths, cordurroy effect
+  <li class="fragment">regional coverage  
+  <li class="fragment">high cost
+  </ul>
+<p>
+<li>
+UAS SfM: 
+  <ul>
+  <li class="fragment">very high point density, 
+  <li class="fragment">limited capability to map under vegetation
+  <li class="fragment">influenced by cast shadows, 
+  <li class="fragment">low cost, but limited area 
+  </ul>
+</ul>
+<p class="fragment">
+Different distribution of errors and distortions:
+Lidar and SfM provide independent set of measurements. 
+</p>
+</section>
+
+<section>
+ <h3>Motivation for lidar and UAS SfM fusion</h3>
+<ul>
+  <li class="fragment">low cost DEM updates in rapidly changing landscapes - e.g. construction sites
+  <li class="fragment">replacing vegetated areas in UAS SfM by bare ground 
+  <li class="fragment">watershed analysis when only part of the watershed was mapped by UAS
+  <li class="fragment">add your suggestion  
+</ul>
+<!--<p><img  height="200" class="fragment" src="img/lidar/midpines_uas_plasviewco2.jpg"></p>CC midle school-->
+</section>
+
+<section>
+ <h3>Fusion techniques</h3>
+<ul>
+ <li>merge the point clouds, decimate or bin at high resolution, interpolate: computationally demanding 
+ <li>interpolate DEMs, randomly sample and reinterpolate: loss of detail, time consuming
+ <li>interpolate DEMs and patch: sharp edges
+ <li>smooth fusion - requires DEMs at same resolution
+</ul>
+</section>
+
+<section>
+ <h3>Workflow</h3>
+<ul>
+ <li>evaluate the point clouds, select resolution
+ <li>interpolate lidar and UAS DEMs at the same resolution
+ <li>evaluate the differences between the lidar and UAS DEMs
+ <li>if applicable, identify errors and apply corrections
+ <li>apply smooth fusion
+</ul>
+</section>
+
+<section>
+   <h3>Identify distortions due to processing</h3>
+<ul>
+ <li>identify spatial pattern of distortions
+ <li>difference maps between Lidar DSM and UAS SfM DSMs: 
+different distortions from AGISOFT and PIX4D
 </ul>
 <p>
-<img width="40%" src="img/fusion_lidar_uav/Brendanlidar_agisoft_difference.png">
-<img width="40%" src="img/fusion_lidar_uav/Brendanlidar_pix4d_difference.png">
-<p class="credit">images by Brendan Harmon</p>
+<img width="40%" src="img/fusion_lidar_uav/dif_lid_agi_junesh.jpg">
+<img width="40%" src="img/fusion_lidar_uav/dif_lid_pix4d_junesh.jpg">
 </section>
 
 <section>
-   <h3>DSM differencing</h3>
+   <h3>Identify changes in topography</h3>
 <ul>
- <li>change in elevation surface due to processes
- <li>vegetation growth, erosion
+ <li>vegetation growth or removal
+ <li>change in elevation surface due to erosion processes
+ <li>difference maps with custom color ramps
 </ul>
 <p>
-<img width="30%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
-<img width="25%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune_gully.jpg">
-<img width="25%" src="img/fusion_lidar_uav/gullyDSC06027.jpg">
+<img width="40%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
+<!--<img width="25%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune_gully.jpg">-->
+<img width="28%" src="img/fusion_lidar_uav/field_rill_photo.jpg">
 </section>
 
 <section>
-   <h3>Comparing profiles (1)</h3>
+   <h3>Comparing profiles: fields</h3>
 <ul>
 <li>identify systematic errors (vertical shifts) 
 <li>differences due to vegetation growth, erosion/deposition
@@ -290,15 +325,16 @@ Different distribution of errors and distortions
 </section>
 
 <section>
-   <h3>Comparing profiles (2)</h3>
+   <h3>Comparing profiles: building</h3>
+<p>
 <ul>
-<li>identify systematic errors (vertical shifts) 
-<li>differences due to vegetation growth, erosion/deposition
+<li>high accuracy, lower level of detail in lidar data
+<li>negligible systematic error
 </ul>
+<p>
 <br>
 <img width="100%" src="img/fusion_lidar_uav/Anna_profile_house.jpg">
 </section>
-
 
 <section>
    <h3>Correct for systematic error and distortions</h3>
@@ -322,6 +358,7 @@ or differencing with lidar
 <p>
 <img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion.png">
 <img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion_relief.png">
+<p class="credit">images by Brendan Harmon</p>
 </section>
 
 <section>
@@ -661,6 +698,10 @@ Public data sources (http in Summary slide):
                 // optionally load pre-recorded chalkboard drawing from file
                     src: "chalkboard.json",
 			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
                     { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
