@@ -181,6 +181,10 @@ for f in os.listdir('.'):
               f, '-o', name + '_spm' + ext])
 </code></pre>
 
+If you have don't have libLAS on Mac, but you have LAStools, replace the previous call with:
+<pre><code>call(['las2las', '-i', f, '-o', name + '_spm', '-epsg 2264', '-target_epsg 3358'])
+</code></pre>
+
 In the same step, we could do also some other conversions which are
 supported by las2las, for example format conversion.
 
@@ -298,7 +302,7 @@ at multiple cores at once is much greater improvement than the slow down
 cause by patching.
 
 
-<h3>Working with large amount of maps</h3>
+<h3>Working with large number of maps</h3>
 
 Set the region to fit one of the raster maps:
 
