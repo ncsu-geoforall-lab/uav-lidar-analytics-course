@@ -41,18 +41,18 @@
    <li class="fragment">georeferencing is based on the position (measured by GPS) and exterior orientation (measured by inertial navigation system INS) of the platform</li>
    <li class="fragment">(x,y,z) is derived from time, GPS positioning and INS parameters</li>
 </ul>
-<p><img  height="200" class="fragment" src="img/lidar/midpines_lidar_plasviewcozoom.jpg"></p>
+<p><img  height="250" class="fragment" src="img/lidar/midpines_lidar_plasviewcozoom.jpg"></p>
 </section>
 
 <section>
    <h3>Point clouds from SfM</h3>
 <ul>
     <li class="fragment">measured variable is reflected energy captured as imagery</li>
-    <li class="fragment">georeferencing can be done entirely from GCPs (GPS is needed)</li>
+    <li class="fragment">georeferencing can be done entirely from GCPs </li>
     <li class="fragment">(x, y, z) is derived from overlapping images and GCPs</li>
     <li class="fragment">alternatively: GPS and INS for position and orientation of images and camera parameters</li>
 </ul>
-<p><img  height="200" class="fragment" src="img/lidar/midpines_uas_plasviewco2.jpg"></p>
+<p><img  height="250" class="fragment" src="img/lidar/midpines_uas_plasviewco2.jpg"></p>
 </section>
 
 <section>
@@ -87,6 +87,7 @@ Lidar and SfM provide independent set of measurements.
   <li class="fragment">low cost DEM updates in rapidly changing landscapes - e.g. construction sites
   <li class="fragment">replacing vegetated areas in UAS SfM by bare ground 
   <li class="fragment">watershed analysis when only part of the watershed was mapped by UAS
+  <li class="fragment">improve accuracy and level of detail over stable features (buildings, bridges)
   <li class="fragment">add your suggestion  
 </ul>
 <!--<p><img  height="200" class="fragment" src="img/lidar/midpines_uas_plasviewco2.jpg"></p>CC midle school-->
@@ -95,10 +96,10 @@ Lidar and SfM provide independent set of measurements.
 <section>
  <h3>Fusion techniques</h3>
 <ul>
- <li>merge the point clouds, decimate or bin at high resolution, interpolate: computationally demanding 
- <li>interpolate DEMs, randomly sample and reinterpolate: loss of detail, time consuming
- <li>interpolate DEMs and patch: sharp edges
- <li>smooth fusion - requires DEMs at same resolution
+ <li class="fragment">merge the point clouds, decimate or bin at high resolution, interpolate: computationally demanding 
+ <li class="fragment">interpolate DEMs, randomly sample, patch, and reinterpolate: loss of detail, time consuming
+ <li class="fragment">interpolate DEMs and patch: sharp edges
+ <li class="fragment">smooth fusion - requires DEMs at same resolution
 </ul>
 </section>
 
@@ -107,6 +108,7 @@ Lidar and SfM provide independent set of measurements.
 <ul>
  <li>evaluate the point clouds, select resolution
  <li>interpolate lidar and UAS DEMs at the same resolution
+<p>
  <li>evaluate the differences between the lidar and UAS DEMs
  <li>if applicable, identify errors and apply corrections
  <li>apply smooth fusion
@@ -130,7 +132,7 @@ different distortions from AGISOFT and PIX4D
 <ul>
  <li>vegetation growth or removal
  <li>change in elevation surface due to erosion processes
- <li>difference maps with custom color ramps
+ <li>UAS SFM - lidar difference maps with custom color
 </ul>
 <p>
 <img width="40%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
@@ -160,13 +162,25 @@ different distortions from AGISOFT and PIX4D
 </section>
 
 <section>
+   <h3>Comparing profiles: road</h3>
+<p>
+<ul>
+<li>relatively, easy to identify, stable feature 
+<li>high accuracy - differences between lidar and UAS SfM within 4cm 
+</ul>
+<p>
+<img width="90%" src="img/fusion_lidar_uav/subregion_road_profile_2.png">
+</section>
+
+<section>
    <h3>Correct for systematic error and distortions</h3>
 <p>
 <ul>
-<li>systematic error - if due to GPS shift: median difference
+<li>systematic error - if due to GPS shift, use median difference
 <li>systematic error - if tilt, use regression function
-<li>some complex UAS distortions can be reduced using interpolated GCP differences
+<li>most challenging are complex UAS SfM distortions - they can be reduced using interpolated GCP differences
 or differencing with lidar 
+<li>importance of well distributed, accurate GCPs 
 </ul>
 </section>
 
@@ -182,6 +196,16 @@ or differencing with lidar
 <img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion.png">
 <img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion_relief.png">
 <p class="credit">images by Brendan Harmon</p>
+</section>
+
+<section>
+   <h3>Updating lidar DSM by patching</h3>
+<p>
+<ul>
+<li>edge between lidar and UAS SfM DEMs  
+</ul>
+<p>
+<img width="95%" src="img/fusion_lidar_uav/patchingedge.png">
 </section>
 
 <section>
@@ -241,19 +265,60 @@ or differencing with lidar
 </section>
 
 <section>
-    <h2>Examples from assignment</h2>
+    <h3>Lidar and UAS SfM patching and fusion</h3>
         <img width="48%" src="img/fusion_lidar_uav/assignment_patched.jpg">
         <img width="48%" src="img/fusion_lidar_uav/assignment_fused.jpg">
         <p style="font-size:80%">
             Simply patched vs. fused UAS and lidar DSMs with overlap width $s = 20\ m$
 </section>
 <section>
-    <h2>Examples from assignment</h2>
+    <h3>Fusing vegetated patch with bare ground</h3>
         <img width="48%" src="img/fusion_lidar_uav/assignment_uas_ground.jpg">
         <img width="48%" src="img/fusion_lidar_uav/assignment_fused_ground.jpg">
         <p style="font-size:80%">
             UAS-derived DSM's vegetated parts replaced with lidar DEM.
 </section>
+
+<section>
+    <h3>Spatially variable overlap</h3>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_overlap.jpg">
+        <p style="font-size:80%">
+           Spatially variable overlap for UAS SfM and lidar fusion based on elevation differences
+</section>
+
+<section>
+    <h3>Modeling overland flow</h3>
+<p>Microtopography captured at ultrahigh resolution by UAS SFM poses special challenges to flow routing:
+<ul>
+  <li>real depressions are important features
+  <li>complex pattern of ponding, overflow of barriers is not supported by standard tools
+  <li>noisy surface requires robust algorithm
+</ul>
+</section>
+
+<section>
+    <h3>Path sampling method</h3>
+<p>Stochatistic method for solving flow continuity equations
+        <img width="48%" src="img/fusion_lidar_uav/fanimwalk.gif">
+        <img width="48%" src="img/fusion_lidar_uav/fanimhhcolp.gif">
+</section>
+
+<section>
+    <h3>Flow over UAS mapped field</h3>
+<img width="68%" src="img/fusion_lidar_uav/agisoft_june.gif">
+<p>Crop surface creates barrier leading to artificial ponding
+
+</section>
+
+<section>
+    <h3>Flow over patched DEMs</h3>
+<p>
+<img width="48%" src="img/fusion_lidar_uav/problem_water_scale.png">
+<img width="48%" src="img/fusion_lidar_uav/problem_solution_man_scale.png">
+<p>Replacing crop surface by lidar bare ground: patching creates artificial flow pattern, 
+smooth fusion improves accuracy of flow distribution 
+</section>
+
 <section>
     <h2>Examples from assignment</h2>
         <img width="48%" src="img/fusion_lidar_uav/assignment_flow_patched.jpg">
@@ -261,6 +326,7 @@ or differencing with lidar
         <p style="font-size:80%">
             Water flow on DSM created by simple patching vs. smooth patching
 </section>
+
 <section>
     <h2>Examples from assignment</h2>
         <img width="48%" src="img/fusion_lidar_uav/assignment_flow_smooth_patched.jpg">
