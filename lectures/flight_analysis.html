@@ -332,6 +332,10 @@ we can make sure flight path will not cross any obstacles.
                 // optionally load pre-recorded chalkboard drawing from file
                     src: "chalkboard.json",
 			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
                     { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -343,11 +347,6 @@ we can make sure flight path will not cross any obstacles.
                     { src: 'plugin/math/math.js', async: true },
                     { src: 'plugin/chalkboard/chalkboard.js' }
                 ],
-
-                math: {
-                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
-                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
-                },
                 keyboard: {
                     67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
                     66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
@@ -358,9 +357,5 @@ we can make sure flight path will not cross any obstacles.
             });
 
         </script>
-        <script type="text/javascript"
-    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
     </body>
 </html>

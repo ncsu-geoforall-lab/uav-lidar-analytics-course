@@ -176,15 +176,14 @@
             <div class="slides">
 <!-- This is a generated file. Do not edit. -->
 <section>
-    <h2>Comparison and fusion of UAS SfM and lidar data</h2>
-    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
-
+    <h2>UAS and lidar data: comparison, fusion, and analysis</h2>
+    <h4>GIS595-004/603; MEA592-006/601:</h4>
+    <h4>UAS Mapping for 3D Modeling</h4>
+    <h4 style="margin-top: 0.5em">
+    Helena Mitasova, Anna Petrasova, Justyna Jeziorska</h4>
     <p class="title-foot">
-        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
-        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU GeoForAll Laboratory">NCSU GeoForAll Lab</a>
-        at
-        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
-        <br>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics,</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
     </p>
 </section>
 
@@ -192,114 +191,170 @@
     <h3>Outline</h3>
 <p>
 <ul>
- <p><li>Analysis of lidar and UAS SfM-derived DSMs differences
+ <p><li>Motivation for combining lidar and UAS SfM data
+ <p><li>Analysis of lidar and UAS SfM DSMs differences
  <p><li>Patching and smooth fusion of UAS and lidar DSM
- <p><li>Fusion for viewshed analysis and watershed modeling
+ <p><li>Overland flow simulation on fused DEM
 </ul>
 </section>
 
-<section>
-   <h3>Point clouds from lidar and SfM</h3>
-<ul>
-<li><b>Lidar:</b> 
-   <ul>
-   <li>measured variable is time of return for each pulse
-   <li>georeferencing is based on the position (measured by GPS) 
-       and exterior orientation (measured by inertial navigation system INS) of the platform
-   <li>(x,y,z) is derived from time, GPS positioning and INS parameters
-   </ul>
-</ul>
-</section>
-
-<section>
-   <h3>Point clouds from lidar and SfM</h3>
-<ul>
-<li><b>SfM:</b>
-    <ul>
-    <li>measured variable is reflected energy captured as imagery
-    <li>georeferencing can be done entirely from GCPs (GPS is needed)
-    <li>(x,y,z) is derived from overlapping images and GCPs
-    <li>alternatively: GPS and INS for position and orientation of images and camera parameters
-    </ul>
-<li>Lidar and SfM provide independent set of measurements. 
-<li>Georeferencing accuracy depends on GPS and INS 
-</ul>
-</section>
-
-<section>
-   <h3>Comparison of lidar and SfM point clouds</h3>
-<ul>
-<li>Lidar: passes through vegetation, multiple return, measured profiles in overalpping swaths,
-shifts between swaths, condurroy effect
-<p>
-<li>
-SfM: very high density, but influenced by cast shadows, difficult to map under vegetation
-<li>
-Different distribution of error and distortions
-<p>
-<img width="30%" src="img/fusion_lidar_uav/lidar_points.png">
-<img width="65%" src="img/fusion_lidar_uav/uav_points.png">
-</section>
-
-<section>
-   <h3>Point cloud to DSM</h3>
-<ul>
-  <li>binning
-  <li>meshes / TIN
-  <li>spatial interpolation (gridding)
-  <li>error from this process is usually much smaller than measurement error, because of high point density
-</ul>
 <!--
-<img width="30%" src="img/fusion_lidar_uav/binned_dsm.png">
-<img width="30%" src="img/fusion_lidar_uav/tin_dsm.png">
-<img width="30%" src="img/fusion_lidar_uav/interpolated_dsm.png">
+<section>
+    <h2>UAS Photogrammetric process</h2>
+     <img class="fragment" src="img/plan/photogrammetric_process.png">
+<p class="fragment">Throughout the whole process, it is important to remember</p>
+    <ul>
+
+        <li class="fragment"><strong>What</strong> is the aim or the project? and </li>
+        <li class="fragment"><strong>What</strong> will be the data used for?</li>
+    </ul>
+</section>
 -->
+
+<section>
+   <h3>Point clouds from lidar</h3>
+<ul>
+   <li class="fragment">measured variable is time of return for each pulse</li>
+   <li class="fragment">georeferencing is based on the position (measured by GPS) and exterior orientation (measured by inertial navigation system INS) of the platform</li>
+   <li class="fragment">(x,y,z) is derived from time, GPS positioning and INS parameters</li>
+</ul>
+<p><img  height="250" class="fragment" src="img/lidar/midpines_lidar_plasviewcozoom.jpg"></p>
 </section>
 
 <section>
-   <h3>DSM differencing</h3>
+   <h3>Point clouds from SfM</h3>
 <ul>
- <li>Spatial pattern of distortions, systematic errors and noise
- <li>Difference maps between Lidar DSM and UAS SfM DSM (AGISOFT and PIX4D)
+    <li class="fragment">measured variable is reflected energy captured as imagery</li>
+    <li class="fragment">georeferencing can be done entirely from GCPs </li>
+    <li class="fragment">(x, y, z) is derived from overlapping images and GCPs</li>
+    <li class="fragment">alternatively: GPS and INS for position and orientation of images and camera parameters</li>
+</ul>
+<p><img  height="250" class="fragment" src="img/lidar/midpines_uas_plasviewco2.jpg"></p>
+</section>
+
+<section>
+   <h3>Comparison of point cloud properties</h3>
+<ul>
+<li>Airborne Lidar: 
+  <ul>
+  <li class="fragment">passes through vegetation,multiple return, 
+  <li class="fragment">shifts between swaths, cordurroy effect
+  <li class="fragment">regional coverage  
+  <li class="fragment">high cost
+  </ul>
+<p>
+<li>
+UAS SfM: 
+  <ul>
+  <li class="fragment">very high point density, 
+  <li class="fragment">limited capability to map under vegetation
+  <li class="fragment">influenced by cast shadows, 
+  <li class="fragment">low cost, but limited area 
+  </ul>
+</ul>
+<p class="fragment">
+Different distribution of errors and distortions:
+Lidar and SfM provide independent set of measurements. 
+</p>
+</section>
+
+<section>
+ <h3>Motivation for lidar and UAS SfM fusion</h3>
+<ul>
+  <li class="fragment">low cost DEM updates in rapidly changing landscapes - e.g. construction sites
+  <li class="fragment">replacing vegetated areas in UAS SfM by bare ground 
+  <li class="fragment">watershed analysis when only part of the watershed was mapped by UAS
+  <li class="fragment">improve accuracy and level of detail over stable features (buildings, bridges)
+  <li class="fragment">add your suggestion  
+</ul>
+<!--<p><img  height="200" class="fragment" src="img/lidar/midpines_uas_plasviewco2.jpg"></p>CC midle school-->
+</section>
+
+<section>
+ <h3>Fusion techniques</h3>
+<ul>
+ <li class="fragment">merge the point clouds, decimate or bin at high resolution, interpolate: computationally demanding 
+ <li class="fragment">interpolate DEMs, randomly sample, patch, and reinterpolate: loss of detail, time consuming
+ <li class="fragment">interpolate DEMs and patch: sharp edges
+ <li class="fragment">smooth fusion - requires DEMs at same resolution
+</ul>
+</section>
+
+<section>
+ <h3>Workflow</h3>
+<ul>
+ <li>evaluate the point clouds, select resolution
+ <li>interpolate lidar and UAS DEMs at the same resolution
+ <li>evaluate the differences between the lidar and UAS DEMs
+ <li>if applicable, identify errors and apply corrections
+ <li>apply smooth fusion
+</ul>
+</section>
+
+<section>
+   <h3>Identify distortions due to processing</h3>
+<ul>
+ <li>identify spatial pattern of distortions
+ <li>difference maps between Lidar DSM and UAS SfM DSMs: 
+different distortions from AGISOFT and PIX4D
 </ul>
 <p>
-<img width="40%" src="img/fusion_lidar_uav/Brendanlidar_agisoft_difference.png">
-<img width="40%" src="img/fusion_lidar_uav/Brendanlidar_pix4d_difference.png">
-<p class="credit">images by Brendan Harmon</p>
+<img width="40%" src="img/fusion_lidar_uav/dif_lid_agi_junesh.jpg">
+<img width="40%" src="img/fusion_lidar_uav/dif_lid_pix4d_junesh.jpg">
 </section>
 
 <section>
-   <h3>DSM differencing</h3>
+   <h3>Identify changes in topography</h3>
 <ul>
- <li>change in elevation surface due to processes
- <li>vegetation growth, erosion
+ <li>vegetation growth or removal
+ <li>change in elevation surface due to erosion processes
+ <li>UAS SFM - lidar difference maps with custom color
 </ul>
 <p>
-<img width="30%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
-<img width="25%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune_gully.jpg">
-<img width="25%" src="img/fusion_lidar_uav/gullyDSC06027.jpg">
+<img width="40%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
+<!--<img width="25%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune_gully.jpg">-->
+<img width="28%" src="img/fusion_lidar_uav/field_rill_photo.jpg">
 </section>
 
 <section>
-   <h3>Comparing profiles</h3>
-<p>
+   <h3>Comparing profiles: fields</h3>
 <ul>
 <li>identify systematic errors (vertical shifts) 
 <li>differences due to vegetation growth, erosion/deposition
 </ul>
+<img width="100%" src="img/fusion_lidar_uav/Anna_profile_fields.jpg">
+</section>
+
+<section>
+   <h3>Comparing profiles: building</h3>
 <p>
-<img width="40%" src="img/fusion_lidar_uav/Anna_profile_fields.jpg">
-<img width="50%" src="img/fusion_lidar_uav/Anna_profile_house.jpg">
+<ul>
+<li>high accuracy, lower level of detail in lidar data
+<li>negligible systematic error
+</ul>
+<img class="stretch" src="img/fusion_lidar_uav/Anna_profile_house.jpg">
+</section>
+
+<section>
+   <h3>Comparing profiles: road</h3>
+<p>
+<ul>
+<li>relatively, easy to identify, stable feature 
+<li>high accuracy - differences between lidar and UAS SfM within 4cm 
+</ul>
+
+<img class="stretch"  src="img/fusion_lidar_uav/subregion_road_profile_2.png">
 </section>
 
 <section>
    <h3>Correct for systematic error and distortions</h3>
 <p>
 <ul>
-<li>systematic error - if due to GPS shift: median difference
+<li>systematic error - if due to GPS shift, use median difference
 <li>systematic error - if tilt, use regression function
-<li>some complex UAS distortions can be reduced using interpolated GCP differences
+<li>most challenging are complex UAS SfM distortions - they can be reduced using interpolated GCP differences
 or differencing with lidar 
+<li>importance of well distributed, accurate GCPs 
 </ul>
 </section>
 
@@ -314,6 +369,17 @@ or differencing with lidar
 <p>
 <img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion.png">
 <img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion_relief.png">
+<p class="credit">images by Brendan Harmon</p>
+</section>
+
+<section>
+   <h3>Updating lidar DSM by patching</h3>
+<p>
+<ul>
+<li>edge between lidar and UAS SfM DEMs  
+</ul>
+
+<img class="stretch" src="img/fusion_lidar_uav/patchingedge.png">
 </section>
 
 <section>
@@ -329,6 +395,230 @@ or differencing with lidar
 </section>
 
 <section>
+<h2>Fusion method</h2>
+<p style="text-align:left;font-size:90%">
+    Linear combination of elevation surfaces $z_{A}$ and $z_{B}$
+    with weights given by overlap width $s$ and distance $d$ to the edge of $z_{A}$:
+<div class="left" style="max-width:54% !important">
+    <p style="font-size:80%">
+        $$
+        z_{AB} = z_{A} w + z_{B}(1 - w),
+    \\[10pt]
+        w = f(s, d) =
+        \begin{cases} 
+              \frac{d}{s} & 0 \leq d < s \\
+              1 & d \geq s
+        \end{cases}
+        $$
+</div>
+<img class="right" src="img/fusion_lidar_uav/schema2.png" style="max-width:45% !important">
+</section>
+<section>
+    <h2>Influence of overlap width $s$</h2>
+    <img width="100%" src="img/fusion_lidar_uav/sm_all.png">
+</section>
+
+<section class="textimg">
+    <h2>Fusion with spatially variable $s$</h2>
+    <div style="max-width:50% !important">
+    <p style="font-size:90%"> By taking into account spatially variable differences <span class="mexpr">$\Delta z$</span>
+        between DEMs <span class="mexpr">$A$</span> and <span class="mexpr">$B$</span> along the overlap:
+        <ul class="pl">
+            <li>we get more gradual transition where differences are high</li>
+            <li>we preserve subtle features of both DEMs where differences are small</li>
+        </ul>
+    </div>
+    <br>
+    <img src="img/fusion_lidar_uav/schema3.png" style="max-width:47% !important">
+
+</section>
+
+<section>
+    <h2>Fusion with spatially variable $s$</h2>
+        <img class="stretch" src="img/fusion_lidar_uav/fusionv2.png">
+</section>
+
+<section>
+    <h3>Lidar and UAS SfM patching and fusion</h3>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_patched.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_fused.jpg">
+        <p style="font-size:80%">
+            Simply patched vs. fused UAS and lidar DSMs with overlap width $s = 20\ m$
+</section>
+<section>
+    <h3>Fusing vegetated patch with bare ground</h3>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_uas_ground.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_fused_ground.jpg">
+        <p style="font-size:80%">
+            UAS-derived DSM's vegetated parts replaced with lidar DEM.
+</section>
+
+<section>
+    <h3>Spatially variable overlap</h3>
+        <img class="stretch" src="img/fusion_lidar_uav/assignment_overlap.jpg">
+        <p style="font-size:80%">
+           Spatially variable overlap for UAS SfM and lidar fusion based on elevation differences
+</section>
+
+<section>
+    <h3>Modeling overland flow</h3>
+<p style="text-align:left">Microtopography captured at ultrahigh resolution by UAS SFM poses special challenges to flow routing:
+<ul>
+  <li>real depressions are important features
+  <li>complex pattern of ponding, overflow of barriers is not supported by standard tools
+  <li>noisy surface requires robust algorithm
+</ul>
+</section>
+
+<section>
+    <h3>Path sampling method</h3>
+<p>Stochatistic method for solving flow continuity equations
+        <img width="48%" src="img/fusion_lidar_uav/fanimwalk.gif">
+        <img width="48%" src="img/fusion_lidar_uav/fanimhhcolp.gif">
+</section>
+
+<section>
+    <h3>Flow over UAS mapped field</h3>
+<img class="stretch" src="img/fusion_lidar_uav/agisoft_june.gif">
+<p>Crop surface creates barrier leading to artificial ponding
+
+</section>
+
+<section>
+    <h3>Flow over patched DEMs</h3>
+<p>
+<img width="48%" src="img/fusion_lidar_uav/problem_water_scale.png">
+<img width="48%" src="img/fusion_lidar_uav/problem_solution_man_scale.png">
+<p>Replacing crop surface by lidar bare ground: patching creates artificial flow pattern, 
+smooth fusion improves accuracy of flow distribution 
+</section>
+
+<section>
+    <h2>Examples from assignment</h2>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_patched.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_smooth_patched.jpg">
+        <p style="font-size:80%">
+            Water flow on DSM created by simple patching vs. smooth patching
+</section>
+
+<section>
+    <h2>Examples from assignment</h2>
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_smooth_patched.jpg">
+        <img width="48%" src="img/fusion_lidar_uav/assignment_flow_ground.jpg">
+        <p style="font-size:80%">
+            Water flow on DSM vs. bare ground fused from UAS DSM and lidar DEM
+</section>
+
+<!-- Python -->
+<section>
+    <h2>Intro to Python in GRASS GIS</h2>
+</section>
+<section>
+    <h2>Motivation</h2>
+    <div class="fragment" >
+    <p style="text-align:left">What is scripting good for?
+        <ul><li>running tasks and workflows repeatedly on many datasets</li>
+            <li>sharing your workflow with colleagues</li>
+            <li>making your work reproducible (for your own benefit)</li>
+        </ul></div><div class="fragment" >
+    <p style="text-align:left">Why Python?
+        <ul><li>most widely used language in geospatial applications</li>
+            <li>easy to learn</li>
+            <li>active community, many libraries</li>
+        </ul></div>
+</section>
+<section>
+    <h2>Running Python in GRASS</h2>
+    <img class="stretch" src="img/python_editor.png">
+    <p>Python shell for one-line statements, editor for  scripts
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li>Enables to run GRASS GIS modules</li>
+    <li>Import:
+    <pre><code data-trim class="python">
+        import grass.script as gs
+	</code></pre></li>
+    <li><strong>run_command:</strong> most commonly used, for modules without text output, with raster/vector output
+    <pre><code data-trim class="python">
+gs.run_command('g.region', raster='elevation')
+gs.run_command('r.neighbors', input='elevation',
+               output='elev_smoothed',
+               method='average', flags='c')
+    </code></pre></li>
+    <li>Compare to GRASS command line syntax:
+        <pre><code data-trim class="nohighlight">
+g.region raster=elevation
+r.neighbors input=elevation output=elev_smoothed method=average -c
+        </code></pre>
+    </li>
+</ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li><strong>read_command:</strong> used when we are interested in text output
+    <pre><code data-trim class="python">
+gs.read_command('r.univar', map='elev_smoothed', flags='g')
+    </code></pre>
+    <pre>
+n=1142647
+null_cells=207394
+cells=1350041
+min=110.196601867676
+max=128.924560546875
+...
+</pre></li></ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li><strong>parse_command:</strong> used with modules producing text output as key=value pair
+    <pre><code data-trim class="python">
+gs.parse_command('r.univar', map='elev_smoothed', flags='g')
+    </code></pre>
+    <pre>
+{'min': '110.1966018', 'max': u'128.9245605', 'cells': u'1350041', ...}
+</pre>
+<br>
+Allows convenient access to variable in dictionary:
+<pre><code data-trim class="python">
+gs.parse_command('r.univar', map='elev_smoothed', flags='g')['range']
+</code></pre>
+<pre>
+18.72795867
+</pre></li></ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li><strong>write_command:</strong> for modules expecting text input from either standard input or file
+    <pre><code data-trim class="python">
+gs.write_command('v.in.ascii', input='-',
+                 stdin='%s|%s' % (635818.8, 221342.4),
+                 output='view_point')
+    </code></pre>
+</ul>
+</section>
+
+<section>
+    <h2>GRASS Python Scripting Library</h2>
+    <ul>
+    <li>Other functions: calling r.mapcalc
+    <pre><code data-trim class="python">
+gs.mapcalc("elev_strip = if(elevation > 100 && elevation < 125,
+            elevation, null())")
+    </code></pre>
+</ul>
+</section>
+
+<!-- 
+<section>
    <h3>Viewsheds</h3>
 <p>
 <ul>
@@ -337,7 +627,7 @@ or differencing with lidar
 </ul>
 <p>
 <img height="400" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
-</section>
+</section> -->
 
 <!--
 <section>
@@ -358,7 +648,7 @@ Public data sources (http in Summary slide):
 
 <div class="parent-page">
     <!-- &#x1f3e0; -->
-    <a href="../topics/lidar.html" title="Go to the topic page">&#8962;</a>
+    <a href="../topics/fusion_uas_lidar.html" title="Go to the topic page">&#8962;</a>
 </div>
         </div>  <!-- slides -->
 
@@ -471,6 +761,10 @@ Public data sources (http in Summary slide):
                 // optionally load pre-recorded chalkboard drawing from file
                     src: "chalkboard.json",
 			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
                     { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -482,11 +776,6 @@ Public data sources (http in Summary slide):
                     { src: 'plugin/math/math.js', async: true },
                     { src: 'plugin/chalkboard/chalkboard.js' }
                 ],
-
-                math: {
-                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
-                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
-                },
                 keyboard: {
                     67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
                     66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
@@ -497,9 +786,5 @@ Public data sources (http in Summary slide):
             });
 
         </script>
-        <script type="text/javascript"
-    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
     </body>
 </html>
