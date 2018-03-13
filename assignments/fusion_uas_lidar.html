@@ -37,7 +37,7 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h2>Fusion of uas and lidar data</h2>
+<h2>Fusion of UAS and lidar data</h2>
 
 Outline:
 <ul>
@@ -47,44 +47,49 @@ Outline:
 </ul>
 
 Data: 
+<p>You should have everything already for Mid Pines area, get anything missing from the <a href="../logistics.html">Course logistics web page</a>:
 <ul>
-    <li>you should already have both the lidar and uas DSMs and points clouds, get anything missing
-        from the <a href="../assignments.html">Course logistics web page</a>.
-    <li><a href="./resources/fields.pack">Fields polygon as packed raster</a> use r.unpack in your mapset to import it
+    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k">
+       GRASS Location LakeWheeler_NCspm</a> with timeseries of UAS DSMs from 2015 flights</li>
+    <li> <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">2013 lidar interpolated DEM and DSM</a>,
+        use r.unpack.
 </ul>
 <p>
 Tools:
 <ul>
-    <li>
-        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
-        installation should also include <a href="http://www.liblas.org/">libLAS</a> library
-        which is used by GRASS modules v.in.lidar and r.in.lidar
-        (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
-    </li>
-    <li>libLAS installation should include command line tools lasinfo and las2txt.
+    <li><a href="http://wingrass.fsv.cvut.cz/grass74/">GRASS GIS 7</a></li>
+    <li>GRASS addon <a href="https://grass.osgeo.org/grass74/manuals/addons/r.patch.smooth.html">r.patch.smooth</a> can be installed with 
+        <code>g.extension r.patch.smooth</code></li>
 </ul>
 
 <!-- cleanup the description of workflows, keep only necessary/interesting parts, add the relevant parts from water_flow.html-->
 
-<h3>Analyze the difference between the lidar and UAS DSM </h3>
-
-Workflow overview:
+<h3>Workflow overview</h3>
 
 First we need to evaluate the DSMs to find out which are suitable for fusion
 <ul>
- <li> compute the difference between a selected lidar DSM and selected UAS DSMs: 
-      entire raster,  along a stable linear feature (road and roof)
- <li> use the results to evaluate whether there is a significant systematic error, such as vertical shift in profiles
-along the road
- <li> use the raster differences to identify distortions, look for unexpected patterns, verify with profile,
+ <li> Compute the difference between a selected lidar DSM and selected UAS DSMs: 
+      entire raster,  along a stable linear feature (road and roof).
+ <li> Use the results to evaluate whether there is a significant systematic error, such as vertical shift in profiles
+along the road.
+ <li> Use the raster differences to identify distortions, look for unexpected patterns, verify with profile,
 and exclude distorted areas from study area.
- <li> you have two DSMs: lidar DSM and a low-distortion subset of UAS DSM:
-      create a new DSM for the entire area using at least two approaches
-      and compare how the two approaches work for water flow modeling
 </ul>
+ You have lidar DEM, DSM and a low-distortion subset of UAS DSM:
+ <ul>
+     <li>Create a new DSM for the entire area using two approaches
+     and compare how the two approaches work for water flow modeling.</li>
+     <li>Combine parts of UAS and lidar DEM to create bare ground,
+     model water flow and compare with water flow modeled on DSM.</li>
+ </ul>
+      
 
-Suggested color table for differences, used in the workflow as 
-<a href="./resources/dif_lidar_uav.txt">dif_lidar_uav.txt</a>:
+<h3>Analyze the difference between the lidar and UAS DSM </h3>
+
+Download  the suggested color table for differences, used in the workflow as 
+<a href="./resources/dif_lidar_uav.txt" download>dif_lidar_uav.txt</a>.
+If you run r.colors from command line, make sure the color table file is in your current
+working directory.
 
 <pre data-filename="dif_lidar_uav.txt"><code> -40 red
  -1 orange
@@ -97,8 +102,9 @@ Suggested color table for differences, used in the workflow as
  35 blue
 </code></pre>
 
-Compute the differences between the lidar and UAS DSMs and evaluate their spatial distribution and
-summary statistical properties
+Compute the differences between the lidar and UAS DSMs
+and evaluate their spatial distribution and
+summary statistical properties:
 <pre><code>g.region rast=mid_pines_lidar2013_dsm -p
 r.mapcalc "diff_lidardsm_agi_june = mid_pines_lidar2013_dsm - 2015_06_20_DSM_agi_11GCP"
 r.colors diff_lidardsm_agi_june rules=dif_lidar_uav.txt
@@ -108,104 +114,146 @@ r.colors diff_lidardsm_pix4d_june rules=dif_lidar_uav.txt
 r.univar diff_lidardsm_pix4d_june
 </code></pre>
 
-Evaluate possible systematic shift along stable features using the profile tool or the following commands
+Evaluate possible systematic shift along stable features
+using the following commands:
 <pre><code>r.profile -g input=diff_lidardsm_agi_june output=road.txt coordinates=637208,219491,637059,219734
 v.in.ascii input=road.txt output=profile_road separator=space columns="x double,y double,profile double,diff double"
 v.univar map=profile_road column=diff
 </code></pre>
 
-hy are the distortions / errors low along the road but high in the fields?
+For more visual comparison use GUI Profile Tool.
+In Map Display toolbar, find <em>Analyze map - Profile surface map</em>
+and select raster maps <code>mid_pines_lidar2013_dsm</code>,
+ <code>2015_06_20_DSM_agi_11GCP</code>, and <code>2015_06_20_pix4d_11GCP_dsm</code>.
+In Profile toolbar, use the second tool <em>Draw transect in map display window</em>
+and then click in Map Display on the road where you want to start the profile and then
+where you want to end it. Use <em>Plot options</em> to set colors of the DSM profiles.
+
+<p>
+Why are the distortions / errors low along the road but high in the fields?
+<p>
 Because the shift in the lidar and UAS DSM is small we will ignore it in our first set of fusion examples, but we will
-use the analysis above top select the region with minimal distortion in the UAS DSM and compute clipped DSM
+use the analysis above to select the region with minimal distortion
+in the UAS DSM and compute a clipped DSM:
 
 <pre><code>g.region n=219720.9 s=219257.1 w=636762.9 e=637190.4 res=0.3 -p
 r.mapcalc "2015_06_20_DSM_agi_11GCP_cl = 2015_06_20_DSM_agi_11GCP"
 </code></pre>
 
 <h3>Patch and fuse the lidar and UAS DSM </h3>
-<!-- remove the part with simple average: replace with smooth fusion-->
+For the rest of the assignment we will use rasters <code>2015_06_20_DSM_agi_11GCP_cl</code>,
+<code>mid_pines_lidar2013_dsm</code>, and <code>mid_pines_lidar2013_dem</code>.
+To make the instructions more readable, we will create a copy of these
+rasters with short names:
 
-Patch UAS DSM with lidar DSM to cover the entire Mid Pines study area and use shaded relief 
-to check for patch edges
-
-<pre><code>g.region rast=mid_pines_lidar2013_dsm -p
-r.patch 2015_06_20_DSM_agi_11GCP_cl,mid_pines_lidar2013_dsm out=lid_uas_patch
-r.relief lid_uas_patch out=lid_uas_patchsh
+<pre><code>g.copy raster=2015_06_20_DSM_agi_11GCP_cl,uas
+g.copy raster=mid_pines_lidar2013_dsm,lidar_dsm
+g.copy raster=mid_pines_lidar2013_dem,lidar_dem
 </code></pre>
 
-We have visible discontinuity along the patch edges so we will use map algebra to do
-the patching with averaged overlap.
-First we define a region for 6m (20 cell) overlap (you can do this also interactively using mouse)
-<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
-g.region s=s-6 n=n+6 e=e+6 w=w-6 -p 
+
+Patch UAS DSM with lidar DSM to cover the entire Mid Pines study area
+and use shaded relief to check for edges:
+
+<pre><code>g.region rast=lidar_dsm -p
+r.patch uas,lidar_dsm out=lid_uas_patch
+r.relief lid_uas_patch out=lid_uas_patch_relief zscale=5
 </code></pre>
 
-Then, within this region, we compute a raster with lidar+uas DSM average in the overlap and UAS elsehwere
-<pre><code>r.mapcalc "lid_uas_overlap_avg = if(isnull(2015_06_20_DSM_agi_11GCP_cl),(2015_06_20_DSM_agi_11GCP+mid_pines_lidar2013_dsm)/2.,2015_06_20_DSM_agi_11GCP_cl)"
+We have visible discontinuity along the patch edges.
+Therefore we will use weighted average to smooth out the overlap with the following workflow.
+We will use two different overlap widths &mdash; 5 and 20 meters &mdash; compare
+the results and try to explain how the smoothing works in your report:
+<pre><code>r.grow.distance -n input=uas distance=distance
+r.mapcalc "patched_smooth_5 = if(distance > 5, uas, if(distance == 0, lidar_dsm, (1 - distance/5) * lidar_dsm + (distance/5 * uas)))"
+r.mapcalc "patched_smooth_20 = if(distance > 20, uas, if(distance == 0, lidar_dsm, (1 - distance/20) * lidar_dsm + (distance/20 * uas)))"
+r.relief patched_smooth_5 out=patched_smooth_5_relief zscale=5
+r.relief patched_smooth_20 out=patched_smooth_20_relief zscale=5
 </code></pre>
 
-We can now merge it with lidar for entire study area and check the patch edges using shaded relief
-<pre><code>g.region rast=mid_pines_lidar2013_dsm
-r.mapcalc "lidar_uas_mergedavg = if(isnull(lid_uas_overlap_avg), mid_pines_lidar2013_dsm, lid_uas_overlap_avg)"
-r.relief lidar_uas_mergedavg out=lidar_uas_mergedavgsh
-</code></pre>
-<p>
-We now have smoother transition from UAS to lidar, but you can still identify two edges when viewing the patched DSM
-in 3D view (nviz). Therefore we will use weighted average to smooth out the overlap with the following workflow
-(try to explain it in your report):
+<h3>Create bare ground by fusing UAS DSM and lidar DEM</h3>
+To properly model water flow on the UAS DSM, we replace vegetation captured in the DSM
+with lidar bare ground (<code>lidar_dem</code>).
+We extract only those parts of UAS DSM where it is higher than
+lidar ground by 30 cm:
 
-<pre><code>g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
-g.region s=s+10 n=n-10 e=e-10 w=w+10 -p
-r.mapcalc "dummy = 1"
-g.region rast=2015_06_20_DSM_agi_11GCP_cl -p
-r.grow.distance -m input=dummy distance=distance
-g.region rast=mid_pines_lidar2013_dsm
-r.mapcalc "patched_smooth = if(isnull(distance), mid_pines_lidar2013_dsm, (1 - distance/10.) * 2015_06_20_DSM_agi_11GCP_cl +(distance/10) * mid_pines_lidar2013_dsm)"
+<pre><code>g.region rast=uas -p
+r.mapcalc "uas_ground = if(uas - lidar_dem < 0.3, uas, null())"
 </code></pre>
 
-We will now create a smooth transition  with spatially variable overlap
+Now we will fuse lidar and the UAS ground using the same method as above.
+This time, we will use addon <a href="https://grass.osgeo.org/grass74/manuals/addons/r.patch.smooth.html">r.patch.smooth</a>:
 
-<!-- move the relevant part for the smooth fusion here -->
+<pre><code>g.extension r.patch.smooth
+</code></pre>
+
+In the first case we will use overlap width 10m:
+<pre><code>g.region rast=lidar_dsm -p
+r.patch.smooth input_a=uas_ground input_b=lidar_dem output=lidar_uas_ground_smooth smooth_dist=10
+r.relief lidar_uas_ground_smooth out=lidar_uas_ground_smooth_relief zscale=5
+</code></pre>
+
+In the second case we will use an alternative approach (using -s flag)
+which uses spatially variable overlap width based on the elevation differences along the borders
+(see <a href="https://grass.osgeo.org/grass74/manuals/addons/r.patch.smooth.html">r.patch.smooth manual</a>):
+<pre><code>r.patch.smooth -s input_a=uas_ground input_b=lidar_dem output=lidar_uas_ground_smooth2 overlap=overlap transition_angle=1.3 parallel_smoothing=13
+r.relief lidar_uas_ground_smooth2 out=lidar_uas_ground_smooth2_relief zscale=5
+</code></pre>
+Add raster <code>overlap</code> to see the spatially variable overlap.
+
 
 <h3>Compare surface flow pattern on patched and fused DSMs </h3>
 The aim of the processing is to investigate the flow pattern
-simulated on different DSMs.
+simulated on different DSMs and DEMs.
 The lidar 2013 and the timeseries of UAS-based DSMs will be used as input for simulations
-using <a href="https://grass.osgeo.org/grass70/manuals/r.sim.water.html">r.sim.water</a>.
+using <a href="https://grass.osgeo.org/grass74/manuals/r.sim.water.html">r.sim.water</a>.
 
 First, we examine the watershed boundaries to see which area to include:
-<pre><code>r.watershed elevation=merged_lidar_uav_full threshold=50000 accumulation=merged_flowacc basin=merged_basin
-r.to.vect -t input=merged_basin output=merged_basin type=area
+<pre><code>g.region rast=lidar_dem -p
+r.watershed elevation=lidar_dem threshold=50000 accumulation=flowacc basin=basin
+r.to.vect -t input=basin output=basin type=area
 </code></pre>
 
 <p> We will compute water flow on our fused DEM within our selected region.
 We need first order spatial derivatives which can be derived either
-using <a href="https://grass.osgeo.org/grass70/manuals/r.slope.aspect.html">r.slope.aspect</a>
-or during interpolation phase with <a href="https://grass.osgeo.org/grass70/manuals/v.surf.rst.html">v.surf.rst</a>.
+using <a href="https://grass.osgeo.org/grass74/manuals/r.slope.aspect.html">r.slope.aspect</a>
+or during interpolation phase with <a href="https://grass.osgeo.org/grass74/manuals/v.surf.rst.html">v.surf.rst</a>.
 
-<pre><code>g.region n=219727 s=219319 e=637191 w=636701 res=0.3 -p
-r.slope.aspect elevation=merged_lidar_uav_full dx=merged_dx dy=merged_dy
+<pre><code>g.region n=219728.7 s=219435 w=636708.9 e=637122.6 res=0.3 -pa
+r.slope.aspect elevation=lid_uas_patch dx=lid_uas_patch_dx dy=lid_uas_patch_dy
 </code></pre>
 The simulation writes water depth and discharge raster maps
 so we can look at first results soon although the simulation takes a lot of time.
 Depending on your processing power, you can make the region smaller.
-<pre><code>r.sim.water -t elevation=merged_lidar_uav_full dx=merged_dx dy=merged_dy rain_value=30 man_value=0.15 depth=merged_depth discharge=merged_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+<pre><code>r.sim.water -t elevation=lid_uas_patch dx=lid_uas_patch_dx dy=lid_uas_patch_dy rain_value=30 man_value=0.15 depth=lid_uas_patch_depth discharge=lid_uas_patch_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
 </code></pre>
+
+Now we will compute the water flow simulation on the DSM patched using smooth fusion:
+<pre><code>r.slope.aspect elevation=patched_smooth_20 dx=patched_smooth_20_dx dy=patched_smooth_20_dy
+r.sim.water -t elevation=patched_smooth_20 dx=patched_smooth_20_dx dy=patched_smooth_20_dy rain_value=30 man_value=0.15 depth=patched_smooth_20_depth discharge=patched_smooth_20_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+Now compare the results (<code>lid_uas_patch_depth.20</code> and <code>patched_smooth_20_depth.20</code>) at the edge of the datasets.
+<p>
+Finally, we will simulate water flow on the bare ground fused from UAV DSM and lidar DEM:
+<pre><code>r.slope.aspect elevation=lidar_uas_ground_smooth dx=lidar_uas_ground_smooth_dx dy=lidar_uas_ground_smooth_dy
+r.sim.water -t elevation=lidar_uas_ground_smooth dx=lidar_uas_ground_smooth_dx dy=lidar_uas_ground_smooth_dy rain_value=30 man_value=0.15 depth=ground_depth discharge=ground_disch nwalkers=100000 niterations=20 output_step=1 hmax=0.2 halpha=8.0 hbeta=1.0
+</code></pre>
+Compare <code>ground_depth.20</code> with the previous results.
 
 <h4>Animation and visualisation the results</h4>
-Animation tool allows to create animated gifs from a series of raster maps.
-Load all the *_depth maps to the animation tool.
+<a href="https://grass.osgeo.org/grass74/manuals/wxGUI.animation.html">
+GRASS GIS Animation Tool</a> allows to create animations from series of raster and vector maps and export animated gifs.
+Pick one or more of the simulated flows and load all the corresponding *_depth maps to the animation tool.
+The water flow pattern is better visible in 2d when it's draped over a shaded relief, so
+add corresponding relief raster and set its transparency to 50%.
 Export the animation as GIF file.
+<p>Look at this <a href="https://www.youtube.com/watch?v=Pi1ESk9iPwk">youtube video</a> to see how to control Animation Tool.
 
-You can use <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>
+
+<!-- You can use <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>
 to add a pause in the end of the simulation:
 <pre><code>convert animation.gif \( +clone -set delay 300 \) animation_with_pause.gif
-</code></pre>
-
-<p>The water flow pattern is better visible in 2d when it's draped over a shaded relief.
-<pre><code>d.shade shade=merged_lidar_uav_full_relief color=merged_depth.20 brighten=30
-</code></pre>
-You can also use shaded maps in the animation tool.
+</code></pre> -->
 
 
 </main>

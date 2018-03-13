@@ -1117,11 +1117,6 @@ along the normal to the reconstructed surface in that point.</li>
                     { src: 'plugin/math/math.js', async: true },
                     { src: 'plugin/chalkboard/chalkboard.js' }
                 ],
-
-                math: {
-                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
-                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
-                },
                 keyboard: {
                     67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
                     66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
@@ -1132,9 +1127,5 @@ along the normal to the reconstructed surface in that point.</li>
             });
 
         </script>
-        <script type="text/javascript"
-    src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
     </body>
 </html>
