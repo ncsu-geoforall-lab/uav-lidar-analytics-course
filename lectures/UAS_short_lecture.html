@@ -1,0 +1,587 @@
+
+<section> 
+<section>
+    <h2>UAS for Geosciences</h2>
+    <h4>Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+    </p>
+
+</section>
+
+<section>
+    <h2>Drones for geosciences?</h2>
+    <ul>
+        <li class="fragment">Don't use the "D" word! - what is an UAS?</li>
+        <li class="fragment">What can UAS do?</li>
+        <li class="fragment">What can UAS do for spatial data collection?</li>
+        <li class="fragment">How to process UAS obtained imagery?</li>
+        <li class="fragment">What to do with the obtained data?</li>
+        <li class="fragment">What do we do with UAS in the Center for Geospatial Analytics?</li>
+    </ul>
+</section>
+<section>
+    <h2>UAS or UAV? Or maybe a drone?</h2>
+    <p class="fragment">
+            <strong>UAV</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>V</strong>ehicle 
+	</p>
+    <p class="fragment">
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>erial <strong>S</strong>ystems
+		</p>
+    <p class="fragment">
+            <strong>Drone</strong> = <strong>D</strong>ynamic <strong>R</strong>emotely <strong>O</strong>perated <strong>N</strong>avigation <strong>E</strong>quipment
+	</p>
+    <p class="fragment">
+            <strong>RPA</strong> = <strong>R</strong>emotely <strong>P</strong>iloted <strong>A</strong>ircraft
+	</p>
+</section>
+<section>
+    <h2>UAS</h2>
+     <p >
+            <strong>UAS</strong> = <strong>U</strong>nmanned <strong>A</strong>ircraft <strong>S</strong>ystems
+	</p>
+    <div class="left">  
+    
+            <ul>
+                <li class="fragment">Unmanned = without a person onboard <p class="small">(operated by automatic or remote control)</p></li>
+                <li class="fragment">Aircraft = able to fly</li>
+   <li class="fragment">System =  associated elements <p class="small">related to safe operations  (may include control stations,control links, support equipment, payloads, flight termination systems, and launch recovery equipment)</p> </li>
+            </ul>  
+    </div>
+
+    <div class="right fragment">
+        <img src="img/Pilot_data_UAV.png" width="95%">
+    </div>
+    <ul>
+     
+                    <ul>
+                    <li class="fragment">consists of three elements:</li>
+                    <li class="small fragment">Unmanned Aircraft;</li>
+                    <li class="small fragment">Control Station;</li>
+                    <li class="small fragment">Data Link.</li>                    
+                    </ul>
+
+    </ul>      
+    
+</section>
+
+
+<section>
+    <h2>How does an UAS look like?</h2>
+    <p class="small">Types and classification of UAS</p>
+</section>
+<section>
+    <h2>Different shapes and sizes…</h2>
+    <img class="small fragment"  src="img/uav_shapes_sizes.png">
+</section>
+<section>
+    <h2>… different designs…</h2>
+    <img class="small fragment" src="img/uas_designs.jpg">
+</section>
+<section>
+    <h2>What can UAS do?</h2>
+</section>
+
+<section>
+    <h2>Sensors</h2>
+    <img src="img/uav_sensors.jpg" style="width:60%">
+</section>
+
+<section>
+    <h2>Sensors (2)</h2>
+    <img src="img/uav_sensors2.jpg" width="60%">
+</section>
+
+<section>
+    <h3>RGB (natural color) cameras</h3>
+        <div class="left">
+		<ul>
+		<li class="fragment">Most common payload for consumer grade UAS</li>
+                <li class="fragment">Photo or video mode</li>
+		<li class="fragment">Mapping (orthophoto and DSM generation) possible even with non-photogrammetric cameras</a> </li>
+		<li class="fragment">Variety of cameras, lenses and mounting systems - some suitable for 3D modeling</li>
+		</ul> 
+        </div>
+    <div class="right fragment">
+        <img src="img/gimbal.PNG" width=70%>
+        <img src="img/RGB_photo.png" width=70%>
+    </div>
+</section>
+
+<section>
+    <h3>Multispectral and hyperspectral cameras</h3>
+        <div class="left">
+		<ul>
+		<li class="fragment">Miniaturization is challenging in terms of optics and sensor calibration</li>
+        <li class="fragment">Weight, cost, data quality has improved; spectral bands, resolution need improvements</li>
+        <li class="fragment">Cameras with NIR band: agriculture and vegetation mapping (for NDVI) </li>
+		<li class="fragment">The more bands the more information, but also higher price of the sensor (multispectral - couple thousands, hyperspectral - tens of thousands $)</li>
+		</ul> 
+        </div>
+    <div class="right">
+        <img src="img/hyperspectral.png">
+        <img src="img/ndvi.png">
+    </div>
+</section>
+
+<section>
+    <h3>Active sensors - LiDAR and SAR</h3>
+        <div class="left">
+		<ul>
+        <li class="fragment">Active sensors can reach bellow-canopy ground surface</li>
+	<li class="fragment">Large trade-offs between performance and size or cost of LiDAR</li>
+        <li class="fragment">LiDAR now common on UAS thanks to miniaturization</li>
+        <li class="fragment">SAR (Synthetic Aperture Radar) used experimentally, still faces challenges in adaptation to UAS <li>
+        </ul>
+        </div>
+    <div class="right">
+        <img src="img/lidar/lid2013_1r_3ft_3d.jpg">
+        <img src="img/lidar/lid2013_be_3ft_3d.jpg">
+   </div>
+</section>
+
+<section>
+    <h3>Thermal imaging</h3>
+        <div class="left">
+	<ul>
+        <li class="fragment">Used in forest fire monitoring, search and resque missions</li>
+	<li class="fragment">For mapping purposes coupled with visible band sensors (see example <a href="http://www.flir.com/suas/duo/">FLIR DUO</a></li>
+       </ul>
+       </div>
+    <div class="right">
+        <img src="img/thermal.png">
+       </div>
+</section>
+
+<!--
+<section>
+    <h2>Can I use it?</h2>
+    <p class="small">regulations, standards, policies, and procedures</p>
+</section>
+
+<section>
+    <h2>Know before you fly</h2>
+    <ul>
+        <li class="fragment"><a href="http://knowbeforeyoufly.org/">“Know Before You Fly”</a> is an educational campaign  that provides prospective unmanned aircraft users with the information and guidance they need to fly safely and responsibly.</li>
+        <li class="fragment">Different rules apply to <a href="http://knowbeforeyoufly.org/for-recreational-users/">recreational</a> and <a href="http://knowbeforeyoufly.org/for-business-users/"> business </a>users and <a href="http://knowbeforeyoufly.org/for-public-entities/">government entities </a> </li>
+	<li class="fragment">New regulations (effective on August 29, 2016) known as <a href="https://youtu.be/v-d1RuTFvbs">“Part 107”</a>)  </li>
+</section>
+-->
+
+<!--
+<section>
+    <h2>Application examples (1)</h2>
+
+    <div class="right fragment">
+        <img src="img/use_examples_1.png">
+    </div>    <div class="left">  
+            <ul>
+                <li class="fragment">Agricultural industry:
+                    <ul><li class="fragment">UAS equipped with fertilizer and pesticide dispersing equipment can be used to spray over large fields;</li></ul>
+                <li class="fragment">Telecommunications:
+                    <ul><li class="fragment">As mobile relay platforms as well as in disaster zones for emergency telecommunications;</li></ul>
+            </ul>  
+    </div>
+</section>
+<section>
+    <h2>Application examples (2)</h2>
+    <div class="right fragment">
+        <img src="img/use_examples_2a.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">News broadcasting:
+                    <ul><li class="fragment">In providing aerial video feeds for news events where reporters cannot get into time;</li></ul>
+                <li class="fragment">Air traffic Control and ground traffic control:
+                    <ul><li class="fragment">To monitor traffic and accidents over highways and road in big and densely populated cities, violation of traffic rules;</li></ul>
+               </ul>  
+    </div>
+</section>
+<section>
+    <h2>Application examples (3)</h2>
+    <div class="right fragment">
+        <img src="img/use_examples_2.png">
+    </div>
+    <div class="left ">  
+            <ul>
+                
+                <li class="fragment">Mineral exploration:</li>
+                    <ul><li class="fragment">In aerial survey, to find minerals in desolate and hard-to-reach regions;</li></ul>
+                <li class="fragment">Coastal surveillance:</li>
+                    <ul><li class="fragment">By the coast guard for monitoring coastlines;</li></ul>
+            </ul>  
+    </div>
+    
+</section>
+-->
+<section>
+    <h2>Applications</h2>
+            <div class="right fragment">
+            <img src="img/uav_pizza_delivery.png">
+            </div>   
+            <div class="left">
+            <ul>
+                <li class="fragment"><a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Pizza delivery</a> - <a href="http://rt.com/news/167936-russia-drones-pizza-delivery/">Russian example</a>, <a href="https://www.youtube.com/watch?v=ZDXuGQRpvs4">Domino’s DomiCopter</a></li>
+                <li class="fragment"><a href="http://news.sky.com/story/1101379/take-off-for-sushi-restaurants-flying-tray">Sushi delivery</a></li>
+                <li class="fragment"><a href="https://www.youtube.com/watch?v=qmHwXf8JUOw">Beer copter</a></li>
+             </ul> 
+             </div>
+</section>
+<section>
+    <h2>UAS for Geosciences</h2>
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas1.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">Agricultural and environmental application:</li>
+                    <ul><li class="small fragment">Vegetation and/or biodiversity control, forest fire monitoring, tree classification, monitor stream temperatures, animals detection, bird counts;</li></ul>
+                <li class="fragment">Intelligence, surveillance, and reconnaissance:</li>
+                    <ul><li class="small fragment">Detection of lost persons in difficult-to-access situations, support fire brigades in real-time crisis management, rapid disaster management;</li></ul>
+                            </ul>  
+    </div>
+</section>
+<section>
+    <h2>UAS for Geosciences</h2>
+    <div class="right fragment">
+        <img src="img/remote_sensing_uas2.png">
+    </div>
+    <div class="left">  
+            <ul>
+                <li class="fragment">Aerial monitoring in engineering:</li>
+                    <ul>
+                    <li class="fragment">Infrastructure inspections and crop monitoring, distributed wind measurement, landslide monitoring;</li>
+                    </ul>
+                <li class="fragment">Cultural heritage:</li>
+                    <ul>
+                    <li class="fragment">Orthophotos of archaeological sites, 3D models of man-made structures;</li>
+                    </ul>
+
+            </ul>  
+          
+    </div>
+
+</section>
+<section>
+    <h2>UAS for Geosciences</h2>
+    <div class="right fragment">
+        <img src="img/flight_track.png">
+    </div>
+    <div class="left">  
+            <ul>
+            <li class="fragment">Traditional surveying, conventional mapping and photogrammetry, and cadastral applications:</li>
+                    <ul>
+                    <li class="fragment">cadastral surveying, advantageous alternative to traditional surveying, high-precision parcel boundary determination;</li>
+                    </ul>
+            </ul> 
+    </div>            
+   <div class="right fragment">
+        <p class="fragment">Extended review on UAS in remote sensing in the<a href="http://ac.els-cdn.com/S0924271614000501/1-s2.0-S0924271614000501-main.pdf?_tid=61c0aabe-f9ad-11e4-8a75-00000aacb360&amp;acdnat=1431548559_cae211036258226462ab73873e8d0fb3"> article</a></p>
+    </div>          
+</section>
+
+<section>
+    <h2>Why shoud you know how to use UAS?</h2>
+        <img class="fragment" src="img/new/uas_statistics.jpg">
+</section>
+<section>
+    <h3>Why shoud you know how to use UAS?</h3>
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/47TNPodZqH0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+ 
+
+</section>
+<!--
+<section>
+    <h2>Why do we need to process the data?</h2>
+    <div class="left">  
+            <img class="fragment" src="img/scale.png" width="60%">
+            <img class="fragment" src="img/orthophoto_why.png" width="80%">
+    </div>
+    <div class="right fragment">
+        <img src="img/disortion.png">
+    </div>
+</section>
+<section>
+    <h2>Why do we need to process the data?</h2>
+    <div class="left fragment">  
+            <img src="img/pespective_vs_orthographic.png" width="90%">
+    </div>
+    <div class="right fragment">
+        <img src="img/pespective_vs_orthographic_image_plane.png">
+    </div>
+</section>
+-->
+
+<section>
+    <h3>Why do we need to process the data?</h3>
+     <img src="img/slide1.png">
+</section>
+<section>
+    <h3>Why do we need to process the data?</h3>
+     <img src="img/slide2.png">
+</section>
+<section>
+    <h3>Why do we need to process the data?</h3>
+     <img src="img/slide3.png">
+</section>
+<section>
+    <h3>Why do we need to process the data?</h3>
+     <img src="img/slide4.png">
+</section>
+<section>
+    <h3>Why do we need to process the data?</h3>
+     <img src="img/slide5.png">
+</section>
+<section>
+    <h3>Why do we need to process the data?</h3>
+     <img src="img/slide6.png">
+</section>
+<section>
+    <h3>Why do we need to process the data?</h3>
+     <img src="img/slide7.png">
+</section>
+
+<section>
+    <h2>Orthorectification</h2>
+
+    <div class="left">  
+    <p class="fragment">Process that removes:</p>
+    <ul>
+        <li class="fragment">effects of relief displacement,</li>
+        <li class="fragment">optical distortions from the sensor,</li>
+        <li class="fragment">geometric perspective</li>
+    </ul>
+        <p class="fragment">from a photograph or digital image</p>
+    </div>
+    <div class="right fragment">
+        <img src="img/DSM_ortho.png" width="40%">
+        <img src="img/new/ortho_example.jpg" width="80%">
+    </div>
+     <p class="fragment">The resulting image - an <strong>orthophoto</strong> or <strong>orthoimage.</strong></p>
+</section>
+<section>
+    <h2>Orthophoto</h2>
+    <div class="left">  
+      <ul>
+        <li class="fragment">Photo that has the same lack of distortion as a map (geometrically corrected, uniform scale);</li>
+        <li class="fragment">Can be used to measure true distances</li>
+    </div>
+    <div class="left">
+        <img src="img/new/ortho_example_measure.JPG">
+    </div>
+</section> 
+
+<section>
+    <h2>How do we get there?</h2>
+    <div class="left">  
+            <p class="small fragment">Old way: analogue</p>
+                <img class="fragment" src="img/analogue.png" width="90%">
+            <p class="small fragment">Now: digital</p>
+                <img class="fragment" src="img/digital.png" width="90%">
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/orthophoto_how.png">
+    </div>
+</section>
+
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_01.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_02.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_03.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_04.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_05.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_06.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_07.png">
+</section>
+<section> 
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_08.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_09.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_10.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_11.png">
+</section>
+<section>
+    <h2>Geoprocessing - workflow</h2>
+     <img src="img/Presentation1_Page_12.png">
+</section>
+
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img src="img/new/processing_outputs.JPG">
+
+</section>
+
+<section>
+    <h2>Digital Surface Model</h2>
+<img src="img/new/dtm_dsm.jpg" width="60%">
+        <ul>
+        <li class="fragment"> DEM/DTM - Digital Elevation Model / Digital Terrain Model</li>
+        	<ul class="fragment">       
+		<li> representation of a terrain's elevation</li>
+        	<li> bare-earth raster grid</li>
+		</ul>
+        <li class="fragment"> DSM - Digital Surface Model 
+        	<ul class="fragment">       
+		<li> representation of a visible surface</li>
+        	<li> captures the natural and built features on the Earth’s surface</li>
+		</ul>
+</section>
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img src="img/new/processing_outputs.JPG">
+
+</section>
+<section>
+    <h2>Pointcloud</h2>
+        <ul>
+        <li class="fragment"> representation of the external surface of an object</li>
+        <li class="fragment"> set of vertices in a three-dimensional coordinate system</li>
+        <li class="fragment"> in GIS, point cloud geometry is often known, rather mistakenly, as LiDAR</li>
+ <div class="left">
+        <img src="img/new/pointclouds.png">
+</div>
+
+   <div class="right">
+        <img src="img/new/Point_cloud_torus.gif">
+    </div>
+</section>
+<section>
+    <h2>3D Model</h2>
+<iframe width="1120" height="630" src="https://www.youtube.com/embed/3P31CDicvsI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</section>
+<section>
+    <h2>UAS in the Center for Geospatial Analytics</h2>
+    <h3>Research</h3>
+</section>
+<section>
+    <h2>What do we do with the data?</h2>
+</section>
+<section>
+    <h3>Where do we get the data?</h3>
+<ul>
+<li>NCSU experimental farms
+<li>Surveyed by airborne lidar: 2001, 2013, 2015
+<li>Test area for sUAS technologies 
+</ul>
+<p>
+    <img height="300" src="img/talk/Raleigh.jpg">
+    <img height="300" src="img/talk/lw_farms_google.jpg">
+<p class="credit">Image source: Google Maps</p>
+</section>
+<section>
+    <h3>How do we get the data?</h3>
+<ul>
+<li> Trimble UX5 system, flying at 138 m, camera 4900 x 3200 
+<li> Orthophoto 3-4 cm resolution
+<li> Digital Surface Model 12-15 cm res, 172 pts/m<sup>2</sup>
+<li> Repeated surveys for crop growth monitoring
+</ul>
+<p>
+    <img width=15% src="img/talk/takeoff.jpg"> &nbsp;
+    <img width=35% src="img/talk/ngat2_dem02m_3d.jpg">
+    <img width=30% src="img/talk/2015_06_15_DSM_GCP_3dlg.jpg">
+<p>
+winter and summer DSM
+</section>
+
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Change in flow pattern based on sUAS data </h3>
+<p>
+GRASS GIS flow simulation for January and June 2015 
+<p>
+    <img height=350 src="img/talk/simwe_jan.jpg">
+    &nbsp; &nbsp; &nbsp; 
+    <img height=350 src="img/talk/simwe_june.jpg">
+</section>
+
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Evolving overland flow based on sUAS data </h3>
+    <img width=60% src="img/talk/agisoft_june.gif">
+</section>
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Overland flow evolution in time</h3>
+    <img src="img/talk/flow_pattern.png">
+</section>
+<section>
+    <h2>What do we do with the data?</h2>
+    <h3>Overland flow modeling - Lidar vs. UAS data</h3>
+    <img src="img/talk/flow_pattern_paddle2.png">
+</section>
+<section>
+    <h2>UAS in the Center for Geospatial Analytics</h2>
+    <h3>Education</h3>
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+<ul>
+<li>innovative curriculum
+</ul>
+    	<div class="left">  
+    <img src="img/talk/class_Corbin.gif">
+
+	</div>
+    	<div class="right">  
+    <img src="img/talk/class_photo.jpg">
+	</div>
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+    <img src="img/talk/students_projects.png">
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+
+    <img width=28% src="img/talk/class_flight_group.png">
+    <img width=65% src="img/talk/class_Travis.gif">
+
+</section>
+<section>
+    <h3>UAS(drone) mapping for 3D modeling</h3>
+    <h4>Graduate level course</h4>
+    <img width=58% src="img/talk/class_Nick.png">
+    <img width=40% src="img/talk/class_flight_thermal3.png">
+
+</section>
+
+
+<section>
+    <h2>Thank you for your attention</h2>
+    <h4>any questions?</h4>
+</section>
