@@ -109,7 +109,8 @@ and a list of files to download, so you can try that as well.
 
 
 <h3>Working with command line tools</h3>
-
+Note: on Mac las2las command won't work for you, please use <a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/logistics.html">VCL</a>.
+<p>
 The LAS files are in different coordinate system, so we need to change it.
 
 <p>
@@ -146,11 +147,6 @@ for f in os.listdir('.'):
         name, ext = os.path.splitext(f)
         call(['las2las', '--a_srs=EPSG:2264', '--t_srs=EPSG:3358', '-i',
               f, '-o', name + '_spm' + ext])
-</code></pre>
-
-If you have don't have libLAS on Mac, but you have LAStools, replace the previous call with:
-<pre><code>
-call(['las2las', '-i', f, '-o', name + '_spm', '-epsg 2264', '-target_epsg 3358'])
 </code></pre>
 
 In the same step, we could do also some other conversions which are
