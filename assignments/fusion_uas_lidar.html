@@ -101,11 +101,17 @@ working directory.
  1 aqua
  35 blue
 </code></pre>
+Download <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">
+lidar DSM and DEMs</a> if you haven't done already, unzip it in your working directory and unpack:
+
+<pre><code>r.unpack -o input=mid_pines_lidar2013_dsm.pack
+r.unpack -o input=mid_pines_lidar2013_dem.pack
+</code></pre>
 
 Compute the differences between the lidar and UAS DSMs
 and evaluate their spatial distribution and
-summary statistical properties:
-<pre><code>g.region rast=mid_pines_lidar2013_dsm -p
+<pre><code>summary statistical properties:
+g.region rast=mid_pines_lidar2013_dsm -p
 r.mapcalc "diff_lidardsm_agi_june = mid_pines_lidar2013_dsm - 2015_06_20_DSM_agi_11GCP"
 r.colors diff_lidardsm_agi_june rules=dif_lidar_uav.txt
 r.univar diff_lidardsm_agi_june
