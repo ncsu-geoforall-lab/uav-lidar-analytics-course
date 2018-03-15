@@ -204,8 +204,6 @@ different format with different modules just for the area of interest
 
 <h3>DSM interpolation with parallelization</h3>
 
-<p><em>Note that this parallelization doesn't currently work on Windows.</em></p>
-
 We will interpolate DEM using
 <a href="https://grass.osgeo.org/grass70/manuals/libpython/pygrass.modules.grid.html#module-pygrass.modules.grid.grid">GridModule</a>
 which allows to run <em>v.surf.rst</em>
@@ -217,15 +215,6 @@ First we set the region of our area
 <pre class="other-code"><code>
 g.region n=219637 s=219254 w=636730 e=637193 res=1 -p
 </code></pre>
-
-Note: You need to change the visible Mapsets to something else than
-the default (current Mapset and PERMANENT Mapset).
-Set the visible Mapsets (SEARCH_PATH) by going to
-<em>Settings -> GRASS working environment -> Mapset access</em>
-and check one of the unchecked Mapsets.
-Otherwise, you will get an error "AttributeError: 'VisibleMapset' object
-has no attribute 'write'",
-see ticket <a href="http://trac.osgeo.org/grass/ticket/2791">#2791</a>.
 
 <p>
 We import GridModule and compute the size of the tiles
@@ -249,13 +238,26 @@ grd.run()
 </code></pre>
 
 <p>
-Then run it in parallel (debug=False) and we can see the time needed reduced significantly:
+Then run it in parallel (debug=False) and we can see the time needed reduced significantly.
+
+On Windows you need to enclose the entire code into main function to work properly:
 <pre><code>
-grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
-                 overlap=10, processes=4, npmin=100,
-                 input='merged_points', elevation='mid_pines_small_dem_1m',
-                 tension=30, smooth=1, overwrite=True)
-grd.run()
+import grass.script as gs
+from grass.pygrass.modules.grid import GridModule
+
+def main():
+    region = gs.region()
+    width = region['cols'] / 2 + 1
+    height = region['rows'] / 2 + 1
+    grd = GridModule('v.surf.rst', debug=False, width=width, height=height,
+                    overlap=10, processes=4, npmin=100,
+                    input='merged_points', elevation='mid_pines_small_dem_1m',
+                    tension=30, smooth=1, overwrite=True)
+    grd.run()
+
+if __name__ == '__main__':
+    main()
+
 </code></pre>
 
 <p>
