@@ -308,7 +308,7 @@ different distortions from AGISOFT and PIX4D
 <ul>
  <li>vegetation growth or removal
  <li>change in elevation surface due to erosion processes
- <li>UAS SFM - lidar difference maps with custom color
+ <li>UAS SfM - lidar difference maps with custom color
 </ul>
 <p>
 <img width="40%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
@@ -363,8 +363,8 @@ or differencing with lidar
 <p>
 <ul>
 <li>replace the grid cells in the updated area by UAS DSM
-<li>averaging over an overlap
-<li>usually creates an edge - can be post-processed
+<li>average over an overlap
+<li>usually creates an edge - requires post-processing
 </ul>
 <p>
 <img width="45%" src="img/fusion_lidar_uav/Brendaninitial_fusion.png">
@@ -375,11 +375,9 @@ or differencing with lidar
 <section>
    <h3>Updating lidar DSM by patching</h3>
 <p>
-<ul>
-<li>edge between lidar and UAS SfM DEMs  
-</ul>
-
-<img class="stretch" src="img/fusion_lidar_uav/patchingedge.png">
+edge between lidar and UAS SfM DEMs
+<p>
+<img width="80%" src="img/fusion_lidar_uav/patchingedge.png">
 </section>
 
 <section>
@@ -433,8 +431,11 @@ or differencing with lidar
 
 </section>
 
+<!-- add here a slide which explains that we set the angle of transition and derive the width of overlap -->
+
 <section>
-    <h2>Fusion with spatially variable $s$</h2>
+    <h3>Fusion with spatially variable $s$</h3>
+Absolute elevation difference between lidar and UAS DEM controls the width of the transition overlap.
         <img class="stretch" src="img/fusion_lidar_uav/fusionv2.png">
 </section>
 
@@ -450,19 +451,19 @@ or differencing with lidar
         <img width="48%" src="img/fusion_lidar_uav/assignment_uas_ground.jpg">
         <img width="48%" src="img/fusion_lidar_uav/assignment_fused_ground.jpg">
         <p style="font-size:80%">
-            UAS-derived DSM's vegetated parts replaced with lidar DEM.
+        Vegetated areas in UAS DSM are replaced with lidar DEM. Yellow shows bare ground in UAS DSM.
 </section>
 
 <section>
     <h3>Spatially variable overlap</h3>
         <img class="stretch" src="img/fusion_lidar_uav/assignment_overlap.jpg">
         <p style="font-size:80%">
-           Spatially variable overlap for UAS SfM and lidar fusion based on elevation differences
+        Bare ground UAS DSM is used to update lidar bare ground DEM using spatially variable overlap
 </section>
 
 <section>
     <h3>Modeling overland flow</h3>
-<p style="text-align:left">Microtopography captured at ultrahigh resolution by UAS SFM poses special challenges to flow routing:
+<p style="text-align:left">Microtopography captured at ultra-high resolution by UAS SfM poses special challenges to flow routing:
 <ul>
   <li>real depressions are important features
   <li>complex pattern of ponding, overflow of barriers is not supported by standard tools
@@ -472,9 +473,12 @@ or differencing with lidar
 
 <section>
     <h3>Path sampling method</h3>
-<p>Stochatistic method for solving flow continuity equations
+<p>Stochastic method for solving flow continuity equations
         <img width="48%" src="img/fusion_lidar_uav/fanimwalk.gif">
         <img width="48%" src="img/fusion_lidar_uav/fanimhhcolp.gif">
+<p style="font-size:50%">
+<a href="http://www4.ncsu.edu/~hmitaso/gmslab/papers/II.6.8_Mitasova_044.pdf">
+Mitasova, H., Thaxton, C., Hofierka, J., McLaughlin, R., Moore, A., Mitas L., 2005, Path sampling method for modeling overland water flow, sediment transport and short term terrain evolution in Open Source GIS. In: C.T. Miller, M.W. Farthing, V.G. Gray, G.F. Pinder eds., Proceedings of the XVth International Conference on Computational Methods in Water Resources (CMWR XV), June 13-17 2004, Chapel Hill, NC, USA, Elsevier, pp. 1479-1490. </a></p>
 </section>
 
 <section>
@@ -494,7 +498,7 @@ smooth fusion improves accuracy of flow distribution
 </section>
 
 <section>
-    <h2>Examples from assignment</h2>
+    <h3>Example from assignment</h3>
         <img width="48%" src="img/fusion_lidar_uav/assignment_flow_patched.jpg">
         <img width="48%" src="img/fusion_lidar_uav/assignment_flow_smooth_patched.jpg">
         <p style="font-size:80%">
@@ -502,11 +506,20 @@ smooth fusion improves accuracy of flow distribution
 </section>
 
 <section>
-    <h2>Examples from assignment</h2>
+    <h3>Example from assignment</h3>
         <img width="48%" src="img/fusion_lidar_uav/assignment_flow_smooth_patched.jpg">
         <img width="48%" src="img/fusion_lidar_uav/assignment_flow_ground.jpg">
         <p style="font-size:80%">
             Water flow on DSM vs. bare ground fused from UAS DSM and lidar DEM
+</section>
+
+<section>
+   <h3>What did we learn?</h3>
+<ul>
+  <li>evaluation and interpretation of differences between lidar and UAS SfM DEMs
+  <li>teachniques for smooth fusion of high resolution DEMs
+  <li>impact of fusion technique on overland flow modeling
+</ul>
 </section>
 
 <!-- Python -->
