@@ -70,10 +70,69 @@ Tools:
 </ul>
 
 <h3>Analyze time series of UAS DSMs</h3>
+<h4>Register the time series in temporal framework</h4>
+Start GRASS GIS in PERMANENT mapset to create a temporal dataset consisting of a series
+of UAS DSMs.
+First, create a space-time raster dataset (STRDS) with absolute temporal type:
 
-Register the time series in temporal framework
+<pre><code>    t.create output=uas_dsm type=strds temporaltype=absolute semantictype=mean title="UAS_DSM" description="UAS-based 2015 DSMs processed by Agisoft"
+</code></pre>
+
+Now, create a text file named "series.txt" with the following content in your working directory.
+These are the DSMs with their time stamps:
+<pre>
+2015_03_18_DSM_agi_6GCP|2015-03-18
+2015_06_20_DSM_agi_11GCP|2015-06-20
+2015_07_27_DSM_agi_2GCP_4ID|2015-07-27
+2015_08_14_DSM_agi_3GCP_4ID|2015-08-14
+2015_09_04_DSM_agi_6GCP|2015-09-04
+2015_09_21_DSM_agi_6GCP|2015-09-21
+2015_10_06_DSM_agi_8GCPs|2015-10-06
+</pre>
+
+Register the DSMs into the created STRDS uas_dsm:
+<pre><code>t.register input=uas_dsm file=series.txt
+</code></pre>
+
+Now check it was registered correctly:
+<pre><code>t.info input=uas_dsm
+</code></pre>
+
+See different ways we can list raster maps registered in the dataset:
+<pre><code>t.rast.list input=uas_dsm columns=name,start_time where="start_time >= '2015-08-01'"
+t.rast.list input=uas_dsm columns=name,start_time,min,max
+</code></pre>
+
+At this point, we create a new mapset where we will further analyze the data.
+<pre><code>g.mapset -c timeseries
+</code></pre>
+You can also create new mapset in Settings - GRASS working environment - Create new mapset.
+
+
+
+
+
 <p>
 Find the area mapped by all surveys - how large it is?
+
+<pre><code>t.info input=uas_dsm -g
+g.region n=219942 s=219037 e=637439 w=636456 -p res=0.3 -a
+t.rast.series input=uas_dsm method=count output=count
+t.rast.series input=uas_dsm method=count output=intersection -n
+g.region zoom=intersection
+</code></pre>
+
+Temporal aggregation, contours, raster algebra, statistics
+<pre><code>t.rast.aggregate input=uas_dsm output=uas_dsm_aggr basename=uas_dsm_aggr granularity="1 months" method=average
+
+t.rast.contours
+
+t.rast.mapcalc inputs=uas_dsm expression="uas_dsm - mid_pines_lidar2013_dem" output=uas_dsm_lidar_diff basename=uas_dsm_lidar_diff
+t.rast.colors input=uas_dsm_lidar_diff color=differences
+t.rast.univar input=uas_dsm_lidar_diff
+</code></pre>
+
+    
 <p>
 Find the minimum elevation (core) - how close it is to lidar bare ground?
 
