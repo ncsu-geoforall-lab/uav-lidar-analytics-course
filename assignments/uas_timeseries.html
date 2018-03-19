@@ -159,7 +159,7 @@ r.unpack -o input=mid_pines_lidar2013_dem.pack
 Find the minimum elevation (core) - how close it is to lidar bare ground?
 <pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum
 r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum"
-r.colors map=diff_lidar_uas@temporal color=differences
+r.colors map=diff_lidar_uas color=differences
 </code></pre>
 
 Parts of the minimum raster are significantly below lidar ground,
@@ -180,7 +180,7 @@ Since there is some problem with the third and fourth raster (<code>2015_07_27_D
 we will exclude them from the analysis:
 <pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum where="start_time < '2015-07-01' or start_time > '2015-09-01'"
 r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum"
-r.colors map=diff_lidar_uas@temporal color=differences
+r.colors map=diff_lidar_uas color=differences
 </code></pre>
 
 
