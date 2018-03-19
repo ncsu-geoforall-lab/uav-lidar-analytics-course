@@ -70,15 +70,123 @@ Tools:
 </ul>
 
 <h3>Analyze time series of UAS DSMs</h3>
+<h4>Register the time series in temporal framework</h4>
+Start GRASS GIS in PERMANENT mapset to create a temporal dataset consisting of a series
+of UAS DSMs.
+First, create a space-time raster dataset (STRDS) with absolute temporal type:
 
-Register the time series in temporal framework
+<pre><code>t.create output=uas_dsm type=strds temporaltype=absolute semantictype=mean title="UAS_DSM" description="UAS-based 2015 DSMs processed by Agisoft"
+</code></pre>
+
+Now, create a text file named "series.txt" with the following content in your working directory.
+These are the DSMs with their time stamps:
+<pre>
+2015_03_18_DSM_agi_6GCP|2015-03-18
+2015_06_20_DSM_agi_11GCP|2015-06-20
+2015_07_27_DSM_agi_2GCP_4ID|2015-07-27
+2015_08_14_DSM_agi_3GCP_4ID|2015-08-14
+2015_09_04_DSM_agi_6GCP|2015-09-04
+2015_09_21_DSM_agi_6GCP|2015-09-21
+2015_10_06_DSM_agi_8GCPs|2015-10-06
+</pre>
+
+Register the DSMs into the created STRDS uas_dsm:
+<pre><code>t.register input=uas_dsm file=series.txt
+</code></pre>
+
+Now check it was registered correctly:
+<pre><code>t.info input=uas_dsm
+</code></pre>
+
+See different ways we can list raster maps registered in the dataset:
+<pre><code>t.rast.list input=uas_dsm columns=name,start_time where="start_time >= '2015-08-01'"
+t.rast.list input=uas_dsm columns=name,start_time,min,max
+</code></pre>
+
 <p>
-Find the area mapped by all surveys - how large it is?
+<!-- TODO:check on Windows -->
+To get better idea about the dates and spatial extents, we can use <em>Timeline tool</em>
+accessible from <em>Temporal - GUI tools - Timeline tool</em>. Select dataset <code>uas_dsm</code>,
+you can click on the drawn data points,
+and then also check <em>3D plot of spatio-temporal extents</em>
+
+<h4>Find the area mapped by all surveys</h4>
 <p>
+At this point, we create a new mapset where we will further analyze the data.
+<pre><code>g.mapset -c timeseries
+</code></pre>
+You can also create new mapset in Settings - GRASS working environment - Create new mapset.
+
+<p>
+<!-- Find the area mapped by all surveys - how large it is? -->
+We will find area mapped by all surveys. First we will set the
+extent to the maximum bounding box, use t.info to get the values:
+
+<pre><code>t.info input=uas_dsm@PERMANENT -g
+g.region n=219942 s=219037 e=637439 w=636456 -pa res=0.3
+</code></pre>
+
+Next, we use t.rast.series to derive raster representing the number of
+overlapping DSMs. By using <a href="https://grass.osgeo.org/grass74/manuals/t.rast.series.html">-n flag</a>
+we create masking raster representing the intersection of all DSMs, and then we change computational
+region to the extent of its non-null bounding box:
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=count output=count
+t.rast.series input=uas_dsm@PERMANENT method=count output=intersection -n
+g.region zoom=intersection -p
+r.mask raster=intersection
+</code></pre>
+
+How large is the area (use r.univar)?
+
+
+<h4>Temporal aggregation</h4>
+Our space-time raster dataset contains two DSMs from September:
+<pre><code>t.rast.list input=uas_dsm@PERMANENT columns=name,start_time
+</pre></code>
+
+We will temporally aggregate the dataset by month by averaging all DSMs within each month
+(in this case averaging the September DSMs):
+<pre><code>t.rast.aggregate input=uas_dsm@PERMANENT output=uas_dsm_aggr basename=uas_dsm_aggr suffix=time granularity="1 months" method=average
+t.rast.list input=uas_dsm_aggr columns=name,start_time
+</code></pre>
+
+
+<h4>Minimum elevation (core)</h4>
 Find the minimum elevation (core) - how close it is to lidar bare ground?
 
-<h3>Estimate crop biomass</h3>
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum
+r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum"
+r.colors map=diff_lidar_uas@temporal color=differences
+</code></pre>
 
+Parts of the minimum raster are significantly below lidar ground,
+find out which DSM is causing it:
+
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=min_raster output=min_raster
+</code></pre>
+
+Display resulting raster <code>min_raster</code> and query it 
+(select the layer in Layer Manager and use Query tool in Map Display)
+or use r.what:
+<pre><code>r.what map=min_raster coordinates=636879,219432
+r.what map=min_raster coordinates=637232,219651
+</code></pre>
+
+Value 2 represents third (numbering starts with 0) raster in our time series.
+Since there is some problem with the third and fourth raster (<code>2015_07_27_DSM_agi_2GCP_4ID, 2015_08_14_DSM_agi_3GCP_4ID@PERMANENT</code>),
+we will exclude them from the analysis:
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum where="start_time < '2015-07-01' or start_time > '2015-09-01'" --o
+r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum" --o
+r.colors map=diff_lidar_uas@temporal color=differences
+</code></pre>
+
+
+<h4>Estimate crop biomass</h4>
+We will use raster algebra on the time series
+to compute crop biomass. We assume crop is anything higher than 0.3 and lower than 2 m:
+<pre><code>t.rast.mapcalc inputs=uas_dsm@PERMANENT expression="if (uas_dsm - mid_pines_lidar2013_dem > 0.3 &amp;&amp; uas_dsm - mid_pines_lidar2013_dem < 2, uas_dsm - mid_pines_lidar2013_dem, null())" output=veg_uas_lidar basename=veg_uas_lidar
+t.rast.univar input=veg_uas_lidar where="start_time < '2015-07-01' or start_time > '2015-09-01'"
+</code></pre>
 
 <h3>Evaluate impact of vegetation change on viewshed extent</h3>
 
