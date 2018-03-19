@@ -301,7 +301,18 @@ To compare the viewsheds display the resulting maps with transparency.
 Discuss the result. Can you find a better place for the webcam? Would placing the webcam higher help?
 
 
-<h3>Estimate volume a building</h3>
+<h3>Estimate volume of a building</h3>
+We need to first extract the mask of the building: 
+<pre><code>g.region n=219388.5 s=219366.9 w=637100.1 e=637138.5 res=0.3 -pa
+r.mapcalc "building = 2015_06_20_DSM_agi_11GCP - mid_pines_lidar2013_dem"
+r.mapcalc "building_mask = if(building > 2, 1, null())"
+</code></pre>
+
+Now we compute the volume
+<pre><code>r.volume input=building clump=building_mask
+</code></pre>
+
+What is the volume of the building?
 <!--
 r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
 r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
