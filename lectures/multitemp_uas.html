@@ -195,7 +195,7 @@
  <p><li>Monitoring survey design
  <p><li>Processing UAS data time series: introduction to temporal data framework
  <p><li>Basic analysis of 3D data time series, volumes 
- <p><li>Applications in crop monitoring, erosion, flooding 
+ <p><li>Applications in crop monitoring, viewsheds 
 </ul>
 </section>
 
@@ -214,8 +214,10 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
 <section>
    <h3>Monitoring design</h3>
 <ul>
-    <li class="fragment">size of the area, spatial resolution needed to capture the changes</li>
+    <li class="fragment">define metrics to quantify the monitored phenomenon: relative height, volume, feature migration</li>
+    <li class="fragment">spatial resolution needed to capture the changes</li>
     <li class="fragment">temporal resolution: regular intervals, event driven mapping </li>
+    <li class="fragment">accessibility: flying over people, line of sight, suitable location for GCP </li>
     <li class="fragment">georeferencing, rectification: GCPs distribution and survey</li>
 </ul>
 </section>
@@ -223,14 +225,19 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
 <section>
    <h3>Processing time series</h3>
 <ul>
-<li>use GCPs and permanent features to evaluate accuracy
-<li>check and correct systematic errors (horizontal, vertical) if needed
+<li>analyze and interpolate point clouds: DSMs with common resolution
+<li>raster DSMs better for time series than TIN
+<li>use GCPs and permanent features to evaluate accuracy, correct errors and distortions
 </ul>
 </section>
 
 <section>
    <h3>Working with temporal data</h3>
-terminology for time series - from temporal data workshop
+<ul>
+ <li>time instant: snapshot at given time: 2013-10-15 13:00:00
+ <li>time interval: defined by start and end time: day, month
+ <li>UAS monitoring acquires snapshots which can be agreggated into intervals
+</ul>
 </section>
 
 <section>
