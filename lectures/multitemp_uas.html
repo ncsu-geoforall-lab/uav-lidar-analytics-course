@@ -186,44 +186,72 @@ Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measu
 
 <section>
  <h3>Map algebra for time series</h3>
-
-extract grid cells with elevation above lidar bare ground within a selected interval (z1,z2)
 <p>
-<img width="30%" src="img/timeseries/veg_uas_lidar2.jpg">
-<img width="30%" src="img/timeseries/veg_uas_lidar3.jpg">
-<img width="30%" src="img/timeseries/veg_uas_lidar7.jpg">
+<ul>
+  <li>apply map algebra expression for each map in the time series at each grid cell
+  <li>output is new time series which can be registered as a new space-time dataset
+  <li>this is different from temporal map algebra
+</ul>
 </section>
+
+<section>
+ <h3>Extract crop height time series</h3>
+<p>We can use map algebra to
+extract grid cells with elevation above lidar bare ground 
+within a selected elevation interval (z1,z2)
+<p>
+<img width="32%" src="img/timeseries/veg_uas_lidar2.jpg">
+<img width="32%" src="img/timeseries/veg_uas_lidar3.jpg">
+<img width="32%" src="img/timeseries/veg_uas_lidar7.jpg">
+<p class="small">
+Maps of relative elevation (0.3m, 2.0m)  above bare ground lidar for 3 time snapshots in our time series.
+The middle map shows distirtions rather than crop.
+</section>
+
+<section>
+ <h3>Estimate crop volume</h3>
+<p>We can use map algebra to
+extract grid cells with elevation above lidar bare ground 
+within a selected elevation interval (z1,z2)
+<p>
+Image illustrating volume computation - bare lidar, crop map cutting plane
+</section>
+
+<section>
+   <h3>Estimate volume of structures</h3>
+<p>
+<ul>
+<li>compute volume based on difference between bare ground and above ground feature, such as building
+</ul>
+<p>
+<img height="400" src="img/fusion_lidar_uav/building volume.jpg">
+</section> 
 
 <section>
    <h3>Analysis: Viewsheds</h3>
 <p>
 <ul>
 <li>provide analysis to support siting of a monitoring webcam
-<li>evaluate influence of changing vegetation on the viewshed extent
-<li>find location of webcam 
+<li>evaluate influence of vegetation on the viewshed area
 </ul>
 <p>
-<img height="400" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
+<img height="380" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
+<p class="small">Spatial extent of viewshed changes over time depending on the height of surrounding vegetation </p>
 </section> 
 
 <section>
-   <h3>Analysis: Volumes</h3>
+   <h3>Dynamic visualization</h3>
 <p>
 <ul>
-<li>compute volumes based on change in elevation: crop, dirt pile
+<li>see Terrain time series visualization in the 
+<a href="http://ncsu-geoforall-lab.github.io/grass-temporal-workshop/">
+GRASS temporal workshop</a>
+<li><a href="https://courses.ncsu.edu/mea582/common/media/03/dynamicgis/dynamicgis.html">
+dynamic visualization examples from MEA582</a>
+<li>we covered the basics in the flow modeling example
 </ul>
 <p>
-<img height="400" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
-</section> 
-
-<section>
-   <h3>Analysis: Crop growth</h3>
-<p>
-<ul>
-<li>compute spatial an temporal istribution of crop growth based on change in elevation
-</ul>
-<p>
-<img height="400" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
+<img height="300" src="img/fusion_lidar_uav/agisoft_june.gif">
 </section>
 
 <section>
@@ -235,6 +263,7 @@ extract grid cells with elevation above lidar bare ground within a selected inte
 <li>computing core and envelope and its application
 <li>indentification of distorted DSMs in time series
 <li>estimation of volumes
+<li>dynamic visualization
 </ul>
 <p>
 </section>
