@@ -63,9 +63,9 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
  <h3>Temporal data framework</h3>
 <ul>
  <li>supports efficient processing, management and analysis of space-time data sets
- <li>space-time dataset is a set of maps registered in a temporal database
- <li>space-time dataset may represent a dynamic process, 
- <li>individual maps represent the states at a given time
+ <li>space-time dataset is a set of maps (raster, vector) registered in a temporal database
+ <li>space-time dataset may represent a dynamic process 
+ <li>individual maps represent the states of the dynamic system at a given time
 </ul>
 <p class="small">
 Gebbert, S. and Pebesma, E. (2014). A temporal GIS for field based environmental modeling. 
@@ -75,9 +75,9 @@ Environmental Modelling and Software, 53, 1–12.</p>
 <section>
    <h3>Time stamp type</h3>
 <ul>
- <li>time stamp: assigns time to an individual map in space-time daya set
- <li>time instant: snapshot at given time: 2013-10-15 13:00:00 (absolute time)
- <li>time interval: defined by start and end time: day, month, year (relative time)
+ <li>time stamp: assigns time to an individual map in space-time data set
+ <li>time instant - snapshot at given time: 2013-10-15 13:00:00 (absolute time)
+ <li>time interval - defined by start and end time: day, month, year (relative time)
  <li>a single UAS survey represents a snapshot (state) which can be agreggated into intervals
 </ul>
 <p>our time snapshot (sept surveys) and aggregated map
@@ -122,16 +122,16 @@ Sept individual and average
 <section>
    <h3>Basic time series analysis</h3>
 <p>
-Per cell statistics (focal) computed for each cell over the time series:
+Per cell statistics computed for each cell over the time series:
 <ul>
  <li>mean and standard deviation
  <li>min, max elevation and range 
  <li>time at minimum, time at maximum
  <li>linear regression: slopem offset, regr. coefficient
 </ul>
-<p>
+<p class="small">
 <a href="http://www4.ncsu.edu/~hmitaso/gmslab/papers/MitasovaFinalGeoinf09.pdf">
-Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measures of terrain dynamics derived from time series of lidar data, Proc. 17th Int. Conf. Geoinformatics, Fairfax, VA. </a>
+Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measures of terrain dynamics derived from time series of lidar data, Proc. 17th Int. Conf. Geoinformatics, Fairfax, VA. </a></p>
 </section>
 
 <section>
@@ -146,8 +146,8 @@ Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measu
 <section>
    <h3>Detecting surveys with large distortions</h3>
 <ul>
-<li>Derive bare ground from UAS time series using core
-<li>Compute difference between UAS core and lidar bare ground surface: identify DSMs with large distortions
+<li>Derive core surface from UAS time series
+<li>Compute difference between UAS core and lidar bare ground surface
 <li>Compute time of minimum raster to identify the distorted DSMs with elevation well below lidar bare ground
 </ul>
 <img width="47%" src="img/timeseries/diff_lid_uasmin.jpg">
@@ -158,30 +158,38 @@ Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measu
    <h3>Corrected UAS core surface</h3>
 <ul>
 <li>Remove distorted DSMs from derivation of core surface
-<li>Difference between UAS core and lidar bare ground surface is very small
-<li>Hist. equalized color ramp for differences highlights the shift in lidar swath
+<li>Difference between UAS core and lidar bare ground surface is now very small
+<li>Hist. equalized color ramp for differences highlights a small shift in lidar swath
 </ul>
 <img width="45%" src="img/timeseries/diff_lid_uasmin2.png">
 <img width="45%" src="img/timeseries/diff_lid_uasmin2_histeq.jpg">
 </section>
 
 <section>
-   <h3>Basic time series analysis: core, envelope</h3>
-<p>Envelope: what is the max height of crop in each pixel over the monitored period?
-<p>time of maximum - when was the crop highest at each grid cell?
-<p>where is the largest range and variability in crop height?
+   <h3>Envelope and range applications</h3>
+<p>
+<ul>
+<li>Envelope: what is the max height of crop in each pixel over the monitored period?
+<li>time of maximum - when was the crop highest at each grid cell?
+<li>where is the largest range and variability in crop height?
+</ul>
 </section>
 
 <section>
-   <h3>Basic time series analysis: core, envelope</h3>
-<p>use envelope to show all cars ever parked there
-<p>core, snapshot, envelope, use e.g. to manage parking area
+   <h3>Envelope and range applications</h3>
+<ul>
+<li>use envelope to show all cars ever parked at the site
+<li>core, snapshot, envelope, surfaces can be used to manage parking area
+</ul>
 </section>
 
 <section>
    <h3>Basic time series analysis: regression</h3>
-<p>longer time series, select subset where the changes are close to linear - e.g. certain crop growth,
-<p>per cell linear regression analysis: map of regression slope and offset 
+<ul>
+ <li>applies to well designed, systematic monitoring with longer time series, 
+ <li>select subset where the changes are close to linear - e.g. crop growth period,
+ <li>compute per cell linear regression analysis: map of regression slope and offset 
+</ul>
 </section>
 
 <section>
@@ -190,13 +198,13 @@ Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measu
 <ul>
   <li>apply map algebra expression for each map in the time series at each grid cell
   <li>output is new time series which can be registered as a new space-time dataset
-  <li>this is different from temporal map algebra
+  <li>this is different (and much simpler) from temporal map algebra
 </ul>
 </section>
 
 <section>
  <h3>Extract crop height time series</h3>
-<p>We can use map algebra to
+<p>Map algebra can be used to
 extract grid cells with elevation above lidar bare ground 
 within a selected elevation interval (z1,z2)
 <p>
@@ -205,14 +213,12 @@ within a selected elevation interval (z1,z2)
 <img width="32%" src="img/timeseries/veg_uas_lidar7.jpg">
 <p class="small">
 Maps of relative elevation (0.3m, 2.0m)  above bare ground lidar for 3 time snapshots in our time series.
-The middle map shows distirtions rather than crop.
+The middle map shows distortions rather than crop.
 </section>
 
 <section>
  <h3>Estimate crop volume</h3>
-<p>We can use map algebra to
-extract grid cells with elevation above lidar bare ground 
-within a selected elevation interval (z1,z2)
+<p>Summary statistics can be used to estimate above ground crop biomass
 <p>
 Image illustrating volume computation - bare lidar, crop map cutting plane
 </section>
@@ -230,14 +236,22 @@ Image illustrating volume computation - bare lidar, crop map cutting plane
 <section>
    <h3>Analysis: Viewsheds</h3>
 <p>
+Evaluate influence of vegetation on the viewshed area
+<p>
+<img height="380" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
+<p class="small">Spatial extent of viewshed changes over time depending on the height of surrounding vegetation, different colors show the spatial extent of viewshed at different times </p>
+</section> 
+
+<section>
+   <h3>Analysis: Viewsheds</h3>
+<p>
 <ul>
 <li>provide analysis to support siting of a monitoring webcam
-<li>evaluate influence of vegetation on the viewshed area
 </ul>
 <p>
 <img height="380" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
 <p class="small">Spatial extent of viewshed changes over time depending on the height of surrounding vegetation </p>
-</section> 
+</section>
 
 <section>
    <h3>Dynamic visualization</h3>
@@ -263,6 +277,7 @@ dynamic visualization examples from MEA582</a>
 <li>computing core and envelope and its application
 <li>indentification of distorted DSMs in time series
 <li>estimation of volumes
+<li>analyzing changing viewsheds
 <li>dynamic visualization
 </ul>
 <p>
