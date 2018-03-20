@@ -14,10 +14,11 @@
     <h3>Outline</h3>
 <p>
 <ul>
- <p><li>Motivation for time series data acquisition, UAS for monitoring
- <p><li>Monitoring survey design
- <p><li>Processing UAS data time series: introduction to temporal data framework
+ <p><li>Motivation for time series data acquisition
+ <p><li>UAS-based monitoring survey design
+ <p><li>Processing UAS data time series, temporal data framework
  <p><li>Basic analysis of 3D data time series, volumes 
+ <p><li>Dynamic visualization of time series
  <p><li>Applications in crop monitoring, viewsheds 
 </ul>
 </section>
@@ -25,9 +26,10 @@
 <section>
    <h3>UAS for monitoring changes</h3>
 Low cost and rapid deployment: excellent for monitoring changes at local scale (fields, small watersheds)
+<p>
 <ul>
    <li class="fragment">crop monitoring: growth, disease, stress</li>
-   <li class="fragment">erosion processes: coastal, stream bank, overal flow</li>
+   <li class="fragment">erosion processes: coastal, stream bank, rills and gullies</li>
    <li class="fragment">natural disasters: flooding, landslides, fire </li>
    <li class="fragment">mining, construction sites </li>
 </ul>
@@ -36,11 +38,12 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
 
 <section>
    <h3>Monitoring design</h3>
+<p>Assess:
 <ul>
-    <li class="fragment">define metrics to quantify the monitored phenomenon: relative height, volume, feature migration</li>
+    <li class="fragment">metrics to quantify changes: relative height, volume, feature migration</li>
     <li class="fragment">spatial resolution needed to capture the changes</li>
-    <li class="fragment">temporal resolution: regular intervals, event driven mapping </li>
-    <li class="fragment">accessibility: flying over people, line of sight, suitable location for GCP </li>
+    <li class="fragment">temporal resolution: regular intervals, events </li>
+    <li class="fragment">accessibility: flying over people, line of sight, suitable GCPs </li>
     <li class="fragment">georeferencing, rectification: GCPs distribution and survey</li>
 </ul>
 </section>
@@ -49,39 +52,113 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
    <h3>Processing time series</h3>
 <ul>
 <li>analyze and interpolate point clouds: DSMs with common resolution
-<li>raster DSMs better for time series than TIN
+<li>raster DSMs are more suitable for time series than TIN
 <li>use GCPs and permanent features to evaluate accuracy, correct errors and distortions
+<li>assign time stamps and register raster DSMs within GIS-based temporal data framework
 </ul>
+<p>Our time series of DSMs in Sketchfab
 </section>
 
 <section>
-   <h3>Working with temporal data</h3>
+ <h3>Temporal data framework</h3>
 <ul>
- <li>time instant: snapshot at given time: 2013-10-15 13:00:00
- <li>time interval: defined by start and end time: day, month
- <li>UAS monitoring acquires snapshots which can be agreggated into intervals
+ <li>supports efficient processing, management and analysis of space-time data sets
+ <li>space-time dataset is a set of maps registered in a temporal database
+ <li>space-time dataset may represent a process, maps represent the states
 </ul>
+<p>our dsm raster maps
+<p class="small">
+Gebbert, S., Pebesma, E. (2014). A temporal GIS for field based environmental modeling. 
+Environmental Modelling and Software, 53, 1–12.</p>
 </section>
 
 <section>
-   <h3>Basic time series analysis</h3>
-Per cell statistics,
-r.series output - geoinformatics and geomorphology paper, 
-prepare examples 
-<p>when it is applicable
+   <h3>Time stamp type</h3>
 <ul>
-  <li> equal time interval 
-  <li> consistent resolution and conditions for survey
+ <li>time instant: snapshot at given time: 2013-10-15 13:00:00 (absolute time)
+ <li>time interval: defined by start and end time: day, month, year (relative time)
+ <li>UAS survey represents a snapshot (state) which can be agreggated into intervals
 </ul>
+<p>our time snapshot (sept surveys) and aggregated map
+</section>
+
+<section>
+  <h3>Registered time series</h3>
+Timeline tool: time and spatial extent of registered maps
+<p>
+<img height="450" src="img/timeseries/uas2015_timeline.jpg">
+</section>
+
+<section>
+   <h3>Temporal plot</h3>
+<ul>
+<li>Plot time series of elevation values at a given location
+</ul>
+<img width="45%" src="img/timeseries/dif_lid_uasmin2.png">
+<img width="45%" src="img/timeseries/dif_lid_uasmin2_histeq.jpg">
+</section>
+
+<section>
+   <h3>Temporal count and intersection</h3>
+<ul>
+<li>Count: number of maps where the given cell has non-null value (overlap)
+<li>Intersection: grid cells with non-null values from each map in time series
+</ul>
+<img width="47%" src="img/timeseries/series_overlap_count.jpg">
+<img width="47%" src="img/timeseries/intersection.jpg">
+</section>
+
+<section>
+   <h3>Temporal aggregation</h3>
+<ul>
+<li>Temporally aggregate maps over given period of time - for example to derive monthly average elevation
+</ul>
+Sept individual and average
+<img width="45%" src="img/timeseries/dif_lid_uasmin2.png">
+<img width="45%" src="img/timeseries/dif_lid_uasmin2_histeq.jpg">
 </section>
 
 <section>
    <h3>Basic time series analysis: core, envelope</h3>
-Per cell statistics,
-r.series output - geoinformatics and geomorphology paper, 
-prepare examples                       
-<p>
-core, envelope (what is the max height of crop in each pixel over the monitored period?)
+<ul>
+ <li>Core surface: min. elevation measured for each cell  
+ <li>Envelope: max. elevation measured for each cell 
+</ul>
+<p> Example: cutting plane with lidar, core and envelope
+</section>
+
+<section>
+   <h3>Basic time series analysis: core, envelope</h3>
+<ul>
+<li>Derive bare ground from UAS time series using core
+<li>Compute difference between UAS core and lidar bare ground surface: identify DSMs with large distortions
+<li>Compute time of minimum raster to identify the distorted DSM with elevation below lidar bare ground
+</ul>
+<img width="47%" src="img/timeseries/dif_lid_uasmin.jpg">
+<img width="47%" src="img/timeseries/minraster.jpg">
+</section>
+
+<section>
+   <h3>Basic time series analysis: core, envelope</h3>
+<ul>
+<li>Remove distorted DSMs from derivation of core surface
+<li>Difference between UAS core and lidar bare ground surface is very small
+<li>Hist. equalized color ramp for differences highlights the shift in lidar swath
+</ul>
+<img width="45%" src="img/timeseries/dif_lid_uasmin2.png">
+<img width="45%" src="img/timeseries/dif_lid_uasmin2_histeq.jpg">
+</section>
+
+<section>
+   <h3>Basic time series analysis: core, envelope</h3>
+<p>Envelope: what is the max height of crop in each pixel over the monitored period?
+<p>time of maximum - when was the crop highest at each grid cell?
+</section>
+
+<section>
+   <h3>Basic time series analysis: core, envelope</h3>
+<p>use envelope to show all cars ever parked there
+<p>core, snapshot, envelope, use e.g. to manage parking area
 </section>
 
 <section>
@@ -93,26 +170,18 @@ where is the wides range and largest variability in crop height?
 <section>
    <h3>Basic time series analysis: regression</h3>
 <p>
-if the changes are linear - e.g. certain crop growth,
+leave for longer time series - if the changes are linear - e.g. certain crop growth,
 per cell linear regression analysis
 </section>
 
 <section>
- <h3>Temporal data framework</h3>
+ <h3>Map algebra for time series</h3>
 
-Large time series: hundreds of surveys
-explain the concept - from temporal data workshop
-
-</section>
-
-<section>
- <h3>Temporal data framework</h3>
-Basic operations: extracting subsets, queries
-</section>
-
-<section>
- <h3>Temporal data framework</h3>
-analysis
+extract grid cells with elevation above lidar bare ground within a selected interval (z1,z2)
+<p>
+<img width="30%" src="img/timeseries/veg_uas_lidar2.png">
+<img width="30%" src="img/timeseries/veg_uas_lidar3.png">
+<img width="30%" src="img/timeseries/veg_uas_lidar7.png">
 </section>
 
 <section>
@@ -148,13 +217,16 @@ analysis
 </section>
 
 <section>
-   <h3>Analysis: Flow pattern</h3>
+   <h3>What we have learned</h3>
 <p>
 <ul>
-<li>analyze change in flow pattern  
+<li>UAS 3D monitoring basic considerations
+<li>temporal framework concept 
+<li>computing core and envelope and its application
+<li>indentification of distorted DSMs in time series
+<li>estimation of volumes
 </ul>
 <p>
-<img height="400" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
 </section>
 
 <div class="parent-page">
