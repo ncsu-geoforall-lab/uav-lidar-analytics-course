@@ -51,7 +51,7 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
 <section>
    <h3>Processing time series</h3>
 <ul>
-<li>analyze and interpolate point clouds: DSMs with common resolution
+<li>analyze and interpolate point clouds: DSMs with aligned, common resolution grids
 <li>raster DSMs are more suitable for time series than TIN
 <li>use GCPs and permanent features to evaluate accuracy, correct errors and distortions
 <li>assign time stamps and register raster DSMs within GIS-based temporal data framework
@@ -64,20 +64,21 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
 <ul>
  <li>supports efficient processing, management and analysis of space-time data sets
  <li>space-time dataset is a set of maps registered in a temporal database
- <li>space-time dataset may represent a process, maps represent the states
+ <li>space-time dataset may represent a dynamic process, 
+ <li>individual maps represent the states at a given time
 </ul>
-<p>our dsm raster maps
 <p class="small">
-Gebbert, S., Pebesma, E. (2014). A temporal GIS for field based environmental modeling. 
+Gebbert, S. and Pebesma, E. (2014). A temporal GIS for field based environmental modeling. 
 Environmental Modelling and Software, 53, 1–12.</p>
 </section>
 
 <section>
    <h3>Time stamp type</h3>
 <ul>
+ <li>time stamp: assigns time to an individual map in space-time daya set
  <li>time instant: snapshot at given time: 2013-10-15 13:00:00 (absolute time)
  <li>time interval: defined by start and end time: day, month, year (relative time)
- <li>UAS survey represents a snapshot (state) which can be agreggated into intervals
+ <li>a single UAS survey represents a snapshot (state) which can be agreggated into intervals
 </ul>
 <p>our time snapshot (sept surveys) and aggregated map
 </section>
@@ -94,14 +95,14 @@ Timeline tool: time and spatial extent of registered maps
 <ul>
 <li>Plot time series of elevation values at a given location
 </ul>
-<img width="45%" src="img/timeseries/dif_lid_uasmin2.png">
-<img width="45%" src="img/timeseries/dif_lid_uasmin2_histeq.jpg">
+<img width="45%" src="img/timeseries/plot1.jpg">
+<img width="45%" src="img/timeseries/plot2.jpg">
 </section>
 
 <section>
    <h3>Temporal count and intersection</h3>
 <ul>
-<li>Count: number of maps where the given cell has non-null value (overlap)
+<li>Count: number of maps (temporal snapshots) where the given cell has non-null value (overlap)
 <li>Intersection: grid cells with non-null values from each map in time series
 </ul>
 <img width="47%" src="img/timeseries/series_overlap_count.jpg">
@@ -114,8 +115,23 @@ Timeline tool: time and spatial extent of registered maps
 <li>Temporally aggregate maps over given period of time - for example to derive monthly average elevation
 </ul>
 Sept individual and average
-<img width="45%" src="img/timeseries/dif_lid_uasmin2.png">
-<img width="45%" src="img/timeseries/dif_lid_uasmin2_histeq.jpg">
+<img width="45%" src="img/timeseries/Sep4_Sep20.jpg">
+<img width="45%" src="img/timeseries/Sepmean.jpg">
+</section>
+
+<section>
+   <h3>Basic time series analysis</h3>
+<p>
+Per cell statistics (focal) computed for each cell over the time series:
+<ul>
+ <li>mean and standard deviation
+ <li>min, max elevation and range 
+ <li>time at minimum, time at maximum
+ <li>linear regression: slopem offset, regr. coefficient
+</ul>
+<p>
+<a href="http://www4.ncsu.edu/~hmitaso/gmslab/papers/MitasovaFinalGeoinf09.pdf">
+Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measures of terrain dynamics derived from time series of lidar data, Proc. 17th Int. Conf. Geoinformatics, Fairfax, VA. </a>
 </section>
 
 <section>
@@ -128,18 +144,18 @@ Sept individual and average
 </section>
 
 <section>
-   <h3>Basic time series analysis: core, envelope</h3>
+   <h3>Detecting surveys with large distortions</h3>
 <ul>
 <li>Derive bare ground from UAS time series using core
 <li>Compute difference between UAS core and lidar bare ground surface: identify DSMs with large distortions
-<li>Compute time of minimum raster to identify the distorted DSM with elevation below lidar bare ground
+<li>Compute time of minimum raster to identify the distorted DSMs with elevation well below lidar bare ground
 </ul>
 <img width="47%" src="img/timeseries/diff_lid_uasmin.jpg">
 <img width="47%" src="img/timeseries/minraster.jpg">
 </section>
 
 <section>
-   <h3>Basic time series analysis: core, envelope</h3>
+   <h3>Corrected UAS core surface</h3>
 <ul>
 <li>Remove distorted DSMs from derivation of core surface
 <li>Difference between UAS core and lidar bare ground surface is very small
@@ -153,6 +169,7 @@ Sept individual and average
    <h3>Basic time series analysis: core, envelope</h3>
 <p>Envelope: what is the max height of crop in each pixel over the monitored period?
 <p>time of maximum - when was the crop highest at each grid cell?
+<p>where is the largest range and variability in crop height?
 </section>
 
 <section>
@@ -162,16 +179,9 @@ Sept individual and average
 </section>
 
 <section>
-   <h3>Basic time series analysis: range and variability</h3>
-<p>
-where is the wides range and largest variability in crop height?
-</section>
-
-<section>
    <h3>Basic time series analysis: regression</h3>
-<p>
-leave for longer time series - if the changes are linear - e.g. certain crop growth,
-per cell linear regression analysis
+<p>longer time series, select subset where the changes are close to linear - e.g. certain crop growth,
+<p>per cell linear regression analysis: map of regression slope and offset 
 </section>
 
 <section>
