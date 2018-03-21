@@ -202,7 +202,7 @@
 
 <section>
    <h3>UAS for monitoring changes</h3>
-Low cost and rapid deployment: excellent for monitoring changes at local scale (fields, small watersheds)
+<p style="text-align:left">Low cost and rapid deployment: excellent for monitoring changes at local scale (fields, small watersheds)
 <p>
 <ul>
    <li class="fragment">crop monitoring: growth, disease, stress</li>
@@ -215,7 +215,7 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
 
 <section>
    <h3>Monitoring design</h3>
-<p>Assess:
+<p style="text-align:left">Assess:
 <ul>
     <li class="fragment">metrics to quantify changes: relative height, volume, feature migration</li>
     <li class="fragment">spatial resolution needed to capture the changes</li>
@@ -233,7 +233,7 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
 <li>use GCPs and permanent features to evaluate accuracy, correct errors and distortions
 <li>assign time stamps and register raster DSMs within GIS-based temporal data framework
 </ul>
-<p>Our time series of DSMs in Sketchfab
+
 </section>
 
 <section>
@@ -244,8 +244,10 @@ Low cost and rapid deployment: excellent for monitoring changes at local scale (
  <li>space-time dataset may represent a dynamic process 
  <li>individual maps represent the states of the dynamic system at a given time
 </ul>
+<br>
 <p class="small">
-Gebbert, S. and Pebesma, E. (2014). A temporal GIS for field based environmental modeling. 
+Gebbert, S. and Pebesma, E. (2014). <a href="https://www.sciencedirect.com/science/article/pii/S136481521300282X">
+A temporal GIS for field based environmental modeling.</a>
 Environmental Modelling and Software, 53, 1–12.</p>
 </section>
 
@@ -257,7 +259,8 @@ Environmental Modelling and Software, 53, 1–12.</p>
  <li>time interval - defined by start and end time: day, month, year (relative time)
  <li>a single UAS survey represents a snapshot (state) which can be agreggated into intervals
 </ul>
-<p>our time snapshot (sept surveys) and aggregated map
+
+<img class="stretch" src="img/timeseries/st_dataset.jpg">
 </section>
 
 <section>
@@ -272,8 +275,7 @@ Timeline tool: time and spatial extent of registered maps
 <ul>
 <li>Plot time series of elevation values at a given location
 </ul>
-<img width="45%" src="img/timeseries/plot1.jpg">
-<img width="45%" src="img/timeseries/plot2.jpg">
+<img width="70%"  src="img/timeseries/tplots.jpg">
 </section>
 
 <section>
@@ -291,9 +293,8 @@ Timeline tool: time and spatial extent of registered maps
 <ul>
 <li>Temporally aggregate maps over given period of time - for example to derive monthly average elevation
 </ul>
-Sept individual and average
-<img width="45%" src="img/timeseries/Sep4_Sep20.jpg">
-<img width="45%" src="img/timeseries/Sepmean.jpg">
+<br>
+<img width="75%" src="img/timeseries/aggregated_sept.jpg">
 </section>
 
 <section>
@@ -318,6 +319,8 @@ Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measu
  <li>Envelope: max. elevation measured for each cell 
 </ul>
 <p> Example: cutting plane with lidar, core and envelope
+    <img width="47%" src="img/timeseries/cutplane1.jpg">
+    <img width="47%" src="img/timeseries/cutplane2.jpg">
 </section>
 
 <section>
@@ -350,6 +353,8 @@ Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measu
 <li>time of maximum - when was the crop highest at each grid cell?
 <li>where is the largest range and variability in crop height?
 </ul>
+<img width="40%" src="img/timeseries/diff_lid_uasmax.jpg">
+<img width="40%" src="img/timeseries/max2.jpg">
 </section>
 
 <section>
@@ -358,6 +363,7 @@ Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measu
 <li>use envelope to show all cars ever parked at the site
 <li>core, snapshot, envelope, surfaces can be used to manage parking area
 </ul>
+<img width="50%" src="img/timeseries/cars.jpg">
 </section>
 
 <section>
@@ -397,7 +403,7 @@ The middle map shows distortions rather than crop.
  <h3>Estimate crop volume</h3>
 <p>Summary statistics can be used to estimate above ground crop biomass
 <p>
-Image illustrating volume computation - bare lidar, crop map cutting plane
+<img width="70%" src="img/timeseries/cutplane1.jpg">
 </section>
 
 <section>
@@ -407,7 +413,7 @@ Image illustrating volume computation - bare lidar, crop map cutting plane
 <li>compute volume based on difference between bare ground and above ground feature, such as building
 </ul>
 <p>
-<img height="400" src="img/fusion_lidar_uav/building volume.jpg">
+<img width="70%" src="img/timeseries/cutplane2.jpg">
 </section> 
 
 <section>
