@@ -1,5 +1,5 @@
 UAV/lidar Data Analytics
-========================
+=========================
 
 This is a repository for a course website and teaching materials.
 
