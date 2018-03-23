@@ -74,14 +74,29 @@ ls ~/odm/images
 
 <h3>Preprocesing of images</h3>
 Before we can run OpenDroneMap, we need to preprocess the images.
-OpenDroneMap takes GPS position and focal length from images, not from the log.
-Since the images don't have this information in their
-<a href="https://en.wikipedia.org/wiki/Exif">EXIF data</a>, we will have
-to add them there.
+
 <ol>
+<li>OpenDroneMap takes GPS position and focal length from images, not from the log.
+First we check whether the GPS data are in the
+<a href="https://en.wikipedia.org/wiki/Exif">EXIF data</a> of the images.
+You can go to file manager and right click to display properties of an image to see the
+EXIF information. Alternatively, use a command line tool <em>jhead</em>.
+We first install it, switch directory and run it twice, once with verbose setting
+to see more details.
+<pre><code>
+sudo apt-get install -y jhead
+cd ~/odm/images
+jhead dsc01648.jpg
+jhead -v dsc01648.jpg
+</code></pre>
+
+
+Since the images don't have GPS information in their
+EXIF data, we will have to add them there.</li>
+
     <li>First, we will need to convert the <code>.jxl</code> log
-file into a CSV file using
-<a href="https://github.com/wenzeslaus/jxl2csv">Vashek's script jxl2csv</a>.
+file into a CSV file using script
+<a href="https://github.com/wenzeslaus/jxl2csv">jxl2csv.py</a>.
 <pre><code>
 # change directory to folder with images
 cd ~/odm/images
@@ -96,19 +111,24 @@ head full_lowercase.csv
 </code></pre>
 </li>
     <li>Then we need to upload the focal length and GPS into the photos' EXIF data,
-because our photos don't have this information in EXIF. We will use
-<a href="https://github.com/petrasovaa/write-EXIF-GPS">Anna's script</a>
+because our photos don't have this information in EXIF. We will use a script
+<a href="https://github.com/petrasovaa/write-EXIF-GPS">write-EXIF-GPS.py</a>
 for that. There will be some warnings about missing files and truncating the
 entry, ignore them.
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
 <pre><code>
 # download the script
-wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
+wget https://gist.githubusercontent.com/petrasovaa/d7cbd64014f4bef24b1c/raw/write_exif_GPS.py
 # install libraries the script requires
-sudo apt update &amp;&amp; apt install -y proj-bin exiv2
+sudo apt update &amp;&amp; sudo apt install -y proj-bin exiv2
 # run the script, input is the CSV we created from jxl file
 python write_exif_GPS.py full_lowercase.csv
+</code></pre>
+
+Now check again the EXIF information:
+<pre><code>
+jhead dsc01648.jpg
 </code></pre>
 
 </li>
@@ -120,10 +140,10 @@ python write_exif_GPS.py full_lowercase.csv
 <pre><code>
 636795.964 219156.17 105.06 1588 2066 dsc01861.jpg
 </code></pre>
-    Download the <a href="./resources/gcp_odm.txt">prepared GCP file here</a>.
+    Download the <a href="./resources/gcp_list.txt">prepared GCP file here</a>.
     This file was manually prepared by identifying the GCPs on selected images.
 <pre><code>
-wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/gcp_odm.txt
+wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/gcp_list.txt
 </code></pre>
     </li>
 </ol>
@@ -149,7 +169,7 @@ Some explanation of the <code>docker run</code> command:
 
 <pre><code>
 cd ~/odm
-docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --resize-to 1000 --gcp /code/images/gcp_odm.txt
+docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --force-ccd 23.4 --resize-to 1000 --gcp /code/images/gcp_list.txt
 </code></pre>
 
 OpenDroneMap will do the processing in parallel. However, each process
@@ -164,22 +184,23 @@ Install additional packages for management of WebODM (assuming you
 already have Docker up and running):
 
 <pre><code>
-sudo apt install docker-compose python-setuptools python-pip
+sudo apt install -y docker-compose python-setuptools python-pip
 </code></pre>
 
 Get WebODM code using Git:
 
 <pre><code>
+cd ~
 git clone https://github.com/OpenDroneMap/WebODM --config core.autocrlf=input
 </code></pre>
 
-Go the the course code directory:
+Go to the code directory:
 
 <pre><code>
 cd WebODM
 </code></pre>
 
-Start WebODM:
+Start WebODM (be patient):
 
 <pre><code>
 ./webodm.sh start &amp;
