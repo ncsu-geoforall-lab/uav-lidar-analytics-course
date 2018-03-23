@@ -46,17 +46,29 @@ OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
 
 <h3>Setting up Docker and directory structure</h3>
 
-We will run OpenDroneMap using Docker to simplify setup (the internally used operating system is Ubuntu).
-OpenDroneMap doesn't have a desktop GUI, we will run it in command line,
-which is quite simple once we deal with preprocessing.
-We will use Ubuntu VCL (Ubuntu 16.04 LTS).
-Once you launch it:
+We will run OpenDroneMap using <a href="https://www.docker.com/">Docker</a> to simplify setup (the internally used operating system is Ubuntu).
+OpenDroneMap doesn't have a desktop GUI, we will run it in command line.
+We will use <a href="https://vcl.ncsu.edu/">VCL</a> with Ubuntu OS, select <em>Agisoft Photoscan &amp; GRASS GIS - Ubuntu</em>
+ (Ubuntu 16.04 LTS). Alternatively, use <em>OSGeo Live</em>, or <em>Ubuntu 16.04 LTS</em> but they provide less computing resources.
 
 <ol>
+<li>Once you start Ubuntu, go to Applications - Terminal Emulator,
+    from this terminal window we will first install Docker from packages:
 
-<li>Download and install <a href="https://www.docker.com/">Docker</a>. See
-    <a href="https://ncsu-geoforall-lab.github.io/open-science-course/topics/environments.html">an open science class instructions</a>
-    for introduction to Docker and recommended download links.
+<pre><code>sudo apt-get install -y docker.io
+</code></pre>
+
+To properly setup Docker in terms of user permissions, run:
+<pre><code>sudo groupadd docker
+sudo usermod -aG docker $USER
+</code></pre>
+To make sure the permission changes take place, you need to log out (Applications - Log out)
+and then log in back. Then start the terminal again.
+</li>
+
+<li>We will download a pre-built image of OpenDroneMap:
+<pre><code>docker pull opendronemap/opendronemap
+</code></pre>
 </li>
 
 <li>Either in file manager or in command line create a directory
@@ -77,6 +89,7 @@ mkdir texturing
 </li>
 
 <li>Get your data ready:
+    Open browser (Applications - Internet - Firefox).
     Download the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
     for the class. Unzip them. Move the images and all the other files
     to the <code>images</code> directory (no subdirectories).
@@ -84,13 +97,12 @@ mkdir texturing
     this:
 <pre><code>mv unzipped-dir/* images/
 </code></pre>
-</li>
-<li>
-    We will run ODM through Docker. We will download a pre-built image of OpenDroneMap
-    (this will take some time):
-<pre><code>docker pull opendronemap/opendronemap
+
+You should see a lot of .jpg and couple other files listed when you run:
+<pre><code>ls ~/odm/images
 </code></pre>
 </li>
+
 </ol>
 
 <h3>Preprocesing of images</h3>

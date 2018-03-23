@@ -50,35 +50,34 @@ Outline:
 </ul>
 
 Data: 
-
+<p>You should have everything already for Mid Pines area, get anything missing from the <a href="../logistics.html">Course logistics web page</a>:
 <ul>
-    <li>you should already have UAS DSMs and points clouds, get anything missing
-        from the <a href="../assignments.html">Course logistics web page</a>.
+    <li><a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfmZPRHlYSTNIZzdpRVBzay04c0VXUjM4Nzlmbjl5WDlrcGs1bFVLczlTd1k">
+       GRASS Location LakeWheeler_NCspm</a> with timeseries of UAS DSMs from 2015 flights</li>
+    <li> <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">2013 lidar interpolated DEM and DSM</a>,
+        use r.unpack.
     <li><a href="./resources/fields.pack">Fields polygon as packed raster</a> use r.unpack in your mapset to import it
+    <li>Text file <a href="./resources/series.txt">series.txt</a> with timeseries</li>
 </ul>
 <p>
 Tools:
-
 <ul>
-    <li>
-        Your <a href="http://wingrass.fsv.cvut.cz/grass70/">GRASS GIS 7</a>
-        installation should also include <a href="http://www.liblas.org/">libLAS</a> library
-        which is used by GRASS modules v.in.lidar and r.in.lidar
-        (standalone GRASS GIS for MS Windows, OSGeo4W and Ubuntu packages contain libLAS).
-    </li>
-    <li>libLAS installation should include command line tools lasinfo and las2txt.
+    <li><a href="http://wingrass.fsv.cvut.cz/grass74/">GRASS GIS 7</a></li>
+    <li>GRASS addon <a href="https://grass.osgeo.org/grass74/manuals/addons/r.patch.smooth.html">r.patch.smooth</a> can be installed with 
+        <code>g.extension r.patch.smooth</code></li>
 </ul>
 
 <h3>Analyze time series of UAS DSMs</h3>
 <h4>Register the time series in temporal framework</h4>
-Start GRASS GIS in PERMANENT mapset to create a temporal dataset consisting of a series
+Start GRASS GIS in Lake_Wheeler_NCspm Location and PERMANENT Mapset to create a temporal dataset consisting of a series
 of UAS DSMs.
 First, create a space-time raster dataset (STRDS) with absolute temporal type:
 
 <pre><code>t.create output=uas_dsm type=strds temporaltype=absolute semantictype=mean title="UAS_DSM" description="UAS-based 2015 DSMs processed by Agisoft"
 </code></pre>
 
-Now, create a text file named "series.txt" with the following content in your working directory.
+Now, create a text file named "series.txt" with the following content in your working directory, or <a href="./resources/series.txt">download the prepared file</a>
+into your working directory.
 These are the DSMs with their time stamps:
 <pre>
 2015_03_18_DSM_agi_6GCP|2015-03-18
@@ -103,12 +102,31 @@ See different ways we can list raster maps registered in the dataset:
 t.rast.list input=uas_dsm columns=name,start_time,min,max
 </code></pre>
 
+Verify the listed raster maps are actually in the database:
+<pre><code>g.list type=raster pattern="2015*"
+</code></pre>
+You can also use the <em>Data</em> tab in Layer Manager.
+
 <p>
-<!-- TODO:check on Windows -->
+We can set common color table to all maps in the dataset:
+<pre><code>t.rast.colors input=uas_dsm color=elevation
+d.rast 2015_06_20_DSM_agi_11GCP@PERMANENT
+d.rast 2015_10_06_DSM_agi_8GCPs@PERMANENT
+</code></pre>
+
+<p>
 To get better idea about the dates and spatial extents, we can use <em>Timeline tool</em>
 accessible from <em>Temporal - GUI tools - Timeline tool</em>. Select dataset <code>uas_dsm</code>,
 you can click on the drawn data points,
-and then also check <em>3D plot of spatio-temporal extents</em>
+and then also check <em>3D plot of spatio-temporal extents</em>. Stretch the window as needed.
+<p>
+
+We can plot the elevation timeseries using <em>Temporal Plot Tool</em>.
+Open the tool from
+<em>Temporal - GUI tools - Temporal plot tool</em>.
+Select dataset <code>uas_dsm</code> and click on the arrow next to the X and Y coordinates field.
+Then click somewhere on the Map Display and press <em>Draw</em>. You should see
+a plot of elevation values. Try different places (road, field, building).
 
 <h4>Find the area mapped by all surveys</h4>
 <p>
@@ -132,11 +150,13 @@ we create masking raster representing the intersection of all DSMs, and then we 
 region to the extent of its non-null bounding box:
 <pre><code>t.rast.series input=uas_dsm@PERMANENT method=count output=count
 t.rast.series input=uas_dsm@PERMANENT method=count output=intersection -n
+d.rast count
+d.rast intersection
 g.region zoom=intersection -p
 r.mask raster=intersection
 </code></pre>
 
-How large is the area (use r.univar)?
+How large is the area (use r.report)?
 
 
 <h4>Temporal aggregation</h4>
@@ -152,17 +172,25 @@ t.rast.list input=uas_dsm_aggr columns=name,start_time
 
 
 <h4>Minimum elevation (core)</h4>
-Find the minimum elevation (core) - how close it is to lidar bare ground?
+You should already have  <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">
+lidar DSM and DEMs</a> if you haven't done already, unzip it in your working directory and unpack:
 
+<pre><code>r.unpack -o input=mid_pines_lidar2013_dsm.pack
+r.unpack -o input=mid_pines_lidar2013_dem.pack
+</code></pre>
+
+Find the minimum elevation (core) - how close it is to lidar bare ground?
 <pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum
 r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum"
-r.colors map=diff_lidar_uas@temporal color=differences
+r.colors map=diff_lidar_uas color=differences
+d.rast diff_lidar_uas
 </code></pre>
 
 Parts of the minimum raster are significantly below lidar ground,
 find out which DSM is causing it:
 
 <pre><code>t.rast.series input=uas_dsm@PERMANENT method=min_raster output=min_raster
+d.rast min_raster
 </code></pre>
 
 Display resulting raster <code>min_raster</code> and query it 
@@ -177,53 +205,117 @@ Since there is some problem with the third and fourth raster (<code>2015_07_27_D
 we will exclude them from the analysis:
 <pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum where="start_time < '2015-07-01' or start_time > '2015-09-01'" --o
 r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum" --o
-r.colors map=diff_lidar_uas@temporal color=differences
+r.colors map=diff_lidar_uas color=differences
 </code></pre>
 
+Apply now the color table <a href="./resources/dif_lidar_uav.txt">dif_lidar_uav.txt</a> we used for highlighting differences in the last assignment:
+<pre><code>r.colors map=diff_lidar_uas rules=dif_lidar_uav.txt
+</code></pre>
+Explain what you see.
+
+Let's look now which temporal datasets we have:
+<pre><code>t.list columns=id,number_of_maps,start_time
+</code></pre>
 
 <h4>Estimate crop biomass</h4>
 We will use raster algebra on the time series
-to compute crop biomass. We assume crop is anything higher than 0.3 and lower than 2 m:
-<pre><code>t.rast.mapcalc inputs=uas_dsm@PERMANENT expression="if (uas_dsm - mid_pines_lidar2013_dem > 0.3 &amp;&amp; uas_dsm - mid_pines_lidar2013_dem < 2, uas_dsm - mid_pines_lidar2013_dem, null())" output=veg_uas_lidar basename=veg_uas_lidar
+to compute crop biomass.
+First we need to make sure that we take into account only fields (not forests).
+You can use get the <a href="./resources/fields.pack">packed raster representation of fields</a> (link is at the top).
+We assume crop is anything higher than 0.3 and lower than 2 m (to exclude the building for example):
+
+<pre><code>r.unpack -o fields.pack
+t.rast.mapcalc inputs=uas_dsm@PERMANENT expression="if (fields, if(uas_dsm - mid_pines_lidar2013_dem > 0.3 &amp;&amp; uas_dsm - mid_pines_lidar2013_dem < 2, uas_dsm - mid_pines_lidar2013_dem, null()))" output=veg_uas_lidar basename=veg_uas_lidar
 t.rast.univar input=veg_uas_lidar where="start_time < '2015-07-01' or start_time > '2015-09-01'"
+d.rast veg_uas_lidar_2
+r.report -n map=veg_uas_lidar_2 units=me nsteps=1
+r.univar map=veg_uas_lidar_2
+</code></pre>
+
+Use Python shell (tab in Layer Manager) to compute the biomass volume for June (paste each line into Python shell and press Enter):
+<pre><code>sum = grass.parse_command('r.univar', map='veg_uas_lidar_2', flags='g')['sum']
+float(sum) * grass.region()['nsres']
+</code></pre>
+
+Remove the mask before we proceed in further analysis:
+<pre><code>r.mask -r
 </code></pre>
 
 <h3>Evaluate impact of vegetation change on viewshed extent</h3>
 
-We would like to set up a webcam to monitor this area
-during the growing season so we need to update the lidar-based DSM with the  UAS data and
+We would like to set up a webcam to monitor this area.
+First we will compute a <em>cumulative viewshed</em> of this area
+to find places from which we will have likely good visibility.
+We pick several places distributed all over the area from which we compute viewsheds
+on a lidar DSM with observer height of 3 meters (webcam height).
+
+<pre><code>g.region raster=mid_pines_lidar2013_dsm res=1 -pa
+r.viewshed input=mid_pines_lidar2013_dsm output=vshed_1 coordinates=637087,219376 observer_elevation=3
+r.viewshed input=mid_pines_lidar2013_dsm output=vshed_2 coordinates=637004,219653 observer_elevation=3
+r.viewshed input=mid_pines_lidar2013_dsm output=vshed_3 coordinates=636782,219374 observer_elevation=3
+r.viewshed input=mid_pines_lidar2013_dsm output=vshed_4 coordinates=636839,219150 observer_elevation=3
+r.viewshed input=mid_pines_lidar2013_dsm output=vshed_5 coordinates=636665,219527 observer_elevation=3
+r.viewshed input=mid_pines_lidar2013_dsm output=vshed_6 coordinates=636863,219503 observer_elevation=3
+</code></pre>
+
+Now we compute the cumulative viewshed as the number of places (from the coordinates above)
+from which a cell is visible. This gives us better idea which places are visually more prominent
+and therefore likely to have good view of the fields.
+<pre><code>r.series input=vshed_1,vshed_2,vshed_3,vshed_4,vshed_5,vshed_6 output=cum_viewshed method=count
+d.rast cum_viewshed
+</code></pre>
+
+Display the result with legend to see which places are potentially good for placing a webcam.
+
+
+<p>
+Since we need the webcam to capture the field during entire
+year we can run <a href="https://grass.osgeo.org/grass74/manuals/t.rast.series.html">t.rast.series</a>
+with method=maximum on the time series of UAS DSMs to derive the DSM series envelope surface
+and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
+the following year. We exclude the problematic DSMs as we did while deriving the core surface:
+
+<pre><code>g.region raster=mid_pines_lidar2013_dsm
+t.rast.series input=uas_dsm@PERMANENT method=maximum output=maximum where="start_time < '2015-07-01' or start_time > '2015-09-01'"
+</code></pre>
+
+<p>
+We need to update the lidar-based DSM with the  UAS envelope data and
 analyze the viewshed while taking into account the corn growing in the field.
 First we need to make sure that we take into account entire field
 to create a lidar-based DSM updated in the fields using UAS data.
-You can use digitizer to create a polygon or 
-get the packed raster representation of fields from the link above.
-
-<pre><code>r.unpack -o fields.pack
-r.mapcalc "uas_june_clpol = 2015_06_20_DSM_agi_11GCP * fields" 
-r.patch uas_june_clpol,mid_pines_lidar2013_dsm out=lid_uas_patch_polygon 
-r.relief lid_uas_patch_polygon out=lid_uas_patch_polygonsh 
+<pre><code>r.mapcalc "maximum_clip = if (fields, maximum)"
+r.patch.smooth input_a=maximum_clip input_b=mid_pines_lidar2013_dsm output=lidar_maximum_dsm smooth_dist=10
+r.relief lidar_maximum_dsm out=lidar_maximum_dsm_relief zscale=5
+d.rast lidar_maximum_dsm_relief
 </code></pre>
+Look at the relief map around the building - where do people park their cars?
 
-We compute viewshed from the point 637100,219360 using
-lidar only, uas only, and patched lidar+uas, 
-<pre><code>r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar coordinates=637100,219360
-r.viewshed input=2015_06_20_DSM_agi_11GCP output=viewshed_uas coordinates=637100,219360
-r.viewshed input=lid_uas_patch_polygon output=viewshed_liduaspatchpoly coordinates=637100,219360 --o
-r.colors viewshed_lidar co=reds
-r.colors viewshed_uas co=greens
-r.colors viewshed_liduaspatchpoly co=blues
+<p>
+Now we selected a location based on the cumulative viewshed and
+look at the difference between the viewshed based on lidar and the envelope surface:
+<pre><code>r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar_dsm observer_elevation=3 coordinates=636917,219223
+r.viewshed input=lidar_maximum_dsm output=viewshed_maximum observer_elevation=3 coordinates=636917,219223
+
+r.colors viewshed_lidar_dsm co=reds
+r.colors viewshed_maximum co=greens
 </code></pre>
 To compare the viewsheds display the resulting maps with transparency.
-Discuss the result.
-<p>
-Note: To find the location and height of the webcam that will capture the entire field during entire
-year we can run 
-<a href="https://grass.osgeo.org/grass72/manuals/r.series.html">r.series</a>
-with method=maximum on the time series of UAS DSMs to derive the DSM series envelope surface
-and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
-the following year.
+Discuss the result. Can you find a better place for the webcam? Would placing the webcam higher help?
 
-<h3>Estimate volume of eroded and deposited soil</h3>
+
+<h3>Estimate volume of a building</h3>
+We need to first extract the mask of the building: 
+<pre><code>g.region n=219388.5 s=219366.9 w=637100.1 e=637138.5 res=0.3 -pa
+r.mapcalc "building = 2015_06_20_DSM_agi_11GCP - mid_pines_lidar2013_dem"
+r.mapcalc "building_mask = if(building > 2, 1, null())"
+</code></pre>
+
+Now we compute the volume
+<pre><code>r.volume input=building clump=building_mask
+</code></pre>
+
+What is the volume of the building?
 <!--
 r.viewshed input=lid_uas_patch output=viewshed_liduas coordinates=637100,219360
 r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=637100,219360
