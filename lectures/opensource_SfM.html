@@ -1,15 +1,150 @@
 <section>
-    <h2>Open source SfM pipeline</h2>
-    <h4>GIS595/MEA792: UAV/lidar Data Analytics</h4>
+    <h2>Open source UAS processing on cloud infrastructure</h2>
+    <h4>GIS595-004/603; MEA592-006/601:</h4>
+    <h4>UAS Mapping for 3D Modeling</h4>
+    <h4 style="margin-top: 0.5em">
+    Anna Petrasova, Vaclav Petras, Helena Mitasova</h4>
     <p class="title-foot">
-        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
-        <a href="http://geospatial.ncsu.edu/osgeorel/" title="NCSU GeoForAll Lab">GeoForAll Lab</a>
-        at
-        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
-        <br>
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics,</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
     </p>
-    <p>Fall 2016</p>
 </section>
+
+<section>
+<h3>Outline</h3>
+<ul>
+<li>Parallel computing concepts</li>
+<li>Parallel computing infrastructure</li>
+<li>Software licences and open source software</li>
+<li>Overview of open source tools for UAS processing</li>
+<li>OpenDroneMap</li>
+</ul>
+</section>
+
+<section>
+<h3>Parallel processing</h3>
+<ul>
+<li>Structure from Motion pipeline is typically more demanding
+ than what we are used to usual with geospatial analysis</li>
+<li class="fragment">solution is parallel processing (and more efficient algorithms in long term)</li>
+<li class="fragment">types of parallel processing:
+<ul>
+    <li>CPU &mdash; tens of parallel processes</li>
+    <li>GPU &mdash; hundreds and thousands of parallel processes</li>
+    <li>cluster with nodes &mdash; each node has tens of CPUs/GPUs</li>
+</ul>
+</li></ul>
+</section>
+
+<section>
+<h3>CPUs in geospatial context</h3>
+<ul>
+<li>Just because your computer has many CPUs, that doesn't mean
+a computation uses them</li>
+<li>Implementing parallel computing with CPUs can be done on the level of algorithm or user level</li>
+</ul>
+<br>
+<img width="50%" src="img/open_source/CPUs.png">
+</section>
+
+<section>
+<h3>CPUs in geospatial context: approaches</h3>
+<ul>
+<li><em>Embarassingly parallel problems</em> &mdash;  independent computations (e.g., solar radiation for more days)</li>
+<li class="fragment"><em>Tiling approach</em> &mdash; divide spatial domain into tiles possibly with overlaps (e.g., interpolation)</li>
+<li class="fragment"><em>Complex approaches</em> &mdash; depend on algorithms, often use tiling with communication between tiles (e.g., hydrology)</li>
+</ul>
+</section>
+
+<section>
+<h3>CPUs in geospatial context: (dis)advantages</h3>
+<p style="text-align: left"> Benefits:
+<ul >
+<li>Many problems fall into first two categories</li>
+<li>It's fairly easy for users to parallelize their computations
+using Python, or background processing</li>
+</ul></p>
+<p class="fragment" style="text-align: left"> Problems:
+<ul class="fragment">
+<li>Overhead can cause a program to run slower than on one CPU (running on <em>n</em> CPUs does not mean <em>n</em>-times speed-up)</li>
+<li>We might not have enough memory for all processes</li>
+</ul></p>
+</section>
+
+<section>
+<h3>GPU computing</h3>
+<ul>
+<li>suitable for large number of very simple computational tasks with minimum memory requirement</li>
+<li>hardware specific (e.g., CUDA platform is for Nvidia only)</li>
+<li>complex programming APIs</li>
+</ul>
+</section>
+
+<section>
+<h3>SfM parallel computing</h3>
+<ul>
+<li>different parts of the pipeline are suitable for different parallelization types</li>
+<li>e.g., PhotoScan can use GPU for image matching and depth maps creation</li>
+</ul>
+</section>
+
+<section>
+<h3>Parallel computing infrastructure (1)</h3>
+<ul>
+<li>laptop/desktop (low power, 8 CPUs) &mdash; for individuals</li>
+<li>server (medium power, tens of CPUs)
+<ul>
+<li>typically remote access, but physical machine is accessible</li>
+<li> hardware owned by organizations, companies</li>
+</ul>
+</li>
+</ul>
+</section>
+
+<section>
+<h3>Parallel computing infrastructure (2)</h3>
+<ul>
+<li>cloud (medium power, tens of CPUs)
+  <ul>
+     <li>connected computers, actual hardware/OS hidden through virtualization</li>
+     <li>easy to setup from user point of view</li>
+     <li>computing is often not the primary application</li>
+     <li>e.g., <a href="https://vcl.ncsu.edu/">NCSU VCL</a>, Amazon Web Services </li>
+  </ul>
+<li>HPC, supercomputers (high power, thousands of CPUs) 
+  <ul>
+      <li>connected nodes, Linux-based OS</li>
+      <li>not all programs can take advantage of it</li>
+      <li>e.g., <a href="https://projects.ncsu.edu/hpc/main.php">NCSU HPC: henry2</a></li>
+  </ul>
+</li>
+</ul>
+</section>
+
+
+<section>
+<h3>Software licensing and cloud</h3>
+<p style="text-align:left">When using any software, you need to deal with licenses. Proprietary software:
+<ul>
+<li>often has educational vs. commercial licenses</li>
+<li>typically needs licences for each computer/user &mdash;
+    may require special licenses for cloud (e.g., Agisoft floating licences), or per computer cores (e.g., Oracle) </li>
+<li>price may be included in the cost of cloud virtual instances (e.g., Windows vs Linux)</li>
+</ul>
+</section>
+
+<section>
+<h3>Software licensing and cloud</h3>
+<p style="text-align:left">Open source software:
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</section>
+
+<!-- According to Whitehurst, unlike server virtualization where each VM is devoted to a single application, the containerization concept is to allow multiple applications to share a single OS instance while still maintaining secure data and resource separation. The advantages are increased performance, reduced VM overhead and hence, much higher resource utilization, in which a single server might host 50 or more containerized apps versus 10 or 20 VMs -->
+
 <section>
 <h3>Overview of open source tools</h3>
   <img src="img/opensource_overview.png" class="stretch">
