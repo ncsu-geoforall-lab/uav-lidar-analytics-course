@@ -39,24 +39,66 @@
 <!-- This is a generated file. Do not edit. -->
 <h2>Processing of UAS imagery in OpenDroneMap</h2>
 
-We will reconstruct DSM and create orthophoto in <a href="http://opendronemap.github.io/odm/">
-OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
+
+Outline:
+<ul>
+    <li> Setup VCL with OpenDroneMap (ODM)</li>
+    <li>Preprocess images to include GPS coordinates</li>
+    <li>Run ODM from command line</li>
+    <li>Setup WebODM</li>
+    <li>Explore results from ODM</li>
+</ul>
+
+Data: 
+<p>Don't download this data on your computer, we will download it on VCL during assignment.
+<ul>
+    <li>Sample of June 2015 UAV flight:
+         <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>.</li>
+    <li> <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">2013 lidar interpolated DEM and DSM</a>,
+        use r.unpack.
+</ul>
 <p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/0UctfoeNB_Y" frameborder="0" allowfullscreen></iframe>
+Tools:
+<ul>
+    <li><a href="http://wingrass.fsv.cvut.cz/grass74/">GRASS GIS 7</a></li>
+    <li><a href="http://opendronemap.github.io/odm/">OpenDroneMap</a> (we will install it on VCL)
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/0UctfoeNB_Y" frameborder="0" allowfullscreen></iframe>
+</ul>
+
+
+
+<!-- We will reconstruct DSM and create orthophoto in <a href="http://opendronemap.github.io/odm/">
+OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
+<p> -->
+
 
 <h3>Setting up Docker and directory structure</h3>
 
-We will run OpenDroneMap using Docker to simplify setup (the internally used operating system is Ubuntu).
-OpenDroneMap doesn't have a desktop GUI, we will run it in command line,
-which is quite simple once we deal with preprocessing.
-We will use Ubuntu VCL (Ubuntu 16.04 LTS).
-Once you launch it:
+We will run OpenDroneMap using <a href="https://www.docker.com/">Docker</a> to simplify setup (the internally used operating system is Ubuntu).
+OpenDroneMap doesn't have a desktop GUI, we will run it in command line.
+We will use <a href="https://vcl.ncsu.edu/">VCL</a> with Ubuntu OS, select <em>Agisoft Photoscan &amp; GRASS GIS - Ubuntu</em>
+ (Ubuntu 16.04 LTS). Alternatively, use <em>OSGeo Live</em>, or <em>Ubuntu 16.04 LTS</em> but they provide less computing resources.
 
 <ol>
+<li>Once you start Ubuntu, it will ask about keyring, click Cancel,
+    then it asks about panel, say Use default.
+    Go to Applications - Terminal Emulator,
+    from this terminal window we will first install Docker from packages:
 
-<li>Download and install <a href="https://www.docker.com/">Docker</a>. See
-    <a href="https://ncsu-geoforall-lab.github.io/open-science-course/topics/environments.html">an open science class instructions</a>
-    for introduction to Docker and recommended download links.
+<pre><code>sudo apt-get install -y docker.io
+</code></pre>
+
+To properly setup Docker in terms of user permissions, run:
+<pre><code>sudo groupadd docker
+sudo usermod -aG docker $USER
+</code></pre>
+To make sure the permission changes take place, you need to log out (Applications - Log out)
+and then log in back. Then start the terminal again.
+</li>
+
+<li>We will download a pre-built image of OpenDroneMap:
+<pre><code>docker pull opendronemap/opendronemap
+</code></pre>
 </li>
 
 <li>Either in file manager or in command line create a directory
@@ -77,6 +119,7 @@ mkdir texturing
 </li>
 
 <li>Get your data ready:
+    Open browser (Applications - Internet - Firefox).
     Download the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
     for the class. Unzip them. Move the images and all the other files
     to the <code>images</code> directory (no subdirectories).
@@ -84,25 +127,38 @@ mkdir texturing
     this:
 <pre><code>mv unzipped-dir/* images/
 </code></pre>
-</li>
-<li>
-    We will run ODM through Docker. We will download a pre-built image of OpenDroneMap
-    (this will take some time):
-<pre><code>docker pull opendronemap/opendronemap
+
+You should see a lot of .jpg and couple other files listed when you run:
+<pre><code>ls ~/odm/images
 </code></pre>
 </li>
+
 </ol>
 
 <h3>Preprocesing of images</h3>
 Before we can run OpenDroneMap, we need to preprocess the images.
-OpenDroneMap takes GPS position and focal length from images, not from the log.
-Since the images don't have this information in their
-<a href="https://en.wikipedia.org/wiki/Exif">EXIF data</a>, we will have
-to add them there.
+
 <ol>
+<li>OpenDroneMap takes GPS position and focal length from images, not from the log.
+First we check whether the GPS data are in the
+<a href="https://en.wikipedia.org/wiki/Exif">EXIF data</a> of the images.
+You can go to file manager and right click to display properties of an image to see the
+EXIF information. Alternatively, use a command line tool <em>jhead</em>.
+We first install it, switch directory and run it twice, once with verbose setting
+to see more details.
+<pre><code>sudo apt-get install -y jhead
+cd ~/odm/images
+jhead dsc01648.jpg
+jhead -v dsc01648.jpg
+</code></pre>
+
+
+Since the images don't have GPS information in their
+EXIF data, we will have to add them there.</li>
+
     <li>First, we will need to convert the <code>.jxl</code> log
-file into a CSV file using
-<a href="https://github.com/wenzeslaus/jxl2csv">Vashek's script jxl2csv</a>.
+file into a CSV file using script
+<a href="https://github.com/wenzeslaus/jxl2csv">jxl2csv.py</a>.
 <pre><code><span class="comment"># change directory to folder with images
 </span>cd ~/odm/images
 <span class="comment"># download the script
@@ -116,18 +172,22 @@ head full_lowercase.csv
 </code></pre>
 </li>
     <li>Then we need to upload the focal length and GPS into the photos' EXIF data,
-because our photos don't have this information in EXIF. We will use
-<a href="https://github.com/petrasovaa/write-EXIF-GPS">Anna's script</a>
+because our photos don't have this information in EXIF. We will use a script
+<a href="https://github.com/petrasovaa/write-EXIF-GPS">write-EXIF-GPS.py</a>
 for that. There will be some warnings about missing files and truncating the
 entry, ignore them.
 Warning: script <code>write_exif_GPS.py</code> is not general, focal length and camera model are hardcoded
 and must be changed for different cameras.
 <pre><code><span class="comment"># download the script
-</span>wget https://raw.githubusercontent.com/petrasovaa/write-EXIF-GPS/master/write_exif_GPS.py
+</span>wget https://gist.githubusercontent.com/petrasovaa/d7cbd64014f4bef24b1c/raw/write_exif_GPS.py
 <span class="comment"># install libraries the script requires
-</span>sudo apt update &amp;&amp; apt install -y proj-bin exiv2
+</span>sudo apt update &amp;&amp; sudo apt install -y proj-bin exiv2
 <span class="comment"># run the script, input is the CSV we created from jxl file
 </span>python write_exif_GPS.py full_lowercase.csv
+</code></pre>
+
+Now check again the EXIF information:
+<pre><code>jhead dsc01648.jpg
 </code></pre>
 
 </li>
@@ -138,9 +198,9 @@ and must be changed for different cameras.
     For example:
 <pre><code>636795.964 219156.17 105.06 1588 2066 dsc01861.jpg
 </code></pre>
-    Download the <a href="./resources/gcp_odm.txt">prepared GCP file here</a>.
+    Download the <a href="./resources/gcp_list.txt">prepared GCP file here</a>.
     This file was manually prepared by identifying the GCPs on selected images.
-<pre><code>wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/gcp_odm.txt
+<pre><code>wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/gcp_list.txt
 </code></pre>
     </li>
 </ol>
@@ -164,7 +224,8 @@ Some explanation of the <code>docker run</code> command:
 </ul>
 
 <pre><code>cd ~/odm
-docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --resize-to 1000 --gcp /code/images/gcp_odm.txt
+docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --resize-to 1000 --gcp /code/images/gcp_list.txt --force-ccd 23.4
+
 </code></pre>
 
 OpenDroneMap will do the processing in parallel. However, each process
@@ -172,26 +233,29 @@ requires certain amount of memory (RAM) based on the size of input
 images. If you want to limit the memory usage, you need to limit the
 number of processes using the <code>--opensfm-processes</code> command
 line option.
+<p>
+Open a new terminal and continue in the next step while the computation runs.
 
 <h3>Running WebODM</h3>
 
 Install additional packages for management of WebODM (assuming you
 already have Docker up and running):
 
-<pre><code>sudo apt install docker-compose python-setuptools python-pip
+<pre><code>sudo apt install -y docker-compose python-setuptools python-pip
 </code></pre>
 
 Get WebODM code using Git:
 
-<pre><code>git clone https://github.com/OpenDroneMap/WebODM --config core.autocrlf=input
+<pre><code>cd ~
+git clone https://github.com/OpenDroneMap/WebODM --config core.autocrlf=input
 </code></pre>
 
-Go the the course code directory:
+Go to the code directory:
 
 <pre><code>cd WebODM
 </code></pre>
 
-Start WebODM:
+Start WebODM (be patient):
 
 <pre><code>./webodm.sh start &amp;
 </code></pre>
@@ -214,22 +278,59 @@ to log in using the admin account credentials you created earlier.
 <h3>Using the results</h3>
 
 All results are stored in the <code>odm</code> directory,
-specifically in <code>orthophoto</code> and <code>georeferencing</code>
+specifically in <code>orthophoto</code>, <code>georeferencing</code>, and <code>texturing</code>
 subdirectories.
-We are interested in the point cloud located in the
+We are interested in the point cloud <code>odm_georeferenced_model.las</code> located in the
 <code>georeferencing</code> directory.
 The point cloud is available as a LAS or text file.
-In GRASS GIS, you can use
-<a href="https://grass.osgeo.org/grass72/manuals/r.in.lidar.html">r.in.lidar</a>
-module or
-<a href="https://grass.osgeo.org/grass72/manuals/r.in.xyz.html">r.in.xyz</a>
-module to create a DSM by binning
-or <a href="https://grass.osgeo.org/grass72/manuals/v.surf.rst.html">v.surf.rst</a>
-to interpolate a DSM.
-The georeferenced orthophoto is a <code>.tif</code> file located in the
-<code>orthophoto</code> directory.
-The CRS of the point cloud and orthophoto should be in EPSG:3358
-(NC State Plane Meters).
+
+<h4>View point cloud</h4>
+<p> Look first at the point cloud (<code>odm_georeferenced_model.las</code>) in <a href="plas.io">plas.io</a>.
+
+
+<h4>View mesh</h4>
+To view and edit the mesh stored as OBJ and located in the
+<code>texturing</code> directory, we can use MeshLab.
+MeshLab can also import the point cloud stored as PLY file.
+In terminal run to install:
+
+<pre><code>sudo apt-get install meshlab
+</code></pre>
+You can then find it in Applications - Graphics.
+Import mesh <code>odm_textured_model_geo.obj</code>.
+
+
+<h4>View DSM</h4>
+<p>Start GRASS GIS (Applications - Education), create GRASS GIS database directory <code>grassdata</code>
+in your home folder. Create new Location (<em>New</em> button on the left)
+using EPSG code 3358.
+<p>
+Start GRASS GIS in PERMANENT and set your working directory where you have
+your odm folder. Import generated orthophoto:
+<pre><code>r.import input=orthophoto/odm_orthophoto.tif output=odm_ortho
+g.region raster=odm_ortho.1
+r.mask raster=odm_ortho.4 maskcats=255
+r.composite red=odm_ortho.1 green=odm_ortho.2 blue=odm_ortho.3 output=ortho
+r.mask -r
+</code></pre>
+
+<p>
+Now import LAS file and fill holes using IDW interpolation. Alternatively you could
+import points with <a href="https://grass.osgeo.org/grass74/manuals/v.in.lidar.html">v.in.lidar</a> and then interpolate using 
+<a href="https://grass.osgeo.org/grass74/manuals/v.surf.rst.html">v.surf.rst</a>.
+<pre><code>r.in.lidar -eo input=georeferencing/odm_georeferenced_model.las output=odm_elev method=mean resolution=0.5
+g.region raster=odm_elev
+r.fill.stats -k input=odm output=odm_filled distance=3 mode=wmean power=2.0 cells=8
+</code></pre>
+
+Compare the DSM with lidar. Unpack the lidar DSM, browse to the file using GUI or you have to have it
+in your current working directory.
+<pre><code>r.unpack -o input=mid_pines_lidar2013_dsm.pack
+r.mapcalc "diff = odm_filled - mid_pines_lidar2013_dsm"
+r.colors map=diff color=differences
+</code></pre>
+
+
 
 <p>
 <center>
@@ -240,11 +341,6 @@ obtained by the above process.
 </center>
 
 <p>
-We can also quickly view our results in
-<a href="http://plas.io/">plas.io</a> (needs browser with WebGL
-support).
-
-<p>
 <center>
 <img src="../img/opendronemap_midpines_point_cloud.png" style="width: 70%;">
 <br>
@@ -252,10 +348,6 @@ Example resulting shaded DSM created in GRASS GIS based on a point cloud
 obtained by the above process.
 </center>
 
-<p>
-To view and edit the mesh stored as OBJ and located in the
-<code>texturing</code> directory, we can use MeshLab.
-MeshLab can also import the point cloud stored as PLY file.
 
 </main>
 
