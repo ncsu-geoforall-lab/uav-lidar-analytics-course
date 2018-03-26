@@ -263,6 +263,7 @@
     <p><li> Shading
     <p><li> Texturemapping
     </ul>
+    <p><li> Photorealism
   </ul>
 </section>
 
@@ -287,7 +288,7 @@
 </section>
 
 <section>
-  <h3> Shaders</h3>
+  <h3> Surface Shaders</h3>
   <ul>
     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
       <img src="img/modeling3D/diffuse.png" style="width: 100%">
@@ -302,7 +303,7 @@
 </section>
 
 <section>
-    <h3> Shaders</h3>
+    <h3> Surface Shaders</h3>
   <ul>
     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
       <img src="img/modeling3D/emission.png" style="width: 100%">
@@ -342,7 +343,7 @@
 </section>
 
 <section>
-<h3>Texture mapping</h3>
+<h3>Texture maps</h3>
 <ul>
   <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
     <img src="img/modeling3D/earth_alpha.png" style="width: 100%">
@@ -354,7 +355,7 @@
 </section>
 
 <section>
-<h3>Texture mapping</h3>
+<h3>Texture maps</h3>
 <ul>
   <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
     <img src="img/modeling3D/earth_emission.png" style="width: 100%">
@@ -366,7 +367,7 @@
 </section>
 
 <section>
-<h3>Texture mapping</h3>
+<h3>Texture maps</h3>
 <ul>
   <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
     <img src="img/modeling3D/earth_alpha.png" style="width: 100%">
@@ -377,6 +378,33 @@
   </ul>
 </section>
 
+<section>
+<h3>Volumetric shaders</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 64%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/earth_volumetric.png" style="width: 100%">
+  Image textures</p>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 31.2%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/volumetric_solid.png" style="width: 100%">
+  Image textures</p>
+  </ul>
+</section>
+
+<section>
+<h3>Volumetric shaders</h3>
+<ul>
+
+  <p style="float: left; font-size: 20pt; text-align: center; width: 44%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/clouds_volume.png" style="width: 100%">
+  Image textures</p>
+
+  <p style="float: left; font-size: 20pt; text-align: center; width: 44%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/volume_earth.png" style="width: 100%">
+  Image textures</p>
+
+
+  </ul>
+</section>
 
 <section>
 <h3>Lighting</h3>
@@ -425,13 +453,77 @@
 
 
 <section>
-<h3>3D Web (Table with Trade-offs)</h3>
+  <h3>3D Web GIS</h3>
+  <ul>
+  <table style="width:100% ; font-size: 16pt">
+  <tr>
+    <th>Platform</th>
+    <th>Interaction design capability</th>
+    <th>Realism</th>
+    <th>Web AR/VR</th>
+    <th>Realtime GIS data integration</th>
+    <th>API</th>
+    <th>License</th>
+    <th>Domain hosting</th>
+
+  </tr>
+  <tr>
+    <td>ArcGIS</td>
+    <td>full</td>
+    <td>medium</td>
+    <td>--</td>
+    <td>yes</td>
+    <td>JS, HTML</td>
+    <td>Proprietary</td>
+    <td>No</td>
+  </tr>
+
+  <tr>
+    <td>CesiumJS</td>
+    <td>full</td>
+    <td>low</td>
+    <td>--</td>
+    <td>yes</td>
+    <td>JS</td>
+    <td>Apache 2.0</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>Sketchfab</td>
+    <td>limited</td>
+    <td>high</td>
+    <td>VR</td>
+    <td>--</td>
+    <td>HTML</td>
+    <td>Proprietary</td>
+    <td>Yes</td>
+  </tr>
+
+  <tr>
+    <td>Blend4web</td>
+    <td>full</td>
+    <td>high</td>
+    <td>VR</td>
+    <td>no</td>
+    <td>HTML CSS JS Python</td>
+    <td>GNU V3</td>
+    <td>No</td>
+  </tr>
+
+  <tr>
+    <td>Mapbox</td>
+    <td>full</td>
+    <td>high</td>
+    <td>full</td>
+    <td>Yes</td>
+    <td>Python JS C#</td>
+    <td>Proprietary</td>
+    <td>Yes</td>
+  </tr>
+
+</table>
 <ul>
-    <p><li>Blend4Web
-    <p><li>Sketchfab
-    <p><li>Cesium
-    <p><li>Mapbox
-  </ul>
+
 </section>
 
 <section>
@@ -439,9 +531,9 @@
 </h3>
 <ul>
 <p><li>Free and open-source
-<p><li>GIS Connection
+<p><li>GIS connection
 <p><li>Easy Scripting python API
-<p><li>3D web outputs
+<p><li>Easy export for Sketchfab and Blend4Web
 </ul>
 <ul>
 </section>
@@ -449,54 +541,89 @@
 <section>
  <h3>Components of Blender interface</h3>
 <ul>
- <li>Environments
- <li>Editors
- <li>Panels
- <li>Tabs
+  <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/Blender_interface.JPG" style="width: 100%">
+          Environments attributed to five Editors</p>
 </ul>
 </section>
 
 <section>
-   <h3>Editors</h3>
+   <h3>Editors: 3D viewport</h3>
 <ul>
- <li>3D viewport
 </ul>
-<p>
-<img width="40%" src="img/fusion_lidar_uav/dif_lid_agi_junesh.jpg">
-</section>
-
-<section>
-   <h3>Python Console</h3>
 <ul>
- <li>Quick scripting/prototyping
+  <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/3D_viewport.PNG" style="width: 100%">
+          <br> 3D viewport</p>
 </ul>
-<p>
-<img width="40%" src="img/fusion_lidar_uav/dif_lid_agi_junesh.jpg">
 </section>
 
 <section>
-   <h3>Python Editor</h3>
+<h3>Editors: Outliner</h3>
+<ul>
+</ul>
+<ul>
+<p style="float: center; font-size: 20pt; text-align: center; width: 70%; margin-right: .5%; margin-bottom: 0.5em;">
+ <img src="img/modeling3D/outliner.JPG" style="width: 100%">
+       <br> Outliner showing Camera, Cube and Lamp objects</p>
+</ul>
+</section>
+
+<section>
+   <h3>Editors: Python console</h3>
+<ul>
+   <li>Quick scripting/prototyping
+   <li>Python libraries already loaded
+</ul>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/python_console.png" style="width: 100%">
+          <br> Python console</p>
+</ul>
+</section>
+
+<section>
+   <h3>Editor: Python text editor</h3>
 <ul>
  <li>Scripting and executing workflows
+ <li>Libraries should be loaded
  </ul>
 <p>
-<img width="40%" src="img/fusion_lidar_uav/dif_lid_agi_junesh.jpg">
+<img width="100%" src="img/modeling3D/python_editor.png">
 </section>
 
 <section>
-   <h3>Properties tab</h3>
+   <h3>Editor: Properties editor</h3>
 <ul>
  <li>Materials, objects, textures, modifiers, lights, Cameras
 </ul>
-<p>
-<img width="40%" src="img/fusion_lidar_uav/diff_lid_uavGCPjune.jpg">
+<ul>
+<p style="float: left; font-size: 20pt; text-align: center; width: 24.4%; margin-right: .5%; margin-bottom: 0.5em;">
+  <img src="img/modeling3D/prop_render.PNG" style="width: 100%">
+    Render options</p>
+    <p style="float: left; font-size: 20pt; text-align: center; width: 24%; margin-right: .5%; margin-bottom: 0.5em;">
+      <img src="img/modeling3D/prop_object.PNG" style="width: 100%">
+        Object attributes</p>
+        <p style="float: left; font-size: 20pt; text-align: center; width: 23.8%; margin-right: .5%; margin-bottom: 0.5em;">
+          <img src="img/modeling3D/prop_materials.PNG" style="width: 100%">
+          Material attributes</p>
+
+          <p style="float: left; font-size: 20pt; text-align: center; width: 24%; margin-right: .5%; margin-bottom: 0.5em;">
+            <img src="img/modeling3D/prop_texture.PNG" style="width: 100%">
+            Texture attributes</p>
+ </ul>
 </section>
 
 <section>
    <h3>Node editor</h3>
 <ul>
- <li>Shaders, textures, links
+ <li> Designing complex photorealistic material
+
 </ul>
+<ul>
+<p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+  <img src="img/modeling3D/nodes.JPG" style="width: 100%">
+    Node tree consisting shader and output Nodes, values and links</p>
 <p>
 </section>
 
