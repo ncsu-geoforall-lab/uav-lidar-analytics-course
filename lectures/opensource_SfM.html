@@ -144,8 +144,6 @@ using Python, or background processing</li>
 <img width="70%" src="img/open_source/top500.jpg">
 </section>
 
-<!-- According to Whitehurst, unlike server virtualization where each VM is devoted to a single application, the containerization concept is to allow multiple applications to share a single OS instance while still maintaining secure data and resource separation. The advantages are increased performance, reduced VM overhead and hence, much higher resource utilization, in which a single server might host 50 or more containerized apps versus 10 or 20 VMs -->
-
 <section>
 <h3>Overview of open source tools for SfM</h3>
   <img src="img/open_source/opensource_overview.png" class="stretch">
@@ -208,15 +206,6 @@ using Python, or background processing</li>
 </section>
 
 <section>
-<h3>WebODM - ODM with web browser interface</h3>
-<ul>
-  <li>new web interface is being developed</li> 
-  <li>learn more at <a href="https://opendronemap.github.io/WebODM/">WebODM</a></li>
-  </ul>
-  <img src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
-</section>
-
-<section>
   <h3>ODM results</h3>
   Improvements in mosaicing:<br>
   <img width="45%" src="img/ODM_ortho_old.jpg">
@@ -230,13 +219,41 @@ using Python, or background processing</li>
 
 <section>
     <h3>Assignment</h3>
-    <p style="text-align:left"> We will run ODM on VCL:
+    <p style="text-align:left"> We will run ODM on Ubuntu VCL:
         <ul>
-          <li>using Docker &mdash; through command line</li> 
-          <li>using Web interface</li>
+          <li>Mid Pines sample dataset</li>
+          <li>using Docker &mdash; through command line </li> 
+          <li>using ODM web interface WebODM</li>
         </ul> 
 </section>
 <section>
-    <h3>Docker</h3>
+    <h3>What is Docker?</h3>
+<ul>
+    <li>tool for easy deploying and running applications by using containers</li>
+    <li class="fragment">containers allow to package an application with dependencies</li>
+    <li class="fragment">no installation, keeps your system clean</li>
+    <li class="fragment">ensures application runs no matter what customized settings your machine has</li>
+    <li class="fragment">similar to Virtual Machine, but much more efficient, takes up less space</li>
+    <liclass="fragment">based on Linux, but there is also Docker for Windows</li>
+</ul>
+</section>
 
+<section>
+<h3>WebODM: ODM with web browser interface</h3>
+<ul>
+  <li>allows viewing results as a 2D webmap, 3D point cloud</li>
+  <li>learn more at <a href="https://github.com/OpenDroneMap/WebODM">WebODM</a></li>
+  <li>we will deploy WebODM using Docker</li>
+  </ul>
+  <img class="stretch" src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
+</section>
+
+<section>
+    <h3>What we have learned</h3>
+<ul>
+    <li>what is parallel computing about</li>
+    <li>what types of computing infrastructure are available</li>
+    <li>software licensing</li>
+    <li>current state of open source tools for SfM</li>
+</ul>
 </section>
