@@ -269,7 +269,7 @@ using Python, or background processing</li>
 <h3>Parallel computing infrastructure (1)</h3>
 <ul>
 <li>laptop/desktop (low power, 8 CPUs) &mdash; for individuals</li>
-<li>server (medium power, tens of CPUs)
+<li class="fragment">server (medium power, tens of CPUs)
 <ul>
 <li>typically remote access, but physical machine is accessible</li>
 <li> hardware owned by organizations, companies</li>
@@ -281,14 +281,14 @@ using Python, or background processing</li>
 <section>
 <h3>Parallel computing infrastructure (2)</h3>
 <ul>
-<li>cloud (medium power, tens of CPUs)
+<li >cloud (medium power, tens of CPUs)
   <ul>
      <li>connected computers, actual hardware/OS hidden through virtualization</li>
      <li>easy to setup from user point of view</li>
      <li>computing is often not the primary application</li>
      <li>e.g., <a href="https://vcl.ncsu.edu/">NCSU VCL</a>, Amazon Web Services </li>
   </ul>
-<li>HPC, supercomputers (high power, thousands of CPUs) 
+<li class="fragment">HPC, supercomputers (high power, thousands of CPUs) 
   <ul>
       <li>connected nodes, Linux-based OS</li>
       <li>not all programs can take advantage of it</li>
@@ -312,70 +312,87 @@ using Python, or background processing</li>
 
 <section>
 <h3>Software licensing and cloud</h3>
-<p style="text-align:left">Open source software:
+<p style="text-align:left">Free and open source software:
 <ul>
-<li></li>
-<li></li>
-<li></li>
+<li>is free to run, study, modify and distribute</li>
+<li>users can use it for any purpose and don't have to worry about the license</li>
+<li>most web and clouds are based on open source technologies</li>
 </ul>
+<img width="70%" src="img/open_source/top500.jpg">
 </section>
 
 <!-- According to Whitehurst, unlike server virtualization where each VM is devoted to a single application, the containerization concept is to allow multiple applications to share a single OS instance while still maintaining secure data and resource separation. The advantages are increased performance, reduced VM overhead and hence, much higher resource utilization, in which a single server might host 50 or more containerized apps versus 10 or 20 VMs -->
 
 <section>
-<h3>Overview of open source tools</h3>
+<h3>Overview of open source tools for SfM</h3>
   <img src="img/opensource_overview.png" class="stretch">
   <p style="font-size: 65%">
-    Source: Kirk McKelvey, <a href="https://2016.foss4g-na.org/sites/default/files/slides/sfm-foss4gna-2016_0.pdf">
+    Based on and updated: Kirk McKelvey, <a href="https://2016.foss4g-na.org/sites/default/files/slides/sfm-foss4gna-2016_0.pdf">
     From UAV to Orthomosaic: Building a Toolchain</a>, FOSS4G NA 2016<br>
-    Note: VisualSFM is not open source, MicMac is missing
+    See <a href="https://github.com/openMVG/awesome_3DReconstruction_list">curated list of papers and resources linked to open source 3D reconstruction from images</a>
+</section>
+
+<section>
+  <h3>MicMac</h3>
+  <ul><li>Developed by French National Geographic Institute (IGN)</li>
+  <li>Set of command-line tools for the different parts of imagery processing</li>
+  <li>Steep learning curve, see <a href="http://logiciels.ign.fr/IMG/pdf/docmicmac-2.pdf">PDF documentation</a></li>
+  <li>Reconstruction results similar or better than other SfM software, see for example this
+     <a href="http://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLI-B5/685/2016/isprs-archives-XLI-B5-685-2016.pdf">
+     paper</a> or a <a href="https://www.youtube.com/watch?v=JCdGJ3yoEE0">video</a></li>
+  <li>Not very active project, mostly one developer</li>
+  <li><a href="https://opengeospatialdata.springeropen.com/articles/10.1186/s40965-017-0027-2">Recent overview paper about MicMac</a></li>
 </section>
 
 <section>
 <img src="img/odm_logo.png" width="600px">
 <p>
-Full pipeline, some parts are using other projects:
-<ul><li>Structure from Motion (SfM): OpenSfM by Mapillary</li>
-  <li>Dense point cloud creation: PMVS / CMVS software</li>
+<p style="text-align:left">Full pipeline, some parts are using other projects:</p>
+<ul><li>Structure from Motion (SfM) + dense cloud: <a href="https://github.com/mapillary/OpenSfM">OpenSfM</a>
+     by <a href="https://www.mapillary.com/">Mapillary</a></li>
   <li>Mesh Generation</li>
-  <li>Texturing / Blending</li>
-  <li>Ortho photo creation</li></ul>
+  <li>Texturing / Blending: <a href="https://www.gcc.tu-darmstadt.de/home/proj/texrecon/">MVS-Texturing (part of MVE)</a></li>
+  <li>Ortho photo creation</li>
+  <li><a href="https://www.pdal.io/">PDAL</a> for DSM generation</li>
+</ul>
 
 </section>
 
 <section>
   <h3>ODM vision: Open Data Ecosystem</h3>
-The aim is for the toolchain to also be able to optionally push to a variety of online data repositories:
-
-
+<p style="text-align:left">The aim is for the toolchain to also be able to optionally push to a variety of online data repositories:
   <ul><li>high-resolution orthos to <a href="https://openaerialmap.org/">OpenAerialMap</a></li>
-    <li>point clouds to <a href="https://openaerialmap.org/">OpenTopography</a></li>
-<li>...</li></ul>
+  <li>point clouds, DSMs to <a href="http://opentopography.org/">OpenTopography</a></li></ul>
 </section>
-<section>
-<h3>ODM drawbacks</h3>
-<ul>
-  <li>GCPs need to be used during reconstruction process to increase precision and avoid 'doming effect'</li>
-  <li>better imagery blending (already in dev branch)</li>
-  <li>missing GUI, especially needed for GCPs identification</li>
-</ul>
-</section>
+
 <section>
 <h3>ODM advantages</h3>
-<ul><li>Open source project, can be used commercially,</li>
-  <li>support by community,</li>
+<ul><li>open source project, can be used commercially,</li>
+ <li>active community: free real-time support on <a href="https://gitter.im/OpenDroneMap/OpenDroneMap">Gitter</a></li>
   <li>easy for batch processing,</li>
   <li>active development, new features coming, see
     <a href="https://github.com/OpenDroneMap/OpenDroneMap/wiki/Roadmap">roadmap</a></li>
 </ul>
 </section>
+
+<section>
+<h3>ODM drawbacks</h3>
+<ul>
+  <li>GCPs need to be used during reconstruction process to increase precision and avoid 'doming effect'</li>
+  <li>missing GUI for GCPs identification</li>
+  <li>missing GPU acceleration</li>
+</ul>
+</section>
+
 <section>
 <h3>WebODM - ODM with web browser interface</h3>
 <ul>
   <li>new web interface is being developed</li> 
   <li>learn more at <a href="https://opendronemap.github.io/WebODM/">WebODM</a></li>
+  </ul>
   <img src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
 </section>
+
 <section>
   <h3>ODM results</h3>
   Improvements in mosaicing:<br>
@@ -386,17 +403,19 @@ The aim is for the toolchain to also be able to optionally push to a variety of 
   <h3>ODM results</h3>
   Difference between lidar and ODM reveals doming effect:<br>
   <img width="60%" src="img/ODM_diff_lidar.jpg">
+</section>
 
+<section>
+    <h3>Assignment</h3>
+    <p style="text-align:left"> We will run ODM on VCL:
+        <ul>
+          <li>using Docker &mdash; through command line</li> 
+          <li>using Web interface</li>
+        </ul> 
 </section>
 <section>
-  <h3>MicMac</h3>
-  <ul><li>Developed by French National Geographic Institute (IGN)</li>
-  <li>Set of command-line tools for the different parts of imagery processing</li>
-  <li>Steep learning curve, see <a href="http://logiciels.ign.fr/IMG/pdf/docmicmac-2.pdf">PDF documentation</a></li>
-  <li>Reconstruction results similar or better than other SfM software, see for example this
-     <a href="http://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLI-B5/685/2016/isprs-archives-XLI-B5-685-2016.pdf">
-     paper</a> or a <a href="https://www.youtube.com/watch?v=JCdGJ3yoEE0"> video</a></li>
-     <li>Not very active project, mostly one developer</li>
+    <h3>Docker</h3>
+
 </section>
         </div>  <!-- slides -->
 
