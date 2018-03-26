@@ -228,9 +228,12 @@ a computation uses them</li>
 <h3>CPUs in geospatial context: approaches</h3>
 <ul>
 <li><em>Embarassingly parallel problems</em> &mdash;  independent computations (e.g., solar radiation for more days)</li>
-<li class="fragment"><em>Tiling approach</em> &mdash; divide spatial domain into tiles possibly with overlaps (e.g., interpolation)</li>
-<li class="fragment"><em>Complex approaches</em> &mdash; depend on algorithms, often use tiling with communication between tiles (e.g., hydrology)</li>
+<li class="fragment" data-fragment-index="1"><em>Tiling approach</em> &mdash; divide spatial domain into tiles possibly with overlaps (e.g., interpolation)</li>
+<li class="fragment" data-fragment-index="2"><em>Complex approaches</em> &mdash; depend on algorithms, often use tiling with communication between tiles (e.g., hydrology)</li>
 </ul>
+<iframe style="margin-bottom:30px" width="280" height="157" src="https://www.youtube.com/embed/eK6dWivro1g?rel=0&amp;controls=0&amp;showinfo=0;loop=1;playlist=eK6dWivro1g" frameborder="0" allow="encrypted-media" data-autoplay></iframe>
+<img style="margin-left:30px;margin-right:30px" width="250px" src="img/open_source/tiling.jpg"  class="fragment" data-fragment-index="1">
+<img width="300px" src="img/fusion_lidar_uav/fanimhhcolp.gif"  class="fragment" data-fragment-index="2">
 </section>
 
 <section>
@@ -269,26 +272,34 @@ using Python, or background processing</li>
 <h3>Parallel computing infrastructure (1)</h3>
 <ul>
 <li>laptop/desktop (low power, 8 CPUs) &mdash; for individuals</li>
-<li class="fragment">server (medium power, tens of CPUs)
+<li class="fragment" data-fragment-index="1">server (medium power, tens of CPUs)
 <ul>
 <li>typically remote access, but physical machine is accessible</li>
 <li> hardware owned by organizations, companies</li>
 </ul>
 </li>
 </ul>
+<img class="fragment" data-fragment-index="1" height="300px" src="img/open_source/server.png">
 </section>
 
 <section>
 <h3>Parallel computing infrastructure (2)</h3>
 <ul>
-<li >cloud (medium power, tens of CPUs)
+<li>cloud (medium power, tens of CPUs)
   <ul>
      <li>connected computers, actual hardware/OS hidden through virtualization</li>
      <li>easy to setup from user point of view</li>
      <li>computing is often not the primary application</li>
      <li>e.g., <a href="https://vcl.ncsu.edu/">NCSU VCL</a>, Amazon Web Services </li>
   </ul>
-<li class="fragment">HPC, supercomputers (high power, thousands of CPUs) 
+</ul>
+<img class="stretch" src="img/open_source/vcl1.png">
+</section>
+
+<section>
+<h3>Parallel computing infrastructure (3)</h3>
+<ul>
+<li>HPC, supercomputers (high power, thousands of CPUs) 
   <ul>
       <li>connected nodes, Linux-based OS</li>
       <li>not all programs can take advantage of it</li>
@@ -296,8 +307,9 @@ using Python, or background processing</li>
   </ul>
 </li>
 </ul>
+<img class="stretch" src="img/open_source/supercomputer.jpg">
+<p class="small"> Supercomputer Blue Waters, NCSA, Illinois</p>
 </section>
-
 
 <section>
 <h3>Software licensing and cloud</h3>
@@ -308,6 +320,12 @@ using Python, or background processing</li>
     may require special licenses for cloud (e.g., Agisoft floating licences), or per computer cores (e.g., Oracle) </li>
 <li>price may be included in the cost of cloud virtual instances (e.g., Windows vs Linux)</li>
 </ul>
+</section>
+
+<section>
+<h3>Software licensing and cloud</h3>
+<img class="stretch" src="img/open_source/vcl2.png">
+<p> Source: <a href="https://vcl.ncsu.edu/2013/05/06/adobe-and-microsoft-office-licensed-products-to-be-removed-from-vcl/">NCSU VCL announcements</a>
 </section>
 
 <section>
@@ -411,7 +429,7 @@ using Python, or background processing</li>
     <li class="fragment">no installation, keeps your system clean</li>
     <li class="fragment">ensures application runs no matter what customized settings your machine has</li>
     <li class="fragment">similar to Virtual Machine, but much more efficient, takes up less space</li>
-    <liclass="fragment">based on Linux, but there is also Docker for Windows</li>
+    <li class="fragment">based on Linux, but there is also Docker for Windows</li>
 </ul>
 </section>
 
@@ -430,7 +448,7 @@ using Python, or background processing</li>
 <ul>
     <li>what is parallel computing about</li>
     <li>what types of computing infrastructure are available</li>
-    <li>software licensing</li>
+    <li>software licensing and cloud</li>
     <li>current state of open source tools for SfM</li>
 </ul>
 </section>
