@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+<section>
+    <h2>3D modeling and rendering with UAV data</h2>
+    <h4>GIS595-004/603; MEA592-006/601:</h4>
+    <h4>UAS Mapping for 3D Modeling</h4>
+    <h4 style="margin-top: 0.5em">
+    Helena Mitasova, Payam Tabrizian, Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics,</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline</h3>
+<p>
+<ul>
+ <p><li>Motivation for 3D modeling with UAV data
+ <p><li>Basic concepts in 3D modeling and rendering
+ <p><li>3D GIS and 3DWeb GIS
+ <p><li>Overview to Blender software and main functionalities
+</ul>
+</section>
+
+<section>
+   <h3>Motivation for 3D modeling with UAV data</h3>
+<ul>
+   <li class="fragment">Easier and more intuitive interaction with data
+</li>
+   <li class="fragment">Data cleaning (artefact removal, adding details)
+</li>
+   <li class="fragment">Adding additional GIS data and simulations (e.g., draping maps)
+</li>
+   <li class="fragment">Animating flights and visualizing various data facets and analytics.
+</li>
+  <li class="fragment">Developing interactive online visualizations
+</li>
+<li class="fragment">Improving science communication and publication impact
+</li>
+
+</ul>
+
+</section>
+
+<section>
+   <h3>3D modeling</h3>
+   <p>
+   <ul>
+    <p><li>Definition
+    <p><li>Typologies
+    <ul>
+      <p><li> Polygonal modeling
+      <p><li> Curve modeling
+      <p><li> Digital sculpting (displacement, Voxels, Dynamic tesselation)
+    </ul>
+    </ul>
+</section>
+
+<section>
+
+   <h3> 3D Mesh</h3>
+   <ul>
+     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+       <img src="img/modeling3D/vertex_sphere.JPG" style="width: 100%">
+      Vertex</p>
+      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+         <img src="img/modeling3D/edge_sphere.JPG" style="width: 100%">
+        Edge</p>
+      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+           <img src="img/modeling3D/face_sphere.JPG" style="width: 100%">
+        Face</p>
+
+      </ul>
+
+        </figcaption>
+        </figure>
+       </ul>
+
+</section>
+
+<section>
+   <h3>3D Rendering</h3>
+<ul>
+    <p><li> Prerendering, viewport rendering, rendering, render engines
+    <p><li> Materials
+      <ul>
+    <p><li> Shading
+    <p><li> Texturemapping
+    </ul>
+    <p><li> Photorealism
+  </ul>
+</section>
+
+<section data-background-image="img/modeling3D/realism.png">
+   <h2 class="shadow">Photorealism</h2>
+
+<p class="float" style="float: left; text-align: center; width: 100%; margin-right: 100em; margin-left: 12em; margin-top: 15em;"><small>Image credit: <i class="fa fa-copyright" aria-hidden="true"></i> Mushrooms by John Wrbanek</small></p>
+</section>
+
+<section>
+
+   <h3> Shaders</h3>
+   <ul>
+     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+       <img src="img/modeling3D/surface.jpg" style="width: 100%">
+      Surface</p>
+      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+         <img src="img/modeling3D/volumetric.jpg" style="width: 100%">
+      Volumteric</p>
+      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+           <img src="img/modeling3D/displacement.jpg" style="width: 100%">
+      Displacement</p>
+      </ul>
+        </figcaption>
+        </figure>
+       </ul>
+
+</section>
+
+<section>
+  <h3> Surface Shaders</h3>
+  <ul>
+    <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+      <img src="img/modeling3D/diffuse.png" style="width: 100%">
+     Diffuse</p>
+     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/glossy.png" style="width: 100%">
+     Glossy</p>
+     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+          <img src="img/modeling3D/transparent.png" style="width: 100%">
+     Transparent</p>
+  </ul>
+</section>
+
+<section>
+    <h3> Surface Shaders</h3>
+  <ul>
+    <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+      <img src="img/modeling3D/emission.png" style="width: 100%">
+     Emission</p>
+     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/glass.png" style="width: 100%">
+     Glass</p>
+     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+          <img src="img/modeling3D/mixed.png" style="width: 100%">
+     Mixed <br> Diffuse + Glass</p>
+
+  </ul>
+</section>
+
+<section>
+<h3>Texture mapping</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/earth_diffuse.jpg" style="width: 100%">
+  Image textures</p>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 30%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/image_tex.png" style="width: 100%">
+  Image textures</p>
+  </ul>
+</section>
+
+<section>
+<h3>Texture mapping</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/earth_bump.png" style="width: 100%">
+  Image textures</p>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 30%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/bump_tex.png" style="width: 100%">
+  Image textures</p>
+  </ul>
+</section>
+
+<section>
+<h3>Texture maps</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/earth_alpha.png" style="width: 100%">
+  Image textures</p>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 30%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/alpha_tex.png" style="width: 100%">
+  Image textures</p>
+  </ul>
+</section>
+
+<section>
+<h3>Texture maps</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/earth_emission.png" style="width: 100%">
+  Image textures</p>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 30%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/emission_tex.png" style="width: 100%">
+  Image textures</p>
+  </ul>
+</section>
+
+<section>
+<h3>Texture maps</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/earth_alpha.png" style="width: 100%">
+  Image textures</p>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 30%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/alpha_tex.png" style="width: 100%">
+  Image textures</p>
+  </ul>
+</section>
+
+<section>
+<h3>Volumetric shaders</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 64%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/earth_volumetric.png" style="width: 100%">
+  Image textures</p>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 31.2%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/volumetric_solid.PNG" style="width: 100%">
+  Image textures</p>
+  </ul>
+</section>
+
+<section>
+<h3>Volumetric shaders</h3>
+<ul>
+
+  <p style="float: left; font-size: 20pt; text-align: center; width: 44%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/clouds_volume.png" style="width: 100%">
+  Image textures</p>
+
+  <p style="float: left; font-size: 20pt; text-align: center; width: 44%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/volume_earth.png" style="width: 100%">
+  Image textures</p>
+
+
+  </ul>
+</section>
+
+<section>
+<h3>Lighting</h3>
+<ul>
+      <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/spot_light.JPG" style="width: 100%">
+          Spotlight</p>
+        <p style="float: left; font-size: 20pt; text-align: center; width: 31.7%; margin-right: .5%; margin-top: .8em;">
+          <img src="img/modeling3D/directional_render.png" style="width: 100%">
+      Render</p>
+  </ul>
+</section>
+
+<section>
+<h3>Lighting</h3>
+<ul>
+      <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/point_light.JPG" style="width: 100%">
+          Point</p>
+        <p style="float: left; font-size: 20pt; text-align: center; width: 33.7%; margin-right: .5%; margin-top: .8em;">
+          <img src="img/modeling3D/point_render.png" style="width: 100%">
+      Render</p>
+  </ul>
+</section>
+
+<section>
+<h3>Lighting</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 60%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/point_light.JPG" style="width: 100%">
+          Sun</p>
+        <p style="float: left; font-size: 20pt; text-align: center; width: 33.7%; margin-right: .5%; margin-top: .8em;">
+          <img src="img/modeling3D/sun_render.png" style="width: 100%">
+      Render</p>
+  </ul>
+</section>
+
+<section>
+<h3>3D GIS</h3>
+<ul>
+    <p><li>Georeferencing
+    <p><li>3D in GIS (e.g., ArcGIS pro, CityEngine)
+    <p><li>GIS in 3D (e.g., Mapbox in Unity, BlenderGIS)
+  </ul>
+</section>
+
+
+<section>
+  <h3>3D Web GIS</h3>
+  <ul>
+  <table style="width:100% ; font-size: 16pt">
+  <tr>
+    <th>Platform</th>
+    <th>Interaction design capability</th>
+    <th>Realism</th>
+    <th>Web AR/VR</th>
+    <th>Realtime GIS data integration</th>
+    <th>API</th>
+    <th>License</th>
+    <th>Domain hosting</th>
+
+  </tr>
+  <tr>
+    <td>ArcGIS</td>
+    <td>full</td>
+    <td>medium</td>
+    <td>--</td>
+    <td>yes</td>
+    <td>JS, HTML</td>
+    <td>Proprietary</td>
+    <td>No</td>
+  </tr>
+
+  <tr>
+    <td>CesiumJS</td>
+    <td>full</td>
+    <td>low</td>
+    <td>--</td>
+    <td>yes</td>
+    <td>JS</td>
+    <td>Apache 2.0</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>Sketchfab</td>
+    <td>limited</td>
+    <td>high</td>
+    <td>VR</td>
+    <td>--</td>
+    <td>HTML</td>
+    <td>Proprietary</td>
+    <td>Yes</td>
+  </tr>
+
+  <tr>
+    <td>Blend4web</td>
+    <td>full</td>
+    <td>high</td>
+    <td>VR</td>
+    <td>no</td>
+    <td>HTML CSS JS Python</td>
+    <td>GNU V3</td>
+    <td>No</td>
+  </tr>
+
+  <tr>
+    <td>Mapbox</td>
+    <td>full</td>
+    <td>high</td>
+    <td>full</td>
+    <td>Yes</td>
+    <td>Python JS C#</td>
+    <td>Proprietary</td>
+    <td>Yes</td>
+  </tr>
+
+</table>
+<ul>
+
+</section>
+
+<section>
+ <h3>Blender
+</h3>
+<ul>
+<p><li>Free and open-source
+<p><li>GIS connection
+<p><li>Easy Scripting python API
+<p><li>Easy export for Sketchfab and Blend4Web
+</ul>
+<ul>
+</section>
+
+<section>
+ <h3>Components of Blender interface</h3>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/Blender_interface.JPG" style="width: 100%">
+          Environments attributed to five Editors</p>
+</ul>
+</section>
+
+<section>
+   <h3>Editors: 3D viewport</h3>
+<ul>
+</ul>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/3d_viewport.PNG" style="width: 100%">
+          <br> 3D viewport</p>
+</ul>
+</section>
+
+<section>
+<h3>Editors: Outliner</h3>
+<ul>
+<p style="float: center; font-size: 20pt; text-align: center; width: 50%; margin-right: .5%; margin-bottom: 0.5em;">
+ <img src="img/modeling3D/outliner.JPG" style="width: 100%">
+       <br> Outliner showing Camera, Cube and Lamp objects</p>
+</ul>
+</section>
+
+<section>
+   <h3>Editors: Python console</h3>
+<ul>
+   <li>Quick scripting/prototyping
+   <li>Python libraries already loaded
+</ul>
+<ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/python_console.png" style="width: 100%">
+          <br> Python console</p>
+</ul>
+</section>
+
+<section>
+   <h3>Editor: Python text editor</h3>
+<ul>
+ <li>Scripting and executing workflows
+ <li>Libraries should be loaded
+ </ul>
+<p>
+<img width="100%" src="img/modeling3D/python_editor.png">
+</section>
+
+<section>
+   <h3>Editor: Properties editor</h3>
+<ul>
+ <li>Materials, objects, textures, modifiers, lights, Cameras
+</ul>
+<ul>
+<p style="float: left; font-size: 20pt; text-align: center; width: 24.4%; margin-right: .5%; margin-bottom: 0.5em;">
+  <img src="img/modeling3D/prop_render.PNG" style="width: 100%">
+    Render options</p>
+    <p style="float: left; font-size: 20pt; text-align: center; width: 24%; margin-right: .5%; margin-bottom: 0.5em;">
+      <img src="img/modeling3D/prop_object.PNG" style="width: 100%">
+        Object attributes</p>
+        <p style="float: left; font-size: 20pt; text-align: center; width: 23.8%; margin-right: .5%; margin-bottom: 0.5em;">
+          <img src="img/modeling3D/prop_materials.PNG" style="width: 100%">
+          Material attributes</p>
+
+          <p style="float: left; font-size: 20pt; text-align: center; width: 24%; margin-right: .5%; margin-bottom: 0.5em;">
+            <img src="img/modeling3D/prop_texture.PNG" style="width: 100%">
+            Texture attributes</p>
+ </ul>
+</section>
+
+<section>
+   <h3>Node editor</h3>
+<ul>
+ <li> Designing complex photorealistic material
+
+</ul>
+<ul>
+<p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+  <img src="img/modeling3D/nodes.JPG" style="width: 100%">
+    Node tree consisting shader and output Nodes, values and links</p>
+<p>
+</section>
+
+<section>
+   <h3>General Workflow</h3>
+<ul>
+ <li>Shaders, textures, links
+</ul>
+<p>
+</section>
+
+
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="../topics/fusion_uas_lidar.html" title="Go to the topic page">&#8962;</a>
+</div>
+
+</div>  <!-- slides -->
+
+</div>  <!-- reveal -->
+
+<!--
+Home button or link to a parent page
+If you want this to be unique for every page (slide deck),
+then remove it from here and put it at the end of each
+file (or series of files) creating one page
+(the position will be little different)
+TODO: some JS is needed to move it to the right position
+-->
+<div class="parent-page">
+<!-- alternative symbol: &#x1f3e0; -->
+<a href=".." title="Course website">
+    <img width="15px" src="img/home.svg"></a>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Display a presentation progress bar
+        progress: true,
+
+        center: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        // width: 960,
+        // height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.05,  // increase?
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.5,
+        maxScale: 5.0,
+
+        theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Parallax background image
+        //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // Parallax background size
+        //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+        chalkboard: {
+        // optionally load pre-recorded chalkboard drawing from file
+            src: "chalkboard.json",
+  },
+        math: {
+                mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+        },
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/math/math.js', async: true },
+            { src: 'plugin/chalkboard/chalkboard.js' }
+        ],
+        keyboard: {
+            67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+            66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+            46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+            8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+            68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+        }
+    });
+
+</script>
+</body>
+</html>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+    </body>
+</html>
