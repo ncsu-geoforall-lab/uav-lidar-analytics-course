@@ -228,7 +228,6 @@ Some explanation of the <code>docker run</code> command:
 
 <pre><code>cd ~/odm
 docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --resize-to 1000 --gcp /code/images/gcp_list.txt --force-ccd 23.4
-
 </code></pre>
 
 OpenDroneMap will do the processing in parallel. However, each process
@@ -236,6 +235,13 @@ requires certain amount of memory (RAM) based on the size of input
 images. If you want to limit the memory usage, you need to limit the
 number of processes using the <code>--opensfm-processes</code> command
 line option.
+
+<p>
+Open System Monitor (Applications - System - System Monitor), go to tab Resources.
+You can observe here how ODM uses parallel processing for different parts of the
+computation.
+
+
 <p>
 Open a new terminal and continue in the next step while the computation runs.
 
@@ -262,24 +268,40 @@ Start WebODM (be patient):
 
 <pre><code>./webodm.sh start &amp;
 </code></pre>
-
-Now go to the URL specified in the output, it will be likely
+<p>
+Further steps:
+<ol>
+<li>In the browser window on your VCL, go to the URL specified in the output, it will be likely
 <tt>http://localhost:8000</tt>. You will be prompted to create an
 administrator account. Create it. It will be the only account we will
-need for the exercise.
+need for the exercise.</li>
 
+<li>
 Upload images to the task which is already there or create a new one.
-Change the resolution of images to 800 to speed up the upload and
-computation (this reduces the quality of the images).
+Don't include the GCP file (there is currently a problem with it, which is being fixed).</li>
 
-Now you need to wait for the processing to finish. To follow the
+<li>In Options, find option force-ccd and put 23.4 there (ccd width of our camera model, it's not in their database)</li>
+<li>
+In Resize images, change the size of images to 1000 to speed up the upload and
+computation (this reduces the quality of the images and the whole reconstruction).</li>
+
+<li>
+    Check if your previous computation in terminal is still running. If yes, please wait until it's done,
+    because you wouldn't have sufficient resources for both reconstructions.
+    Once it's finished, you can start processing in WebODM, it should take roughly 30 mins.</li>
+
+<li>To follow the
 processing, you can access WebODM from outside the VCL machine. Enter
 the VCL machine IP address as URL to your web browser and add
 <tt>:8000</tt> to it. You should get a login page and you should be able
-to log in using the admin account credentials you created earlier.
+to log in using the admin account credentials you created earlier.</li>
 
-<h3>Using the results</h3>
-If the processing is still running, download precomputed results -
+<li>Once your WebODM is finished, you can explore data within WebODM (in VCL or outside),
+specifically the orthopohoto and point cloud. You can also download them.</li>
+</ol>
+
+<h3>Using the results from ODM (docker version)</h3>
+If the processing is still running and you can't wait, download precomputed results &mdash;
  <a href="https://drive.google.com/open?id=1uwjfPGL5knydpZoU_zU0Fopzl5tSRl9t">odm.zip</a> and unzip in your home folder.
 
 <p>
