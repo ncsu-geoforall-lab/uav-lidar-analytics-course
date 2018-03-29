@@ -331,7 +331,7 @@ import points with <a href="https://grass.osgeo.org/grass74/manuals/v.in.lidar.h
 <pre><code>
 r.in.lidar -eo input=georeferencing/odm_georeferenced_model.las output=odm_elev method=mean resolution=0.5
 g.region raster=odm_elev
-r.fill.stats -k input=odm output=odm_filled distance=3 mode=wmean power=2.0 cells=8
+r.fill.stats -k input=odm_elev output=odm_filled distance=3 mode=wmean power=2.0 cells=8
 </code></pre>
 
 Compare the DSM with lidar. Unpack the lidar DSM, browse to the file using GUI or you have to have it
