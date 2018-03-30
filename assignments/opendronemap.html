@@ -336,7 +336,7 @@ using EPSG code 3358.
 <p>
 Start GRASS GIS in PERMANENT and set your working directory where you have
 your odm folder. Import generated orthophoto:
-<pre><code>r.import input=orthophoto/odm_orthophoto.tif output=odm_ortho
+<pre><code>r.import input=orthophoto/odm_orthophoto.tif output=odm_ortho -o
 g.region raster=odm_ortho.1
 r.mask raster=odm_ortho.4 maskcats=255
 r.composite red=odm_ortho.1 green=odm_ortho.2 blue=odm_ortho.3 output=ortho
