@@ -51,9 +51,12 @@ a computation uses them</li>
 <h3>CPUs in geospatial context: approaches</h3>
 <ul>
 <li><em>Embarassingly parallel problems</em> &mdash;  independent computations (e.g., solar radiation for more days)</li>
-<li class="fragment"><em>Tiling approach</em> &mdash; divide spatial domain into tiles possibly with overlaps (e.g., interpolation)</li>
-<li class="fragment"><em>Complex approaches</em> &mdash; depend on algorithms, often use tiling with communication between tiles (e.g., hydrology)</li>
+<li class="fragment" data-fragment-index="1"><em>Tiling approach</em> &mdash; divide spatial domain into tiles possibly with overlaps (e.g., interpolation)</li>
+<li class="fragment" data-fragment-index="2"><em>Complex approaches</em> &mdash; depend on algorithms, often use tiling with communication between tiles (e.g., hydrology)</li>
 </ul>
+<iframe style="margin-bottom:30px" width="280" height="157" src="https://www.youtube.com/embed/eK6dWivro1g?rel=0&amp;controls=0&amp;showinfo=0;loop=1;playlist=eK6dWivro1g" frameborder="0" allow="encrypted-media" data-autoplay></iframe>
+<img style="margin-left:30px;margin-right:30px" width="250px" src="img/open_source/tiling.jpg"  class="fragment" data-fragment-index="1">
+<img width="300px" src="img/fusion_lidar_uav/fanimhhcolp.gif"  class="fragment" data-fragment-index="2">
 </section>
 
 <section>
@@ -92,35 +95,44 @@ using Python, or background processing</li>
 <h3>Parallel computing infrastructure (1)</h3>
 <ul>
 <li>laptop/desktop (low power, 8 CPUs) &mdash; for individuals</li>
-<li class="fragment">server (medium power, tens of CPUs)
+<li class="fragment" data-fragment-index="1">server (medium power, tens of CPUs)
 <ul>
 <li>typically remote access, but physical machine is accessible</li>
 <li> hardware owned by organizations, companies</li>
 </ul>
 </li>
 </ul>
+<img class="fragment" data-fragment-index="1" height="300px" src="img/open_source/server.png">
 </section>
 
 <section>
 <h3>Parallel computing infrastructure (2)</h3>
 <ul>
-<li >cloud (medium power, tens of CPUs)
+<li>cloud (medium power, tens of CPUs)
   <ul>
      <li>connected computers, actual hardware/OS hidden through virtualization</li>
      <li>easy to setup from user point of view</li>
      <li>computing is often not the primary application</li>
      <li>e.g., <a href="https://vcl.ncsu.edu/">NCSU VCL</a>, Amazon Web Services </li>
   </ul>
-<li class="fragment">HPC, supercomputers (high power, thousands of CPUs) 
+</ul>
+<img class="stretch" src="img/open_source/vcl1.png">
+</section>
+
+<section>
+<h3>Parallel computing infrastructure (3)</h3>
+<ul>
+<li>HPC, supercomputers (high power, thousands of CPUs) 
   <ul>
-      <li>connected nodes, Linux-based OS</li>
+      <li>connected nodes, unix-based OS (e.g., Linux)</li>
       <li>not all programs can take advantage of it</li>
       <li>e.g., <a href="https://projects.ncsu.edu/hpc/main.php">NCSU HPC: henry2</a></li>
   </ul>
 </li>
 </ul>
+<img class="stretch" src="img/open_source/supercomputer.jpg">
+<p class="small"> Supercomputer Blue Waters, NCSA, Illinois</p>
 </section>
-
 
 <section>
 <h3>Software licensing and cloud</h3>
@@ -135,6 +147,12 @@ using Python, or background processing</li>
 
 <section>
 <h3>Software licensing and cloud</h3>
+<img class="stretch" src="img/open_source/vcl2.png">
+<p> Source: <a href="https://vcl.ncsu.edu/2013/05/06/adobe-and-microsoft-office-licensed-products-to-be-removed-from-vcl/">NCSU VCL announcements</a>
+</section>
+
+<section>
+<h3>Software licensing and cloud</h3>
 <p style="text-align:left">Free and open source software:
 <ul>
 <li>is free to run, study, modify and distribute</li>
@@ -143,8 +161,6 @@ using Python, or background processing</li>
 </ul>
 <img width="70%" src="img/open_source/top500.jpg">
 </section>
-
-<!-- According to Whitehurst, unlike server virtualization where each VM is devoted to a single application, the containerization concept is to allow multiple applications to share a single OS instance while still maintaining secure data and resource separation. The advantages are increased performance, reduced VM overhead and hence, much higher resource utilization, in which a single server might host 50 or more containerized apps versus 10 or 20 VMs -->
 
 <section>
 <h3>Overview of open source tools for SfM</h3>
@@ -208,15 +224,6 @@ using Python, or background processing</li>
 </section>
 
 <section>
-<h3>WebODM - ODM with web browser interface</h3>
-<ul>
-  <li>new web interface is being developed</li> 
-  <li>learn more at <a href="https://opendronemap.github.io/WebODM/">WebODM</a></li>
-  </ul>
-  <img src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
-</section>
-
-<section>
   <h3>ODM results</h3>
   Improvements in mosaicing:<br>
   <img width="45%" src="img/ODM_ortho_old.jpg">
@@ -230,13 +237,41 @@ using Python, or background processing</li>
 
 <section>
     <h3>Assignment</h3>
-    <p style="text-align:left"> We will run ODM on VCL:
+    <p style="text-align:left"> We will run ODM on Ubuntu VCL:
         <ul>
-          <li>using Docker &mdash; through command line</li> 
-          <li>using Web interface</li>
+          <li>Mid Pines sample dataset</li>
+          <li>using Docker &mdash; through command line </li> 
+          <li>using ODM web interface WebODM</li>
         </ul> 
 </section>
 <section>
-    <h3>Docker</h3>
+    <h3>What is Docker?</h3>
+<ul>
+    <li>tool for easy deploying and running applications by using containers</li>
+    <li class="fragment">containers allow to package an application with dependencies</li>
+    <li class="fragment">no installation, keeps your system clean</li>
+    <li class="fragment">ensures application runs no matter what customized settings your machine has</li>
+    <li class="fragment">similar to Virtual Machine, but much more efficient, takes up less space</li>
+    <li class="fragment">based on Linux, but there is also Docker for Windows</li>
+</ul>
+</section>
 
+<section>
+<h3>WebODM: ODM with web browser interface</h3>
+<ul>
+  <li>allows viewing results as a 2D webmap, 3D point cloud</li>
+  <li>learn more at <a href="https://github.com/OpenDroneMap/WebODM">WebODM</a></li>
+  <li>we will deploy WebODM using Docker</li>
+  </ul>
+  <img class="stretch" src="https://raw.githubusercontent.com/OpenDroneMap/WebODM/master/screenshots/ui-mockup.png">
+</section>
+
+<section>
+    <h3>What we have learned</h3>
+<ul>
+    <li>what is parallel computing about</li>
+    <li>what types of computing infrastructure are available</li>
+    <li>software licensing and cloud</li>
+    <li>current state of open source tools for SfM</li>
+</ul>
 </section>
