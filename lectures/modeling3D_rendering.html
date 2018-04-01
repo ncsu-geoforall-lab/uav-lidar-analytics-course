@@ -195,6 +195,7 @@
  <p><li>Basic concepts in 3D modeling and rendering
  <p><li>3D GIS and 3DWeb GIS
  <p><li>Overview to Blender software and main functionalities
+ <p><li>General workflows for modeling with UAV and GIS data in Blender
 </ul>
 </section>
 
@@ -236,13 +237,13 @@
 
    <h3> 3D Mesh</h3>
    <ul>
-     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+     <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
        <img src="img/modeling3D/vertex_sphere.JPG" style="width: 100%">
       Vertex</p>
-      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+      <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
          <img src="img/modeling3D/edge_sphere.JPG" style="width: 100%">
         Edge</p>
-      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+      <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
            <img src="img/modeling3D/face_sphere.JPG" style="width: 100%">
         Face</p>
 
@@ -277,13 +278,13 @@
 
    <h3> Shaders</h3>
    <ul>
-     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+     <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
        <img src="img/modeling3D/surface.jpg" style="width: 100%">
       Surface</p>
-      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+      <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
          <img src="img/modeling3D/volumetric.jpg" style="width: 100%">
       Volumteric</p>
-      <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+      <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
            <img src="img/modeling3D/displacement.jpg" style="width: 100%">
       Displacement</p>
       </ul>
@@ -296,13 +297,13 @@
 <section>
   <h3> Surface Shaders</h3>
   <ul>
-    <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+    <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
       <img src="img/modeling3D/diffuse.png" style="width: 100%">
      Diffuse</p>
-     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+     <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
         <img src="img/modeling3D/glossy.png" style="width: 100%">
      Glossy</p>
-     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+     <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
           <img src="img/modeling3D/transparent.png" style="width: 100%">
      Transparent</p>
   </ul>
@@ -311,13 +312,13 @@
 <section>
     <h3> Surface Shaders</h3>
   <ul>
-    <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+    <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
       <img src="img/modeling3D/emission.png" style="width: 100%">
      Emission</p>
-     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
+     <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right:.5%; margin-bottom: 0.5em;">
         <img src="img/modeling3D/glass.png" style="width: 100%">
      Glass</p>
-     <p class="fragment" style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+     <p style="float: left; font-size: 20pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
           <img src="img/modeling3D/mixed.png" style="width: 100%">
      Mixed <br> Diffuse + Glass</p>
 
@@ -632,12 +633,134 @@
 </section>
 
 <section>
-   <h3>General Workflow</h3>
+   <h3>General Workflows</h3>
 <ul>
- <li>Shaders, textures, links
+ <li>Importing data
+ <li>Model Optimization
+ <li>Lighting and Shading
+ <li>Shading
+
 </ul>
 <p>
 </section>
+
+<section>
+   <h3>Importing surface models</h3>
+<ul>
+ <li>Geotiff (.tif) through BlenderGIS
+ <li>Wavefront (.obj) directly from Agisoft, etc.
+ <li>Stanford (.ply) pointclouds
+</ul>
+</section>
+
+<section>
+   <h3>Optimizing the model</h3>
+<ul>
+ <li>Decimation
+ <li>Smoothing
+ <li>Mesh correction
+ <li>Texture correction
+</ul>
+<p>
+</section>
+<section>
+  <h3>Decimation with Decimate modifier</h3>
+  <ul>
+  <p style="float: left; font-size: 15pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/decimate_70.jpg" style="width: 100%">
+      Initial mesh <br> 5mil faces, 5GB memory</p>
+
+    <p style="float: left; font-size: 15pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/decimate_50.jpg" style="width: 100%">
+      Decimate to %50 <br> 2.5mil faces, 3.6GB memory </p>
+
+    <p style="float: left; font-size: 15pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+      <img src="img/modeling3D/decimate_10.jpg" style="width: 100%">
+        Decimate to %10 <br> 500K faces, 2.2GB memory</p>
+</ul>
+<p>
+</section>
+
+<section>
+  <h3>Smoothing with Smooth modifier</h3>
+  <ul>
+  <p style="float: left; font-size: 15pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/smooth_n.jpg" style="width: 100%">
+      Initial mesh </p>
+
+    <p style="float: left; font-size: 15pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/smooth_med.jpg" style="width: 100%">
+      After medium smoothing</p>
+
+    <p style="float: left; font-size: 15pt; text-align: center; width: 32%; margin-right: .5%; margin-bottom: 0.5em;">
+      <img src="img/modeling3D/smooth_hi.jpg" style="width: 100%">
+      After high smoothing</p>
+</ul>
+</section>
+
+
+<section>
+  <h3>Mesh correction with sculpting tool</h3>
+  <ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/sculpting_brushes.png" style="width: 100%">
+      Blender Sculpt tool Brushes </p>
+
+</ul>
+</section>
+
+<section>
+  <ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width:100%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/sculpting_before.jpg" style="width: 100%">
+      Initial mesh </p>
+      <p style="float: left; font-size: 20pt; text-align: center; width: 100%; margin-right: .5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/sculpting_after.jpg" style="width: 100%">
+          Refined mesh using Inflate, Flatten and Smooth brush </p>
+
+</ul>
+</section>
+
+<section>
+  <h3>Texture correction with Texture Paint tool</h3>
+  <ul>
+  <p style="float: Center; font-size: 20pt; text-align: center; width: 70%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/texture_paint.png" style="width: 100%">
+      Blender Texture Paint tool </p>
+</ul>
+</section>
+
+<section>
+  <ul>
+  <p style="float: left; font-size: 20pt; text-align: center; width:80%; margin-right: .5%; margin-bottom: 0.5em;">
+    <img src="img/modeling3D/texture_after.jpg" style="width: 100%">
+      Initial mesh </p>
+      <p style="float: left; font-size: 20pt; text-align: center; width: 80%; margin-right: .5%; margin-bottom: 0.5em;">
+        <img src="img/modeling3D/texture_before.jpg" style="width: 100%">
+          Refined textuere using clone brush </p>
+
+</ul>
+</section>
+
+<!--
+<section>
+1. Model optimization
+
+. Model Optimization:
+  Decimation
+  Smoothing
+  Mesh correction
+  Texture correction
+Shading
+Animation
+Analysis
+
+3D visualizing and animating flight routes
+3D Visuzlaing camera locations and errors.
+<section>
+-->
+
+
 
 
 
