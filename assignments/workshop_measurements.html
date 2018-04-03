@@ -1,0 +1,51 @@
+<h2>Measurements in Agisoft Photoscan</h2>
+
+You will be working with processed data. Because the processing is very time consuming, the processed data (stored in the <a href="https://drive.google.com/open?id=1XMV7MUqsFBA84GbhzswcMYrpPuZGYYDs">Agisoft project files</a>) is provided. <br>
+After opening the <strong>2016_09_22_sample_classroom.psx</strong> file, you should see generated orthomosaic and DSM in the Workspace pane. <br>All you have to do is to indicate the new location of the pictures. <br>
+In order to do that right clik on any of the pictures in the Pictures pane and choose <em>Change Path...</em> and in the dialog window mark the <em>All cameras</em> option. This will automatically apply the updated location to all the pictures in the project.</p>
+<figure><img src="img/geoprocessing/agi_change_path.jpg"> </figure>
+<h4>Distance measurement:</h4>
+<p>Using the Ruler instrument for the toolbar menu calculate the length of the longer side of the building.</p>
+
+<h4>Distance between GCPs:</h4>
+<p>To measure distance between two markers in Agisoft:</p>
+<ul>
+<li>Select both markers to be used for distance measurements on the Reference pane using <em>Ctrl</em> button
+<li>Select Create Scale Bar command form the 3D view context menu. The scale bar will be created and an instant added to the Scale Bar list on the Reference pane. 
+</ul><br>
+
+<strong>NOTE:</strong> in order to see the estimated values, you need to be in the estimates display - on the Reference pane, following button needs to be active
+<img src="img/volumes/agi_view_estimates.png" width=25%>
+
+<h4>Distance between cameras</h4>
+<p>To measure distance between two cameras in Agisoft:</p>
+<ul>
+<li>Select the two cameras on the Workspace or Reference pane using <em>Ctrl</em> button. Alternatively, the cameras can be selected in the Model view window using selecting tools from the Toolbar.
+<li>Select Create Scale Bar command form the 3D view context menu. The scale bar will be created and an instant added to the Scale Bar list on the Reference pane. 
+</ul>
+
+
+<h3>Performing measurements on DSMs</h3>
+<p>Switch to Ortho view (double click on the Orthomosaic in the Workspace pane)
+<ul>
+
+<h4>Point and distance measurement:</h4>
+
+<ul>
+<li>Using Ruler instrument or Draw Polyline from the Toolbar of the Ortho view and measure a chosen object on the orthophoto.
+</ul>
+
+<h4>Contours:</h4>
+<ul>
+<li>Select <em>Generate Contours...</em> command from Tools menu.
+<li>Set round values for Minimal altitude, Maximal altitude parameters as well as the Interval for the contours.
+<li>Set the transparency for the contours for 50% and do not display the labels. (You can do it in <em>Preferences</em> in the Contours context menu in the Workspace pane (contours are in the Shapes folder)
+</ul>
+
+<h4>Cross section:</h4>
+<p>Choose some interesting place for cross section (you can see from the contours where are some variations in terrain)</p>
+<ul>
+<li>Indicate a line to make a cut of the model using Draw Polyline tool from the Ortho view toolbar (double click ends the line).
+<li>Right button click on the polyline/polygon and select <em>Measure...</em> command from the context menu.
+<li>Include in the report your profile with the and its location.
+</ul>
