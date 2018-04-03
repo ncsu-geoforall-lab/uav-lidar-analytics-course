@@ -1,0 +1,308 @@
+<section>
+    <h2>From images to 3D models:</h2>
+   <h3>What do we need to process the data?</h3>
+    <h4>UAS Imagery Processing Workshop</a></h4>
+    <h4 style="margin-top: 0.5em">
+        Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+</section>
+
+<section>
+    <h2>UAS data </h2>
+    <h4>What do we get after the flight mission?</h4>
+        <img class="fragment"src="img/new/uas_data.jpg">
+
+</section>
+
+<section>
+    <h2>Digital imagery</h2>
+        <img class="fragment"src="img/digital_imagery.png">
+ <ul>
+        <li class="fragment">usually on the camera SD card</li>
+        <li class="fragment">can be geotagged (depends on camera)</li>
+        <ul>
+        <li class="fragment">Camera lens location is "written into" each photo's EXIF file</li>
+	<li class="fragment">this is not necessary the case...</li>
+	</ul>
+</ul>
+</section>
+<section>
+    <h3>Location of the photo</h3>
+<p class="fragment"><strong>Geotagging</strong> a photograph - associating a photo with a geographical location (latitude, longnitude and usually altitude)</li></p>
+    <div class="right">
+            <img class="fragment" src="img/mapping/geotag.png">
+    </div>
+ <div class="left">
+		<ul>
+		<li class="small fragment">In theory, every part of a picture can be tied to a geographic location, but in the most typical application, only <strong>the position of the sensor</strong> is associated with the <strong>entire digital image</strong></li>
+		<li class="small fragment">GPS in the camera or UAS measures location with very low accuracy</li>
+		</ul> 
+    </div>
+
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag1.png">
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag2.png">
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag3.png">
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag4.png">
+</section>
+<section>
+    <h2>Flight log</h2>
+        <ul>
+        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measures the orientation of airborne sensors,</li>
+        <li class="fragment">Information is logged into a text file (flight log),</li>
+        <li class="fragment">Contains elements of exterior orientation (EO, more <a href="./2017_Imagery_Processing.html#/18">later in the lecture</a>)</li>
+        </ul>
+        <img class="fragment" src="img/log.png" width="80%">
+</section>
+<section>
+    <h2>GCP coordinates</h2>
+<div class="left">
+        <ul>
+        <li class="fragment">Measured by GPS coordinates of the panels set before the flight</li>
+        <li class="fragment">Photo ID points (distinguishable ground features)can be surveyed later on </li>
+        <li class="fragment">It is important to know the GCPs coorditate system (spatial reference system)</li>
+        </ul>
+</div>
+<div class="right">
+        <img src="img/GCPs.png">
+</div>
+</section>
+
+<section>
+    <h2>Spatial reference system</h2>
+     <div class="left">
+        <ul>
+        <li class="small fragment">defines how the two-dimensional, projected map in your GIS is related to real places on the earth</li>
+        <li class="small fragment">It is crucial to know what is your data reference system!</li>
+
+    </div>
+    <div class="right">
+        <img src="img/new/projection.JPG" width="60%">
+    </div>
+<ul>
+        <li class="small fragment">There are global map projections, but most map projections are created and optimized to project smaller areas of the earth’s surface</li>
+        <li class="small fragment">There are two different types of coordinate reference systems: Geographic Coordinate Systems and Projected Coordinate Systems</li>
+        <li class="small fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (EPSG codes for coordinate reference systems)</a></li>
+</ul>
+</section>
+
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img class="fragment" src="img/new/processing_outputs.JPG">
+</section>
+
+<section>
+    <h2>Orthophoto</h2>
+     <div class="left">
+        <ul>
+        <li class="fragment"> aerial imagery geometrically corrected ("orthorectified") such that the scale is uniform</li>
+        <li class="fragment"> raster: consists of red, green and blue bands</li>
+    </div>
+    <div class="right">
+        <img src="img/new/ortho_example.jpg">
+    </div>
+</section>
+<section>
+    <h2>Digital Surface Model</h2>
+<img src="img/new/dtm_dsm.jpg" width="60%">
+        <ul>
+        <li class="fragment"> DEM/DTM - Digital Elevation Model / Digital Terrain Model</li>
+        	<ul class="fragment">       
+		<li> representation of a terrain's elevation</li>
+        	<li> bare-earth raster grid</li>
+		</ul>
+        <li class="fragment"> DSM - Digital Surface Model 
+        	<ul class="fragment">       
+		<li> representation of a visible surface</li>
+        	<li> captures the natural and built features on the Earth’s surface</li>
+		</ul>
+</section>
+
+<section>
+    <h2>Pointcloud</h2>
+        <ul>
+        <li class="fragment"> representation of the external surface of an object</li>
+        <li class="fragment"> set of vertices in a three-dimensional coordinate system</li>
+        <li class="fragment"> vector or raster?</li>
+        <li class="fragment"> Dale Lutz once said, "point cloud is a badly behaved raster"</li>
+ <div class="left">
+        <img src="img/new/pointclouds.png">
+</div>
+
+   <div class="right">
+        <img src="img/new/Point_cloud_torus.gif">
+    </div>
+</section>
+
+
+<section>
+        <img class="fragment"src="img/new/uas_data.jpg" width="61%">
+        <img class="fragment"src="img/processing/getting_there.png" width="40%">
+        <img class="fragment" src="img/new/processing_outputs.JPG" width="61%">
+</section>
+<section>
+        <img src="img/new/uas_data.jpg" width="61%">
+        <img src="img/processing/getting_there2.png" width="40%">
+        <img src="img/new/processing_outputs.JPG" width="61%">
+</section>
+
+<section>
+    <h2>What do we need?</h2>
+    <ol>
+        <li class="fragment">Digital <strong>imagery</strong>;</li>
+        <li class="fragment">(Digital elevation model or topographic dataset)</li>
+        <li class="fragment">Exterior <strong>orientation parameters </strong> from aerial triangulation or IMU;</li>
+        <li class="fragment">(<strong>Camera calibration</strong> report);</li>
+        <li class="fragment">(Ground Control Points parameters);</li>
+        <li class="fragment">Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
+    </ol>
+<p class="small">items in brackets are optional<p>
+</section>
+<section>
+    <h2>1. Digital imagery</h2>
+            <img class="fragment" src="img/digital_imagery.png">
+    <div class="left">  
+            <img class="fragment" src="img/multiview.png">
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/camera_sensor.png" width="80%">
+    </div>
+</section>
+<section>
+    <h2>2. Digital Elevation Model</h2>
+     <div class="left">  
+		<img src="img/disortion.png">
+     </div>
+    <div class="right">
+           <p class="fragment"> <strong>In the past:</strong> Shape of the ground surface must be known in order to remove the effects of relief displacement<p>
+    </div>
+             <p class="fragment"> <strong>Now:</strong> computed automatically by Structure from Motion <p>    
+</section>
+
+<section>
+    <h2>Structure from Motion (SfM)</h2>
+    <div class="left">  
+        <ul>
+        <li class="fragment">range imaging technique,</li>
+        <li class="fragment">process of estimating 3D structures from 2D image sequences,</li>
+        <li class="fragment">may be coupled with local motion signals</li>
+        </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/sfm_explained.jpg">
+    </div>
+</section>
+<section>
+    <h2>3. Exterior orientation (EO) </h2>
+            <p class="fragment">EO= <strong>position</strong> and <strong>orientation</strong> in the object space</p>
+            <p class="fragment">6 elements <strong>necessary</strong> for any photogrammetric processing:</p>
+    <div class="left">  
+    <ul>
+        <li class="fragment">X, Y, and Z of the exposure station position (latitude, longitude and altitude of the camera),</li>
+        <li class="fragment">angular orientation: ω, φ, and κ (yaw, pich and roll)</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/orientation.png">
+    </div>
+</section>
+<section>
+    <h3>Flight log</h3>
+        <ul>
+        <li class="fragment">Log file contains elements of exterior orientation that are measured by onboard Inertial Measurement Unit (IMU) and written into text file</li>
+</ul>
+
+        <img src="img/processing/log.png" width=60%>
+<ul>
+        <li class="fragment">Sometimes (most DJI products) exterior orientation parameters are saved in photos EXIF file</li>
+        <li class="fragment">Log contains information about the location of the camera, not location of the depicted object  - <a href="./HM_Photogrammetry_and_SfM.html#/25">more info in this section of lecture 3</a></li>
+        </ul>
+</section>
+<section>
+    <h2>4. Interior orientation </h2>
+    <div class="left">  
+    <ul>
+        <li class="fragment">In the past: camera calibration report,</li>
+        <li class="fragment">Now: Self-calibration (auto-calibration) is the process of determining intrinsic camera parameters directly from uncalibrated images</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img src="img/interior_orientation.png">
+    </div>
+    <ul>
+        <li class="fragment">Can be automatically derived using Structure from Motion (SfM) methods</li>
+    </ul>
+</section>
+
+<section>
+    <h2>5. Ground Control Points</h2>
+    <div class="left">
+        <li class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). </li>
+</div>
+    <div class="right">
+            <img src="img/processing/GCP_girls.png">
+    </div>
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+            <img class="fragment" src="img/new/relative_absolute_orientation.JPG">
+                <ul>
+                <li class="fragment">necessary for georeferencing if photos are not geotagged</li>
+                <li class="fragment">improve precision of the model</li>
+                <li class="fragment">important for quality control</li>
+                </ul>
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+     <img src="img/mapping/geotag3.png">
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+     <img src="img/mapping/geotagGCP1.png">
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+     <img src="img/mapping/geotagGCP2.png">
+</section>
+<section>
+    <h2>6. Processing options</h2>
+<img class="fragment" src="img/new/processing_options.JPG">
+</section>
+
+<section>
+    <h2>Processing options</h2>
+Everything boils down to... money (and time)
+<ul>
+        <li class="fragment">What is my starting budget and equipment?;</li>
+        <li class="fragment">How frequently will I fly?;</li>
+        <li class="fragment">Do I have the experience/ training necessary for processing (or am I able to hire people who do)?</li>
+        <li class="fragment">Do I have time to process the data by myself?</li>
+    </ul>
+</section>
+<section>
+<h2>Processing options - software</h2>
+
+<ul>
+        <li class="fragment"><a href="http://www.agisoft.com/">Agisoft Photoscan</a></li>
+        <li class="fragment"><a href="https://pix4d.com/">Pix4D</a></li>
+        <li class="fragment"><a href="http://uas.trimble.com/tbc-am">Trimble Business Center</a> - Aerial Photogrammetry Module</li>
+        <li class="fragment"><a href="http://www.esri.com/products/drone2map">Drone2Map (ESRI)</a></li>
+        <li class="fragment"><a href="https://dronemapper.com/">DroneMapper</a></li>
+        <li class="fragment"><a href="http://opendronemap.org/">opendronemap</a></li>
+<li class="fragment">many many more...</li>
+    </ul>
+</section>

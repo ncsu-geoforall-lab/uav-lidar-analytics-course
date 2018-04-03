@@ -1,0 +1,195 @@
+<section>
+    <h2>From images to 3D models: Why do we need to process the data?</h2>
+    <h4>UAS Imagery Processing Workshop</a></h4>
+    <h4 style="margin-top: 0.5em">
+        Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+</section>
+
+
+
+
+
+<section>
+    <h3>Vertical and oblique aerial imagery</h3>
+     <img class="fragment" src="img/new/imagery_oblique.png" width="70%">
+</section>
+
+<section>
+    <h2>Vertical aerial photography</h2>
+<p> Jockey's Ridge 1932</p>
+     <img src="img/JockeysRidge1932full.jpg" width="75%">
+</section>
+
+<section>
+    <h2>Oblique aerial photography</h2>
+<p> San Francisco Earthquake, 1906: Note the high distortion</p>
+     <img src="img/san_francisco.png" width="55%">
+</section>
+
+
+
+
+
+<section>
+    <h3>Why do we need to process the images?</h3>
+<p>Perspective and relief distortion</p>
+    <div class="left">  
+            <img src="img/pespective_vs_orthographic.png" width="90%">
+    </div>
+    <div class="right fragment">
+    <p>
+        <img src="img/disortion.png">
+    </p>
+    </div>
+</section>
+
+
+
+<section>
+    <h2>Orthorectification</h2>
+
+    <div class="left">  
+    <p class="fragment">Process that removes:</p>
+    <ul>
+        <li class="fragment">geometric perspective,</li>
+        <li class="fragment">effects of relief displacement,</li>
+        <li class="fragment">optical distortions from the sensor</li>
+    </ul>
+        <p class="fragment">from a photograph or digital image</p>
+    </div>
+    <div class="right fragment">
+        <img src="img/DSM_ortho.png" width="40%">
+        <img src="img/new/ortho_example_measure.JPG">" width="80%">
+    </div>
+     <p class="fragment">The resulting image - an <strong>orthophoto</strong> or <strong>orthoimage.</strong></p>
+</section>
+<section>
+    <h2>Orthorectification</h2>
+     <img src="img/slide1.png">
+</section>
+<section>
+    <h2>Orthorectification</h2>
+     <img src="img/slide2.png">
+</section>
+<section>
+    <h2>Orthorectification</h2>
+     <img src="img/slide3.png">
+</section>
+<section>
+    <h2>Orthorectification</h2>
+     <img src="img/slide4.png">
+</section>
+<section>
+    <h2>Orthorectification</h2>
+     <img src="img/slide5.png">
+</section>
+<section>
+    <h2>Orthorectification</h2>
+     <img src="img/slide6.png">
+</section>
+<section>
+    <h2>Orthorectification</h2>
+     <img src="img/slide7.png">
+</section>
+<section>
+   <h2>From 2D images to a 3D model</h2>
+<ul>
+<li class="fragment"> orthophoto is a 2D image
+<li class="fragment"> elevation data are derived as part of orthorectification process
+<li class="fragment"> exact camera parameters and manually identified GCPs on the images were needed to derive a DEM
+<li class="fragment"> Structure from Motion: automated point matching, camera parameter estimation and 3D model generation
+</ul>
+</section>
+
+
+
+<section>
+    <h2>Structure from Motion (SfM)</h2>
+    <div>  
+        <ul>
+        <li class="fragment">range imaging technique,</li>
+        <li class="fragment">process of estimating 3D structures from overlapping 2D image sequences,</li>
+        <li class="fragment">may be coupled with local motion signals</li>
+        </ul>
+    </div>
+<!-- better fits into imagery processing
+    <div class="right"> <img class="fragment" src="img/SfM.png"> </div>-->
+</section>
+
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme01-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme02-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme03-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme04-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme05-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme06-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme07-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme08-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme09-01.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme11-02.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme12-02.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme13-02.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme14-02.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme15-02.png" width="90%">
+</section>
+<section>
+<h2>Structure from Motion (SfM)</h2>
+<img src="img/new/SfM_scheme16-02.png" width="90%">
+</section>
+
+<section>
+    <h2>UAS Photogrammetric process</h2>
+     <img class="fragment" src="img/new/uas_process.JPG">
+<p class="fragment">Throughout the whole process, it is important to remember</>
+    <ul>
+
+        <li class="fragment"><strong>What</strong> is the aim or the project? and </li>
+        <li class="fragment"><strong>What</strong> will be the data used for?</li>
+    </ul>
+</section>
+
+
+

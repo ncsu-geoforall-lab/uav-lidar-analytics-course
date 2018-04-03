@@ -1,0 +1,231 @@
+<section>
+    <h2>Analysis of the processing outputs</h2>
+    <h4>UAS Imagery Processing Workshop</a></h4>
+    <h4 style="margin-top: 0.5em">
+        Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+</section>
+
+<section>
+    <h2>Visualization of the outputs</h2>
+    <ul>
+    <li class="fragment">all georeferenced poutputs - orthophoto, DSM and pointcloud can be displayed and analyzed in the GIS software</li>
+    <li class="fragment">3D model can be loaded onto 3D modeling software</li>
+    <li class="fragment">There are online tools enabling rapid visualization of 3D content</li>
+    </ul> 
+</section>
+
+<section>
+    <h2>Point cloud - plas.io</h2>
+<p> <a href="plas.io">plasi.io</a> an in- browser point cloude rendering tool
+    <img class="fragment" src="img/new/plas_io.JPG">
+</section>
+<section>
+    <h2>3D model - Sketchfab</h2>
+<div class="right">
+            <img src="img/new/sketchfab.png"width ="77%">
+ </div>
+ <div class="left">   
+<p> <a href="https://sketchfab.com/">Sketchfab</a> is a platform to publish, share and discover 3D, VR and AR content </p> 
+    <ul>
+    <li class=><p> <a href="https://sketchfab.com/osgeolab/models">OSgeoForALl</a> models on sketchfab</li>
+    <li class="small">Free account has limitations</li>
+    <li class="small">Pro account available for .edu domains</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+<h3>Measurements in Agisoft Photoscan</h3>
+<ul>
+<li class="fragment">Agisoft has capability of performing simple measurements on DSM and 3D model:</li>
+<li class="fragment"><strong>Profile generation</strong></li>
+</ul>
+ <img class="fragment" src="img/analysis/profile.PNG" width="80%">
+</section>
+<section>
+<h3>Measurements in Agisoft Photoscan</h3>
+<ul>
+<li><strong>Generating contour lines</strong></li>
+</ul>
+ <img class="fragment" src="img/analysis/DEM_contours.PNG" width="80%">
+</section>
+
+<section>
+<h3>Measurements in Agisoft Photoscan</h3>
+<ul>
+<li><strong>Volume and area measurements</strong></li>
+</ul>
+ <img class="fragment" src="img/analysis/volumes_contours.PNG">
+</section>
+<section>
+    <h2>Analyzing the processing report</h2>
+ <div class="right">
+            <img src="img/new/report_small.png"width ="50%">
+ </div>
+ <div class="left">   
+<p> Includes: </p> 
+    <ul>
+    <li class="small fragment">Orthophoto and digital elevation model sketch;</li>
+    <li class="small fragment">Camera parameters and survey scheme</li>
+    <li class="small fragment">Tie points data export (matching points and panoramas) </li>
+    <li class="small fragment">Image overlap statistics</li>
+    <li class="small fragment">Camera positioning error estimates</li>
+    <li class="small fragment">Ground control point error estimates</li>
+    <li class="small fragment">Processing parameters</li>
+    </ul> 
+ </div>   
+</section>
+<section>
+    <h2>Orthophoto</h2>
+    <img class="fragment" src="img/flights_ortho.png">
+</section>
+<section>
+    <h2>Survey data</h2>
+    <img class="fragment" src="img/flight_image_overlap.png">
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+    <img class="fragment" src="img/flights_GCP_errors.png" width="90%">
+</section>
+<section>
+    <h2>Ground Control Points</h2>
+    <img class="fragment" src="img/flights_GCP_errors_explained.png" width="90%">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img class="fragment" src="img/camera1.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera2.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera3.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera4.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera5.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera6.png">
+</section>
+<section>
+    <h2>Camera calibration report</h2>
+    <img src="img/camera7.png">
+</section>
+<section>
+    <h2>Analyzing the processing report</h2>
+ <div class="right">
+            <img src="img/camera_calibration_report.png">
+ </div>
+ <div class="left">   
+    <ul>
+    <li class="fragment">While carrying out photo alignment PhotoScan estimates both internal and external camera orientation parameters, including nonlinear radial distortions.</li>
+</ul>
+<p class="fragment">Tools > Camera calibration</p>
+ </div>   
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img class="fragment" src="img/image_residuals1.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img src="img/image_residuals2.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+    <img src="img/image_residuals3.png" width="80%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+<pclass="fragment">The <strong>geometric error</strong> corresponding to the <strong>average image distance</strong>, measured in pixels, between:</p>
+    <img class="fragment" src="img/image_residuals_explained.png" width="90%">
+</section>
+<section>
+    <h2>Image residuals</h2>
+<p class="fragment">This <strong>reprojection error</strong> is equivalent to the root mean square (RMS) image residuals used in photogrammetric literature</p>
+<p class="small fragment"> More on image residuals in <a href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3609/epdf">this article</a></p>
+    <img class="fragment" src="img/image_residuals.png">
+</section>
+<section>
+    <h2>Flight path</h2>
+    <img class="fragment" src="img/flight_path.png">
+</section>
+<section>
+    <h2>Flight path in 3D</h2>
+    <img class="fragment" src="img/flight_path3d.png" width="70%">
+</section>
+
+<section>
+    <h2>Digital Surface Model</h2>
+    <img class="fragment" src="img/Flight1_DSM.png">
+</section>
+<section>
+    <h2>DSMs comparison by software</h2>
+    <img class="fragment" src="img/flights_software.png">
+</section>
+<section>
+    <h2>GCPs</h2>
+    <img class="fragment" src="img/new/GCP_report.png">
+</section>
+<section>
+    <h2>'Bowl effect'</h2>
+<p class="fragment">effect can be introduced during photo alignment, in case camera calibration estimates are inaccurate</p>
+    <img class="fragment" src="img/flights_bowl.png">
+</section>
+<section>
+    <h2>'Bowl effect'</h2>
+<p >effect can be introduced during photo alignment, in case camera calibration estimates are inaccurate</p>
+    <img class="left fragment" src="img/pix4d_gcp-pix4d_noGCP_bowl.png" width="50%">
+    <img class="right fragment" src="img/sample_DSM_bowl_effect.png" width="50%">
+</section>
+<section>
+    <h2>'Bowl effect'- solutions to the problem</h2>
+    <ol>
+	<li class="fragment"> If camera calibration is known in advance-  it can be loaded in PhotoScan and fixed during photo alignment.</li>
+	<li class="fragment">Optimization procedure - recommended approach</li>
+		<ul>
+			<li class="fragment">based on <strong>camera</strong> or <strong>GCP</strong> coordinates</li>
+			<li class="fragment">performed after photo alignment</li>
+			<li class="fragment">is recommended to perform optimization based on ground control data in any case, even if precalibrated cameras are used</li>
+		</ul>
+	</ol>
+</section>
+<section>
+    <h2>Optimization</h2>
+    <img class="fragment" src="img/flights_optimization.png" width="90%">
+</section>
+<section>
+    <h2>What is an optimization?</h2>
+    		<ul>
+		<li class="fragment">PhotoScan performs full photogrammetric adjustment taking into account additional constraints introduced by ground control data</li>
+		<li class="fragment">Extrinsic and intrinsic parameters for all cameras are optimized at this step, in contrast to the simple 7-parameter transform used for georeferencing by default</li>
+		<li class="fragment">Optimization helps to significantly improve accuracy of the final solution</li>
+		</ul>
+<p class="fragment"> More on the bowl effect in <a href="http://onlinelibrary.wiley.com/doi/10.1002/esp.3609/epdf">this article</a></p>
+</section>
+<section>
+<section>
+<h2>Terrain analysis</h2>
+<p class="fragment"> computing <a href="https://grass.osgeo.org/grass64/manuals/r.slope.aspect.html">aspect, slope, curvature</a> and <a href="https://grass.osgeo.org/grass70/manuals/r.relief.html">shaded relief</a> maps</p>
+ <img class="left fragment" src="img/analysis_aspect_GCP.png" width="35%">
+ <img class="right fragment" src="img/analysis_slope_GCP.png" width="35%">
+ <img class="left fragment" src="img/analysis_curvature_GCP.png" width="35%">
+ <img class="right fragment" src="img/analysis_relief_GCP.png" width="35%">
+</section>
+<section>
+<h2>Advanced terrain analysis</h2>
+<p class="fragment"> computing <a href="https://grass.osgeo.org/grass70/manuals/addons/r.local.relief.html">local relief</a>,  <a href="https://grass.osgeo.org/grass70/manuals/addons/r.skyview.html">skyview</a> and <a href="https://grass.osgeo.org/grass70/manuals/addons/r.shaded.pca.html">shaded PCA maps</a></p>
+ <img class="left fragment" src="img/analysis_local_relief.png" width="50%">
+ <img class="right fragment" src="img/analysis_skyview.png" width="35%">
+ <img class="left fragment" src="img/analysis_pca_GCPs.png" width="50%">
+</section>

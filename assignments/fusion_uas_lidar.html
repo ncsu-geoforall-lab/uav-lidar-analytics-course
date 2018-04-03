@@ -101,11 +101,17 @@ working directory.
  1 aqua
  35 blue
 </code></pre>
+Download <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">
+lidar DSM and DEMs</a> if you haven't done already, unzip it in your working directory and unpack:
+
+<pre><code>r.unpack -o input=mid_pines_lidar2013_dsm.pack
+r.unpack -o input=mid_pines_lidar2013_dem.pack
+</code></pre>
 
 Compute the differences between the lidar and UAS DSMs
 and evaluate their spatial distribution and
-summary statistical properties:
-<pre><code>g.region rast=mid_pines_lidar2013_dsm -p
+<pre><code>summary statistical properties:
+g.region rast=mid_pines_lidar2013_dsm -p
 r.mapcalc "diff_lidardsm_agi_june = mid_pines_lidar2013_dsm - 2015_06_20_DSM_agi_11GCP"
 r.colors diff_lidardsm_agi_june rules=dif_lidar_uav.txt
 r.univar diff_lidardsm_agi_june
@@ -127,7 +133,7 @@ and select raster maps <code>mid_pines_lidar2013_dsm</code>,
  <code>2015_06_20_DSM_agi_11GCP</code>, and <code>2015_06_20_pix4d_11GCP_dsm</code>.
 In Profile toolbar, use the second tool <em>Draw transect in map display window</em>
 and then click in Map Display on the road where you want to start the profile and then
-where you want to end it. Use <em>Plot options</em> to set colors of the DSM profiles.
+where you want to end it. Use <em>Plot options</em> to show legend and to set colors of the DSM profiles (look for the yellow wheel icon).
 
 <p>
 Why are the distortions / errors low along the road but high in the fields?
@@ -245,7 +251,7 @@ Compare <code>ground_depth.20</code> with the previous results.
 GRASS GIS Animation Tool</a> allows to create animations from series of raster and vector maps and export animated gifs.
 Pick one or more of the simulated flows and load all the corresponding *_depth maps to the animation tool.
 The water flow pattern is better visible in 2d when it's draped over a shaded relief, so
-add corresponding relief raster and set its transparency to 50%.
+add corresponding relief raster and set its transparency to 50% (last icon in Add new animation/Edit animation dialog).
 Export the animation as GIF file.
 <p>Look at this <a href="https://www.youtube.com/watch?v=Pi1ESk9iPwk">youtube video</a> to see how to control Animation Tool.
 

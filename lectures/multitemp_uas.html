@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2> Analysis of multitemporal UAS data and its applications </h2>
+    <h4>GIS595-004/603; MEA592-006/601:</h4>
+    <h4>UAS Mapping for 3D Modeling</h4>
+    <h4 style="margin-top: 0.5em">
+    Helena Mitasova, Anna Petrasova, Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics,</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+    </p>
+</section>
+
+<section>
+    <h3>Outline</h3>
+<p>
+<ul>
+ <p><li>Motivation for time series data acquisition
+ <p><li>UAS-based monitoring survey design
+ <p><li>Processing UAS data time series, temporal data framework
+ <p><li>Basic analysis of 3D data time series, volumes 
+ <p><li>Dynamic visualization of time series
+ <p><li>Applications in crop monitoring, viewsheds 
+</ul>
+</section>
+
+<section>
+   <h3>UAS for monitoring changes</h3>
+<p style="text-align:left">Low cost and rapid deployment: excellent for monitoring changes at local scale (fields, small watersheds)
+<p>
+<ul>
+   <li class="fragment">crop monitoring: growth, disease, stress</li>
+   <li class="fragment">erosion processes: coastal, stream bank, rills and gullies</li>
+   <li class="fragment">natural disasters: flooding, landslides, fire </li>
+   <li class="fragment">mining, construction sites </li>
+</ul>
+<!--<p><img  height="250" class="fragment" src="img/lidar/midpines_lidar_plasviewcozoom.jpg"></p>-->
+</section>
+
+<section>
+   <h3>Monitoring design</h3>
+<p style="text-align:left">Assess:
+<ul>
+    <li class="fragment">metrics to quantify changes: relative height, volume, feature migration</li>
+    <li class="fragment">spatial resolution needed to capture the changes</li>
+    <li class="fragment">temporal resolution: regular intervals, events </li>
+    <li class="fragment">accessibility: flying over people, line of sight, suitable GCPs </li>
+    <li class="fragment">georeferencing, rectification: GCPs distribution and survey</li>
+</ul>
+</section>
+
+<section>
+   <h3>Processing time series</h3>
+<ul>
+<li>analyze and interpolate point clouds: DSMs with aligned, common resolution grids
+<li>raster DSMs are more suitable for time series than TIN
+<li>use GCPs and permanent features to evaluate accuracy, correct errors and distortions
+<li>assign time stamps and register raster DSMs within GIS-based temporal data framework
+</ul>
+
+</section>
+
+<section>
+ <h3>Temporal data framework</h3>
+<ul>
+ <li>supports efficient processing, management and analysis of space-time data sets
+ <li>space-time dataset is a set of maps (raster, vector) registered in a temporal database
+ <li>space-time dataset may represent a dynamic process 
+ <li>individual maps represent the states of the dynamic system at a given time
+</ul>
+<br>
+<p class="small">
+Gebbert, S. and Pebesma, E. (2014). <a href="https://www.sciencedirect.com/science/article/pii/S136481521300282X">
+A temporal GIS for field based environmental modeling.</a>
+Environmental Modelling and Software, 53, 1–12.</p>
+</section>
+
+<section>
+   <h3>Time stamp type</h3>
+<ul>
+ <li>time stamp: assigns time to an individual map in space-time data set
+ <li>time instant - snapshot at given time: 2013-10-15 13:00:00 (absolute time)
+ <li>time interval - defined by start and end time: day, month, year (relative time)
+ <li>a single UAS survey represents a snapshot (state) which can be agreggated into intervals
+</ul>
+
+<img class="stretch" src="img/timeseries/st_dataset.jpg">
+</section>
+
+<section>
+  <h3>Registered time series</h3>
+Timeline tool: time and spatial extent of registered maps
+<p>
+<img height="450" src="img/timeseries/uas2015_timeline.jpg">
+</section>
+
+<section>
+   <h3>Temporal plot</h3>
+<ul>
+<li>Plot time series of elevation values at a given location
+</ul>
+<img width="70%"  src="img/timeseries/tplots.jpg">
+</section>
+
+<section>
+   <h3>Temporal count and intersection</h3>
+<ul>
+<li>Count: number of maps (temporal snapshots) where the given cell has non-null value (overlap)
+<li>Intersection: grid cells with non-null values from each map in time series
+</ul>
+<img width="47%" src="img/timeseries/series_overlap_count.jpg">
+<img width="47%" src="img/timeseries/intersection.jpg">
+</section>
+
+<section>
+   <h3>Temporal aggregation</h3>
+<ul>
+<li>Temporally aggregate maps over given period of time - for example to derive monthly average elevation
+</ul>
+<br>
+<img width="75%" src="img/timeseries/aggregated_sept.jpg">
+</section>
+
+<section>
+   <h3>Basic time series analysis</h3>
+<p>
+Per cell statistics computed for each cell over the time series:
+<ul>
+ <li>mean and standard deviation
+ <li>min, max elevation and range 
+ <li>time at minimum, time at maximum
+ <li>linear regression: slopem offset, regr. coefficient
+</ul>
+<p class="small">
+<a href="http://www4.ncsu.edu/~hmitaso/gmslab/papers/MitasovaFinalGeoinf09.pdf">
+Mitasova, H., Hardin, E., Overton, M., and Harmon, R.S., 2009, New spatial measures of terrain dynamics derived from time series of lidar data, Proc. 17th Int. Conf. Geoinformatics, Fairfax, VA. </a></p>
+</section>
+
+<section>
+   <h3>Basic time series analysis: core, envelope</h3>
+<ul>
+ <li>Core surface: min. elevation measured for each cell  
+ <li>Envelope: max. elevation measured for each cell 
+</ul>
+<p> Example: cutting plane with lidar, core and envelope
+    <img width="47%" src="img/timeseries/cutplane1.jpg">
+    <img width="47%" src="img/timeseries/cutplane2.jpg">
+</section>
+
+<section>
+   <h3>Detecting surveys with large distortions</h3>
+<ul>
+<li>Derive core surface from UAS time series
+<li>Compute difference between UAS core and lidar bare ground surface
+<li>Compute time of minimum raster to identify the distorted DSMs with elevation well below lidar bare ground
+</ul>
+<img width="47%" src="img/timeseries/diff_lid_uasmin.jpg">
+<img width="47%" src="img/timeseries/minraster.jpg">
+</section>
+
+<section>
+   <h3>Corrected UAS core surface</h3>
+<ul>
+<li>Remove distorted DSMs from derivation of core surface
+<li>Difference between UAS core and lidar bare ground surface is now very small
+<li>Hist. equalized color ramp for differences highlights a small shift in lidar swath
+</ul>
+<img width="45%" src="img/timeseries/diff_lid_uasmin2.png">
+<img width="45%" src="img/timeseries/diff_lid_uasmin2_histeq.jpg">
+</section>
+
+<section>
+   <h3>Envelope and range applications</h3>
+<p>
+<ul>
+<li>Envelope: what is the max height of crop in each pixel over the monitored period?
+<li>time of maximum - when was the crop highest at each grid cell?
+<li>where is the largest range and variability in crop height?
+</ul>
+<img width="40%" src="img/timeseries/diff_lid_uasmax.jpg">
+<img width="40%" src="img/timeseries/max2.jpg">
+</section>
+
+<section>
+   <h3>Envelope and range applications</h3>
+<ul>
+<li>use envelope to show all cars ever parked at the site
+<li>core, snapshot, envelope, surfaces can be used to manage parking area
+</ul>
+<img width="50%" src="img/timeseries/cars.jpg">
+</section>
+
+<section>
+   <h3>Basic time series analysis: regression</h3>
+<ul>
+ <li>applies to well designed, systematic monitoring with longer time series, 
+ <li>select subset where the changes are close to linear - e.g. crop growth period,
+ <li>compute per cell linear regression analysis: map of regression slope and offset 
+</ul>
+</section>
+
+<section>
+ <h3>Map algebra for time series</h3>
+<p>
+<ul>
+  <li>apply map algebra expression for each map in the time series at each grid cell
+  <li>output is new time series which is registered as a new space-time dataset
+  <li>this is different (and much simpler) from temporal map algebra
+</ul>
+</section>
+
+<section>
+ <h3>Extract crop height time series</h3>
+<p>Map algebra can be used to
+extract grid cells with elevation above lidar bare ground 
+within a selected elevation interval (z1,z2)
+<p>
+<img width="32%" src="img/timeseries/veg_uas_lidar2.jpg">
+<img width="32%" src="img/timeseries/veg_uas_lidar3.jpg">
+<img width="32%" src="img/timeseries/veg_uas_lidar7.jpg">
+<p class="small">
+Maps of relative elevation (0.3m, 2.0m)  above bare ground lidar for 3 time snapshots in our time series.
+The middle map shows distortions rather than crop.
+</section>
+
+<section>
+ <h3>Estimate crop volume</h3>
+<p>Summary statistics can be used to estimate above ground crop biomass
+<p>
+<img width="70%" src="img/timeseries/cutplane1.jpg">
+</section>
+
+<section>
+   <h3>Estimate volume of structures</h3>
+<p>
+<ul>
+<li>compute volume based on difference between bare ground and above ground feature, such as building
+</ul>
+<p>
+<img width="70%" src="img/timeseries/cutplane2.jpg">
+</section> 
+
+<section>
+   <h3>Analysis: Viewsheds</h3>
+<p>
+Evaluate influence of vegetation on the viewshed area
+<p>
+<img height="380" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
+<p class="small">Spatial extent of viewshed changes over time depending on the height of surrounding vegetation, different colors show the spatial extent of viewshed at different times </p>
+</section> 
+
+<section>
+   <h3>Analysis: Viewsheds</h3>
+<p>
+<ul>
+<li>provide analysis to support siting of a monitoring webcam
+</ul>
+<p>
+<img height="380" src="img/fusion_lidar_uav/Anna_viewshed.jpg">
+<p class="small">Spatial extent of viewshed changes over time depending on the height of surrounding vegetation </p>
+</section>
+
+<section>
+   <h3>Dynamic visualization</h3>
+<p>
+<ul>
+<li>see Terrain time series visualization in the 
+<a href="http://ncsu-geoforall-lab.github.io/grass-temporal-workshop/">
+GRASS temporal workshop</a>
+<li><a href="https://courses.ncsu.edu/mea582/common/media/03/dynamicgis/dynamicgis.html">
+dynamic visualization examples from MEA582</a>
+<li>we covered the basics in the flow modeling example
+</ul>
+<p>
+<img height="300" src="img/fusion_lidar_uav/agisoft_june.gif">
+</section>
+
+<section>
+   <h3>What we have learned</h3>
+<p>
+<ul>
+<li>UAS 3D monitoring basic considerations
+<li>temporal framework concept 
+<li>computing core and envelope and its application
+<li>indentification of distorted DSMs in time series
+<li>estimation of volumes
+<li>analyzing changing viewsheds
+<li>dynamic visualization
+</ul>
+<p>
+</section>
+
+<div class="parent-page">
+    <!-- &#x1f3e0; -->
+    <a href="../topics/uas_timeseries.html" title="Go to the topic page">&#8962;</a>
+</div>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+    </body>
+</html>
