@@ -6,8 +6,9 @@ If you want to obtain a DEM/DSM in GRASS from .las point cloud use one of the fo
 <ol>
     <li>binning
         <ul>
-            <li>Use r.in.lidar to create raster map using binning. Crude but fast.
-            <li>Multiple tiles can be merged by r.patch after r.in.lidar (since they are raster maps)
+            <li>Use r.in.lidar to create raster map using binning. Fast, but leaves holes in the data.
+                Use r.fill.stats to fill the holes (use -k flag).
+            <li>Multiple tiles can be then merged by r.patch (since they are raster maps)
         </ul>
     <li>interpolating
         <ul>
