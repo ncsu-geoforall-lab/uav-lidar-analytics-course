@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+
+<section> 
+<section>
+    <h2>Introduction to UAS</h2>
+   <h4>UAS Imagery Processing Workshop</a></h4>
+    <h4 style="margin-top: 0.5em">
+        Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+</section>
+
+<section>
+    <h2>What is an UAV?</h2>
+    For the brief summary read the <a href="http://www.insidegnss.com/auto/janfeb08-wp.pdf">overview article</a>
+</section>
+
+<section>
+    <h2>Generic Unmanned Aircraft System</h2>
+    <div class="right fragment">
+        <img src="img/new/uas_general_scheme.png">
+    </div>
+    <div class="left">
+		<ul>
+		<li class="fragment">Air vehicle</li>
+		<li class="fragment">Mission planning element</li>
+		<li class="fragment">Command and control element</li>
+		<li class="fragment">Communication link</li>
+		<li class="fragment">Launch and recovery element (for some of them)</li>
+		<li class="fragment">Payload</li>
+		</ul> 
+    </div>
+</section>
+<section>
+    <h2>How does an UAS look like?</h2>
+    <p class="small">Types and classification of UAS</p>
+</section>
+
+<section>
+    <h2>Different shapes and sizes…</h2>
+    <img class="small fragment"  src="img/uav_shapes_sizes.png">
+</section>
+
+<section>
+    <h2>… different designs…</h2>
+    <img class="small fragment" src="img/uas_designs.jpg">
+</section>
+<section>
+    <h2>It's not only about a drone</h2>
+        <img src="img/new/hardware_software.JPG" width="60%">
+</section>
+<section>
+    <h2>Two main types of UAS </h2>
+<div class="right fragment">
+<p>Fixed wing</p>
+        <img src="img/new/fixed.png">
+    </div>
+    <div class="left fragment">
+<p>Multi-rotor (rotary)</p>
+        <img src="img/new/rotary.png">
+    </div>
+</section>
+<section>
+    <h2>Fixed wing </h2>
+        <img src="img/new/fixed_wing_pros_cons_.jpg">
+</section>
+<section>
+    <h2>Multi-rotor</h2>
+        <img src="img/new/multi_rotor_pros_cons_.jpg">
+</section>
+<section>
+    <h2>Fixed wing vs. Multi-rotor</h2>
+        <img src="img/new/rotary_vs_fixed.jpg" width="60%">
+</section>
+
+<section>
+    <h2>Drone buing guide</h2>
+<div class="left">
+<a href="https://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/lectures/pdfs/DroneDeploy-Drone-Buyers-Guide-V1.3.pdf">Guide greated by DroneDeploy</a> </br>
+ - focuses on DJI products, but applicable for broader audience 
+</div>
+<div class="right">
+        <img src="img/new/drone_guide.png">
+</div>
+
+</section>
+<section>
+    <h2>Sensors</h2>
+    <img src="img/uav_sensors.jpg" style="width:60%">
+</section>
+
+<section>
+    <h2>Sensors</h2>
+    <img src="img/uav_sensors2.jpg" width="60%">
+</section>
+<section>
+    <h2>sUAS sensors for mapping</h2>
+    <div class="right fragment">
+        <img src="img/new/uas_general_scheme.png">
+    </div>
+    <div class="left">
+		<ul>
+		<li class="fragment">RGB cameras</li>
+		<li class="fragment">Infrared sensors</li>
+		<li class="fragment">Multispectral and hyperspectral sensors</li>
+		<li class="fragment">Laser scanners</li>
+		<li class="fragment">Thermal sensors</li>
+		</ul> 
+    </div>
+</section>
+<section>
+    <h3>RGB (natural color) cameras</h3>
+        <div class="left">
+		<ul>
+		<li class="fragment">Most common payload for consumer grade UAS</li>
+                <li class="fragment">Photo or video mode</li>
+		<li class="fragment">Mapping (orthophoto and DSM generation) possible even with non-photogrammetric cameras</a> </li>
+		<li class="fragment">Variety of cameras, lenses and mounting systems - some suitable for 3D modeling</li>
+		</ul> 
+        </div>
+    <div class="right fragment">
+        <img src="img/gimbal.PNG" width=70%>
+        <img src="img/RGB_photo.png" width=70%>
+    </div>
+</section>
+<section>
+    <h3>Multispectral and hyperspectral cameras</h3>
+        <div class="left">
+		<ul>
+		<li class="small fragment">Miniaturization is challenging in terms of optics and sensor calibration</li>
+        <li class="small fragment">Weight, cost, data quality has improved; spectral bands, resolution need improvements</li>
+        <li class="small fragment">Cameras with NIR band: agriculture and vegetation mapping (for NDVI) </li>
+		<li class="small fragment">The more bands the more information, but also higher price of the sensor (multispectral - couple thousands, hyperspectral - tens of thousands $)</li>
+		</ul> 
+        </div>
+    <div class="right">
+        <img src="img/hyperspectral.png">
+        <img src="img/ndvi.png">
+    </div>
+</section>
+
+<section>
+    <h3>Active sensors - LiDAR and SAR</h3>
+        <div class="left">
+		<ul>
+        <li class="fragment">Active sensors can reach bellow-canopy ground surface</li>
+	<li class="fragment">Large trade-offs between performance and size or cost of LiDAR</li>
+        <li class="small fragment">LiDAR now common on UAS thanks to miniaturization</li>
+        <li class="small fragment">SAR (Synthetic Aperture Radar) used experimentally, still faces challenges in adaptation to UAS </li>
+        </ul>
+        </div>
+    <div class="right">
+        <img src="img/lidar/lid2013_1r_3ft_3d.jpg">
+        <img src="img/lidar/lid2013_be_3ft_3d.jpg">
+   </div>
+</section>
+
+<section>
+    <h3>Thermal imaging</h3>
+        <div class="left">
+	<ul>
+        <li class="fragment">Used in forest fire monitoring, search and resque missions</li>
+	<li class="fragment">For mapping purposes coupled with visible band sensors (see example <a href="http://www.flir.com/suas/duo/">FLIR DUO</a></li>
+       </ul>
+       </div>
+    <div class="right">
+        <img src="img/thermal.png">
+       </div>
+</section>
+
+
+<section>
+    <h2>Know before you fly</h2>
+    <ul>
+        <li class="fragment"><a href="http://knowbeforeyoufly.org/">“Know Before You Fly”</a> is an educational campaign  that provides prospective unmanned aircraft users with the information and guidance they need to fly safely and responsibly.</li>
+        <li class="fragment">Different rules apply to <a href="http://knowbeforeyoufly.org/for-recreational-users/">recreational</a> and <a href="http://knowbeforeyoufly.org/for-business-users/"> business </a>users and <a href="http://knowbeforeyoufly.org/for-public-entities/">government entities </a> </li>
+	<li class="fragment">New regulations (effective on August 29, 2016) known as <a href="https://youtu.be/v-d1RuTFvbs">“Part 107”</a>)  </li>
+</section>
+<section>
+    <h2>Civilian Application Fields</h2>
+       <img src="img/new/drones_industry.jpg" width=60%>
+</section>
+
+<section>
+    <h2>Why shoud you know how to use UAS?</h2>
+        <img class="fragment" src="img/new/uas_statistics.jpg">
+</section>
+<section>
+    <h2>Why shoud you know how to use UAS?</h2>
+    <p class="small"><a href="https://www.youtube.com/watch?v=47TNPodZqH0">How to obtain spatial data?</a></p>
+
+        <img class="fragment"src="img/new/terrestrial_UAS_satelite.jpg" width=50%>
+</section>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+    </body>
+</html>
