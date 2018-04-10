@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>From images to 3D models:</h2>
+   <h3>What do we need to process the data?</h3>
+    <h4>UAS Imagery Processing Workshop</a></h4>
+    <h4 style="margin-top: 0.5em">
+        Justyna Jeziorska</h4>
+    <p class="title-foot">
+        <a href="http://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+       <br> <a href="http://www.ncsu.edu/" title="North Carolina State University">North Carolina State University</a>
+</section>
+
+<section>
+    <h2>UAS data </h2>
+    <h4>What do we get after the flight mission?</h4>
+        <img class="fragment"src="img/new/uas_data.jpg">
+
+</section>
+
+<section>
+    <h2>Digital imagery</h2>
+        <img class="fragment"src="img/digital_imagery.png">
+ <ul>
+        <li class="fragment">usually on the camera SD card</li>
+        <li class="fragment">can be geotagged (depends on camera)</li>
+        <ul>
+        <li class="fragment">Camera lens location is "written into" each photo's EXIF file</li>
+	<li class="fragment">this is not necessary the case...</li>
+	</ul>
+</ul>
+</section>
+<section>
+    <h3>Location of the photo</h3>
+<p class="fragment"><strong>Geotagging</strong> a photograph - associating a photo with a geographical location (latitude, longnitude and usually altitude)</li></p>
+    <div class="right">
+            <img class="fragment" src="img/mapping/geotag.png">
+    </div>
+ <div class="left">
+		<ul>
+		<li class="small fragment">In theory, every part of a picture can be tied to a geographic location, but in the most typical application, only <strong>the position of the sensor</strong> is associated with the <strong>entire digital image</strong></li>
+		<li class="small fragment">GPS in the camera or UAS measures location with very low accuracy</li>
+		</ul> 
+    </div>
+
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag1.png">
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag2.png">
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag3.png">
+</section>
+<section>
+    <h2>Geotagging</h2>
+     <img src="img/mapping/geotag4.png">
+</section>
+<section>
+    <h2>Flight log</h2>
+        <ul>
+        <li class="fragment">Onboard Inertial Measurement Unit (IMU) accurately measures the orientation of airborne sensors,</li>
+        <li class="fragment">Information is logged into a text file (flight log),</li>
+        <li class="fragment">Contains elements of exterior orientation (EO, more <a href="./Workshop_short_Imagery_Processing_Intro.html#/21">later in the lecture</a>)</li>
+        </ul>
+        <img class="fragment" src="img/log.png" width="80%">
+</section>
+<section>
+    <h2>GCP coordinates</h2>
+<div class="left">
+        <ul>
+        <li class="fragment">Measured by GPS coordinates of the panels set before the flight</li>
+        <li class="fragment">Photo ID points (distinguishable ground features)can be surveyed later on </li>
+        <li class="fragment">It is important to know the GCPs coorditate system (spatial reference system)</li>
+        </ul>
+</div>
+<div class="right">
+        <img src="img/GCPs.png">
+</div>
+</section>
+
+<section>
+    <h2>Spatial reference system</h2>
+     <div class="left">
+        <ul>
+        <li class="small fragment">defines how the two-dimensional, projected map in your GIS is related to real places on the earth</li>
+        <li class="small fragment">It is crucial to know what is your data reference system!</li>
+
+    </div>
+    <div class="right">
+        <img src="img/new/projection.JPG" width="60%">
+    </div>
+<ul>
+        <li class="small fragment">There are global map projections, but most map projections are created and optimized to project smaller areas of the earth’s surface</li>
+        <li class="small fragment">There are two different types of coordinate reference systems: Geographic Coordinate Systems and Projected Coordinate Systems</li>
+        <li class="small fragment"><a href="http://spatialreference.org/ref/epsg/">Spatial reference list (EPSG codes for coordinate reference systems)</a></li>
+</ul>
+</section>
+
+<section>
+    <h2>UAS data processing outputs</h2>
+    <h4>What do we get after processing the data?</h4>
+        <img class="fragment" src="img/new/processing_outputs.JPG">
+</section>
+
+<section>
+    <h2>Orthophoto</h2>
+     <div class="left">
+        <ul>
+        <li class="fragment"> aerial imagery geometrically corrected ("orthorectified") such that the scale is uniform</li>
+        <li class="fragment"> raster: consists of red, green and blue bands</li>
+    </div>
+    <div class="right">
+        <img src="img/new/ortho_example.jpg">
+    </div>
+</section>
+<section>
+    <h2>Digital Surface Model</h2>
+<img src="img/new/dtm_dsm.jpg" width="60%">
+        <ul>
+        <li class="fragment"> DEM/DTM - Digital Elevation Model / Digital Terrain Model</li>
+        	<ul class="fragment">       
+		<li> representation of a terrain's elevation</li>
+        	<li> bare-earth raster grid</li>
+		</ul>
+        <li class="fragment"> DSM - Digital Surface Model 
+        	<ul class="fragment">       
+		<li> representation of a visible surface</li>
+        	<li> captures the natural and built features on the Earth’s surface</li>
+		</ul>
+</section>
+
+<section>
+    <h2>Pointcloud</h2>
+        <ul>
+        <li class="fragment"> representation of the external surface of an object</li>
+        <li class="fragment"> set of vertices in a three-dimensional coordinate system</li>
+        <li class="fragment"> vector or raster?</li>
+        <li class="fragment"> Dale Lutz once said, "point cloud is a badly behaved raster"</li>
+ <div class="left">
+        <img src="img/new/pointclouds.png">
+</div>
+
+   <div class="right">
+        <img src="img/new/Point_cloud_torus.gif">
+    </div>
+</section>
+
+
+<section>
+        <img class="fragment"src="img/new/uas_data.jpg" width="61%">
+        <img class="fragment"src="img/processing/getting_there.png" width="40%">
+        <img class="fragment" src="img/new/processing_outputs.JPG" width="61%">
+</section>
+<section>
+        <img src="img/new/uas_data.jpg" width="61%">
+        <img src="img/processing/getting_there2.png" width="40%">
+        <img src="img/new/processing_outputs.JPG" width="61%">
+</section>
+
+<section>
+    <h2>What do we need?</h2>
+    <ol>
+        <li class="fragment">Digital <strong>imagery</strong>;</li>
+        <li class="fragment">(Digital elevation model or topographic dataset)</li>
+        <li class="fragment">Exterior <strong>orientation parameters </strong> from aerial triangulation or IMU;</li>
+        <li class="fragment">(<strong>Camera calibration</strong> report);</li>
+        <li class="fragment">(Ground Control Points parameters);</li>
+        <li class="fragment">Photogrammetric<strong> processing software</strong> that utilizes collinearity equations.</li>
+    </ol>
+<p class="small">items in brackets are optional<p>
+</section>
+<section>
+    <h2>1. Digital imagery</h2>
+            <img class="fragment" src="img/digital_imagery.png">
+    <div class="left">  
+            <img class="fragment" src="img/multiview.png">
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/camera_sensor.png" width="80%">
+    </div>
+</section>
+<section>
+    <h2>2. Digital Elevation Model</h2>
+     <div class="left">  
+		<img src="img/disortion.png">
+     </div>
+    <div class="right">
+           <p class="fragment"> <strong>In the past:</strong> Shape of the ground surface must be known in order to remove the effects of relief displacement<p>
+    </div>
+             <p class="fragment"> <strong>Now:</strong> computed automatically by Structure from Motion <p>    
+</section>
+
+<section>
+    <h2>Structure from Motion (SfM)</h2>
+    <div class="left">  
+        <ul>
+        <li class="fragment">range imaging technique,</li>
+        <li class="fragment">process of estimating 3D structures from 2D image sequences,</li>
+        <li class="fragment">may be coupled with local motion signals</li>
+        </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/sfm_explained.jpg">
+    </div>
+</section>
+<section>
+    <h2>3. Exterior orientation (EO) </h2>
+            <p class="fragment">EO= <strong>position</strong> and <strong>orientation</strong> in the object space</p>
+            <p class="fragment">6 elements <strong>necessary</strong> for any photogrammetric processing:</p>
+    <div class="left">  
+    <ul>
+        <li class="fragment">X, Y, and Z of the exposure station position (latitude, longitude and altitude of the camera),</li>
+        <li class="fragment">angular orientation: ω, φ, and κ (yaw, pich and roll)</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img class="fragment" src="img/orientation.png">
+    </div>
+</section>
+<section>
+    <h3>Flight log</h3>
+        <ul>
+        <li class="fragment">Log file contains elements of exterior orientation that are measured by onboard Inertial Measurement Unit (IMU) and written into text file</li>
+</ul>
+
+        <img src="img/processing/log.png" width=60%>
+<ul>
+        <li class="fragment">Sometimes (most DJI products) exterior orientation parameters are saved in photos EXIF file</li>
+        <li class="fragment">Log contains information about the location of the camera, not location of the depicted object  - <a href="./HM_Photogrammetry_and_SfM.html#/25">more info in this section of lecture 3</a></li>
+        </ul>
+</section>
+<section>
+    <h2>4. Interior orientation </h2>
+    <div class="left">  
+    <ul>
+        <li class="fragment">In the past: camera calibration report,</li>
+        <li class="fragment">Now: Self-calibration (auto-calibration) is the process of determining intrinsic camera parameters directly from uncalibrated images</li>
+    </ul>
+    </div>
+    <div class="right">
+            <img src="img/interior_orientation.png">
+    </div>
+    <ul>
+        <li class="fragment">Can be automatically derived using Structure from Motion (SfM) methods</li>
+    </ul>
+</section>
+
+<section>
+    <h2>5. Ground Control Points</h2>
+    <div class="left">
+        <li class="fragment"><strong>GCP</strong> - target in the project area with known 3 coordinates (X,Y,Z or lat, long, alt). </li>
+</div>
+    <div class="right">
+            <img src="img/processing/GCP_girls.png">
+    </div>
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+            <img class="fragment" src="img/new/relative_absolute_orientation.JPG">
+                <ul>
+                <li class="fragment">necessary for georeferencing if photos are not geotagged</li>
+                <li class="fragment">improve precision of the model</li>
+                <li class="fragment">important for quality control</li>
+                </ul>
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+     <img src="img/mapping/geotag3.png">
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+     <img src="img/mapping/geotagGCP1.png">
+</section>
+<section>
+    <h2>Why Ground Control Points?</h2>
+     <img src="img/mapping/geotagGCP2.png">
+</section>
+<section>
+    <h2>6. Processing options</h2>
+<img class="fragment" src="img/new/processing_options.JPG">
+</section>
+
+<section>
+    <h2>Processing options</h2>
+Everything boils down to... money (and time)
+<ul>
+        <li class="fragment">What is my starting budget and equipment?;</li>
+        <li class="fragment">How frequently will I fly?;</li>
+        <li class="fragment">Do I have the experience/ training necessary for processing (or am I able to hire people who do)?</li>
+        <li class="fragment">Do I have time to process the data by myself?</li>
+    </ul>
+</section>
+<section>
+<h2>Processing options - software</h2>
+
+<ul>
+        <li class="fragment"><a href="http://www.agisoft.com/">Agisoft Photoscan</a></li>
+        <li class="fragment"><a href="https://pix4d.com/">Pix4D</a></li>
+        <li class="fragment"><a href="http://uas.trimble.com/tbc-am">Trimble Business Center</a> - Aerial Photogrammetry Module</li>
+        <li class="fragment"><a href="http://www.esri.com/products/drone2map">Drone2Map (ESRI)</a></li>
+        <li class="fragment"><a href="https://dronemapper.com/">DroneMapper</a></li>
+        <li class="fragment"><a href="http://opendronemap.org/">opendronemap</a></li>
+<li class="fragment">many many more...</li>
+    </ul>
+</section>
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+    </body>
+</html>
