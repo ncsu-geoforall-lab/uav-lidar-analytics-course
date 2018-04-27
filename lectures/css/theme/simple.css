@@ -216,6 +216,28 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
+ * ALTERNATE HEADERS
+ *********************************************/
+
+h1.shadow {
+   font-size: 3em;
+   font-weight: 700;
+   color: #000;
+   text-shadow: 0 0 6px white, 0 0 5px white, 0 0 4px white, 0 0 3px white, 0 0 2px white, 0 0 1px white; }
+
+h2.shadow {
+   font-size: 1.75em;
+   font-weight: 600;
+   color: #000;
+   text-shadow: 0 0 6px white, 0 0 5px white, 0 0 4px white, 0 0 3px white, 0 0 2px white, 0 0 1px white; }
+
+h3.shadow {
+   font-size: 1.5em;
+   font-weight: 500;
+   color: #000;
+   text-shadow: 0 0 4px white, 0 0 3px white, 0 0 2px white, 0 0 1px white; }
+
+/*********************************************
  * NAVIGATION CONTROLS
  *********************************************/
 .reveal .controls div.navigate-left, .reveal .controls div.navigate-left.enabled {
