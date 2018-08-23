@@ -65,7 +65,7 @@ If the projection of the .las file does not match your GRASS location use one of
     <li>Use las2las before using r.in.lidar or v.in.lidar. The following
         example command is for reprojecting tiles in NAD83/North Carolina in feet (EPSG:2264)
         into NAD83/North Carolina in meters (EPSG:3358):
-<pre><code>las2las --a_srs=EPSG:2264 --t_srs=EPSG:3358 -i input_spf.las -o output_spm.las
+<pre><code>las2las --a_srs=EPSG:2264 --t_srs=EPSG:3358 -i input_spf.las -o output_spm.las
 </code></pre>
 
     <li>You can create a Location which matches the resolution of the las file and then v.in.lidar to import the points there and finally, go to the desired Location and use v.proj to re-project the data from the other Location.
