@@ -3,15 +3,15 @@
 
 Outline:
 <ul>
-    <li> Setup VCL with OpenDroneMap (ODM)</li>
-    <li>Preprocess images to include GPS coordinates</li>
-    <li>Run ODM from command line</li>
-    <li>Setup WebODM</li>
-    <li>Explore results from ODM</li>
+    <li> Setup VCL with Web OpenDroneMap (WebODM)</li>
+    <!-- <li>Preprocess images to include GPS coordinates</li> -->
+    <!-- <li>Setup WebODM</li> -->
+    <li>Explore results from WebODM</li>
+    <li>Run ODM from command line (optional)</li>
 </ul>
 
 Data: 
-<p>Don't download this data on your computer, we will download it on VCL during assignment.
+<!-- <p>Don't download this data on your computer, we will download it on VCL during assignment. -->
 <ul>
     <li>Sample of June 2015 UAV flight:
          <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>.</li>
@@ -34,10 +34,7 @@ OpenDroneMap</a> - open source toolkit for processing civilian drone imagery.
 <p> -->
 
 
-<h3>Setting up Docker and directory structure</h3>
-
-We will run OpenDroneMap using <a href="https://www.docker.com/">Docker</a> to simplify setup (the internally used operating system is Ubuntu).
-OpenDroneMap doesn't have a desktop GUI, we will run it in command line.
+<h3>Preparing Docker and data</h3>
 We will use <a href="https://vcl.ncsu.edu/">VCL</a> with Ubuntu OS, select <em>Agisoft Photoscan &amp; GRASS GIS - Ubuntu</em>
  (Ubuntu 16.04 LTS). Alternatively, use <em>OSGeo Live</em>, or <em>Ubuntu 16.04 LTS</em> but they provide less computing resources.
  You can request it for 1 day or more if you plan to go back to the assignment later.
@@ -50,7 +47,13 @@ We will use <a href="https://vcl.ncsu.edu/">VCL</a> with Ubuntu OS, select <em>A
     from this terminal window we will first install Docker from packages:
 
 <pre><code>
-sudo apt-get install -y docker.io
+sudo apt-get install -y docker.io git python-setuptools python-pip
+</code></pre>
+
+We also need docker-compose:
+<pre><code>
+sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 </code></pre>
 
 To properly setup Docker in terms of user permissions, run:
@@ -62,49 +65,29 @@ To make sure the permission changes take place, you need to log out (Application
 and then log in back. Then start the terminal again.
 </li>
 
-<li>We will download a pre-built image of OpenDroneMap:
-<pre><code>
-docker pull opendronemap/opendronemap
-</code></pre>
-</li>
+<!--
 
-<li>Either in file manager or in command line create a directory
-    called <code>odm</code>. Put it somewhere with enough disk space (home folder).
-    Inside the <code>odm</code> directory create directories
-    <code>images</code>, <code>orthophoto</code>,
-    <code>georeferencing</code>, and <code>texturing</code>.
-    On unix-like systems, creating the directories would look something
-    like this:
-<pre><code>
-cd
-mkdir odm
-cd odm
-mkdir images
-mkdir orthophoto
-mkdir georeferencing
-mkdir texturing
-</code></pre>
-</li>
-
+-->
 <li>Get your data ready:
-    Open browser (Applications - Internet - Firefox).
-    Download the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
-    for the class. Unzip them. Move the images and all the other files
-    to the <code>images</code> directory (no subdirectories).
-    On unix-like systems, moving of the files would look something like
-    this:
+    On your computer (not VCL), download the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
+    for the class. Unzip them.</li>
+<li>Finally, we need to identify GCPs in the images.
+To georeference the DSM, we need to prepare a text file with each GCP on one line,
+where the numbers represent GCP X, GCP Y, GCP altitude, image column, image row, image name.
+For example:
 <pre><code>
-mv unzipped-dir/* images/
+636795.964 219156.17 105.06 1588 2066 dsc01861.jpg
 </code></pre>
-
-You should see a lot of .jpg and couple other files listed when you run:
+Download the <a href="./resources/gcp_list.txt">prepared GCP file</a> here and 
+save it in the same folder you have your images.
+This file was manually prepared by identifying the GCPs on selected images.
 <pre><code>
-ls ~/odm/images
+wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/resources/gcp_list.txt
 </code></pre>
 </li>
-
 </ol>
 
+<!--
 <h3>Preprocesing of images</h3>
 Before we can run OpenDroneMap, we need to preprocess the images.
 
@@ -180,56 +163,12 @@ wget http://ncsu-geoforall-lab.github.io/uav-lidar-analytics-course/assignments/
 </code></pre>
     </li>
 </ol>
-
 Now we are ready to run OpenDroneMap!
-
-<h3>Running OpenDroneMap</h3>
-
-We will use default parameters. To review parameters run:
-<pre><code>
-docker run -it --rm opendronemap/opendronemap --help
-</code></pre>
-
-Now we launch the computation. We will keep default values, but we need to specify the path to file with GCPs.
-Some explanation of the <code>docker run</code> command:
-<ul>
-    <li><code>-v</code> links our directory <code>images</code> to
-    a directory inside Docker container</li>
-    <li>The string <code>$(pwd)</code> in the commands stands for the current
-    working directory which should be the <code>odm</code> directory
-    we created earlier.</li>
-</ul>
-
-<pre><code>
-cd ~/odm
-docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing opendronemap/opendronemap --mesh-size 100000 --resize-to 1000 --gcp /code/images/gcp_list.txt --force-ccd 23.4
-</code></pre>
-
-OpenDroneMap will do the processing in parallel. However, each process
-requires certain amount of memory (RAM) based on the size of input
-images. If you want to limit the memory usage, you need to limit the
-number of processes using the <code>--opensfm-processes</code> command
-line option.
-
-<p>
-Open System Monitor (Applications - System - System Monitor), go to tab Resources.
-You can observe here how ODM uses parallel processing for different parts of the
-computation.
-
-
-<p>
-Open a new terminal and continue in the next step while the computation runs.
+-->
 
 <h3>Running WebODM</h3>
 
-Install additional packages for management of WebODM (assuming you
-already have Docker up and running):
-
-<pre><code>
-sudo apt install -y docker-compose python-setuptools python-pip
-</code></pre>
-
-Get WebODM code using Git:
+On VCL, download WebODM code using Git:
 
 <pre><code>
 cd ~
@@ -250,63 +189,58 @@ Start WebODM (be patient):
 <p>
 Further steps:
 <ol>
-<li>In the browser window on your VCL, go to the URL specified in the output, it will be likely
-<tt>http://localhost:8000</tt>. You will be prompted to create an
+<li>On your host computer (not VCL) go to the IP address of the VCL
+     (you get that number when you click Connect when you access your VCL reservation), so it will
+ be something like 152.7.86.219:8000
+</li>
+<li> You will be prompted to create an
 administrator account. Create it. It will be the only account we will
 need for the exercise.</li>
+<li>Alternatively, in the browser window on your VCL, go to
+<tt>http://localhost:8000</tt>.</li>
 
 <li>
-Upload images to the task which is already there or create a new one.
-Don't include the GCP file (there is currently a problem with it, which is being fixed).</li>
+Upload images to the task which is already there or create a new one. Include gcp_list.txt file you downloaded.
+<!-- Don't include the GCP file (there is currently a problem with it, which is being fixed). -->
+</li>
 
-<li>In Options, find option force-ccd and put 23.4 there (ccd width of our camera model, it's not in their database)</li>
+<!-- <li>In Options, find option force-ccd and put 23.4 there (ccd width of our camera model, it's not in their database)</li> -->
 <li>
 In Resize images, change the size of images to 1000 to speed up the upload and
 computation (this reduces the quality of the images and the whole reconstruction).</li>
 
-<li>
-    Check if your previous computation in terminal is still running. If yes, please wait until it's done,
-    because you wouldn't have sufficient resources for both reconstructions.
-    Once it's finished, you can start processing in WebODM, it should take roughly 30 mins.</li>
-
-<li>To follow the
+<!-- <li>To follow the
 processing, you can access WebODM from outside the VCL machine. Enter
 the VCL machine IP address as URL to your web browser and add
 <tt>:8000</tt> to it. You should get a login page and you should be able
-to log in using the admin account credentials you created earlier.</li>
+to log in using the admin account credentials you created earlier.</li> -->
 
 <li>Once your WebODM is finished, you can explore data within WebODM (in VCL or outside),
-specifically the orthopohoto and point cloud. You can also download them.</li>
+specifically the orthopohoto, point cloud, mesh and DSM.
+You can also download them, for next steps download the DSM (tiff), orthophoto, and mesh.</li>
 </ol>
 
-<h3>Using the results from ODM (docker version)</h3>
+
+<h3>Using the results from WebODM</h3>
 If the processing is still running and you can't wait, download precomputed results &mdash;
  <a href="https://drive.google.com/open?id=1uwjfPGL5knydpZoU_zU0Fopzl5tSRl9t">odm.zip</a> and unzip in your home folder.
 
-<p>
-All results are stored in the <code>odm</code> directory,
-specifically in <code>orthophoto</code>, <code>georeferencing</code>, and <code>texturing</code>
-subdirectories.
 
-We are interested in the point cloud <code>odm_georeferenced_model.las</code> located in the
-<code>georeferencing</code> directory.
-The point cloud is available as a LAS or text file.
 
 <h4>View point cloud</h4>
-<p> Look first at the point cloud (<code>odm_georeferenced_model.las</code>) in <a href="plas.io">plas.io</a>.
+<p> Look first at the point cloud (<code>georeferenced_model.laz</code>) in <a href="plas.io">plas.io</a>.
 
 
 <h4>View mesh</h4>
-To view and edit the mesh stored as OBJ and located in the
-<code>texturing</code> directory, we can use MeshLab.
+To view and edit the mesh stored as OBJ we can use MeshLab.
 MeshLab can also import the point cloud stored as PLY file.
-In terminal run to install:
+In VCL terminal run to install:
 
 <pre><code>
 sudo apt-get install meshlab
 </code></pre>
 You can then find it in Applications - Graphics.
-Import mesh <code>odm_textured_model_geo.obj</code>.
+Import mesh <code>textured_model.obj</code>.
 
 
 <h4>View DSM</h4>
@@ -317,14 +251,19 @@ using EPSG code 3358.
 Start GRASS GIS in PERMANENT and set your working directory where you have
 your odm folder. Import generated orthophoto:
 <pre><code>
-r.import input=orthophoto/odm_orthophoto.tif output=odm_ortho -o
+r.import input=orthophoto.tif output=odm_ortho -o
 g.region raster=odm_ortho.1
 r.mask raster=odm_ortho.4 maskcats=255
 r.composite red=odm_ortho.1 green=odm_ortho.2 blue=odm_ortho.3 output=ortho
 r.mask -r
 </code></pre>
 
-<p>
+
+Now import DSM file:
+<pre><code>
+r.import input=dsm.tiff output=odm_dsm
+</code></pre>
+<!-- <p>
 Now import LAS file and fill holes using IDW interpolation. Alternatively you could
 import points with <a href="https://grass.osgeo.org/grass74/manuals/v.in.lidar.html">v.in.lidar</a> and then interpolate using 
 <a href="https://grass.osgeo.org/grass74/manuals/v.surf.rst.html">v.surf.rst</a>.
@@ -332,13 +271,13 @@ import points with <a href="https://grass.osgeo.org/grass74/manuals/v.in.lidar.h
 r.in.lidar -eo input=georeferencing/odm_georeferenced_model.las output=odm_elev method=mean resolution=0.5
 g.region raster=odm_elev
 r.fill.stats -k input=odm_elev output=odm_filled distance=3 mode=wmean power=2.0 cells=8
-</code></pre>
+</code></pre> -->
 
 Compare the DSM with lidar. Unpack the lidar DSM, browse to the file using GUI or you have to have it
 in your current working directory.
 <pre><code>
 r.unpack -o input=mid_pines_lidar2013_dsm.pack
-r.mapcalc "diff = odm_filled - mid_pines_lidar2013_dsm"
+r.mapcalc "diff = odm_dsm - mid_pines_lidar2013_dsm"
 r.colors map=diff color=differences
 </code></pre>
 
@@ -359,4 +298,95 @@ obtained by the above process.
 Example resulting shaded DSM created in GRASS GIS based on a point cloud
 obtained by the above process.
 </center>
+
+
+
+<h3>Running OpenDroneMap in command line (optional)</h3>
+We will run OpenDroneMap in a command line using <a href="https://www.docker.com/">Docker</a> to simplify setup (the internally used operating system is Ubuntu).
+To setup ODM:
+<ol>
+<li>We will download a pre-built image of OpenDroneMap:
+<pre><code>
+docker pull opendronemap/opendronemap
+</code></pre>
+</li>
+
+<li>Either in file manager or in command line create a directory
+    called <code>odm</code>. Put it somewhere with enough disk space (home folder).
+    Inside the <code>odm</code> directory create directories
+    <code>images</code>, <code>orthophoto</code>,
+    <code>georeferencing</code>, and <code>texturing</code>.
+    On unix-like systems, creating the directories would look something
+    like this:
+<pre><code>
+cd
+mkdir odm
+cd odm
+mkdir images
+mkdir orthophoto
+mkdir georeferencing
+mkdir texturing
+</code></pre>
+</li>
+
+
+<li>Get your data ready:
+    Open browser (Applications - Internet - Firefox).
+    Download the <a href="https://drive.google.com/open?id=0B1AfQGDB8tPXfnlzUkpqcGl3V2ZMeTQ2VmJUeTFkNXJ6al83UGJJR2VXaVRRUWRIVWpHZDg">photos and log</a>
+    for the class. Unzip them. Move the images and all the other files
+    to the <code>images</code> directory (no subdirectories).
+    On unix-like systems, moving of the files would look something like
+    this:
+<pre><code>
+mv unzipped-dir/* images/
+</code></pre>
+
+You should see a lot of .jpg and couple other files listed when you run:
+<pre><code>
+ls ~/odm/images
+</code></pre>
+</li>
+</ol>
+
+We will use default parameters. To review parameters run:
+<pre><code>
+docker run -it --rm opendronemap/opendronemap --help
+</code></pre>
+
+    Check if your previous computation in WebODM  is still running. If yes, please wait until it's done,
+    because you wouldn't have sufficient resources for both reconstructions.
+    Once it's finished, you can start processing, it should take roughly 30 mins.
+<p>
+ We will keep default values, but we need to specify the path to file with GCPs.
+Some explanation of the <code>docker run</code> command:
+<ul>
+    <li><code>-v</code> links our directory <code>images</code> to
+    a directory inside Docker container</li>
+    <li>The string <code>$(pwd)</code> in the commands stands for the current
+    working directory which should be the <code>odm</code> directory
+    we created earlier.</li>
+</ul>
+
+<pre><code>
+cd ~/odm
+docker run -it --rm -v $(pwd)/images:/code/images -v $(pwd)/orthophoto:/code/odm_orthophoto -v $(pwd)/georeferencing:/code/odm_georeferencing -v $(pwd)/texturing:/code/odm_texturing $(pwd)/dem:/code/odm_dem opendronemap/opendronemap --mesh-size 100000 --resize-to 1000 --dsm --gcp /code/images/gcp_list.txt --force-ccd 23.4
+</code></pre>
+
+OpenDroneMap will do the processing in parallel. However, each process
+requires certain amount of memory (RAM) based on the size of input
+images. If you want to limit the memory usage, you need to limit the
+number of processes using the <code>--opensfm-processes</code> command
+line option.
+
+<p>
+Open System Monitor (Applications - System - System Monitor), go to tab Resources.
+You can observe here how ODM uses parallel processing for different parts of the
+computation.
+
+
+<p>
+Once computed, all results are stored in the <code>odm</code> directory,
+specifically in <code>orthophoto</code>, <code>georeferencing</code>,  <code>texturing</code>, and <code>dem</code>
+subdirectories.
+
 
