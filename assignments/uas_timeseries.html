@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>GIS595-004/603; MEA592-006/601:<br>UAS Mapping for 3D Modeling</title>
+<title>GIS595-005/603; MEA592-004/601:<br>UAS Mapping for 3D Modeling</title>
 
 <link rel="shortcut icon" href=".././img/favicon.ico" />
 
@@ -18,7 +18,7 @@
 
 <header>
 <div id="header-image">
-    <h1>GIS595-004/603; MEA592-006/601:<br>UAS Mapping for 3D Modeling</h1>
+    <h1>GIS595-005/603; MEA592-004/601:<br>UAS Mapping for 3D Modeling</h1>
 </div>
 
 <nav>
@@ -73,7 +73,7 @@ Start GRASS GIS in Lake_Wheeler_NCspm Location and PERMANENT Mapset to create a 
 of UAS DSMs.
 First, create a space-time raster dataset (STRDS) with absolute temporal type:
 
-<pre><code>t.create output=uas_dsm type=strds temporaltype=absolute semantictype=mean title="UAS_DSM" description="UAS-based 2015 DSMs processed by Agisoft"
+<pre><code>t.create output=uas_dsm type=strds temporaltype=absolute semantictype=mean title="UAS_DSM" description="UAS-based 2015 DSMs processed by Agisoft"
 </code></pre>
 
 Now, create a text file named "series.txt" with the following content in your working directory, or <a href="./resources/series.txt">download the prepared file</a>
@@ -90,26 +90,26 @@ These are the DSMs with their time stamps:
 </pre>
 
 Register the DSMs into the created STRDS uas_dsm:
-<pre><code>t.register input=uas_dsm file=series.txt
+<pre><code>t.register input=uas_dsm file=series.txt
 </code></pre>
 
 Now check it was registered correctly:
-<pre><code>t.info input=uas_dsm
+<pre><code>t.info input=uas_dsm
 </code></pre>
 
 See different ways we can list raster maps registered in the dataset:
-<pre><code>t.rast.list input=uas_dsm columns=name,start_time where="start_time >= '2015-08-01'"
+<pre><code>t.rast.list input=uas_dsm columns=name,start_time where="start_time >= '2015-08-01'"
 t.rast.list input=uas_dsm columns=name,start_time,min,max
 </code></pre>
 
 Verify the listed raster maps are actually in the database:
-<pre><code>g.list type=raster pattern="2015*"
+<pre><code>g.list type=raster pattern="2015*"
 </code></pre>
 You can also use the <em>Data</em> tab in Layer Manager.
 
 <p>
 We can set common color table to all maps in the dataset:
-<pre><code>t.rast.colors input=uas_dsm color=elevation
+<pre><code>t.rast.colors input=uas_dsm color=elevation
 d.rast 2015_06_20_DSM_agi_11GCP@PERMANENT
 d.rast 2015_10_06_DSM_agi_8GCPs@PERMANENT
 </code></pre>
@@ -131,7 +131,7 @@ a plot of elevation values. Try different places (road, field, building).
 <h4>Find the area mapped by all surveys</h4>
 <p>
 At this point, we create a new mapset where we will further analyze the data.
-<pre><code>g.mapset -c timeseries
+<pre><code>g.mapset -c timeseries
 </code></pre>
 You can also create new mapset in Settings - GRASS working environment - Create new mapset.
 
@@ -140,7 +140,7 @@ You can also create new mapset in Settings - GRASS working environment - Create 
 We will find area mapped by all surveys. First we will set the
 extent to the maximum bounding box, use t.info to get the values:
 
-<pre><code>t.info input=uas_dsm@PERMANENT -g
+<pre><code>t.info input=uas_dsm@PERMANENT -g
 g.region n=219942 s=219037 e=637439 w=636456 -pa res=0.3
 </code></pre>
 
@@ -148,7 +148,7 @@ Next, we use t.rast.series to derive raster representing the number of
 overlapping DSMs. By using <a href="https://grass.osgeo.org/grass74/manuals/t.rast.series.html">-n flag</a>
 we create masking raster representing the intersection of all DSMs, and then we change computational
 region to the extent of its non-null bounding box:
-<pre><code>t.rast.series input=uas_dsm@PERMANENT method=count output=count
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=count output=count
 t.rast.series input=uas_dsm@PERMANENT method=count output=intersection -n
 d.rast count
 d.rast intersection
@@ -161,12 +161,12 @@ How large is the area (use r.report)?
 
 <h4>Temporal aggregation</h4>
 Our space-time raster dataset contains two DSMs from September:
-<pre><code>t.rast.list input=uas_dsm@PERMANENT columns=name,start_time
+<pre><code>t.rast.list input=uas_dsm@PERMANENT columns=name,start_time
 </pre></code>
 
 We will temporally aggregate the dataset by month by averaging all DSMs within each month
 (in this case averaging the September DSMs):
-<pre><code>t.rast.aggregate input=uas_dsm@PERMANENT output=uas_dsm_aggr basename=uas_dsm_aggr suffix=time granularity="1 months" method=average
+<pre><code>t.rast.aggregate input=uas_dsm@PERMANENT output=uas_dsm_aggr basename=uas_dsm_aggr suffix=time granularity="1 months" method=average
 t.rast.list input=uas_dsm_aggr columns=name,start_time
 </code></pre>
 
@@ -175,12 +175,12 @@ t.rast.list input=uas_dsm_aggr columns=name,start_time
 You should already have  <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/secref_mid_pines_spm_elev.zip">
 lidar DSM and DEMs</a> if you haven't done already, unzip it in your working directory and unpack:
 
-<pre><code>r.unpack -o input=mid_pines_lidar2013_dsm.pack
+<pre><code>r.unpack -o input=mid_pines_lidar2013_dsm.pack
 r.unpack -o input=mid_pines_lidar2013_dem.pack
 </code></pre>
 
 Find the minimum elevation (core) - how close it is to lidar bare ground?
-<pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum
 r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum"
 r.colors map=diff_lidar_uas color=differences
 d.rast diff_lidar_uas
@@ -189,32 +189,32 @@ d.rast diff_lidar_uas
 Parts of the minimum raster are significantly below lidar ground,
 find out which DSM is causing it:
 
-<pre><code>t.rast.series input=uas_dsm@PERMANENT method=min_raster output=min_raster
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=min_raster output=min_raster
 d.rast min_raster
 </code></pre>
 
 Display resulting raster <code>min_raster</code> and query it 
 (select the layer in Layer Manager and use Query tool in Map Display)
 or use r.what:
-<pre><code>r.what map=min_raster coordinates=636879,219432
+<pre><code>r.what map=min_raster coordinates=636879,219432
 r.what map=min_raster coordinates=637232,219651
 </code></pre>
 
 Value 2 represents third (numbering starts with 0) raster in our time series.
 Since there is some problem with the third and fourth raster (<code>2015_07_27_DSM_agi_2GCP_4ID, 2015_08_14_DSM_agi_3GCP_4ID@PERMANENT</code>),
 we will exclude them from the analysis:
-<pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum where="start_time < '2015-07-01' or start_time > '2015-09-01'" --o
+<pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum where="start_time < '2015-07-01' or start_time > '2015-09-01'" --o
 r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum" --o
 r.colors map=diff_lidar_uas color=differences
 </code></pre>
 
 Apply now the color table <a href="./resources/dif_lidar_uav.txt">dif_lidar_uav.txt</a> we used for highlighting differences in the last assignment:
-<pre><code>r.colors map=diff_lidar_uas rules=dif_lidar_uav.txt
+<pre><code>r.colors map=diff_lidar_uas rules=dif_lidar_uav.txt
 </code></pre>
 Explain what you see.
 
 Let's look now which temporal datasets we have:
-<pre><code>t.list columns=id,number_of_maps,start_time
+<pre><code>t.list columns=id,number_of_maps,start_time
 </code></pre>
 
 <h4>Estimate crop biomass</h4>
@@ -224,7 +224,7 @@ First we need to make sure that we take into account only fields (not forests).
 You can use get the <a href="./resources/fields.pack">packed raster representation of fields</a> (link is at the top).
 We assume crop is anything higher than 0.3 and lower than 2 m (to exclude the building for example):
 
-<pre><code>r.unpack -o fields.pack
+<pre><code>r.unpack -o fields.pack
 t.rast.mapcalc inputs=uas_dsm@PERMANENT expression="if (fields, if(uas_dsm - mid_pines_lidar2013_dem > 0.3 &amp;&amp; uas_dsm - mid_pines_lidar2013_dem < 2, uas_dsm - mid_pines_lidar2013_dem, null()))" output=veg_uas_lidar basename=veg_uas_lidar
 t.rast.univar input=veg_uas_lidar where="start_time < '2015-07-01' or start_time > '2015-09-01'"
 d.rast veg_uas_lidar_2
@@ -233,12 +233,12 @@ r.univar map=veg_uas_lidar_2
 </code></pre>
 
 Use Python shell (tab in Layer Manager) to compute the biomass volume for June (paste each line into Python shell and press Enter):
-<pre><code>sum = grass.parse_command('r.univar', map='veg_uas_lidar_2', flags='g')['sum']
+<pre><code>sum = grass.parse_command('r.univar', map='veg_uas_lidar_2', flags='g')['sum']
 float(sum) * grass.region()['nsres'] * grass.region()['ewres']
 </code></pre>
 
 Remove the mask before we proceed in further analysis:
-<pre><code>r.mask -r
+<pre><code>r.mask -r
 </code></pre>
 
 <h3>Evaluate impact of vegetation change on viewshed extent</h3>
@@ -249,7 +249,7 @@ to find places from which we will have likely good visibility.
 We pick several places distributed all over the area from which we compute viewsheds
 on a lidar DSM with observer height of 3 meters (webcam height).
 
-<pre><code>g.region raster=mid_pines_lidar2013_dsm res=1 -pa
+<pre><code>g.region raster=mid_pines_lidar2013_dsm res=1 -pa
 r.viewshed input=mid_pines_lidar2013_dsm output=vshed_1 coordinates=637087,219376 observer_elevation=3
 r.viewshed input=mid_pines_lidar2013_dsm output=vshed_2 coordinates=637004,219653 observer_elevation=3
 r.viewshed input=mid_pines_lidar2013_dsm output=vshed_3 coordinates=636782,219374 observer_elevation=3
@@ -261,7 +261,7 @@ r.viewshed input=mid_pines_lidar2013_dsm output=vshed_6 coordinates=636863,21950
 Now we compute the cumulative viewshed as the number of places (from the coordinates above)
 from which a cell is visible. This gives us better idea which places are visually more prominent
 and therefore likely to have good view of the fields.
-<pre><code>r.series input=vshed_1,vshed_2,vshed_3,vshed_4,vshed_5,vshed_6 output=cum_viewshed method=count
+<pre><code>r.series input=vshed_1,vshed_2,vshed_3,vshed_4,vshed_5,vshed_6 output=cum_viewshed method=count
 d.rast cum_viewshed
 </code></pre>
 
@@ -275,7 +275,7 @@ with method=maximum on the time series of UAS DSMs to derive the DSM series enve
 and use it to analyze the viewshed. Of course, this assumes that the crops will be the same
 the following year. We exclude the problematic DSMs as we did while deriving the core surface:
 
-<pre><code>g.region raster=mid_pines_lidar2013_dsm
+<pre><code>g.region raster=mid_pines_lidar2013_dsm
 t.rast.series input=uas_dsm@PERMANENT method=maximum output=maximum where="start_time < '2015-07-01' or start_time > '2015-09-01'"
 </code></pre>
 
@@ -284,7 +284,7 @@ We need to update the lidar-based DSM with the  UAS envelope data and
 analyze the viewshed while taking into account the corn growing in the field.
 First we need to make sure that we take into account entire field
 to create a lidar-based DSM updated in the fields using UAS data.
-<pre><code>r.mapcalc "maximum_clip = if (fields, maximum)"
+<pre><code>r.mapcalc "maximum_clip = if (fields, maximum)"
 r.patch.smooth input_a=maximum_clip input_b=mid_pines_lidar2013_dsm output=lidar_maximum_dsm smooth_dist=10
 r.relief lidar_maximum_dsm out=lidar_maximum_dsm_relief zscale=5
 d.rast lidar_maximum_dsm_relief
@@ -294,7 +294,7 @@ Look at the relief map around the building - where do people park their cars?
 <p>
 Now we selected a location based on the cumulative viewshed and
 look at the difference between the viewshed based on lidar and the envelope surface:
-<pre><code>r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar_dsm observer_elevation=3 coordinates=636917,219223
+<pre><code>r.viewshed input=mid_pines_lidar2013_dsm output=viewshed_lidar_dsm observer_elevation=3 coordinates=636917,219223
 r.viewshed input=lidar_maximum_dsm output=viewshed_maximum observer_elevation=3 coordinates=636917,219223
 
 r.colors viewshed_lidar_dsm co=reds
@@ -306,13 +306,13 @@ Discuss the result. Can you find a better place for the webcam? Would placing th
 
 <h3>Estimate volume of a building</h3>
 We need to first extract the mask of the building: 
-<pre><code>g.region n=219388.5 s=219366.9 w=637100.1 e=637138.5 res=0.3 -pa
+<pre><code>g.region n=219388.5 s=219366.9 w=637100.1 e=637138.5 res=0.3 -pa
 r.mapcalc "building = 2015_06_20_DSM_agi_11GCP - mid_pines_lidar2013_dem"
 r.mapcalc "building_mask = if(building > 2, 1, null())"
 </code></pre>
 
 Now we compute the volume
-<pre><code>r.volume input=building clump=building_mask
+<pre><code>r.volume input=building clump=building_mask
 </code></pre>
 
 What is the volume of the building?
@@ -330,7 +330,7 @@ r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=63710
 <ul>
 <li><a class="term-changes" href="https://moodle-courses1718.wolfware.ncsu.edu/course/view.php?id=4709">Moodle site</a></li>
 <li><a href="http://help.ncsu.edu/">Computing Help</a></li>
-<li><a href="http://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
 <li><a href="http://www.ncsu.edu/policies/prr-disclaimer.php">Disclaimer</a></li>
 <li><a href="http://oit.ncsu.edu/itaccess">Accessibility</a></li>
 <li><a href="https://github.com/ncsu-geoforall-lab/uav-lidar-analytics-course" title="Source code for web pages on GitHub">
@@ -340,7 +340,7 @@ r.viewshed input=lidar_uas_mergedavg output=viewshed_liduasavg coordinates=63710
 <li title="Copyright and license (not applicable to linked materials)">
     &copy; 2018
     <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
-    <a href="http://geospatial.ncsu.edu/osgeorel/">NCSU GeoForAll Lab</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
 </li>
 </ul>
 </nav>
