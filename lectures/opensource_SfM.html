@@ -311,6 +311,121 @@ using Python, or background processing</li>
 <p class="small"> Supercomputer Blue Waters, NCSA, Illinois</p>
 </section>
 
+<!-- --SLIDE X -->
+<section>
+<h4>PhotoScan Requirements</h4>
+<img class="stretch" src="img/agi_specs.JPG">
+<aside class="notes">
+HEre are Agisoft suggestions to run the software, not what will perform best<p>
+Ram is the memory, CPU is the processor and GPU is the graphics card.
+</aside>
+</section>
+
+<!----SLIDE X -->
+<section>
+<h4>PhotoScan CPU</h4>
+<img class="stretch" src="img/processor.jpg">
+<br>
+<ol style="font-size: 40%;">
+<p>https://www.pugetsystems.com/recommended/Recommended-Systems-for-Agisoft-PhotoScan-145/Hardware-Recommendations</p>
+</ol>
+<aside class="notes">
+Some steps use clock speed and some use cores<p>
+Steps such as Build Dense Cloud benefit from many few cores<p>
+Building the mesh and texture do better with high clock speeds<p>
+for overall processing, higher Clock speeds are key.  The AMD threadripper processors are cheaper but slower.
+</aside>
+</section>
+
+<!-- --SLIDE X -->
+<section>
+<h4>PhotoScan GPU</h4>
+<img class="stretch" src="img/gpu.jpg">
+<br>
+<ol style="font-size: 40%;">
+<p>https://www.pugetsystems.com/recommended/Recommended-Systems-for-Agisoft-PhotoScan-145/Hardware-Recommendations</p>
+</ol>
+<aside class="notes">
+PhotoScan's Build Dense Cloud step is highly affected by the number and model of video cards<p>
+align Photos step is also GPU dependent<p>
+</aside>
+</section>
+
+<!-- --SLIDE X -->
+<section>
+<h4>PhotoScan Multiple GPUs</h4>
+
+<img class="stretch" src="img/multi_gpu.jpg">
+<br>
+<ol style="font-size: 40%;">
+<p>https://www.pugetsystems.com/recommended/Recommended-Systems-for-Agisoft-PhotoScan-145/Hardware-Recommendations</p>
+</ol>
+<aside class="notes">
+PhotoScan does well with using multiple video cards.<p>
+Adding a second GPU decreases the time it takes to build the dense cloud by about 25%
+</aside>
+</section>
+
+<!-- --SLIDE X -->
+<section>
+<h4>PhotoScan Hard Drive Write Speeds</h4>
+<img class="stretch" src="img/hd.jpg">
+<br>
+<ol style="font-size: 40%;">
+<p>https://www.pugetsystems.com/recommended/Recommended-Systems-for-Agisoft-PhotoScan-145/Hardware-Recommendations</p>
+</ol>
+<aside class="notes">
+Not much of difference between SSD and mechanical HD.<p>
+Kind of suprising with how much data is being moved.
+</aside>
+</section>
+
+<!-- --SLIDE X -->
+<section>
+<h4>PhotoScan Memory</h4>
+<img class="stretch" src="img/agi_mem.JPG">
+<aside class="notes">
+adjust the RAM to the resolution of photos and number of photos<p>
+once the ram has been exceeded it will start using the disk and it will fail.<p>
+the max memory is also governed by the CPU
+</aside>
+</section>
+
+<!-- --SLIDE X -->
+<section>
+<h4>Local Workstation</h4>
+<img class="stretch" src="img/computer1.png">
+<aside class="notes">
+here is a screenshot from my Photoscan computer<p>
+too a while to sort out the hardware<p>
+32 cores, 126 GB ram.  process took almost 10 days to run at 100%
+</aside>
+</section>
+
+<!-- --SLIDE X -->
+<section>
+<h4>Alternatives- Henry 2</h4>
+<img class="stretch" src="img/hpclogin.PNG">
+<aside class="notes">
+thousands of cores but no gpus<p>
+linux machine<p>
+agisoft can be run on linux and command line<p>
+to be continued
+</aside>
+</section>
+
+<!-- --SLIDE X -->
+<section>
+<h4>Alternatives- AWS</h4>
+<img class="stretch" src="img/aws.jpg">
+<aside class="notes">
+this set up is closest to the machine I am running<p>
+10 days of processing would come out to around $500<p>
+these are the linux machine costs<p>
+this doesn't include the data transfer and re-work
+</aside>
+</section>
+
 <section>
 <h3>Software licensing and cloud</h3>
 <p style="text-align:left">When using any software, you need to deal with licenses. Proprietary software:
