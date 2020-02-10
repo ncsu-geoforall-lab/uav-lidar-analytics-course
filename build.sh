@@ -26,8 +26,6 @@ OUTDIR="build"
 if [ ! -d "$OUTDIR" ]; then
     mkdir $OUTDIR
     echo "Creating directory $OUTDIR automatically."
-    echo "If you are using GitHub pages to create publish the website,"
-    echo "you probably want to create this directory by a dedicated script."
 fi
 
 # disable Jekyll which is not needed for out GitHub pages
