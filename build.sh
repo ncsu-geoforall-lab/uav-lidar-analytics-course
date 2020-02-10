@@ -18,15 +18,6 @@ function build_page {
     build_page_general $1 $2 $HEAD_FILE $FOOT_FILE $OUTDIR
 }
 
-function build_page_rst {
-    FILE_SOURCE=$1
-    FILE_TARGET=$2
-    cat $HEAD_FILE > $OUTDIR/$FILE_TARGET
-    echo "<!-- This is a generated file. Do not edit. -->" >> $OUTDIR/$FILE_TARGET
-    pandoc --to=html $FILE_SOURCE >> $OUTDIR/$FILE_TARGET
-    cat $FOOT_FILE >> $OUTDIR/$FILE_TARGET
-}
-
 HEAD_FILE=head.html
 FOOT_FILE=foot.html
 
@@ -46,11 +37,6 @@ if [ ! -d "$OUTDIR" ]; then
     echo "The directory $OUTDIR does not exists and it will be created for you."
     mkdir $OUTDIR
 fi
-
-for FILE in `ls *.rst|grep -v foot|grep -v head`
-do
-    build_page_rst $FILE `basename -s .rst $FILE`.html
-done
 
 for FILE in `ls *.html|grep -v foot|grep -v head`
 do

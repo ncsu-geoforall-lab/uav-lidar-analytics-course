@@ -12,10 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get install -y -qq pandoc
     - name: Build the website
       run: |
         ./build.sh

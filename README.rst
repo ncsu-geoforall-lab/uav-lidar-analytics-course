@@ -16,10 +16,14 @@ To learn about Git and GitHub, you can use:
 Requirements
 ------------
 
+To get updates and publish the page from your machine, you need:
+
+* Git (or some graphical Git client)
+
+To build the website locally, you need:
+
 * Bash
 * Python
-* Pandoc when using rst files
-
 
 How to use it
 -------------
