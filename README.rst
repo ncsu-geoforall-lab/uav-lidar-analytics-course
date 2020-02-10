@@ -1,6 +1,10 @@
 UAV/lidar Data Analytics
 =========================
 
+.. image:: https://github.com/ncsu-geoforall-lab/uav-lidar-analytics-course/workflows/Publish%20the%20website/badge.svg
+   :alt: Publish the website
+   :target: https://github.com/ncsu-geoforall-lab/uav-lidar-analytics-course/actions?query=workflow%3A%22Publish+the+website%22
+
 This is a repository for a course website and teaching materials.
 
 For reference about the template the website style see:
