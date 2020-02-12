@@ -1,5 +1,5 @@
 <section>
-    <h2>Imagery processing - Agisoft PhotoScan Professional</h2>
+    <h2>Imagery processing - Agisoft Metashape</h2>
    <h4>UAS Imagery Processing Workshop</a></h4>
     <h4 style="margin-top: 0.5em">
         Justyna Jeziorska</h4>
@@ -13,7 +13,7 @@
      <img class="fragment" src="img/agisoft.png">
 </section>
 <section>
-    <h2>Agisoft PhotoScan Professional</h2>
+    <h2>Agisoft Metashape Professional</h2>
 <div class="left">  
     <ul>
         <li class="fragment">Image-based solution aimed at creating 3D content from still images;</li>
@@ -23,13 +23,13 @@
     </div>
     <div class="right">
         <p class="small fragment"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
-        <p class="small fragment"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_3_en.pdf"> Manual</a></p>
+        <p class="small fragment"><a href="https://www.agisoft.com/pdf/metashape-pro_1_5_en.pdf"> Manual</a></p>
         <p class="small fragment">also tutorials for</p>
         <p class="small fragment"><a href="http://www.agisoft.com/pdf/PS_1.3%20-Tutorial%20%28BL%29%20-%20Orthophoto,%20DEM%20%28GCPs%29.pdf"> Orthophoto and DSM generation with GCPs</a><br>
-<a href="http://www.agisoft.com/pdf/PS_1.1%20-Tutorial%20%28IL%29%20-%20Classification%20and%20DTM.pdf"> Dense Cloud Classification & DTM Generation</a><br>
-<a href="http://www.agisoft.com/pdf/PS_1.1_Tutorial%20%28IL%29%20-%20Volume%20measurements.pdf"> Mesh-based Area & Volume Measurements</a> </p>
+<a href="https://agisoft.freshdesk.com/support/solutions/articles/31000148866-dense-cloud-classification"> Dense Cloud Classification & DTM Generation</a><br>
+<a href="https://agisoft.freshdesk.com/support/solutions/articles/31000148884-dem-based-measurements-"> DEM based Measurements</a> </p>
         <p class="small fragment"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
-        <img class="fragment" src="img/Agisoft_Logo.jpg">
+        <img class="fragment" src="img/Agisoft_Logo.jpg" width="30%">
     </div>    
 
 
@@ -42,7 +42,7 @@
      <h4 class="fragment">Preprocessing stage:</h4>
         <img class="fragment" src="img/processing/flowchart_processing_pre.png">
             <ul>
-                <li class="small fragment">loading photos into PhotoScan;</li>
+                <li class="small fragment">loading photos into Agisoft Metashape;</li>
                 <li class="small fragment">inspecting loaded images, removing unnecessary images.</li>
             </ul>  
 </section>
@@ -78,7 +78,7 @@
 </section>
 <section>
     <h3>1. Aligning photos</h3>
-            <p class="fragment">At this stage Agisoft PhotoScan: <br >implements SfM algorithms to monitor the movement of features through sequence of multiple images:</p>
+            <p class="fragment">At this stage Agisoft Metashape: <br >implements SfM algorithms to monitor the movement of features through sequence of multiple images:</p>
     <div class="left">  
     <ul>
         <li class="fragment">obtains the relative location of the acquisition positions,</li>
@@ -117,7 +117,7 @@
     </div>
 </section>
 <section>
-    <h3>Aligning cameras in PhotoScan</h3>
+    <h3>Aligning cameras in Metashape</h3>
             <img class="left fragment" src="img/processing/aligned_photos.PNG" width="58.5%">
             <img class="right fragment" src="img/processing/sparse_cloud.PNG" width="39%">
         <p class="small right fragment"><strong>sparse point cloud</strong> generation</p>
@@ -132,7 +132,7 @@
 </section>
 <section>
     <h3>2. Building dense point cloud</h3>
-  <p class="fragment">At the stage of dense point cloud generation reconstruction PhotoScan calculates depth maps for every image</p>
+  <p class="fragment">At the stage of dense point cloud generation reconstruction Metashape calculates depth maps for every image</p>
  
        <ul>
                 <li class="fragment">Quality: <strong>Highest, High, Medium, Low, Lower</strong>>  the higher quality the more accurate camera position estimates but the process is more time consuming</li>
@@ -303,7 +303,7 @@
                 <li>Orthophoto,</strong></li>
                 <li>Spherical,</li>
                 <li>Single photo,</li>
-                <li>Keep uv.</li>
+                <li>Keep uv</li>
             </ul>
     </ul> 
  </div>   
@@ -390,7 +390,7 @@ corresponding to dense point cloud points are reconstructed</li>
 <ul>
 <ul>
     <li class="small fragment">Enabled (recommended):  interpolation mode 
-PhotoScan will calculate DEM for all areas of thescene  that  are  visible  on  at  least  one  image.  </li>
+Metashape will calculate DEM for all areas of thescene  that  are  visible  on  at  least  one  image.  </li>
 </ul>
 </ul>
 </section>
