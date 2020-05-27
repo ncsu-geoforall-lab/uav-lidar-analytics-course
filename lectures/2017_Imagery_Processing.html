@@ -279,7 +279,7 @@ Everything boils down to... money (and time)
 <h2>Processing options - software</h2>
 
 <ul>
-        <li class="fragment"><a href="http://www.agisoft.com/">Agisoft Photoscan</a></li>
+        <li class="fragment"><a href="http://www.agisoft.com/">Agisoft Metashape</a></li>
         <li class="fragment"><a href="https://pix4d.com/">Pix4D</a></li>
         <li class="fragment"><a href="http://uas.trimble.com/tbc-am">Trimble Business Center</a> - Aerial Photogrammetry Module</li>
         <li class="fragment"><a href="http://www.esri.com/products/drone2map">Drone2Map (ESRI)</a></li>
@@ -289,7 +289,7 @@ Everything boils down to... money (and time)
     </ul>
 </section>
 <section>
-    <h2>Agisoft PhotoScan Professional</h2>
+    <h2>Agisoft Metashape Professional</h2>
 <div class="left">  
     <ul>
         <li class="fragment">Image-based solution aimed at creating 3D content from still images;</li>
@@ -299,13 +299,13 @@ Everything boils down to... money (and time)
     </div>
     <div class="right">
         <p class="small fragment"><a href="http://www.agisoft.com/downloads/installer/"> Installer</a></p>
-        <p class="small fragment"><a href="http://www.agisoft.com/pdf/photoscan-pro_1_3_en.pdf"> Manual</a></p>
+        <p class="small fragment"><a href="https://www.agisoft.com/pdf/metashape-pro_1_5_en.pdf"> Manual</a></p>
         <p class="small fragment">also tutorials for</p>
         <p class="small fragment"><a href="http://www.agisoft.com/pdf/PS_1.3%20-Tutorial%20%28BL%29%20-%20Orthophoto,%20DEM%20%28GCPs%29.pdf"> Orthophoto and DSM generation with GCPs</a><br>
-<a href="http://www.agisoft.com/pdf/PS_1.1%20-Tutorial%20%28IL%29%20-%20Classification%20and%20DTM.pdf"> Dense Cloud Classification & DTM Generation</a><br>
-<a href="http://www.agisoft.com/pdf/PS_1.1_Tutorial%20%28IL%29%20-%20Volume%20measurements.pdf"> Mesh-based Area & Volume Measurements</a> </p>
+<a href="https://agisoft.freshdesk.com/support/solutions/articles/31000148866-dense-cloud-classification"> Dense Cloud Classification & DTM Generation</a><br>
+<a href="https://agisoft.freshdesk.com/support/solutions/articles/31000148884-dem-based-measurements-"> DEM based Measurements</a> </p>
         <p class="small fragment"><a href="https://www.youtube.com/channel/UCPheXwPeFLnWHo8u4ksSH7w"> Youtube channel</a></p>
-        <img src="img/Agisoft_Logo.jpg">
+        <img class="fragment" src="img/Agisoft_Logo.jpg" width="30%">
     </div>    
 
 
@@ -316,7 +316,7 @@ Everything boils down to... money (and time)
      <h4 class="fragment">Preprocessing stage:</h4>
         <img class="fragment" src="img/processing/flowchart_processing_pre.png">
             <ul>
-                <li class="small fragment">loading photos into PhotoScan;</li>
+                <li class="small fragment">loading photos into Metashape;</li>
                 <li class="small fragment">inspecting loaded images, removing unnecessary images.</li>
             </ul>  
 </section>
@@ -352,7 +352,7 @@ Everything boils down to... money (and time)
 </section>
 <section>
     <h3>1. Aligning photos</h3>
-            <p class="fragment">At this stage Agisoft PhotoScan: <br >implements SfM algorithms to monitor the movement of features through sequence of multiple images:</p>
+            <p class="fragment">At this stage Agisoft Metashape: <br >implements SfM algorithms to monitor the movement of features through sequence of multiple images:</p>
     <div class="left">  
     <ul>
         <li class="fragment">obtains the relative location of the acquisition positions,</li>
@@ -391,7 +391,7 @@ Everything boils down to... money (and time)
     </div>
 </section>
 <section>
-    <h3>Aligning cameras in PhotoScan</h3>
+    <h3>Aligning cameras in Metashape</h3>
             <img class="left fragment" src="img/processing/aligned_photos.PNG" width="58.5%">
             <img class="right fragment" src="img/processing/sparse_cloud.PNG" width="39%">
         <p class="small right fragment"><strong>sparse point cloud</strong> generation</p>
@@ -406,7 +406,7 @@ Everything boils down to... money (and time)
 </section>
 <section>
     <h3>2. Building dense point cloud</h3>
-  <p class="fragment">At the stage of dense point cloud generation reconstruction PhotoScan calculates depth maps for every image</p>
+  <p class="fragment">At the stage of dense point cloud generation reconstruction Agisoft calculates depth maps for every image</p>
  
        <ul>
                 <li class="fragment">Quality: <strong>Highest, High, Medium, Low, Lower</strong>>  the higher quality the more accurate camera position estimates but the process is more time consuming</li>
@@ -502,7 +502,8 @@ Everything boils down to... money (and time)
     <h3>Optional: editing mesh</h3>
     <div class="left">     
     <ul>
-               <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong>necessary step for <strong>volumes calculation</strong>;</li>
+               <li class="fragment"><strong>Close Holes tool</strong> > repairs your model if the reconstruction procedure resulted in a mesh with several holes, due to <strong>insufficient image overlap</strong>
+<li class="fragment">necessary step for <strong>volumes calculation</strong>;</li>
 
     </ul>
     </div>
@@ -664,7 +665,7 @@ corresponding to dense point cloud points are reconstructed</li>
 <ul>
 <ul>
     <li class="small fragment">Enabled (recommended):  interpolation mode 
-PhotoScan will calculate DEM for all areas of thescene  that  are  visible  on  at  least  one  image.  </li>
+Agisoft will calculate DEM for all areas of thescene  that  are  visible  on  at  least  one  image.  </li>
 </ul>
 </ul>
 </section>
@@ -805,14 +806,14 @@ along the normal to the reconstructed surface in that point.</li>
                 <li class="fragment">measuring distances and volumes,</li>
                 <li class="fragment">marker based chunk alignment.</li>
         </ul> 
-            <li class="fragment">more on GCP placing and processing in Agisoft see see <a href="./2017_Imagery_Processing_assignment_intro.html">intro to the assignment</a></li>
+            <li class="fragment">more on GCP placing and processing in Agisoft see <a href="./2017_Imagery_Processing_assignment_intro.html">intro to the assignment</a></li>
 </section>
  <section>
 <h2> What did we learn?</h2>
 <ul>
 <li class="fragment">What is a general workflow for UAS imagery processing
 <li class="fragment">How do we transform UAS data into orthophoto, DSM, 3D model and pointcloud
-<li class="fragment">How to process the data in Agisoft Photoscan Professional and how to set proper parameters in the program
+<li class="fragment">How to process the data in Agisoft Metashape Professional and how to set proper parameters in the program
 </ul>
 </section>
 
