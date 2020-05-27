@@ -37,7 +37,7 @@
 
 <main>
 <!-- This is a generated file. Do not edit. -->
-<h1>Terrain Analysis of the flight site using GIS tools</h1>
+﻿<h1>Terrain Analysis of the flight site using GIS tools</h1>
 
 <p>In order to execute a safe flight, you need to make sure that the flight path will not cross any
 obstacles. Also remember that the ground altitude is measured in the take off localization and
@@ -106,7 +106,6 @@ v.to.rast input=flight_track_points output=flight_path_altitude_rast use=z
    <li> set region to your study area using g.region or using the zoom function for setting the region 
       <li>Import lidar data to grass
 <pre><code>r.in.lidar mid_pines_spm_2013.las output=mid_pines_surface_max method=max class_filter=1,2 return_filter=first resolution=3 -oe 
-r.in.lidar secref_spm_2013.las output=secref_surface_max method=max class_filter=1,2 return=first res=3 zrange=0,300 -oe
 </code></pre>
 <li> <i><strong>NOTE</i></strong> - If you are working on Windows and have the GRASS 7.2.2 installed, the command r.in.lidar might not work for you - in this case you can download the interpolated DSMs for <a href="http://fatra.cnr.ncsu.edu/uav-lidar-analytics-course/mid_pines_surface_max.pack"> Mid Pines</a>. <br>Use <code>r.unpack</code> to unpack the rasters.</i>
  </ul>
