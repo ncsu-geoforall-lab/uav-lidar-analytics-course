@@ -1,4 +1,4 @@
-<h2>Geoprocessing of the UAS data</h2>
+﻿<h2>Geoprocessing of the UAS data</h2>
 
 <p>Completing this assignment you will generate orthomosaic and Digital
 Surface Model using pictures taken from the UAS Trimble UX5 Rover
@@ -78,30 +78,10 @@ subsequent sessions.</p>
     <li>Leave default
         (optional – white log to file: enabled, if you want to save the txt log file)
 </ul>
-
-<p>OpenCL TAB:</p>
-
-<ul>
-    <li>Check on any OpenCL devices detected by Metashape in the dialog
-        and reduce the number of active CPU cores by one for each OpenCL
-        device enabled.
-</ul>
-
-<p>Advanced tab:</p>
+<p>GPU tab:</p>
 
 <ul>
-	<li>Project Files
-		<ul>
-		<li>Project compression level: 6
-		<li>Keep depth maps: disabled
-		<li>Store absolute image paths: disabled
-		</ul>
-	<li>Export/Import: enable all
-	<li>Misceallaneous:
-		<ul>
-		<li>Enable performance optimization: enabled
-		<li>Refine marker projections based on image content: enabled
-		</ul>
+    <li>Check the "USE CPU when performing GPU accelerated processing" option at the bottom
 </ul>
 <p>Network Tab:</p>
 
@@ -114,6 +94,22 @@ subsequent sessions.</p>
 <ul>
     <li>Leave default (or adjust to personal taste)
 </ul>
+<p>Advanced tab:</p>
+
+<ul>
+	<li>Project Files
+		<ul>
+		<li>Keep key points: disabled
+		<li>Keep depth maps: disabled
+		<li>Store absolute image paths: disabled
+		</ul>
+	<li>Export/Import: enable all
+	<li>Misceallaneous:
+		<ul>
+		<li>Enable fine level task division: enabled
+		</ul>
+</ul>
+
 <figure>
 <img src="img/geoprocessing/agi_preferences.JPG">
 </figure>
