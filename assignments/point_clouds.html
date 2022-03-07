@@ -245,35 +245,36 @@ Go to 3D view, set surface resolution 1 and color to map 'classes'. Save images.
 
 <h3>Compute the difference of lidar DEM and GCP heights</h3>
 
-First, create a copy of the map:
+First, download the <a href="https://drive.google.com/file/d/1i8cOvdtL7gqwMVat97QG8s9m17dBeBu_/view?usp=sharing">GCP_12_decimal file</a> 
 
-<pre><code>g.copy vector=GCP_12_degrees,GCP_12_differences
+and import it to GRASS
+<pre><code>v.in.ogr GCP_12_decimal.csv
 </code></pre>
 
 Then, add the columns:
 
-<pre><code>v.db.addcolumn map=GCP_12_differences columns="dem_height DOUBLE, height_difference DOUBLE"
+<pre><code>v.db.addcolumn map=GCP_12_decimal columns="dem_height DOUBLE, height_difference DOUBLE"
 </code></pre>
 
 Query (sample) the raster elevation at the locations of GCPs:
 
-<pre><code>v.what.rast -i map=GCP_12_differences raster=mid_pines_ground_elev column=dem_height
+<pre><code>v.what.rast -i map=GCP_12_decimal raster=mid_pines_ground_elev column=dem_height
 </code></pre>
 
 Compute the difference and save it in the attribute column:
 
-<pre><code>v.db.update map=GCP_12_differences column=height_difference query_column="ASL - dem_height"
+<pre><code>v.db.update map=GCP_12_decimal column=height_difference query_column="ASL - dem_height"
 </code></pre>
 
 View the results:
 
-<pre><code>v.db.select map=GCP_12_differences columns=ASL,dem_height,height_difference
+<pre><code>v.db.select map=GCP_12_decimal columns=ASL,dem_height,height_difference
 </code></pre>
 
 Compute extended univariate statistics and show thematic map:
 
-<pre><code>v.univar -e GCP_12_differences column=height_difference
-d.vect.thematic map=GCP_12_differences column=height_difference algorithm=int nclasses=4 colors=blue,30:144:255,173:216:230,255:192:203 icon=basic/circle size=20
+<pre><code>v.univar -e GCP_12_decimal column=height_difference
+d.vect.thematic map=GCP_12_decimal column=height_difference algorithm=int nclasses=4 colors=blue,30:144:255,173:216:230,255:192:203 icon=basic/circle size=20
 d.legend.vect at=10,40
 </code></pre>
 
