@@ -222,11 +222,11 @@ Go to 3D view, set surface resolution 1 and color to map 'classes'. Save images.
 
 <h3>Compute the difference of lidar DEM and GCP heights</h3>
 
-First, download the <a href="https://drive.google.com/file/d/1i8cOvdtL7gqwMVat97QG8s9m17dBeBu_/view?usp=sharing">GCP_12_decimal file</a> 
+First, download the <a href="https://drive.google.com/file/d/1yAFKvDslNubgzoTT_f5GKCuwzwpXmuTl/view?usp=sharing">GCP_12_decimal pack file</a> 
 
-and import it to GRASS
+and unpack it to GRASS
 <pre><code>
-v.in.ogr -o GCP_12_decimal.csv
+v.unpack GCP_12_decimal.pack
 </code></pre>
 
 Then, add the columns:
