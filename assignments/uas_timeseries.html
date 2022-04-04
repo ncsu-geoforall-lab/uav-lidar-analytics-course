@@ -68,9 +68,18 @@ Tools:
 </ul>
 
 <h3>Analyze time series of UAS DSMs</h3>
+<h4>Create a new mapset and copy the UAS DSMs</h4>
+Start GRASS GIS in Lake_Wheeler_NCspm Location and create a new mapset "assignment5b". Open GRASS GIS in this mapset
+<pre><code>g.copy raster=2015_03_18_DSM_agi_6GCP@PERMANENT,2015_03_18_DSM_agi_6GCP
+g.copy raster=2015_06_20_DSM_agi_11GCP@PERMANENT,2015_06_20_DSM_agi_11GCP
+g.copy raster=2015_07_27_DSM_agi_2GCP_4ID@PERMANENT,2015_07_27_DSM_agi_2GCP_4ID 
+g.copy raster=2015_08_14_DSM_agi_3GCP_4ID@PERMANENT,2015_08_14_DSM_agi_3GCP_4ID 
+g.copy raster=2015_09_04_DSM_agi_6GCP@PERMANENT,2015_09_04_DSM_agi_6GCP
+g.copy raster=2015_09_21_DSM_agi_6GCP@PERMANENT,2015_09_21_DSM_agi_6GCP
+.copy raster=2015_10_06_DSM_agi_8GCPs@PERMANENT,2015_10_06_DSM_agi_8GCPs
+</code></pre>
 <h4>Register the time series in temporal framework</h4>
-Start GRASS GIS in Lake_Wheeler_NCspm Location and PERMANENT Mapset to create a temporal dataset consisting of a series
-of UAS DSMs.
+
 First, create a space-time raster dataset (STRDS) with absolute temporal type:
 
 <pre><code>t.create output=uas_dsm type=strds temporaltype=absolute semantictype=mean title="UAS_DSM" description="UAS-based 2015 DSMs processed by Agisoft"
@@ -110,8 +119,8 @@ You can also use the <em>Data</em> tab in Layer Manager.
 <p>
 We can set common color table to all maps in the dataset:
 <pre><code>t.rast.colors input=uas_dsm color=elevation
-d.rast 2015_06_20_DSM_agi_11GCP@PERMANENT
-d.rast 2015_10_06_DSM_agi_8GCPs@PERMANENT
+d.rast 2015_06_20_DSM_agi_11GCP@assignment5b
+d.rast 2015_10_06_DSM_agi_8GCPs@assignment5b
 </code></pre>
 
 <p>
@@ -140,7 +149,7 @@ You can also create new mapset in Settings - GRASS working environment - Create 
 We will find area mapped by all surveys. First we will set the
 extent to the maximum bounding box, use t.info to get the values:
 
-<pre><code>t.info input=uas_dsm@PERMANENT -g
+<pre><code>t.info input=uas_dsm@assignment5b -g
 g.region n=219942 s=219037 e=637439 w=636456 -pa res=0.3
 </code></pre>
 
@@ -148,8 +157,8 @@ Next, we use t.rast.series to derive raster representing the number of
 overlapping DSMs. By using <a href="https://grass.osgeo.org/grass74/manuals/t.rast.series.html">-n flag</a>
 we create masking raster representing the intersection of all DSMs, and then we change computational
 region to the extent of its non-null bounding box:
-<pre><code>t.rast.series input=uas_dsm@PERMANENT method=count output=count
-t.rast.series input=uas_dsm@PERMANENT method=count output=intersection -n
+<pre><code>t.rast.series input=uas_dsm@assignment5b method=count output=count
+t.rast.series input=uas_dsm@assignment5b method=count output=intersection -n
 d.rast count
 d.rast intersection
 g.region zoom=intersection -p
@@ -161,12 +170,12 @@ How large is the area (use r.report)?
 
 <h4>Temporal aggregation</h4>
 Our space-time raster dataset contains two DSMs from September:
-<pre><code>t.rast.list input=uas_dsm@PERMANENT columns=name,start_time
+<pre><code>t.rast.list input=uas_dsm@assignment5b columns=name,start_time
 </pre></code>
 
 We will temporally aggregate the dataset by month by averaging all DSMs within each month
 (in this case averaging the September DSMs):
-<pre><code>t.rast.aggregate input=uas_dsm@PERMANENT output=uas_dsm_aggr basename=uas_dsm_aggr suffix=time granularity="1 months" method=average
+<pre><code>t.rast.aggregate input=uas_dsm@assignment5b output=uas_dsm_aggr basename=uas_dsm_aggr suffix=time granularity="1 months" method=average
 t.rast.list input=uas_dsm_aggr columns=name,start_time
 </code></pre>
 
@@ -189,7 +198,7 @@ d.rast diff_lidar_uas
 Parts of the minimum raster are significantly below lidar ground,
 find out which DSM is causing it:
 
-<pre><code>t.rast.series input=uas_dsm@PERMANENT method=min_raster output=min_raster
+<pre><code>t.rast.series input=uas_dsm@assignment5b method=min_raster output=min_raster
 d.rast min_raster
 </code></pre>
 
@@ -201,9 +210,9 @@ r.what map=min_raster coordinates=637232,219651
 </code></pre>
 
 Value 2 represents third (numbering starts with 0) raster in our time series.
-Since there is some problem with the third and fourth raster (<code>2015_07_27_DSM_agi_2GCP_4ID, 2015_08_14_DSM_agi_3GCP_4ID@PERMANENT</code>),
+Since there is some problem with the third and fourth raster (<code>2015_07_27_DSM_agi_2GCP_4ID, 2015_08_14_DSM_agi_3GCP_4ID@assignment5b</code>),
 we will exclude them from the analysis:
-<pre><code>t.rast.series input=uas_dsm@PERMANENT method=minimum output=minimum where="start_time < '2015-07-01' or start_time > '2015-09-01'" --o
+<pre><code>t.rast.series input=uas_dsm@assignment5b method=minimum output=minimum where="start_time < '2015-07-01' or start_time > '2015-09-01'" --o
 r.mapcalc "diff_lidar_uas = mid_pines_lidar2013_dem - minimum" --o
 r.colors map=diff_lidar_uas color=differences
 </code></pre>
@@ -225,7 +234,7 @@ You can use get the <a href="./resources/fields.pack">packed raster representati
 We assume crop is anything higher than 0.3 and lower than 2 m (to exclude the building for example):
 
 <pre><code>r.unpack -o fields.pack
-t.rast.mapcalc inputs=uas_dsm@PERMANENT expression="if (fields, if(uas_dsm - mid_pines_lidar2013_dem > 0.3 &amp;&amp; uas_dsm - mid_pines_lidar2013_dem < 2, uas_dsm - mid_pines_lidar2013_dem, null()))" output=veg_uas_lidar basename=veg_uas_lidar
+t.rast.mapcalc inputs=uas_dsm@assignment5b expression="if (fields, if(uas_dsm - mid_pines_lidar2013_dem > 0.3 &amp;&amp; uas_dsm - mid_pines_lidar2013_dem < 2, uas_dsm - mid_pines_lidar2013_dem, null()))" output=veg_uas_lidar basename=veg_uas_lidar
 t.rast.univar input=veg_uas_lidar where="start_time < '2015-07-01' or start_time > '2015-09-01'"
 d.rast veg_uas_lidar_2
 r.report -n map=veg_uas_lidar_2 units=me nsteps=1
@@ -276,7 +285,7 @@ and use it to analyze the viewshed. Of course, this assumes that the crops will 
 the following year. We exclude the problematic DSMs as we did while deriving the core surface:
 
 <pre><code>g.region raster=mid_pines_lidar2013_dsm
-t.rast.series input=uas_dsm@PERMANENT method=maximum output=maximum where="start_time < '2015-07-01' or start_time > '2015-09-01'"
+t.rast.series input=uas_dsm@assignment5b method=maximum output=maximum where="start_time < '2015-07-01' or start_time > '2015-09-01'"
 </code></pre>
 
 <p>
