@@ -197,17 +197,22 @@ r.rgb input=orthophoto_RGB@PERMANENT red=othophoto_RGB.red green=othophoto_RGB.g
 calculate the VARI index
 <pre><code>
 i.vi output=VARI viname=vari red=ortho.red@PERMANENT green=ortho.green@PERMANENT blue=ortho.blue@PERMANENT
-r.colors -e map=VARI@PERMANENT color=bgyr   
+r.colors -e map=VARI@PERMANENT color=bgyr 
+d.legend -f -s -d rast=VARI
+r.univar VARI  
 </pre></code>
-
 Calculate Redness Index (RI)
 <pre><code>
 r.mapcalc expression="RI = 1.0 * (pow ( ortho.red@PERMANENT, 2 ) )/( ortho.blue@PERMANENT *pow( ortho.green@PERMANENT ,2))"
 r.colors -e map=RI@PERMANENT color=bcyr
+d.legend -f -s -d rast=RI
+r.univar RI
 </pre></code>
 Calculate Brightness Index (BI)
 <pre><code>
 r.mapcalc expression=”BI = 1.0 * ( sqrt(pow( ortho.red@PERMANENT ,2)+pow( ortho.green@PERMANENT ,2)+pow( ortho.blue@PERMANENT ,2)) )/3”
+d.legend -f -s -d rast=BI
+r.univar BI
 r.colors -e map=BI@PERMANENT color=byg
 </pre></code>
 
@@ -217,11 +222,13 @@ r.colors -e map=BI@PERMANENT color=byg
 Calculate NDVI
 <pre><code>
 i.vi output=NDVI viname=ndvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
+d.legend -f -s -d rast=NDVI
 </pre></code>
 or
 <pre><code>
 r.mapcalc expression="NDVI2 = 1.0 * ( orthophoto_NIR@PERMANENT - orthophoto_RED@PERMANENT )/( orthophoto_NIR@PERMANENT + orthophoto_RED@PERMANENT )" 
 r.colors map=NDVI2@PERMANENT color=ndvi
+d.legend -f -s -d rast=NDVI2
 </pre></code>
 <pre><code>
 r.univar NDVI
@@ -231,25 +238,35 @@ Calculate IPVI: Infrared Percentage Vegetation Index
 <pre><code>
 i.vi output=IPVI viname=ipvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
 r.colors map=IPVI@PERMANENT color=bcyr
+d.legend -f -s -d rast=IPVI
 r.univar IPVI
 </pre></code>
 Calculate PVI: Perpendicular Vegetation Index
 <pre><code>
 i.vi output=PVI viname=pvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
 r.colors map=PVI@PERMANENT color=bcyr
+d.legend -f -s -d rast=PVI
 r.univar PVI
 </pre></code>
-Calculate SAVI
+Calculate SAVI: Soil-adjusted Vegetation Index
 <pre><code>
 i.vi output=SAVI viname=savi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
 r.colors map=SAVI@PERMANENT color=byr
+d.legend -f -s -d rast=SAVI
 r.univar SAVI
 </pre></code>
 Calculate DVI: Difference Vegetation Index
 <pre><code>
 i.vi output=DVI viname=dvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
 r.colors map=DVI@PERMANENT color=byr
+d.legend -f -s -d rast=DVI
 r.univar DVI
 </pre></code>
-
+Calculate NDRE Normalized Difference Red Edge Index
+<pre><code>
+r.mapcalc expression="NDRE = 1.0 * ( orthophoto_NIR@PERMANENT - orthophoto_REG@PERMANENT )/( orthophoto_NIR@PERMANENT + orthophoto_REG@PERMANENT )" 
+r.colors -e map=NDRE@PERMANENT color=bgyr 
+d.legend -f -s -d rast=NDRE
+r.univar DVI
+</pre></code>
 Refer to lecture, supplemental materials and <a href="https://grass.osgeo.org/grass78/manuals/i.vi.html">i.vi help page</a> to interpret the results of the calculation of above indices. 
