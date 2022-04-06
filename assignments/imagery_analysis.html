@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS/MEA 584:<br>Mapping and Analytics Using UAS</title>
+
+<link rel="shortcut icon" href=".././img/favicon.ico" />
+
+<link href="../layout.css" rel="stylesheet" type="text/css" media="screen">
+<link href="../style.css" rel="stylesheet" type="text/css" media="screen">
+
+</head>
+
+<body>
+
+<div id="outercontainer">
+<div id="container">
+
+<header>
+<div id="header-image">
+    <h1>GIS/MEA 584:<br>Mapping and Analysis Using UAS</h1>
+</div>
+
+<nav>
+<ul class="nav">
+<li><a href="../index.html">Syllabus</a></li>
+<li><a href="../schedule_spring.html">Schedule</a></li>
+<li><a href="../logistics.html">Course logistics</a></li>
+<li><a href="../topics.html">Topics</a></li>
+<!--<li><a href="../lectures.html">Lectures</a></li>-->
+<li><a href="../projects.html">Projects</a></li>
+<li><a href="../workshop.html">Workshop</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+<!-- This is a generated file. Do not edit. -->
+<h2>Multispectral imagery processing and analysis</h2>
+
+Outline:
+
+<ul>
+    <li>process multispectral imagery in Agisoft Metashape
+    <li>calculate Vegetation indices in GRASS GIS
+</ul>
+This assignment is based on chapter 17 of the book “Fundamentals of capturing and processing drone imagery and data” (<a href="https://catalog.lib.ncsu.edu/catalog/NCSU5277219">available through NCSU library: available through NCSU library</a>)
+<h3>Data:</h3>
+Agisoft part:
+<ul>
+    <li><a href= “https://drive.google.com/drive/folders/1ahi1fVD4_P-1tI32AnOY2MzK7Bhm5SlY?usp=sharing”>RGB folder</a> (202 pictures)
+    <li><a href= “https://drive.google.com/drive/folders/1saPmrzqdEGqGg1uWsGJfTkJfcet5pUpS?usp=sharing”>RED folder</a> (205 pictures)
+</ul>
+GRASS GIS part:
+<ul>
+    <li><a href= https://drive.google.com/file/d/1_OPE-bTH_qIrNGNU5E31Wm21LRImLz5o/view?usp=sharing>RGB orthophoto</a>
+    <li>Multispectral layers:
+	<ul>
+		<li><a href="https://drive.google.com/file/d/18LRwk4Wf2fswXI5oKqtvrWGcolY2eoE_/view?usp=sharing">GRE</a> (green)
+		<li><a href="https://drive.google.com/file/d/1gMGVTMkgyXeGw91eAfMjv2yD6hbHFc0_/view?usp=sharing">RED</a>
+		<li><a href="https://drive.google.com/file/d/1yh4HsSFOZvnHYKfaNDy6W5W_F3k96mug/view?usp=sharing">NIR</a> (near infrared)
+		<li><a href="https://drive.google.com/file/d/1cWoAqXWQj6SA8oRPQEbRU2vDXMZEKdGJ/view?usp=sharing">REG</a> (red edge)
+</ul>
+</ul>
+<h3>Software:</h3>
+
+<p>In the assignment we will be using GRASS GIS 7.8 and Agisoft Metashape Professional
+<a href="../logistics.html">Course logistics webpage</a> for links to software in case you don't have it installed already.
+<p>
+<h2>Agisoft Metashape part</h2>
+<h2>Processing multispectral drone imagery</h2>
+
+<h3>Add photos to chunks</h3>
+<pre><code>Click Workflow->add folder-> RGB folder
+</code></pre>
+In the Workspace pane right click on Workspace and select “New chunk” from the dropdown menu. Double click at the new chunk in the Workspace pane (it will appear bold when active)
+<pre><code>Click Workflow->add folder-> RED folder
+</code></pre>
+Rename your Chunks by right-clicking on Chunk 1 > Rename. Change the name of the RGB chunk (Chunk 1) to “RGB” and the RED chunk (Chunk 2) to “RED”. Each chunk includes a sub-category Cameras, which contains a list of the loaded images. The chunks contain photos taken during the site survey as well as images captured during the ascent and the descent of the drone. You do not need the images from the ascent and descent
+<h3>Camera calibration </h3>
+Note: this step is only completed for the RED dataset: 
+<pre><code>Click Tools > Camera calibration
+</code></pre>
+to correct Black level. This setting adjusts the color contrast in the images. On the left side of the dialogue, choose the Sequoia Camera (if it is not already selected). Go to the main panel and choose the Bands tab. Change the Black level from 4819.9 to 0, and click OK.
+
+
+
+<h3>Aligning photos</h3>
+
+To exclude images from the ascent and descent, you can manually select them from the list using the image numbers below and then right-click Photos > Disable Camera. You may note that some additional photos are disabled. These photos have also been excluded from the alignment.
+<ul>
+<li>For RGB: select images 0005 to 0065 (ascent) and images 0180 to 0206 (descent).</li>
+<li>For RED: select images 0004 to 0022 (ascent) and images 0180 to 0192 (descent).
+</ul>
+<pre><code>Click on Workflow > Align Photos 
+</code></pre>
+to align the photos. (you need to align the RED chunk and RGB chunk separately by activating each one of them)
+<ul>
+<li>Accuracy: RGB: Low, RED: Medium</li>
+<li>Generic Preselection: Yes</li>
+<li>Reference Preselection: Yes (drop-down at the right: source)</li>
+<li>Key point limit: 40,000</li>
+<li>Tie point limit: 4,000</li>
+<li>Adaptive camera model fitting (Advanced Settings): Yes</li>
+</ul>
+
+<h3>Optimizing sparse point cloud</h3>
+The result of the alignment process is a sparse point cloud, which contains tie points of the aligned photos. Tie points are locations or objects that are visually recognizable in the overlap area between two or more images. The tie points contain three different measures of accuracy: reprojection error, reconstruction uncertainty, and projection accuracy. Detailed descriptions of these three parameters are provided in the <a href="https://www.agisoft.com/pdf/metashape-pro_1_8_en.pdf">Agisoft user manual</a>. For the purposes of this exercise, it is sufficient to know that Agisoft is able to calculate these three accuracy parameters, and you can optimize the sparse cloud by using the Gradual Selection tool to identify and delete points with high error according to the values of the accuracy parameters. You want to delete points with low Reconstruction Uncertainty values before moving on to the next steps. To do this:
+<pre><code>Click Model > Gradual Selection 
+</code></pre>
+to optimize the sparse cloud. In the dropdown menu, choose Reconstruction Uncertainty. You can decrease or increase the uncertainty value of the points by sliding the button from left to right. After clicking OK, you can zoom in and out of the point cloud to inspect the points and see which points have been highlighted as you change the level of reconstruction uncertainty. Set the levels as indicate below then click OK.:
+<ul>
+<li>RGB: 16.0</li>
+<li>RED: 44.0</li>
+</ul>
+Click Delete on the keyboard to remove the selected points.
+The last step is to adjust the camera positions and correct the point cloud. 
+<pre><code>Click Tools > Optimize Cameras. 
+</code></pre>
+Leave all settings as default and click OK.
+
+<h3>Building a 3D Model (Mesh)</h3>
+In this exercise, you will use the optimized sparse point cloud to build a 3D model (Mesh). A mesh is a 3D structure on which the photos are fitted to create an orthomosaic. You can imagine this process as putting paper mâché onto a wire model. The process works best when the surface of the mesh is smooth, without hard edges or gaps.<br>
+To develop a mesh, 
+<pre><code>click Workflow > Build Mesh. 
+</pre></code>
+Choose the following settings for a maximum number of faces (geometric parts forming the mesh surface), and then click OK.
+<ul>
+<li>Source data: Sparse cloud</li>
+<li>Surface type: Arbitrary (3D)</li>
+<li>Face count: Custom > 0</li>
+<li>Interpolation: Enabled (default)</li>
+<li>Calculate vortex colors (Advanced settings): Yes</li>
+</ul>
+To create a smooth mesh, 
+<pre><code>click Tools > Mesh > Smooth Mesh 
+</pre></code>
+and input the following values, then click OK.
+<ul>
+<li>Strength: 15</li>
+<li>Fix borders (Advanced settings): Yes</li>
+</ul>
+
+
+<h3>Generating an Orthomosaic</h3>
+You will now generate an orthomosaic using the mesh you created above. NOTE: This step works only if you have the licensed version of Agisoft, it in unavailable in the DEMO mode. If you are working in a DEMO mode, the outputs will be provided for you to download.
+<pre><code>Workflow > Build Orthomosaic
+</pre></code>
+and input the below settings, then click OK.
+<ul>
+<li>Projection type: Geographic</li>
+<li>Projection: WGS 84 / UTM 32N (EPSG::32632)</li>
+<li>Surface: Mesh</li>
+<li>Blending mode: Mosaic</li>
+<li>Enable hole filling: Yes</li>
+<li>Pixel size: leave default setting</li>
+</ul>
+To export your orthomosaic as a GeoTIFF file,
+<pre><code>click File > Export > Export Orthomosaic> Export JPEG/TIFF/PNG, 
+</pre></code>
+name the files as follows and save them.
+<ul>
+<li>RGB: “orthophoto_RGB”</li>
+<li>RED: “orthophoto_RED”</li>
+</ul>
+Use the following settings:
+<ul>
+<li>Projection type: Geographic</li>
+<li>Project: WGS 84 / UTM 32N (EPSG::32632)</li>
+<li>Pixel size: leave default settings</li>
+<li>Output file: Write big TIFF file</li>
+</ul>
+
+
+
+
+
+<h2>GRASS GIS part</h2>
+
+<h2>Generating spectral indices from UAS-derived orthomosaics</h2>
+The RGB sensor on the Parrot Sequoia is equipped with a rolling shutter while the multispectral sensors use a global shutter. These differences can impact the registration of the different bands, and cause geometric distortions. Additionally, the four spectral sensors are slightly offset from each other on the Parrot Sequoia, which leads to band misregistration and can affect the calculation of spectral indices by preventing the bands from being combined into an orthomosaic. To achieve optimal results, it is necessary to perform an extra step to align the bands when preprocessing spectral orthomosaics. 
+<p>
+Start Grass GIS
+Create a new location based on EPSG: 32632 (do not apply transformation)<br>
+Open the PERMANENT mapset in this location
+<p>
+Change the current working directory to the directory where you downloaded
+the LAS files using <tt>cd</tt> command and path or in case you work
+in command line in GRASS GUI just type <tt>cd</tt> and press enter
+and select the directory using a dialog.
+
+<pre><code>cd ~/Downloads
+</code></pre>
+
+set the region
+<pre><code>g.region n=5612389.15971435 s=5612164.15046685 e=466168.04885871 w=465909.24655539 res=0.1 -p
+</code></pre>
+
+Import the RGB orthophoto into GRASS
+<pre><code>r.in.gdal input=orthophoto_RGB.tif output=orthophoto_RGB
+</pre></code>
+Import the multispectral layers
+<pre><code>r.in.gdal input=orthophoto_GRE.tif output=orthophoto_GRE
+r.in.gdal input=orthophoto_RED.tif output=orthophoto_RED
+r.in.gdal input=orthophoto_NIR.tif output=orthophoto_NIR
+r.in.gdal input=orthophoto_REG.tif output=orthophoto_REG
+</pre></code>
+
+<h3>Working with the RGB Orthomosaic</h3>
+
+You will use the orthomosaics to compute vegetation indices. You will first work with the RGB orthomosaic before moving on to multiple single-band orthomosaics in the next part.
+You have downloaded the orthophoto with three bands combined (red, green and blue). We need to separate the bands to use them in the indices calculation 
+<pre><code>g.region n=5612389.15971435 s=5612164.15046685 e=466168.04885871 w=465909.24655539 res=0.1 -p
+r.rgb input=orthophoto_RGB@PERMANENT red=othophoto_RGB.red green=othophoto_RGB.green blue=othophoto_RGB.blue
+</pre></code>
+calculate the VARI index
+<pre><code>i.vi output=VARI viname=vari red=ortho.red@PERMANENT green=ortho.green@PERMANENT blue=ortho.blue@PERMANENT
+r.colors -e map=VARI@PERMANENT color=bgyr   
+</pre></code>
+
+Calculate Redness Index (RI)
+<pre><code>r.mapcalc expression="RI = 1.0 * (pow ( ortho.red@PERMANENT, 2 ) )/( ortho.blue@PERMANENT *pow( ortho.green@PERMANENT ,2))"
+r.colors -e map=RI@PERMANENT color=bcyr
+</pre></code>
+Calculate Brightness Index (BI)
+<pre><code>r.mapcalc expression=”BI = 1.0 * ( sqrt(pow( ortho.red@PERMANENT ,2)+pow( ortho.green@PERMANENT ,2)+pow( ortho.blue@PERMANENT ,2)) )/3”
+r.colors -e map=BI@PERMANENT color=byg
+</pre></code>
+
+
+<h3>Working with multispectral orthomosaic</h3>
+
+Calculate NDVI
+<pre><code>i.vi output=NDVI viname=ndvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
+</pre></code>
+or
+<pre><code>r.mapcalc expression="NDVI2 = 1.0 * ( orthophoto_NIR@PERMANENT - orthophoto_RED@PERMANENT )/( orthophoto_NIR@PERMANENT + orthophoto_RED@PERMANENT )" 
+r.colors map=NDVI2@PERMANENT color=ndvi
+</pre></code>
+<pre><code>r.univar NDVI
+r.univar NDVI2
+</pre></code>
+Calculate IPVI: Infrared Percentage Vegetation Index
+<pre><code>i.vi output=IPVI viname=ipvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
+r.colors map=IPVI@PERMANENT color=bcyr
+r.univar IPVI
+</pre></code>
+Calculate PVI: Perpendicular Vegetation Index
+<pre><code>i.vi output=PVI viname=pvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
+r.colors map=PVI@PERMANENT color=bcyr
+r.univar PVI
+</pre></code>
+Calculate SAVI
+<pre><code>i.vi output=SAVI viname=savi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
+r.colors map=SAVI@PERMANENT color=byr
+r.univar SAVI
+</pre></code>
+Calculate DVI: Difference Vegetation Index
+<pre><code>i.vi output=DVI viname=dvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
+r.colors map=DVI@PERMANENT color=byr
+r.univar DVI
+</pre></code>
+
+Refer to lecture, supplemental materials and <a href="https://grass.osgeo.org/grass78/manuals/i.vi.html">i.vi help page</a> to interpret the results of the calculation of above indices. 
+
+</main>
+
+<footer>
+
+<nav>
+<ul>
+<li><a class="term-changes" href="https://moodle-courses1718.wolfware.ncsu.edu/course/view.php?id=4709">Moodle site</a></li>
+<li><a href="http://help.ncsu.edu/">Computing Help</a></li>
+<li><a href="https://geospatial.ncsu.edu/">GIST Home</a></li>
+<li><a href="http://www.ncsu.edu/policies/prr-disclaimer.php">Disclaimer</a></li>
+<li><a href="http://oit.ncsu.edu/itaccess">Accessibility</a></li>
+<li><a href="https://github.com/ncsu-geoforall-lab/uav-lidar-analytics-course" title="Source code for web pages on GitHub">
+        <img src="../img/github_logo.png" alt="GitHub Octocat logo">
+    </a>
+</li>
+<li title="Copyright and license (not applicable to linked materials)">
+    &copy; 2018
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    <a href="https://geospatial.ncsu.edu/geoforall/">NCSU GeoForAll Lab</a>
+</li>
+</ul>
+</nav>
+
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>

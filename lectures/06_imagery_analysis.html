@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>GIS595/MEA792: UAV/lidar Data Analytics</title>
+
+        <meta name="description" content="NCSU GIS595/MEA792: UAV/lidar Data Analytics course lecture">
+        <meta name="author" content="NCSU OSGeoREL, Mitasova et al.">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <style>
+        * {
+            /*font-family: Verdana, Geneva, sans-serif !important;*/
+        }
+        body {
+        /*background-color: #FFF !important;*/
+        /*
+          background-image: url("pictures/elevation-nagshead.gif");
+          background-repeat: no-repeat;
+          background-position: left bottom;*/
+        }
+        .reveal section img {
+            background: transparent;
+            border: 0;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+        }
+        /* for standalone frame */
+        /*
+        iframe {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        */
+        /* display: inline; background-color: #002B36; padding: 0px; margin: 0px */
+        .rounded-corners {
+            border: 0px solid black;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        a {
+            color: #060 !important;
+        }
+        a:hover {
+            color: #060 !important;
+            text-decoration: underline !important;
+        }
+        h1, h2, h3, h4, h5 {
+            text-transform: none !important;
+            /* word-break: keep-all; text-transform: none; font-size: 200%; line-height: 110%; */
+            color: #060 !important;
+            /* color: #444 !important; */ /* grey from the wab page */
+            font-weight: bold !important;
+            -webkit-hyphens: none !important;
+            -moz-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
+            line-height: 110% !important;
+        }
+        .reveal .progress span {
+            background-color: #060 !important;
+        }
+        /* predefined element positioning */
+        .top {
+            /*position: relative;*/
+            top: 5%;
+            height: 45%; /* is the height even needed? */
+        }
+        .bottom {
+            height: 45%;
+        }
+        .ne {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .nw {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .se {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            height: 45%;
+            width: 45%;
+        }
+        .sw {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            height: 45%;
+            width: 45%;
+        }
+
+        /* classes for sections with predefined elements */
+        /* classes for sections with predefined elements */
+        .right, .textimg > img, .textimg > video, .textimg > iframe, .imgtext > p, .imgtext > ul, .imgtext > ol, .imgtext > div {
+            float: right;
+            text-align: left;
+            max-width: 47%;
+        }
+        .left, .imgtext > img, .imgtext > video, imgtext > iframe, .textimg > p, .textimg > ul, .textimg > ol, .textimg > div {
+            float: left;
+            text-align: left;
+            max-width: 47%;
+        }
+        li > ul, li > ol {
+            font-size: 85% !important;
+            line-height: 110% !important;
+        }
+        .small {
+            font-size: smaller !important;
+            color: black;
+            margin: 0.1em !important;
+        }
+        .credit {
+            font-size: small !important;
+            color: gray;
+            margin: 0.1em !important;
+        }
+        .parent-page {
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            top: auto;
+            left: auto;
+            z-index: 30;
+            font-size: medium !important;
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+<!-- This is a generated file. Do not edit. -->
+<section>
+    <h2>Multispectral imagery analysis</h2>
+    <h4>GIS/MEA 584 Mapping and Analysis Using UAS</h4>
+<!--    <h3 style="margin-top: 0.5em"> Author</h3>-->
+    <p class="title-foot">
+        <a href="http://www.ncsu.edu/" title="North Carolina State University">NCSU</a>
+        <a href="https://geospatial.ncsu.edu/geoforall/" title="NCSU OSGeo Research and Education Laboratory">OSGeoREL</a>
+        at
+        <a href="https://geospatial.ncsu.edu/" title="Center for Geospatial Analytics">Center for Geospatial Analytics</a>
+        <br>
+    </p>
+
+</section>
+<section>
+    <h2>Objectives</h2>
+    <ul>
+        <li class="fragment"><strong>Understand</strong> electromagnetic spectrum</li>
+        <li class="fragment"><strong>Recognize</strong> differences between visual spectrum and multispectral sensors</li>
+       <li class="fragment"><strong>Understand</strong> spatial bands in drone cameras</li>
+       <li class="fragment"><strong>Utilize</strong> photogrammetric software for processing of multispectral imagery</li>
+        <li class="fragment"><strong>Understand</strong> the advantages of using Vegetation Indices</li>
+   </ul>
+</section>
+<section>
+    <h2>Visible spectrum – RGB cameras</h2>
+<ul>
+<li>The human eye is sensitive only to wavelengths between 400 and 700 nm, which is known as the visible spectrum. Humans can perceive a variety of colors ranging from violet to red.  Wavelengths however can also be shorter (ultraviolet) or longer (infrared) than those of our visible eyesight.</li>
+<li>Even though we cannot see them, these invisible wavebands are very indicative of the agronomic characteristics of soil, plants and crops.</li>
+<li><a href="https://www.youtube.com/watch?v=3iaFzafWJQE&feature=emb_imp_woyt">Short movie</a>
+</section>
+<section>
+    <h2>Electromagnetic spectrum</h2>
+    <img class="fragment" src="img/imagery_analysis/electromagnetic_spectrum.jpg"width ="80%>
+<p class="fragment"> source: https://www.gisnote.com/wp-content/uploads/2019/04/image-result-for-electromagnetic-spectrum-micasens.jpeg</p> 
+</section>
+<section>
+    <h2>Reflectance bands</h2>
+
+            <img src="img/imagery_analysis/spectral_bands.png"width ="90%">   
+
+</section>
+<section>
+    <h2>Multispectral sensors</h2>
+    <ul>
+		<li class="fragment">Advances in multispectral sensors for drones have led to a rapid growth in their use for capturing not only visible spectra (e.g., red, green, and blue bands, hereafter referred to as RGB but also bands outside the visible spectra such as near-infrared (NIR) and red-edge (REG) channels (the red edge is located between the red and NIR portions of the electromagnetic spectrum).</li>
+		<li class="fragment">Multispectral sensors flown onboard UAS provide data that are spectrally similar to imagery captured from satellites and manned aircraft – putting a very powerful tool into the hands of users.</li>
+		</ul>
+</section>
+<section>
+    <h2>Generating a reflectance map from a multispectral drone</h2>
+<ul>
+		<li class="fragment">The at-sensor reflectance (i.e., radiance), which is the radiant flux received by the sensor, is a function of the surface radiance and the atmospheric disturbance between the surface and the sensor.</li>
+		<li class="fragment">This can be calibrated by a reflectance standard to an absolute reflectance signature stored as numeric digital number values in the image. The output is a reflectance map/imagery with multiple bands</li>
+		</ul>
+</section>
+<section>
+    <h2>Generating a reflectance map from a multispectral drone</h2>
+    <img class="fragment" src="img/imagery_analysis/multispectral_camera.png">
+<p class="small fragment">“Fundamentals of capturing and processing drone imagery and data” FIGURE 17.1</p>
+</section>
+<section>
+    <h2>Multispectral drone cameras</h2>
+    <img class="fragment" src="img/imagery_analysis/multispectral_cameras.png"width ="90%">
+<p class="small fragment">Jeziorska, J. UAS for Wetland Mapping and Hydrological Modeling. Remote Sens. 2019, 11, 1997. https://doi.org/10.3390/rs11171997</p>
+</section>
+<section>
+ <div class="left">   
+<h2>Multispectral drone cameras</h2>
+    <ul>
+    <li class="fragment">Jeziorska, J. UAS for Wetland Mapping and Hydrological Modeling. Remote Sens. 2019, 11, 1997. https://doi.org/10.3390/rs11171997.</li>
+</ul>
+ </div>
+ <div class="right">
+
+            <img src="img/imagery_analysis/multispectral_table.png">
+ </div>
+   
+</section>
+<section>
+    <h2>Green band</h2>
+    <ul>
+		<li class="small fragment">corresponds to the reflected energy in the 500 to 600 nm spectral band and has the greatest reflectance of a plant in this band. The reflectance peak is at around 550 nm. It has been proven that this spectral band is strongly correlated with the amount of chlorophyll contained in the plant.</li>
+		<li class="small fragment">In this visible portion of the vegetation spectrum, the reflectance curve of a healthy plant exhibits the greatest reflectance in a green waveband (in the range of 550 nm). This is why plants appear green to us.</li>
+		<li class="small fragment">IA chemical compound in leaves called chlorophyll strongly absorbs radiation in the red and blue wavelengths but reflects green wavelengths. Leaves appear “greenest” to us in the summer, when chlorophyll content is at its maximum.</li>
+		</ul>
+</section>
+<section>
+    <h2>Red band</h2>
+    <ul>
+		<li class="fragment">Corresponds to the reflected energy in the 600 – 700 nm spectral band. The strong chlorophyll absorption in this band results in a low reflectance. Reflectance varies significantly in relation to factors such as biomass, LAI (Leaf Area Index), soil history, crop type, humidity and plant stress.</li>
+		<li class="fragment">For most crops this band gives an excellent contrast between the plants and the soil and it is extensively used for compiling most of the vegetation indices in agriculture.
+</li>
+		</ul>
+</section>
+<section>
+<h2>Red Edge</h2>
+<div class="left">  
+<ul> 
+<li class="small fragment">This a very narrow band (700 – 730 nm), which corresponds to the entry point of Near Infrared. It is the point of sudden change in reflectance, from strong absorption of Red to substantial reflection of Near Infrared. This band is very sensitive to plant stress and provides information on the chlorophyll.
+</li>
+</ul>
+</div>
+<div class="right">
+<img src="img/imagery_analysis/red_edge.jpg">
+</div>
+</section>
+<section>
+    <h2>NIR (Near-Infrared)</h2>
+    <ul>
+		<li class="fragment">Corresponds to the wavelengths in the 700 nm to 1.3 µm range, has the strongest reflectance of the bands studied. There is a very strong correlation between this reflectance and the level of chlorophyll in the plant. A highly significant variation of the reflectance in this band is produced when a plant is under stress.</li>
+		<li class="fragment">Healthy vegetation absorbs blue and red-light energy to fuel photosynthesis and create chlorophyll. A plant with more chlorophyll will reflect more near-infrared energy than an unhealthy plant. Thus, analyzing a plants spectrum of both absorption and reflection in visible and in infrared wavelengths can provide information about the plants’ health and productivity.</li>
+		</ul>
+</section>
+<section>
+    <h2>NIR (Near-Infrared)</h2>
+    <ul>
+		<li class="small fragment">Along with the Red spectral band, infrared is extensively used for compiling most of the vegetation indices in agriculture</li>
+		<li class="small fragment">NIR is sensitive to the leaf cellular structure and provides critical data to monitor changes in crop health.</li>
+<ul>
+<li class="small fragment">Soil property and moisture analysis</li>
+<li class="small fragment">Crop health and stress analysis</li>
+<li class="small fragment">Water management</li>
+<li class="small fragment">Erosion analysis</li>
+<li class="small fragment">Plant counting</li>
+</ul>
+		</ul>
+</section>
+<section>
+    <h2>Benefits Of Multispectral Imaging</h2>
+   <ul>
+		<li class="fragment">Identify pests, disease and weeds. Optimize pesticide usage and crop sprays through early detection.</li>
+		<li class="fragment">Provide data on soil fertility and refine fertilization by detecting nutrient deficiencies. Help with land management and whether to take agriculture land in or out of production or rotate crops etc.</li>
+		<li class="fragment">Count plants and determine population or spacing issues.</li>
+		<li class="fragment">Estimate crop yield.</li>
+</ul>
+</section>
+<section>
+    <h2>Benefits Of Multispectral Imaging</h2>
+   <ul>
+		<li class="fragment">Measure irrigation. Control crop irrigation by identifying areas where water stress is suspected. Then, make improvement to land areas such as install drainage systems and waterways based on the multispectral data.</li>
+		<li class="fragment">View damage to crops from farm machinery and make necessary repairs or replace problematic machinery.</li>
+		<li class="fragment">Survey fencing and farm buildings.</li>
+		<li class="fragment">Monitor livestock. Now, drones with thermal cameras can be used to locate livestock at night time along with plenty of other uses.</li>
+</ul>
+</section>
+<section>
+    <h2>Processing of multispecral drone imagery</h2>
+<div class="left"> 
+Radiometric calibration 
+<ul> 
+<li class="small fragment">The calibration is carried out by manually selecting the area of the reflectance target on the calibration image and assigning the known reflectance value of the target
+</li>
+</ul>
+</div>
+
+<div class="right">
+<img src="img/imagery_analysis/calibration.png">
+</div>
+<li class="small fragment">Calibration images can be collected before, after, or during the flight. For pre- and post-flight calibration, drone and sensor are held manually above the target and images for all bands are acquired 
+</section>
+<section>
+    <h2>Vegetation indices</h2>
+    <ul>
+		<li class="fragment">Reflectance maps can be used to calculate a variety of spectral indices. Spectral indices are a form of image enhancement where the bands are mathematically combined or transformed to permit better interpretation of the information in the image.</li>
+		<li class="fragment">Since the 1970s, many indices have been developed for different scientific purposes. The most common spectral indices are vegetation indices (VIs) that highlight the biophysical characteristics of the vegetation and are sensitive to photosynthetic activity, canopy structure, and vegetation composition.</li>
+		</ul>
+</section>
+<section>
+    <h2>The variation in reflectance </h2>
+    <img src="img/imagery_analysis/reflectance_variation.png"width="50%">
+<p class="small fragment">“Fundamentals of capturing and processing drone imagery and data”  FIGURE 17.2 The variation in reflectance induced by a ditch. In this case the soil in the ditch nourishes the vegetation, allowing it to grow more vigorously than the surrounding vegetation. These differences result in higher reflectance of NIR radiation</p>
+</section>
+<section>
+    <h2>Vegetation indices - examples</h2>
+<p class="fragment">VISUAL ATMOSPHERIC RESISTANCE INDEX (VARI)<p>
+    <ul>
+		<li class="fragment">VARI = (green - red ) / (green + red - blue)</li>
+		<li class="fragment">The Visual Atmospheric Resistance Index is a vegetation index that was originally designed for satellite imagery. It’s minimally sensitive to atmospheric effects, allowing for vegetation to be estimated in a wide variety of environments.</li>
+		<li class="fragment">The Visible Atmospherically Resistant Index (VARI) is designed to emphasize vegetation in the visible portion of the spectrum, while mitigating illumination differences and atmospheric effects. It is ideal for RGB or color images; it utilizes all three color bands</li>
+		</ul>
+
+</section>
+
+<section>
+    <h2>Vegetation indices – examples</h2>
+<div class="left"> 
+VARI 
+<ul> 
+<li class="small fragment">As sunlight reaches the earth’s atmosphere, it is scattered in all directions by the gasses and particles in the air. But, blue light tends to scatter more than all the other colors because it travels in smaller wavelengths than the rest of the visual spectrum. Therefore, we see the sky as blue most of the time.</li>
+</ul>
+</div>
+
+<div class="right">
+<img src="img/imagery_analysis/VARI.png">
+</div> 
+<ul>
+<li class="small fragment">This vegetation index accounts for to presence of blue in its calculation of spectral data.</li>
+</ul>
+</section>
+<section>
+    <h2>Vegetation indices – examples</h2>
+<div class="left"> 
+The Redness Index (RI)
+<ul> 
+<li class="small fragment">can also be computed from RGB bands and accounts for the soil redness intensity, which can be related to the soil properties such as mineral composition, water content, and even the soil particle size. RI is computed as</li>
+</ul>
+</div>
+
+<div class="right">
+<img src="img/imagery_analysis/RI.png">
+</div> 
+<ul>
+<li class="small fragment">RI = RED^2/(BLUE*GREEN^2)</li>
+</ul>
+</section>
+
+<section>
+<h2>Vegetation indices – examples</h2>
+<div class="left"> 
+Brightness Index (BI)
+<ul> 
+<li class="small fragment">provides an overall measure of the combined magnitude of reflectance from all three RGB bands and is useful for differentiating bright soils from soils with higher organic matter</li>
+</ul>
+<img src="img/imagery_analysis/BI_formula.png">
+</div>
+<div class="right">
+<img src="img/imagery_analysis/BI.png">
+</div> 
+</section>
+<section>
+    <h2>Vegetation indices – examples</h2>
+<div class="left"> 
+Normalized Difference Vegetation Index
+<ul> 
+<li class="small fragment">NDVI = (NIR-RED)/(NIR+RED)</li>
+<li class="small fragment">In this algorithm, the red and near-infrared (NIR) bands of imagery are evaluated to calculate a vegetation index value. It’s designed to detect differences in green canopy area, emphasizing the green color of a healthy plant. </li>
+</ul>
+</div>
+
+<div class="right">
+<img src="img/imagery_analysis/NDVI.png">
+</div> 
+</section>
+
+<section>
+<h2>Vegetation indices – examples</h2>
+<div class="left"> 
+Normalized Difference Vegetation Index
+<ul> 
+<li class="small fragment">It’s commonly used as an indicator of chlorophyll content in several different types of crops, including corn, alfalfa, soybean, and wheat.</li>
+<li class="small fragment">The difference between the green and red values of the image differentiates between plants and soil.</li>
+</ul>
+</div>
+
+<div class="right">
+<img src="img/imagery_analysis/NDVI2.png">
+</div> 
+<ul>
+<li class="small fragment">The value of this index ranges from -1 to 1. The common range for green vegetation is 0.2 to 0.8.</li>
+</ul>
+</section>
+<section>
+    <h2>Vegetation indices – examples</h2>
+<div class="left"> 
+Infrared Percentage Vegetation Index (IPVI)
+<ul> 
+<li class="fragment">IPVI = NIR/(NIR+RED)</li>
+<li class="fragment">This index is functionally the same as NDVI, but it is computationally faster. Values range from 0 to 1. </li>
+</ul>
+</div>
+
+<div class="right">
+<img src="img/imagery_analysis/IPVI.png">
+</div> 
+</section>
+
+<section>
+    <h2>Vegetation indices – examples</h2>
+<div class="left"> 
+Difference Vegetation Index (DVI)
+<ul> 
+<li class="fragment">DVI = ( NIR – RED )</li>
+<li class="small fragment">This index distinguishes between soil and vegetation, but it does not account for the difference between reflectance and radiance caused by atmospheric effects or shadows. </li>
+</ul>
+</div>
+
+<div class="right">
+<img src="img/imagery_analysis/IPVI.png">
+</div> 
+<ul>
+<li class="small fragment">in DVI zero indicates bare soil, values less than zero indicate water, and those greater than zero indicate vegetation. </li>
+</ul>
+</section>
+
+
+
+
+<section>
+    <h2>Vegetation indices - examples</h2>
+SOIL-ADJUSTED VEGETATION INDEX (SAVI)
+<ul> 
+<li class="fragment">SAVI = ((1.0+0.5)*(NIR - red)) / (nir + reD +0.5)</li>
+<li class="small fragment">Where NDVI outputs tend to vary with soil color, soil moisture, and saturation effects from high-density vegetation, Soil-adjusted Vegetation Index (SAVI) accounts for differential red and near-infrared extinction through the vegetation canopy. It minimizes soil brightness and emphasizes data from vegetation. </li>
+<li class="small fragment">SAVI is particularly useful in circumstances where soil quality varies substantially within a single given area of interest.</li>
+<li class="small fragment">This index is best used in areas with relatively sparse vegetation where soil is visible through the canopy.</li>
+</ul>
+</section>
+
+        </div>  <!-- slides -->
+
+    </div>  <!-- reveal -->
+
+    <!--
+        Home button or link to a parent page
+        If you want this to be unique for every page (slide deck),
+        then remove it from here and put it at the end of each
+        file (or series of files) creating one page
+        (the position will be little different)
+        TODO: some JS is needed to move it to the right position
+    -->
+    <div class="parent-page">
+        <!-- alternative symbol: &#x1f3e0; -->
+        <a href=".." title="Course website">
+            <img width="15px" src="img/home.svg"></a>
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: false,
+
+                // Display a presentation progress bar
+                progress: true,
+                
+                center: true,
+                
+                // Display the page number of the current slide
+                slideNumber: false,
+
+                // Enable the slide overview mode
+                overview: true,
+
+                // Turns fragments on and off globally
+                fragments: true,
+
+                // The "normal" size of the presentation, aspect ratio will be preserved
+                // when the presentation is scaled to fit different resolutions. Can be
+                // specified using percentage units.
+                // width: 960,
+                // height: 700,
+                
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,  // increase?
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.5,
+                maxScale: 5.0,
+
+                theme: Reveal.getQueryHash().theme,  // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Push each slide change to the browser history
+                history: true,
+                // Enable keyboard shortcuts for navigation
+                keyboard: true,
+
+                // Vertical centering of slides
+                center: true,
+
+                // Enables touch navigation on devices with touch input
+                touch: true,
+
+                // Loop the presentation
+                loop: false,
+                // Flags if the presentation is running in an embedded mode,
+                // i.e. contained within a limited portion of the screen
+                embedded: false,
+
+                // Number of milliseconds between automatically proceeding to the
+                // next slide, disabled when set to 0, this value can be overwritten
+                // by using a data-autoslide attribute on your slides
+                autoSlide: 0,
+
+                // Stop auto-sliding after user input
+                autoSlideStoppable: true,
+
+                // Enable slide navigation via mouse wheel
+                mouseWheel: false,
+
+                // Hides the address bar on mobile devices
+                hideAddressBar: true,
+
+                // Opens links in an iframe preview overlay
+                previewLinks: false,
+
+                // Transition speed
+                transitionSpeed: 'default', // default/fast/slow
+
+                // Transition style for full page slide backgrounds
+                backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+                // Number of slides away from the current that are visible
+                viewDistance: 3,
+
+                // Parallax background image
+                //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+                // Parallax background size
+                //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+                chalkboard: {
+                // optionally load pre-recorded chalkboard drawing from file
+                    src: "chalkboard.json",
+			    },
+                math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true },
+                    { src: 'plugin/chalkboard/chalkboard.js' }
+                ],
+                keyboard: {
+                    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+                    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+                    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+                    8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+                    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+                }
+            });
+
+        </script>
+    </body>
+</html>
