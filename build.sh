@@ -42,7 +42,9 @@ do
 done
 
 # Topics index
-FILES="`./extract-links.py "topics/.+html" schedule.html`"
+# The first parameter is the regular expression to match links
+# in the files which are all the remaining parameters (one or more).
+FILES="`./extract-links.py "topics/.+html" schedule.html schedule_spring.html`"
 TITLE="Topics"
 HEAD_TEXT=""
 # if this gets longer, it must go to a file
