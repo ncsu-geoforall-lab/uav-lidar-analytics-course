@@ -221,21 +221,21 @@ r.in.gdal input=orthophoto_REG.tif output=orthophoto_REG
 You will use the orthomosaics to compute vegetation indices. You will first work with the RGB orthomosaic before moving on to multiple single-band orthomosaics in the next part.
 You have downloaded the orthophoto with three bands combined (red, green and blue). We need to separate the bands to use them in the indices calculation 
 <pre><code>g.region n=5612389.15971435 s=5612164.15046685 e=466168.04885871 w=465909.24655539 res=0.1 -p
-r.rgb input=orthophoto_RGB@PERMANENT red=othophoto_RGB.red green=othophoto_RGB.green blue=othophoto_RGB.blue
+r.rgb input=orthophoto_RGB@PERMANENT red=ortho.red green=ortho.green blue=ortho.blue
 </pre></code>
-calculate the VARI index
+calculate VARI: Visible Atmospherically Resistant Index 
 <pre><code>i.vi output=VARI viname=vari red=ortho.red@PERMANENT green=ortho.green@PERMANENT blue=ortho.blue@PERMANENT
 r.colors -e map=VARI@PERMANENT color=bgyr 
 d.legend -f -s -d rast=VARI
 r.univar VARI  
 </pre></code>
-Calculate Redness Index (RI)
+Calculate RI: Redness Index
 <pre><code>r.mapcalc expression="RI = 1.0 * (pow ( ortho.red@PERMANENT, 2 ) )/( ortho.blue@PERMANENT *pow( ortho.green@PERMANENT ,2))"
 r.colors -e map=RI@PERMANENT color=bcyr
 d.legend -f -s -d rast=RI
 r.univar RI
 </pre></code>
-Calculate Brightness Index (BI)
+Calculate BI: Brightness Index
 <pre><code>r.mapcalc expression=”BI = 1.0 * ( sqrt(pow( ortho.red@PERMANENT ,2)+pow( ortho.green@PERMANENT ,2)+pow( ortho.blue@PERMANENT ,2)) )/3”
 d.legend -f -s -d rast=BI
 r.univar BI
@@ -245,7 +245,7 @@ r.colors -e map=BI@PERMANENT color=byg
 
 <h3>Working with multispectral orthomosaic</h3>
 
-Calculate NDVI
+Calculate NDVI: Normalized Difference Vegetation Index
 <pre><code>i.vi output=NDVI viname=ndvi red=orthophoto_RED@PERMANENT nir=orthophoto_NIR@PERMANENT
 d.legend -f -s -d rast=NDVI
 </pre></code>
@@ -281,11 +281,11 @@ r.colors map=DVI@PERMANENT color=byr
 d.legend -f -s -d rast=DVI
 r.univar DVI
 </pre></code>
-Calculate NDRE Normalized Difference Red Edge Index
+Calculate NDRE: Normalized Difference Red Edge Index
 <pre><code>r.mapcalc expression="NDRE = 1.0 * ( orthophoto_NIR@PERMANENT - orthophoto_REG@PERMANENT )/( orthophoto_NIR@PERMANENT + orthophoto_REG@PERMANENT )" 
 r.colors -e map=NDRE@PERMANENT color=bgyr 
 d.legend -f -s -d rast=NDRE
-r.univar DVI
+r.univar NDRE
 </pre></code>
 Refer to lecture, supplemental materials and <a href="https://grass.osgeo.org/grass78/manuals/i.vi.html">i.vi help page</a> to interpret the results of the calculation of above indices. 
 
