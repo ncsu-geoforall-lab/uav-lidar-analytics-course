@@ -207,13 +207,13 @@ set the region
 </code></pre>
 
 Import the RGB orthophoto into GRASS
-<pre><code>r.in.gdal input=orthophoto_RGB.tif output=orthophoto_RGB
+<pre><code>r.in.gdal input=ortho_RGB.tif output=orthophoto_RGB
 </pre></code>
 Import the multispectral layers
-<pre><code>r.in.gdal input=orthophoto_GRE.tif output=orthophoto_GRE
-r.in.gdal input=orthophoto_RED.tif output=orthophoto_RED
-r.in.gdal input=orthophoto_NIR.tif output=orthophoto_NIR
-r.in.gdal input=orthophoto_REG.tif output=orthophoto_REG
+<pre><code>r.in.gdal input=ortho_GRE.tif output=orthophoto_GRE
+r.in.gdal input=ortho_RED.tif output=orthophoto_RED
+r.in.gdal input=ortho_NIR.tif output=orthophoto_NIR
+r.in.gdal input=ortho_REG.tif output=orthophoto_REG
 </pre></code>
 
 <h3>Working with the RGB Orthomosaic</h3>
@@ -236,7 +236,7 @@ d.legend -f -s -d rast=RI
 r.univar RI
 </pre></code>
 Calculate BI: Brightness Index
-<pre><code>r.mapcalc expression=”BI = 1.0 * ( sqrt(pow( ortho.red@PERMANENT ,2)+pow( ortho.green@PERMANENT ,2)+pow( ortho.blue@PERMANENT ,2)) )/3”
+<pre><code>r.mapcalc expression="BI = 1.0 * ( sqrt(pow( ortho.red@PERMANENT ,2)+pow( ortho.green@PERMANENT ,2)+pow( ortho.blue@PERMANENT ,2)) )/3"
 d.legend -f -s -d rast=BI
 r.univar BI
 r.colors -e map=BI@PERMANENT color=byg
